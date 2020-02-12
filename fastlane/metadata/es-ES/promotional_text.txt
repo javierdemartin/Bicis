@@ -1,0 +1,1 @@
+Compara el historial del día de cualquier estación de bicicletas junto con la predicción.

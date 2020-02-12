@@ -1,0 +1,25 @@
+/* 
+  Settings.strings
+  Bicis
+
+  Created by Javier de Martín Gil on 05/02/2020.
+  Copyright © 2020 Javier de Martín Gil. All rights reserved.
+*/
+
+"USERNAME_PLACEHOLDER" = "Teléfono";
+"PASSWORD_PLACEHOLDER" = "Contraseña";
+"SUBMIT_LOGIN_BUTTON_TITLE" = "Iniciar sesión";
+"TITLE_LABEL_HEADER" = "Ajustes";
+"HOW_TO_USE" = "No llegues a una estación y te quedes sin bicis. Compara el comportamiento con las predicciones y elige la mejor estación";
+"REQUEST_LOCATION_SERVICES_BUTTON" = "Servicios de localización";
+"UNAUTHORISED_LOCATION_SERVICES" = "Sin acceso";
+"AUTHORISED_LOCATION_SERVICES" = "Concedido";
+"LOCATION_SERVICES_PRIVACY" = "Bicis es el resultado del trabajo de una única persona. Todas las predicciones se realizan de forma diaria por una red neuronal y personalizada para cada ciudad y estación.";
+
+// ERRORS
+
+"INCORRECT_CREDENTIALS" = "Credenciales incorrectas";
+"SUCCESSFUL_LOG_IN" = "Autenticado correctamente";
+
+"HOW_TO_USE_SETTINGS_PAGE" = "Para volver a abrir la página de ajustes haz tap en el gráfico de cualquier estación";
+"FEEDBACK_BUTTON" = "  Enviar comentarios  ";

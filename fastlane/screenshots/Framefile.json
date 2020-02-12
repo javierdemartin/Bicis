@@ -1,0 +1,32 @@
+{
+    "default": {
+        
+        "keyword": {
+	    "font": "./fonts/SFProDisplay-Bold.otf"
+        },
+        "title": {
+            "color": "#FFFFFF",
+	    "font": "./fonts/SFProDisplay-Bold.otf"
+	},
+        "background": "./background.png",
+        "padding": 50,
+        "show_complete_frame": false,
+	"stack_title": true,
+        "title_below_image": false
+    },
+    
+    
+    "data": [
+        {
+            "filter": "iPhone",
+            "keyword": {
+                "color": "#FFFFFF"
+            },
+            "filter": "iPad",
+            "keyword": {
+                "color": "#FFFFFF"
+            }
+        }
+    ]
+}
+

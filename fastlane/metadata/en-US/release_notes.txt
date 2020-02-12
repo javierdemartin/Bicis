@@ -1,0 +1,3 @@
+Long and awaited update. First off, I completely worked a lot server-side. Predictions have greatly improved and there are new cities available. If you'd like to have Bicis available for your city use the feedback button in the settings page and ping me. Overall the app is still the same. I rewrote it from the ground up to be faster and let me work faster on it so more updates can come. Enjoy!
+
+Full release notes available here: Notas de la actualización completas en: https://javierdemart.in/blog/Bicis_v2020_2

@@ -1,0 +1,8 @@
+app_identifier("com.javierdemartin.bici") # The bundle identifier of your app
+apple_id("javierdemartin@gmail.com") # Your Apple email address
+
+itc_team_id("118306445") # App Store Connect Team ID
+team_id("Z3PCB8TM76") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

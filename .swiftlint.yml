@@ -1,0 +1,10 @@
+excluded:
+ - Pods
+
+line_length: 170
+file_length:
+  warning: 500
+  error: 1200
+identifier_name:
+  excluded: # excluded via string array
+    - id

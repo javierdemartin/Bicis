@@ -1,0 +1,886 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8000476F23EF425300492DFB /* BicisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000476E23EF425300492DFB /* BicisUITests.swift */; };
+		8000477723EF426000492DFB /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000477623EF426000492DFB /* SnapshotHelper.swift */; };
+		8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000477A23F06C1100492DFB /* StoreKitHelper.swift */; };
+		8002ED7C2397FC5E008ABB6B /* LocationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8002ED7B2397FC5E008ABB6B /* LocationServices.swift */; };
+		8002ED82239801F9008ABB6B /* SettingsViewControler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8002ED7E239801F9008ABB6B /* SettingsViewControler.swift */; };
+		8002ED83239801F9008ABB6B /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8002ED7F239801F9008ABB6B /* SettingsViewModel.swift */; };
+		8002ED84239801F9008ABB6B /* SettingsErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8002ED80239801F9008ABB6B /* SettingsErrors.swift */; };
+		800CE942239559F700674D1C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800CE941239559F700674D1C /* Constants.swift */; };
+		800CE94423955A7F00674D1C /* LocalDataManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800CE94323955A7F00674D1C /* LocalDataManagerError.swift */; };
+		800DDD4C23ED510700FCE4E5 /* BiciMad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800DDD4B23ED510700FCE4E5 /* BiciMad.swift */; };
+		80109135236E2DEC00D3C45E /* LocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80109134236E2DEC00D3C45E /* LocalDataManager.swift */; };
+		80109137236E2DFA00D3C45E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80109136236E2DFA00D3C45E /* DataManager.swift */; };
+		80109139236E2F9700D3C45E /* RemoteDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80109138236E2F9700D3C45E /* RemoteDataManager.swift */; };
+		8010913C236E308700D3C45E /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010913B236E308700D3C45E /* OnboardingViewModel.swift */; };
+		8010913E236E309300D3C45E /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8010913D236E309300D3C45E /* OnboardingViewController.swift */; };
+		80109141236E316E00D3C45E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80109140236E316E00D3C45E /* HomeViewController.swift */; };
+		80109143236E317700D3C45E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80109142236E317700D3C45E /* HomeViewModel.swift */; };
+		80109145236E320300D3C45E /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80109144236E320300D3C45E /* AppCoordinator.swift */; };
+		8010914B236E330100D3C45E /* Pods_Bicis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8010914A236E330100D3C45E /* Pods_Bicis.framework */; };
+		801ECE3B236F3B7D003CFAF7 /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE3A236F3B7D003CFAF7 /* MapPin.swift */; };
+		801ECE3D236F3B90003CFAF7 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE3C236F3B90003CFAF7 /* CustomAnnotationView.swift */; };
+		801ECE42236F3BD1003CFAF7 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE41236F3BD1003CFAF7 /* UIColor.swift */; };
+		801ECE44236F3BEA003CFAF7 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE43236F3BEA003CFAF7 /* Appearance.swift */; };
+		801ECE46236F3C10003CFAF7 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE45236F3C10003CFAF7 /* String.swift */; };
+		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
+		805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B5A2223EE050C000F3CC5 /* Bundle.swift */; };
+		80628461236E34C500717472 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628460236E34C500717472 /* Coordinator.swift */; };
+		80628463236ED79300717472 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628462236ED79300717472 /* Result.swift */; };
+		80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628464236ED87900717472 /* DefaultRemoteDataManager.swift */; };
+		80628468236EDA5000717472 /* Responses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628467236EDA5000717472 /* Responses.swift */; };
+		8062846A236EE22F00717472 /* DefaultLocalDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628469236EE22F00717472 /* DefaultLocalDataManager.swift */; };
+		807C88A323EAD638003BA644 /* Home.strings in Resources */ = {isa = PBXBuildFile; fileRef = 807C88A523EAD638003BA644 /* Home.strings */; };
+		807C88A923EAD692003BA644 /* Settings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 807C88AB23EAD692003BA644 /* Settings.strings */; };
+		807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C88AF23EB17CA003BA644 /* CityBikes.swift */; };
+		807C88B323EB17EC003BA644 /* NextBike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C88B223EB17EC003BA644 /* NextBike.swift */; };
+		8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8085CC5C236E2CB500B45A7C /* AppDelegate.swift */; };
+		8085CC66236E2CB800B45A7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8085CC65236E2CB800B45A7C /* Assets.xcassets */; };
+		8085CC69236E2CB800B45A7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8085CC67236E2CB800B45A7C /* LaunchScreen.storyboard */; };
+		80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */; };
+		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
+		BB945FE472A23F11205BB191 /* Pods_Bicis_BicisUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BCE3AFEA221F7BFDEAB899 /* Pods_Bicis_BicisUITests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8000477123EF425300492DFB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8085CC51236E2CB500B45A7C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8085CC58236E2CB500B45A7C;
+			remoteInfo = Bicis;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1472B5D618BCE2E94598894E /* Pods_BicisTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BicisTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		644E8E3F87CF67AFCCA7E9B0 /* Pods-Bicis-BicisUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis-BicisUITests.debug.xcconfig"; path = "Target Support Files/Pods-Bicis-BicisUITests/Pods-Bicis-BicisUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		79D733FBA41973B1311630B3 /* Pods-Bicis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis.release.xcconfig"; path = "Target Support Files/Pods-Bicis/Pods-Bicis.release.xcconfig"; sourceTree = "<group>"; };
+		8000476C23EF425300492DFB /* BicisUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BicisUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8000476E23EF425300492DFB /* BicisUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BicisUITests.swift; sourceTree = "<group>"; };
+		8000477023EF425300492DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8000477623EF426000492DFB /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
+		8000477A23F06C1100492DFB /* StoreKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
+		8002ED7B2397FC5E008ABB6B /* LocationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServices.swift; sourceTree = "<group>"; };
+		8002ED7E239801F9008ABB6B /* SettingsViewControler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewControler.swift; path = Bicis/Settings/SettingsViewControler.swift; sourceTree = SOURCE_ROOT; };
+		8002ED7F239801F9008ABB6B /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsViewModel.swift; path = Bicis/Settings/SettingsViewModel.swift; sourceTree = SOURCE_ROOT; };
+		8002ED80239801F9008ABB6B /* SettingsErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsErrors.swift; path = Bicis/Settings/SettingsErrors.swift; sourceTree = SOURCE_ROOT; };
+		800CE941239559F700674D1C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		800CE94323955A7F00674D1C /* LocalDataManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManagerError.swift; sourceTree = "<group>"; };
+		800CE94523955BD400674D1C /* Bicis.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bicis.entitlements; sourceTree = "<group>"; };
+		800DDD4B23ED510700FCE4E5 /* BiciMad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiciMad.swift; sourceTree = "<group>"; };
+		80109134236E2DEC00D3C45E /* LocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManager.swift; sourceTree = "<group>"; };
+		80109136236E2DFA00D3C45E /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		80109138236E2F9700D3C45E /* RemoteDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataManager.swift; sourceTree = "<group>"; };
+		8010913B236E308700D3C45E /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		8010913D236E309300D3C45E /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		80109140236E316E00D3C45E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		80109142236E317700D3C45E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		80109144236E320300D3C45E /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		80109146236E32F300D3C45E /* Pods_Bicis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Bicis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8010914A236E330100D3C45E /* Pods_Bicis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Bicis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		801ECE3A236F3B7D003CFAF7 /* MapPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
+		801ECE3C236F3B90003CFAF7 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
+		801ECE41236F3BD1003CFAF7 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		801ECE43236F3BEA003CFAF7 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		801ECE45236F3C10003CFAF7 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		803FD8A023C71FAF008DDE91 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
+		805B5A2223EE050C000F3CC5 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		80628460236E34C500717472 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		80628462236ED79300717472 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		80628464236ED87900717472 /* DefaultRemoteDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRemoteDataManager.swift; sourceTree = "<group>"; };
+		80628467236EDA5000717472 /* Responses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responses.swift; sourceTree = "<group>"; };
+		80628469236EE22F00717472 /* DefaultLocalDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLocalDataManager.swift; sourceTree = "<group>"; };
+		807C88A223EAD62B003BA644 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		807C88A423EAD638003BA644 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Home.strings; sourceTree = "<group>"; };
+		807C88A623EAD63C003BA644 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Home.strings; sourceTree = "<group>"; };
+		807C88AA23EAD692003BA644 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
+		807C88AC23EAD694003BA644 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Settings.strings; sourceTree = "<group>"; };
+		807C88AF23EB17CA003BA644 /* CityBikes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityBikes.swift; sourceTree = "<group>"; };
+		807C88B223EB17EC003BA644 /* NextBike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBike.swift; sourceTree = "<group>"; };
+		8085CC59236E2CB500B45A7C /* Bicis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bicis.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8085CC5C236E2CB500B45A7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8085CC65236E2CB800B45A7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8085CC68236E2CB800B45A7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8085CC6A236E2CB800B45A7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserInterfaceIdiom.swift; sourceTree = "<group>"; };
+		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		82BCE3AFEA221F7BFDEAB899 /* Pods_Bicis_BicisUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bicis_BicisUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3A858CABDDF9CD4FA0A1738 /* Pods-Bicis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis.debug.xcconfig"; path = "Target Support Files/Pods-Bicis/Pods-Bicis.debug.xcconfig"; sourceTree = "<group>"; };
+		E59531B5EA24EAA280BE3600 /* Pods_Bicis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bicis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E90227762C796EA6CA64D3D1 /* Pods-Bicis-BicisUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis-BicisUITests.release.xcconfig"; path = "Target Support Files/Pods-Bicis-BicisUITests/Pods-Bicis-BicisUITests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8000476923EF425300492DFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB945FE472A23F11205BB191 /* Pods_Bicis_BicisUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8085CC56236E2CB500B45A7C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8010914B236E330100D3C45E /* Pods_Bicis.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5949BD66B4AC3B1C21CA4D42 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8010914A236E330100D3C45E /* Pods_Bicis.framework */,
+				80109146236E32F300D3C45E /* Pods_Bicis.framework */,
+				E59531B5EA24EAA280BE3600 /* Pods_Bicis.framework */,
+				82BCE3AFEA221F7BFDEAB899 /* Pods_Bicis_BicisUITests.framework */,
+				1472B5D618BCE2E94598894E /* Pods_BicisTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8000476D23EF425300492DFB /* BicisUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8000477623EF426000492DFB /* SnapshotHelper.swift */,
+				8000476E23EF425300492DFB /* BicisUITests.swift */,
+				8000477023EF425300492DFB /* Info.plist */,
+			);
+			path = BicisUITests;
+			sourceTree = "<group>";
+		};
+		8002ED7D2397FCAB008ABB6B /* LocationServices */ = {
+			isa = PBXGroup;
+			children = (
+				8002ED7B2397FC5E008ABB6B /* LocationServices.swift */,
+			);
+			path = LocationServices;
+			sourceTree = "<group>";
+		};
+		800CE93E239554EF00674D1C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8002ED80239801F9008ABB6B /* SettingsErrors.swift */,
+				8002ED7E239801F9008ABB6B /* SettingsViewControler.swift */,
+				8002ED7F239801F9008ABB6B /* SettingsViewModel.swift */,
+				807C88AB23EAD692003BA644 /* Settings.strings */,
+			);
+			name = Settings;
+			path = "ç+`´p++++++";
+			sourceTree = "<group>";
+		};
+		800CE94623955CD500674D1C /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				80109134236E2DEC00D3C45E /* LocalDataManager.swift */,
+				800CE94323955A7F00674D1C /* LocalDataManagerError.swift */,
+				80628469236EE22F00717472 /* DefaultLocalDataManager.swift */,
+			);
+			path = Local;
+			sourceTree = "<group>";
+		};
+		800DDD4D23ED512700FCE4E5 /* BiciMad */ = {
+			isa = PBXGroup;
+			children = (
+				800DDD4B23ED510700FCE4E5 /* BiciMad.swift */,
+			);
+			path = BiciMad;
+			sourceTree = "<group>";
+		};
+		80109133236E2D9B00D3C45E /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				800CE94623955CD500674D1C /* Local */,
+				80109136236E2DFA00D3C45E /* DataManager.swift */,
+				807C88AE23EB1711003BA644 /* Remote */,
+				80628462236ED79300717472 /* Result.swift */,
+			);
+			path = DataManager;
+			sourceTree = "<group>";
+		};
+		8010913A236E304100D3C45E /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				8010913B236E308700D3C45E /* OnboardingViewModel.swift */,
+				8010913D236E309300D3C45E /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		8010913F236E316000D3C45E /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				80109140236E316E00D3C45E /* HomeViewController.swift */,
+				80109142236E317700D3C45E /* HomeViewModel.swift */,
+				801ECE3A236F3B7D003CFAF7 /* MapPin.swift */,
+				801ECE3C236F3B90003CFAF7 /* CustomAnnotationView.swift */,
+				803FD8A023C71FAF008DDE91 /* GraphView.swift */,
+				807C88A523EAD638003BA644 /* Home.strings */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		801ECE40236F3BC3003CFAF7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				801ECE41236F3BD1003CFAF7 /* UIColor.swift */,
+				801ECE45236F3C10003CFAF7 /* String.swift */,
+				805B5A2223EE050C000F3CC5 /* Bundle.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		805B5A2423EE0A95000F3CC5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8085CC65236E2CB800B45A7C /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		8062845F236E34B900717472 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				80628460236E34C500717472 /* Coordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		80628466236EDA3600717472 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				80628467236EDA5000717472 /* Responses.swift */,
+				801ECE43236F3BEA003CFAF7 /* Appearance.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		807C88AE23EB1711003BA644 /* Remote */ = {
+			isa = PBXGroup;
+			children = (
+				807C88B423EB1802003BA644 /* NextBike */,
+				80109138236E2F9700D3C45E /* RemoteDataManager.swift */,
+				80628464236ED87900717472 /* DefaultRemoteDataManager.swift */,
+				807C88B123EB17D1003BA644 /* CityBikes */,
+				800DDD4D23ED512700FCE4E5 /* BiciMad */,
+			);
+			path = Remote;
+			sourceTree = "<group>";
+		};
+		807C88B123EB17D1003BA644 /* CityBikes */ = {
+			isa = PBXGroup;
+			children = (
+				807C88AF23EB17CA003BA644 /* CityBikes.swift */,
+			);
+			path = CityBikes;
+			sourceTree = "<group>";
+		};
+		807C88B423EB1802003BA644 /* NextBike */ = {
+			isa = PBXGroup;
+			children = (
+				807C88B223EB17EC003BA644 /* NextBike.swift */,
+			);
+			path = NextBike;
+			sourceTree = "<group>";
+		};
+		8085CC50236E2CB500B45A7C = {
+			isa = PBXGroup;
+			children = (
+				8085CC5B236E2CB500B45A7C /* Bicis */,
+				8000476D23EF425300492DFB /* BicisUITests */,
+				8085CC5A236E2CB500B45A7C /* Products */,
+				A46C4047EA8A6CBF9DA58A66 /* Pods */,
+				5949BD66B4AC3B1C21CA4D42 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		8085CC5A236E2CB500B45A7C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8085CC59236E2CB500B45A7C /* Bicis.app */,
+				8000476C23EF425300492DFB /* BicisUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8085CC5B236E2CB500B45A7C /* Bicis */ = {
+			isa = PBXGroup;
+			children = (
+				800CE94523955BD400674D1C /* Bicis.entitlements */,
+				801ECE40236F3BC3003CFAF7 /* Extensions */,
+				80628466236EDA3600717472 /* Model */,
+				8062845F236E34B900717472 /* Coordinator */,
+				8010913F236E316000D3C45E /* Home */,
+				8010913A236E304100D3C45E /* Onboarding */,
+				80109133236E2D9B00D3C45E /* DataManager */,
+				8085CC5C236E2CB500B45A7C /* AppDelegate.swift */,
+				80109144236E320300D3C45E /* AppCoordinator.swift */,
+				8085CC6A236E2CB800B45A7C /* Info.plist */,
+				805B5A2423EE0A95000F3CC5 /* Resources */,
+				8085CC67236E2CB800B45A7C /* LaunchScreen.storyboard */,
+				800CE93E239554EF00674D1C /* Settings */,
+				800CE941239559F700674D1C /* Constants.swift */,
+				8002ED7D2397FCAB008ABB6B /* LocationServices */,
+				80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */,
+				80A8216923D9B7E4003DD67D /* Cities.swift */,
+				8000477A23F06C1100492DFB /* StoreKitHelper.swift */,
+			);
+			path = Bicis;
+			sourceTree = "<group>";
+		};
+		A46C4047EA8A6CBF9DA58A66 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B3A858CABDDF9CD4FA0A1738 /* Pods-Bicis.debug.xcconfig */,
+				79D733FBA41973B1311630B3 /* Pods-Bicis.release.xcconfig */,
+				644E8E3F87CF67AFCCA7E9B0 /* Pods-Bicis-BicisUITests.debug.xcconfig */,
+				E90227762C796EA6CA64D3D1 /* Pods-Bicis-BicisUITests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8000476B23EF425300492DFB /* BicisUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8000477323EF425300492DFB /* Build configuration list for PBXNativeTarget "BicisUITests" */;
+			buildPhases = (
+				DCCAA81D9D3F36242B0C82D6 /* [CP] Check Pods Manifest.lock */,
+				8000476823EF425300492DFB /* Sources */,
+				8000476923EF425300492DFB /* Frameworks */,
+				8000476A23EF425300492DFB /* Resources */,
+				4546E4020216D1F27A9367FE /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8000477223EF425300492DFB /* PBXTargetDependency */,
+			);
+			name = BicisUITests;
+			productName = BicisUITests;
+			productReference = 8000476C23EF425300492DFB /* BicisUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		8085CC58236E2CB500B45A7C /* Bicis */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8085CC83236E2CB800B45A7C /* Build configuration list for PBXNativeTarget "Bicis" */;
+			buildPhases = (
+				CEADEC9560DB1ADAA18663BF /* [CP] Check Pods Manifest.lock */,
+				8085CC55236E2CB500B45A7C /* Sources */,
+				8085CC56236E2CB500B45A7C /* Frameworks */,
+				8085CC57236E2CB500B45A7C /* Resources */,
+				06294201CE501E64004456DE /* [CP] Embed Pods Frameworks */,
+				807C88AD23EADCA2003BA644 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Bicis;
+			productName = Bicis;
+			productReference = 8085CC59236E2CB500B45A7C /* Bicis.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8085CC51236E2CB500B45A7C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1100;
+				ORGANIZATIONNAME = "Javier de Martín Gil";
+				TargetAttributes = {
+					8000476B23EF425300492DFB = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = 8085CC58236E2CB500B45A7C;
+					};
+					8085CC58236E2CB500B45A7C = {
+						CreatedOnToolsVersion = 11.0;
+					};
+				};
+			};
+			buildConfigurationList = 8085CC54236E2CB500B45A7C /* Build configuration list for PBXProject "Bicis" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				es,
+			);
+			mainGroup = 8085CC50236E2CB500B45A7C;
+			productRefGroup = 8085CC5A236E2CB500B45A7C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8085CC58236E2CB500B45A7C /* Bicis */,
+				8000476B23EF425300492DFB /* BicisUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8000476A23EF425300492DFB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8085CC57236E2CB500B45A7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8085CC69236E2CB800B45A7C /* LaunchScreen.storyboard in Resources */,
+				8085CC66236E2CB800B45A7C /* Assets.xcassets in Resources */,
+				807C88A323EAD638003BA644 /* Home.strings in Resources */,
+				807C88A923EAD692003BA644 /* Settings.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		06294201CE501E64004456DE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bicis/Pods-Bicis-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bicis/Pods-Bicis-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bicis/Pods-Bicis-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4546E4020216D1F27A9367FE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bicis-BicisUITests/Pods-Bicis-BicisUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Bicis-BicisUITests/Pods-Bicis-BicisUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bicis-BicisUITests/Pods-Bicis-BicisUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		807C88AD23EADCA2003BA644 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		CEADEC9560DB1ADAA18663BF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bicis-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DCCAA81D9D3F36242B0C82D6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Bicis-BicisUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8000476823EF425300492DFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8000476F23EF425300492DFB /* BicisUITests.swift in Sources */,
+				8000477723EF426000492DFB /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8085CC55236E2CB500B45A7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80109145236E320300D3C45E /* AppCoordinator.swift in Sources */,
+				80109137236E2DFA00D3C45E /* DataManager.swift in Sources */,
+				8002ED84239801F9008ABB6B /* SettingsErrors.swift in Sources */,
+				801ECE46236F3C10003CFAF7 /* String.swift in Sources */,
+				80109135236E2DEC00D3C45E /* LocalDataManager.swift in Sources */,
+				807C88B323EB17EC003BA644 /* NextBike.swift in Sources */,
+				807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */,
+				80109143236E317700D3C45E /* HomeViewModel.swift in Sources */,
+				8010913E236E309300D3C45E /* OnboardingViewController.swift in Sources */,
+				8002ED83239801F9008ABB6B /* SettingsViewModel.swift in Sources */,
+				800CE94423955A7F00674D1C /* LocalDataManagerError.swift in Sources */,
+				80109139236E2F9700D3C45E /* RemoteDataManager.swift in Sources */,
+				801ECE3D236F3B90003CFAF7 /* CustomAnnotationView.swift in Sources */,
+				801ECE3B236F3B7D003CFAF7 /* MapPin.swift in Sources */,
+				80109141236E316E00D3C45E /* HomeViewController.swift in Sources */,
+				80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */,
+				800DDD4C23ED510700FCE4E5 /* BiciMad.swift in Sources */,
+				80628468236EDA5000717472 /* Responses.swift in Sources */,
+				805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */,
+				8062846A236EE22F00717472 /* DefaultLocalDataManager.swift in Sources */,
+				801ECE42236F3BD1003CFAF7 /* UIColor.swift in Sources */,
+				80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */,
+				80628461236E34C500717472 /* Coordinator.swift in Sources */,
+				801ECE44236F3BEA003CFAF7 /* Appearance.swift in Sources */,
+				80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */,
+				803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */,
+				8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */,
+				8010913C236E308700D3C45E /* OnboardingViewModel.swift in Sources */,
+				8002ED82239801F9008ABB6B /* SettingsViewControler.swift in Sources */,
+				80628463236ED79300717472 /* Result.swift in Sources */,
+				8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */,
+				800CE942239559F700674D1C /* Constants.swift in Sources */,
+				8002ED7C2397FC5E008ABB6B /* LocationServices.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8000477223EF425300492DFB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8085CC58236E2CB500B45A7C /* Bicis */;
+			targetProxy = 8000477123EF425300492DFB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		807C88A523EAD638003BA644 /* Home.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				807C88A423EAD638003BA644 /* en */,
+				807C88A623EAD63C003BA644 /* es */,
+			);
+			name = Home.strings;
+			sourceTree = "<group>";
+		};
+		807C88AB23EAD692003BA644 /* Settings.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				807C88AA23EAD692003BA644 /* en */,
+				807C88AC23EAD694003BA644 /* es */,
+			);
+			name = Settings.strings;
+			path = Bicis/Home;
+			sourceTree = SOURCE_ROOT;
+		};
+		8085CC67236E2CB800B45A7C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8085CC68236E2CB800B45A7C /* Base */,
+				807C88A223EAD62B003BA644 /* es */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8000477423EF425300492DFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 644E8E3F87CF67AFCCA7E9B0 /* Pods-Bicis-BicisUITests.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z3PCB8TM76;
+				INFOPLIST_FILE = BicisUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.BicisUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Bicis;
+			};
+			name = Debug;
+		};
+		8000477523EF425300492DFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E90227762C796EA6CA64D3D1 /* Pods-Bicis-BicisUITests.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z3PCB8TM76;
+				INFOPLIST_FILE = BicisUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.BicisUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Bicis;
+			};
+			name = Release;
+		};
+		8085CC81236E2CB800B45A7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8085CC82236E2CB800B45A7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8085CC84236E2CB800B45A7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3A858CABDDF9CD4FA0A1738 /* Pods-Bicis.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 10;
+				DEVELOPMENT_TEAM = Z3PCB8TM76;
+				INFOPLIST_FILE = Bicis/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2020.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8085CC85236E2CB800B45A7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79D733FBA41973B1311630B3 /* Pods-Bicis.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 10;
+				DEVELOPMENT_TEAM = Z3PCB8TM76;
+				INFOPLIST_FILE = Bicis/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 2020.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8000477323EF425300492DFB /* Build configuration list for PBXNativeTarget "BicisUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8000477423EF425300492DFB /* Debug */,
+				8000477523EF425300492DFB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8085CC54236E2CB500B45A7C /* Build configuration list for PBXProject "Bicis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8085CC81236E2CB800B45A7C /* Debug */,
+				8085CC82236E2CB800B45A7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8085CC83236E2CB800B45A7C /* Build configuration list for PBXNativeTarget "Bicis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8085CC84236E2CB800B45A7C /* Debug */,
+				8085CC85236E2CB800B45A7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8085CC51236E2CB500B45A7C /* Project object */;
+}

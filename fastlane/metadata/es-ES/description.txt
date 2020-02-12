@@ -1,0 +1,6 @@
+¿Has llegado alguna vez a una estación de bicicletas y estaba vacía? Abre Bicis y obtén información detallada sobre la predicción de disponibilidad durante el día junto con el historial. Compara ambas para ver el comportamiento y decide tu medio de transporte.
+
+Cada día se crean nuevas predicciones. Cada una es personalizada para cada estación por una red neuronal utilizando datos de días anteriores.
+
+Disponible para Madrid, Bilbao, Nueva York y más por llegar.
+
