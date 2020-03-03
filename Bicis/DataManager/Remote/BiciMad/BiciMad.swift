@@ -33,6 +33,47 @@ struct BiciMadStation: BikeStation {
 
     var geometry: BiciMadStationGeometry
 
+    var availabilityArray: [Int]?
+    var predictionArray: [Int]?
+
+    var rmse: Double? {
+            guard let availability = availabilityArray else { return nil }
+            guard let prediction = predictionArray else { return nil }
+
+            var rmseResult = 0.0
+
+            for element in 0..<availability.count {
+                rmseResult += pow(Double(prediction[element] - availability[element]), 2.0)
+            }
+
+            rmseResult = sqrt(1/Double(availability.count) * rmseResult)
+
+            return rmseResult
+    }
+
+    var rmsePercentage: Double? {
+        //        get {
+
+        guard let availability = availabilityArray else { return nil }
+        guard let prediction = predictionArray else { return nil }
+
+        guard let maxPrediction = prediction.max() else { return nil }
+        guard let maxAvailability = availability.max() else { return nil }
+        
+        let maxValue = Double(max(maxPrediction, maxAvailability))
+
+        var rmseResult = 0.0
+
+        for element in 0..<availability.count {
+            rmseResult += pow(Double(prediction[element] - availability[element]), 2.0)
+        }
+
+        rmseResult = (sqrt(1/Double(availability.count) * rmseResult) / maxValue) * 100
+
+        return rmseResult
+        //        }
+    }
+
     enum CodingKeys: String, CodingKey {
         case id
         case stationName = "name"

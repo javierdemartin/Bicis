@@ -18,7 +18,7 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
 
     func setStationTitleFor(name: String) {
 
-        self.stationTitle.removeFromSuperview()
+        stationTitle.removeFromSuperview()
 
         stationTitle = UILabel(frame: CGRect(x: 5, y: 5, width: self.frame.width, height: 40.0))
         stationTitle.text = name
@@ -28,18 +28,11 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
 
         stationTitle.frame.size.width = name.width(withConstrainedHeight: 19.0, font: myFont)
         stationTitle.font = myFont
-
-//        stationTitle.layer.shadowColor = UIColor.black.cgColor
-//        stationTitle.layer.shadowRadius = 4.0
-//        stationTitle.layer.shadowOpacity = 0.45
-//        stationTitle.layer.shadowOffset = .zero 
         stationTitle.layer.masksToBounds = false
 
         stationTitle.sizeToFit()
 
-        self.addSubview(self.stationTitle)
-
-        self.bringSubviewToFront(self.stationTitle)
+        addSubview(stationTitle)
     }
 }
 

@@ -19,7 +19,6 @@ class DefaultLocalDataManager: LocalDataManager {
             defaults.set(encodedData, forKey: "city")
 
             completion(.success(()))
-
         } catch {
             completion(.error(LocalDataManagerError.errorSavingToDefaults))
         }

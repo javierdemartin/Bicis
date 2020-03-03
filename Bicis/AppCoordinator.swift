@@ -40,7 +40,6 @@ class AppCoordinator: Coordinator {
     override func start() {
 
         if isUITesting() {
-            guard let selectedCity = availableCities["Bilbao"] else { return }
             currentCity = availableCities["Bilbao"]
             showHomeViewController()
         } else {
@@ -133,7 +132,6 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
 
         // Dismiss the graphview
         homeViewModel.delegate?.dismissGraphView()
-
 
         homeViewModel.dataManager.getStations(city: city.formalName, completion: { resultStations in
 

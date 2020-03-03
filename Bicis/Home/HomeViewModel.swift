@@ -59,21 +59,6 @@ extension HomeViewModel: LocationServicesDelegate {
         // TODO: Error
         print(error)
     }
-
-//    stations.bind { stations in
-//
-//        let currentLocation = location
-//
-//        let nearestPin: BikeStation? = stations.reduce((CLLocationDistanceMax, nil)) { (nearest, pin) in
-//            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.latitude), longitude:  CLLocationDegrees(pin.longitude))
-//            let loc = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
-//            let distance = currentLocation.distance(from: loc)
-//            return distance < nearest.0 ? (distance, pin) : nearest
-//        }.1
-//
-//        print(nearestPin)
-//
-//    }
 }
 
 class HomeViewModel {
@@ -90,15 +75,35 @@ class HomeViewModel {
 
     let stationsDict = Binding<[String: BikeStation]>(value: [:])
 
+    func calculateRmseFrom(prediction: [Int], actual: [Int]) {
+
+        guard let maxPrediction = prediction.max() else { return }
+        guard let maxAvailability = actual.max() else { return }
+
+        var maxValue = max(maxPrediction, maxAvailability)
+
+        var rmseResult = 0.0
+
+        for element in 0..<actual.count {
+            rmseResult += pow(Double(prediction[element] - actual[element]), 2.0)
+        }
+
+        rmseResult = sqrt(1/Double(actual.count) * rmseResult)
+
+        print("RMSE \(rmseResult)%")
+    }
+
     func getCurrentCity(completion: @escaping(Result<City>) -> Void) {
 
         dataManager.getCurrentCity(completion: { cityResult in
             switch cityResult {
 
             case .success(let city):
-                let centerCoordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(city.latitude), longitude: CLLocationDegrees(city.longitude))
+//                let centerCoordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(city.latitude), longitude: CLLocationDegrees(city.longitude))
+//
+//                self.delegate?.centerMap(on: centerCoordinates)
 
-                self.delegate?.centerMap(on: centerCoordinates)
+                completion(.success(city))
 
             case .error(let err):
                 print("ERROR \(err)")
@@ -109,6 +114,25 @@ class HomeViewModel {
     func removeAnnotationsFromMap() {
 
         delegate?.removePinsFromMap()
+    }
+
+    func getMapPinsFrom(city: City) {
+
+        dataManager.getStations(city: city.formalName, completion: { resultStations in
+
+            switch resultStations {
+
+            case .success(let res):
+
+                res.forEach({ individualStation in
+                    self.stationsDict.value[individualStation.stationName] = individualStation
+                })
+
+                self.stations.value = res
+            case .error:
+                break
+            }
+        })
     }
 
     init(city: City?, compositeDisposable: CompositeDisposable, dataManager: HomeViewModelDataManager) {
@@ -123,25 +147,11 @@ class HomeViewModel {
 
         if let currentCity = self.city {
 
-            dataManager.getStations(city: currentCity.formalName, completion: {resultStations in
-
-                switch resultStations {
-
-                case .success(let res):
-
-                    res.forEach({ individualStation in
-                        self.stationsDict.value[individualStation.stationName] = individualStation
-                    })
-
-                    self.stations.value = res
-                case .error:
-                    break
-                }
-            })
+            getMapPinsFrom(city: currentCity)
         }
     }
 
-    func getApiData(city: String, type: String, station: String, prediction: Bool) {
+    func getApiData(city: String, type: String, station: String, prediction: Bool, completion: @escaping(Result<[Int]>) -> Void) {
 
         dataManager.getPredictionForStation(city: city, type: type, name: station, completion: { [weak self] res in
 
@@ -156,6 +166,8 @@ class HomeViewModel {
                 sortedKeysAndValues.forEach({ datosa.append($0.value )})
 
                 self.delegate?.drawPrediction(data: datosa, prediction: prediction)
+
+                completion(.success(datosa))
 
             }
         })

@@ -1,3 +1,3 @@
-Actualización más que esperada. Para empezar, he trabajado en el lado del servidor. Las predicciones han mejorado considerablemente y hay nuevas ciudades disponibles. Si quieres que Bicis llegue a tu ciudad utiliza el botón de comentarios de la página de ajustes. La app sigue siendo la misma. He reescrito muchas partes para que sea más rápida y me permita actualizarla con más frecuencia.
-
-Notas de la actualización completas en: https://javierdemart.in/blog/Bicis_v2020_2
+· Solucionado error que provocaba que se seleccionara automáticamente la ciudad de Madrid al abrir la app y guardado otra ubicación.
+· Actualización frecuente del feed de datos para mostrar siempre los datos más actualizados
+· Cada vez que se abra la aplicación se seleccionará de forma automática la estación más cercana

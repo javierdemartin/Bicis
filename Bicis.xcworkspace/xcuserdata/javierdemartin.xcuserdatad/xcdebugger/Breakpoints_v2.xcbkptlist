@@ -7,156 +7,127 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3618B216-BB62-4827-BD45-4207B27E931B"
+            uuid = "965A620E-2627-4327-AE20-332185C3DD14"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BicisUITests/BicisUITests.swift"
+            filePath = "Bicis/DataManager/Remote/DefaultRemoteDataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "testExample()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
-         <BreakpointContent
-            uuid = "36E40458-B60E-4D81-8736-40CF65CCFD37"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            symbolName = "NSException"
-            moduleName = "">
-            <Locations>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "57142390-0D3C-4927-A615-462A984E8A70"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Bicis/AppCoordinator.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "start()"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "getStations(city:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A62D8B44-77CC-4B74-A48D-B71E2A421E8E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Bicis/AppCoordinator.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "start()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "682D6E54-DEFE-4FA5-A45C-9AEB101D8F3A"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Bicis/AppCoordinator.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "start()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "682D6E54-DEFE-4FA5-A45C-9AEB101D8F3A - 39373b13381a443e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Bicis.Result&lt;Bicis.City&gt;) -&gt; () in Bicis.AppCoordinator.start() -&gt; ()"
-                  moduleName = "Bicis"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/javierdemartin/Documents/Proyectos/FINAL%20BICIS/Bicis/Bicis/AppCoordinator.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "51"
-                  endingLineNumber = "51"
-                  offsetFromSymbolStart = "149">
-               </Location>
-               <Location
-                  uuid = "682D6E54-DEFE-4FA5-A45C-9AEB101D8F3A - 39373b13381a443e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Bicis.Result&lt;Bicis.City&gt;) -&gt; () in Bicis.AppCoordinator.start() -&gt; ()"
-                  moduleName = "Bicis"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/javierdemartin/Documents/Proyectos/FINAL%20BICIS/Bicis/Bicis/AppCoordinator.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "51"
-                  endingLineNumber = "51"
-                  offsetFromSymbolStart = "181">
-               </Location>
-               <Location
-                  uuid = "682D6E54-DEFE-4FA5-A45C-9AEB101D8F3A - 39373b13381a443e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Bicis.Result&lt;Bicis.City&gt;) -&gt; () in Bicis.AppCoordinator.start() -&gt; ()"
-                  moduleName = "Bicis"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/javierdemartin/Documents/Proyectos/FINAL%20BICIS/Bicis/Bicis/AppCoordinator.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "51"
-                  endingLineNumber = "51"
-                  offsetFromSymbolStart = "678">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "789D2CF7-CD49-4206-801E-82E6D22D51BA"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Bicis/AppCoordinator.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "start()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8E659C63-F8F4-43E5-A99B-7A4CA8DA19A8"
+            uuid = "B25B6F32-B0EC-493A-BF4F-8E2BF9217899"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Bicis/Home/HomeViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "init(city:compositeDisposable:dataManager:)"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "getCurrentCity(completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B25B6F32-B0EC-493A-BF4F-8E2BF9217899 - 76fd422f3a55a8a4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Bicis.Result&lt;Bicis.City&gt;) -&gt; () in Bicis.HomeViewModel.getCurrentCity(completion: (Bicis.Result&lt;Bicis.City&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Bicis"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/javierdemartin/Documents/Proyectos/FINAL%20BICIS/Bicis/Bicis/Home/HomeViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "168">
+               </Location>
+               <Location
+                  uuid = "B25B6F32-B0EC-493A-BF4F-8E2BF9217899 - 76fd422f3a55a8a4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Bicis.Result&lt;Bicis.City&gt;) -&gt; () in Bicis.HomeViewModel.getCurrentCity(completion: (Bicis.Result&lt;Bicis.City&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Bicis"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/javierdemartin/Documents/Proyectos/FINAL%20BICIS/Bicis/Bicis/Home/HomeViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "196">
+               </Location>
+               <Location
+                  uuid = "B25B6F32-B0EC-493A-BF4F-8E2BF9217899 - 76fd422f3a55a8a4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Bicis.Result&lt;Bicis.City&gt;) -&gt; () in Bicis.HomeViewModel.getCurrentCity(completion: (Bicis.Result&lt;Bicis.City&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Bicis"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/javierdemartin/Documents/Proyectos/FINAL%20BICIS/Bicis/Bicis/Home/HomeViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "101"
+                  endingLineNumber = "101"
+                  offsetFromSymbolStart = "624">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "945605D2-48C3-4DF2-8267-641B8D89B48A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Bicis/Home/HomeViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "getCurrentCity(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "08DCD14C-7066-40E9-AB72-738D73226123"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Bicis/Home/HomeViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "getCurrentCity(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8429B76A-4017-4606-89D3-F37EDCE4D3E4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Bicis/Home/HomeViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "getCurrentCity(completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -51,6 +51,15 @@ class SettingsViewController: UIViewController {
 
     let viewModel: SettingsViewModel
 
+    let pullTabToDismissView: UIView = {
+
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGray
+        view.layer.cornerRadius = 2.5
+        return view
+    }()
+
     let scrollView: UIScrollView = {
 
         let scrollView = UIScrollView(frame: .zero)
@@ -66,7 +75,7 @@ class SettingsViewController: UIViewController {
 
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [self.locationServicesStackView, stringVersion, logInPrivacyTextView, self.cityPicker, locationServicesExplanationTextView, requestFeedBackButton])
+        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, self.locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, self.cityPicker, locationServicesExplanationTextView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -156,6 +165,43 @@ class SettingsViewController: UIViewController {
         button.setTitleColor(.black, for: .normal)
         button.setTitle("REQUEST_LOCATION_SERVICES_BUTTON".localize(file: "Settings"), for:
             .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    lazy var donationsHorizontalStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [tipButtonTier1, tipButtonTier2])
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.backgroundColor = .white
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.spacing = 10.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        return stackView
+    }()
+
+    lazy var tipButtonTier1: UIButton = {
+
+        let button = UIButton()
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor.systemBlue
+        button.layer.cornerRadius = 9.0
+
+        button.setTitle("TIER_1_DONATION".localize(file: "Settings"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    lazy var tipButtonTier2: UIButton = {
+
+        let button = UIButton()
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor.systemBlue
+        button.layer.cornerRadius = 9.0
+
+        button.setTitle("TIER_2_DONATION".localize(file: "Settings"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -251,6 +297,12 @@ class SettingsViewController: UIViewController {
             verticalStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20.0)
         ])
 
+        NSLayoutConstraint.activate([
+            pullTabToDismissView.heightAnchor.constraint(equalToConstant: 5),
+            pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
+            pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        ])
+
 //        NSLayoutConstraint.activate([
 //            verticalStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0),
 //            verticalStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16.0),
@@ -335,24 +387,24 @@ extension SettingsViewController: LocationServicesDelegate {
 
         locationServicesStatusImage.image = UIImage(systemName: "location.fill")
 
-        let nearestPin: City? = availableCities.reduce((CLLocationDistanceMax, nil)) { (nearest, pin) in
-            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.value.latitude), longitude: CLLocationDegrees(pin.value.latitude))
-            let loc = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
-            let distance = currentLocation.distance(from: loc)
-
-            return distance < nearest.0 ? (distance, pin.value) : nearest
-        }.1
-
-        guard let nearest = nearestPin else { return }
-
-        guard let firstIndex = citiesList.firstIndex(of: nearest.formalName) else { return }
-
-        self.cityPicker.selectRow(firstIndex, inComponent: 0, animated: true)
-        self.pickerView(self.cityPicker, didSelectRow: firstIndex, inComponent: 0)
-
-        viewModel.changedCityInPickerView(city: citiesList[firstIndex])
-
-        cityPicker.reloadAllComponents()
+//        let nearestPin: City? = availableCities.reduce((CLLocationDistanceMax, nil)) { (nearest, pin) in
+//            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.value.latitude), longitude: CLLocationDegrees(pin.value.latitude))
+//            let loc = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+//            let distance = currentLocation.distance(from: loc)
+//
+//            return distance < nearest.0 ? (distance, pin.value) : nearest
+//        }.1
+//
+//        guard let nearest = nearestPin else { return }
+//
+//        guard let firstIndex = citiesList.firstIndex(of: nearest.formalName) else { return }
+//
+//        self.cityPicker.selectRow(firstIndex, inComponent: 0, animated: true)
+//        self.pickerView(self.cityPicker, didSelectRow: firstIndex, inComponent: 0)
+//
+//        viewModel.changedCityInPickerView(city: citiesList[firstIndex])
+//
+//        cityPicker.reloadAllComponents()
     }
 
     func tracingLocationDidFailWithError(_ error: NSError) {

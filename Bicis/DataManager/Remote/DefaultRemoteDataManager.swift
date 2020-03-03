@@ -87,8 +87,8 @@ class DefaultRemoteDataManager: RemoteDataManager {
 
                                     switch selectedCity.formalName {
                                     case "New York":
-                                        let result = try JSONDecoder().decode(CityBikesRoot.self, from: data)
-                                        completion(.success(result.network.stations))
+                                        let result = try JSONDecoder().decode(CitiBikesRoot.self, from: data)
+                                        completion(.success(result.stationBeanList))
                                     case "Bilbao":
                                         let result = try JSONDecoder().decode(NextBikeRoot.self, from: data)
                                         completion(.success(result.countries[0].cities[0].places))
@@ -133,8 +133,8 @@ class DefaultRemoteDataManager: RemoteDataManager {
 
                             switch selectedCity.formalName {
                             case "New York":
-                                let result = try JSONDecoder().decode(CityBikesRoot.self, from: data)
-                                completion(.success(result.network.stations))
+                                let result = try JSONDecoder().decode(CitiBikesRoot.self, from: data)
+                                completion(.success(result.stationBeanList))
                             case "Bilbao":
                                 let result = try JSONDecoder().decode(NextBikeRoot.self, from: data)
                                 completion(.success(result.countries[0].cities[0].places))

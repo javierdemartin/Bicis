@@ -80,14 +80,18 @@ class SettingsViewModel {
 
             case .success(let cityFromDefaults):
                 self.delegate?.selectCityInPickerView(city: cityFromDefaults.formalName)
-            case .error(_):
+
+            case .error(let errorCity):
+
+                self.dataManager.saveCurrentCity(apiCityName: availableCities.first!.value, completion: { _ in })
+                self.delegate?.selectCityInPickerView(city: availableCities.first!.value.formalName)
+                print(errorCity)
                 break
             }
         })
     }
 
     func dismissingSettingsViewController() {
-
 
         dataManager.getCurrentCityFromDefaults(completion: { cityResult in
             switch cityResult {

@@ -10,7 +10,6 @@ import UIKit
 import ReactiveCocoa
 import ReactiveSwift
 import MapKit
-import GoogleMobileAds
 
 protocol HomeViewControllerGraphViewDelegate: class {
     func setStationTitleFor(name: String)
@@ -18,7 +17,10 @@ protocol HomeViewControllerGraphViewDelegate: class {
 
 class HomeViewController: UIViewController {
 
+    let generator = UIImpactFeedbackGenerator(style: .light)
+
     var annotations: [MKAnnotation]?
+    var latestSelectedAnnotation: MKAnnotation?
     weak var graphViewDelegate: HomeViewControllerGraphViewDelegate?
 
     let compositeDisposable: CompositeDisposable
@@ -57,13 +59,6 @@ class HomeViewController: UIViewController {
         return label
     }()
 
-    var adBannerView: DFPBannerView = {
-        let bannerView = DFPBannerView(adSize: kGADAdSizeBanner)
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-
-        return bannerView
-    }()
-
     init(viewModel: HomeViewModel, compositeDisposable: CompositeDisposable) {
 
         self.viewModel = viewModel
@@ -81,12 +76,6 @@ class HomeViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-
-        print(self.view.bounds.size)
-
-        if !graphView.isHidden {
-            graphView.hideView()
-        }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -103,31 +92,6 @@ class HomeViewController: UIViewController {
         view.addSubview(graphView)
         view.bringSubviewToFront(graphView)
 
-        if !isUITesting() {
-            view.addSubview(adBannerView)
-            view.bringSubviewToFront(adBannerView)
-
-            view.addConstraints(
-            [NSLayoutConstraint(item: adBannerView,
-                                attribute: .bottom,
-                                relatedBy: .equal,
-                                toItem: bottomLayoutGuide,
-                                attribute: .top,
-                                multiplier: 1,
-                                constant: 0),
-             NSLayoutConstraint(item: adBannerView,
-                                attribute: .centerX,
-                                relatedBy: .equal,
-                                toItem: view,
-                                attribute: .centerX,
-                                multiplier: 1,
-                                constant: 0)
-            ])
-        }
-
-
-
-
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         graphView.addGestureRecognizer(tap)
 
@@ -138,8 +102,6 @@ class HomeViewController: UIViewController {
         if UIDevice.current.userInterfaceIdiom == .pad {
 
             NSLayoutConstraint.activate([
-//                graphView.widthAnchor.constraint(equalToConstant: 450),
-//                graphView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor)
                 graphView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 32),
                 graphView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -32)
 
@@ -163,22 +125,6 @@ class HomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        viewModel.getCurrentCity(completion: { currentCityResult in
-            switch currentCityResult {
-
-            case .success(let currentCity):
-                self.currentCity = currentCity
-
-                let centerCoordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(currentCity.latitude), longitude: CLLocationDegrees(currentCity.longitude))
-
-                self.centerMap(on: centerCoordinates)
-
-            case .error(let err):
-                // TODO: Mostrar error
-                print(err.localizedDescription)
-            }
-        })
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -188,7 +134,7 @@ class HomeViewController: UIViewController {
         graphView.isHidden = true
     }
 
-    func selectClosestAnnotationGraph(stations: [BikeStation], currentLocation: CLLocation, completion: @escaping(Result<Void>) -> Void) {
+    func selectClosestAnnotationGraph(stations: [BikeStation], currentLocation: CLLocation) {
 
         let nearestPin: BikeStation? = stations.reduce((CLLocationDistanceMax, nil)) { (nearest, pin) in
             let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.latitude), longitude: CLLocationDegrees(pin.longitude))
@@ -204,36 +150,57 @@ class HomeViewController: UIViewController {
         self.centerMap(on: CLLocationCoordinate2D(latitude: CLLocationDegrees(nearestStation.latitude),
                                                   longitude: CLLocationDegrees(nearestStation.longitude)))
 
-        self.graphView.showView()
-        self.graphViewDelegate?.setStationTitleFor(name: nearestStation.stationName)
+        if self.mapView.annotations.contains(where: {$0.title == nearestStation.stationName}) {
 
-        guard let currentCity = self.viewModel.city else { return }
+            if let foo = self.mapView.annotations.first(where: {$0.title == nearestStation.stationName}) {
+                self.mapView.selectAnnotation(foo, animated: true)
+            }
+        }
+    }
 
-        self.viewModel.getApiData(city: currentCity.apiName,
-                                  type: "prediction",
-                                  station: nearestStation.stationName,
-                                  prediction: true)
-        self.viewModel.getApiData(city: currentCity.apiName,
-                                  type: "today",
-                                  station: nearestStation.stationName,
-                                  prediction: false)
+    @objc func appMovedToForeground() {
+        print("App moved to ForeGround!")
+
+        if let currentUserLcoation = LocationServices.sharedInstance.currentLocation {
+            centerMap(on: CLLocationCoordinate2D(latitude: currentUserLcoation.coordinate.latitude, longitude: currentUserLcoation.coordinate.longitude))
+        }
+
+        viewModel.getCurrentCity(completion: { currentCityResult in
+            switch currentCityResult {
+
+            case .success(let currentCity):
+                self.currentCity = currentCity
+
+                guard let unwrappedCity = self.currentCity else { return }
+
+                self.viewModel.getMapPinsFrom(city: unwrappedCity)
+
+            case .error(let err):
+                // TODO: Mostrar error
+                print(err.localizedDescription)
+            }
+        })
+    }
+
+    @objc func appMovedToBackground() {
+        print("App moved to Background!")
+
+        guard let didSelectAnnotation = latestSelectedAnnotation else { return }
+
+        mapView.deselectAnnotation(didSelectAnnotation, animated: false)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+
         mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
 
         mapView.delegate = self
         graphViewDelegate = graphView
-        
-        if !isUITesting() {
-            
-            adBannerView.rootViewController = self
-//            adBannerView.adUnitID = "/6499/example/banner"
-            adBannerView.adUnitID = "ca-app-pub-6446389863983986/8701019584" 
-            adBannerView.load(DFPRequest())
-        }
 
         setupBindings()
     }
@@ -289,47 +256,14 @@ class HomeViewController: UIViewController {
                 currentLocationFromDevice = LocationServices.sharedInstance.currentLocation
             }
 
-            guard let currentLocation = currentLocationFromDevice else { return }
+            guard let unwrappedLocation = currentLocationFromDevice else { return }
 
-            let nearestPin: BikeStation? = stations.reduce((CLLocationDistanceMax, nil)) { (nearest, pin) in
-                let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.latitude), longitude: CLLocationDegrees(pin.longitude))
-                let loc = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
-                let distance = currentLocation.distance(from: loc)
-                return distance < nearest.0 ? (distance, pin) : nearest
-            }.1
-
-            guard let nearest = nearestPin else { return }
-
-            guard let nearestStation = self.viewModel.stationsDict.value[nearest.stationName] else { return }
-
-            self.centerMap(on: CLLocationCoordinate2D(latitude: CLLocationDegrees(nearestStation.latitude),
-                                                      longitude: CLLocationDegrees(nearestStation.longitude)))
-
-            self.graphView.showView()
-            self.graphViewDelegate?.setStationTitleFor(name: nearestStation.stationName)
-
-            guard let currentCity = self.viewModel.city else { return }
-
-            self.viewModel.getApiData(city: currentCity.apiName,
-                                      type: "prediction",
-                                      station: nearestStation.stationName,
-                                      prediction: true)
-            self.viewModel.getApiData(city: currentCity.apiName,
-                                      type: "today",
-                                      station: nearestStation.stationName,
-                                      prediction: false)
+            self.selectClosestAnnotationGraph(stations: stations, currentLocation: unwrappedLocation)
         }
     }
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-
         dismissGraphView()
-
-        if UIApplication.shared.statusBarOrientation.isLandscape {
-            // activate landscape changes
-        } else {
-            // activate portrait changes
-        }
     }
 
     func centerMap(on point: CLLocationCoordinate2D) {
@@ -340,13 +274,12 @@ class HomeViewController: UIViewController {
 
         self.mapView.setRegion(region, animated: true)
     }
-
-
 }
 
 // MARK: HomeViewModelDelegate
 
 extension HomeViewController: HomeViewModelDelegate {
+
     func removePinsFromMap() {
 
         self.annotations?.removeAll()
@@ -447,50 +380,25 @@ extension HomeViewController: MKMapViewDelegate {
             markerAnnotationView.canShowCallout = false
 
             return markerAnnotationView
-//            annotationView.number = UInt32(stationsDictFromViewModel.freeBikes)
         }
 
         return annotationView
-
-
-//
-//        if annotation is MapPin {
-//
-//            let bikeStationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: "pinAnnotation")
-//
-//            guard let annotationTitle = annotation.title else { return nil }
-//
-//            guard let unwrappedAnnotationTitle = annotationTitle else { return nil }
-//
-//            guard let stationsDictFromViewModel = self.viewModel.stationsDict.value[unwrappedAnnotationTitle] else { return nil }
-//
-//            bikeStationView.number = UInt32(stationsDictFromViewModel.freeBikes)
-//            bikeStationView.canShowCallout = false
-
-//
-//            return bikeStationView
-//
-//        }
     }
-
-//    private func registerAnnotationViewClasses() {
-//        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-//    }
 
     func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
         return MKClusterAnnotation(memberAnnotations: memberAnnotations)
     }
 
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        generator.impactOccurred()
         graphView.hideView()
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 
-        let generator = UIImpactFeedbackGenerator(style: .light)
-        generator.impactOccurred()
-
         guard let annotationFromPin = view.annotation as? MapPin else { return }
+
+        latestSelectedAnnotation = annotationFromPin
 
         var apiQueryStationValue: String?
 
@@ -500,30 +408,44 @@ extension HomeViewController: MKMapViewDelegate {
             apiQueryStationValue = annotationFromPin.stationInformation.stationName
         }
 
-        // Set the station's title in the PredictionGraphView
+        graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationInformation.stationName)
 
-//        graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationInformation.stationName)
-//        graphViewDelegate?.setStationTitleFor(name: view.annotation?.title)
+        centerMap(on: annotationFromPin.coordinate)
 
-        if view.tag != 0 {
+        viewModel.getApiData(city: viewModel.city!.apiName, type: "prediction", station: apiQueryStationValue!, prediction: true, completion: { result in
 
-            guard let stationTitle = annotationFromPin.title
-                else { return }
+            self.generator.impactOccurred()
+            self.graphView.showView()
 
-            view.canShowCallout = false
+            switch result {
 
-            graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationInformation.stationName)
+            case .success(let predictionArray):
 
-//            guard let auxxx = view as? CustomAnnotationView else { return }
-//
-//            auxxx.setTitle(forStation: stationTitle)
+                guard self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName] != nil else { return }
 
-            self.centerMap(on: annotationFromPin.coordinate)
+                self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.predictionArray = predictionArray
 
-            graphView.showView()
+                self.viewModel.getApiData(city: self.viewModel.city!.apiName, type: "today", station: apiQueryStationValue!, prediction: false, completion: { todayResult in
 
-            viewModel.getApiData(city: viewModel.city!.apiName, type: "prediction", station: apiQueryStationValue!, prediction: true)
-            viewModel.getApiData(city: viewModel.city!.apiName, type: "today", station: apiQueryStationValue!, prediction: false)
-        }
+                    switch todayResult {
+
+                    case .success(let todayArray):
+
+                        self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.availabilityArray = todayArray
+
+                        print("RMSE MIO : \(self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.rmse)")
+
+                        self.viewModel.calculateRmseFrom(prediction: predictionArray, actual: todayArray)
+                    case .error:
+                        break
+                    }
+                })
+
+            case .error:
+                break
+
+            }
+
+        })
     }
 }
