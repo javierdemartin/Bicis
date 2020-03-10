@@ -12,6 +12,9 @@ enum RemoteDataManagerError: Error {
     case incorrectLogInCredentials
     case couldntGetApiKey
     case noDataFromServer
+    case couldntParseFeed
+    case couldntGetApiKeyFromBiciMad
+    case didNotGetAnyStation
 }
 
 protocol RemoteDataManager {

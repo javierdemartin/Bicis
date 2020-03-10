@@ -28,16 +28,4 @@ extension String {
     func localize(file: String) -> String {
         return NSLocalizedString(self, tableName: file, bundle: Bundle.main, value: "", comment: "")
     }
-
-    func stringClassFromString() -> AnyClass? {
-
-        /// get namespace
-        guard let namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as? String else { return nil }
-
-        /// get 'anyClass' with classname and namespace
-        let cls: AnyClass = NSClassFromString("\(namespace).\(self)")!;
-
-        // return AnyClass!
-        return cls;
-    }
 }

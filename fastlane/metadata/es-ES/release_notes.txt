@@ -1,3 +1,1 @@
-· Solucionado error que provocaba que se seleccionara automáticamente la ciudad de Madrid al abrir la app y guardado otra ubicación.
-· Actualización frecuente del feed de datos para mostrar siempre los datos más actualizados
-· Cada vez que se abra la aplicación se seleccionará de forma automática la estación más cercana
+Eliminados anuncios y trackers innecesarios. La aplicación no dispone de ninguna librería de terceros que envíe datos sobre los usuarios.

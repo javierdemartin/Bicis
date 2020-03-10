@@ -55,6 +55,15 @@ extension DataManager: HomeViewModelDataManager {
     }
 }
 
+extension DataManager: RoutePlannerViewModelDataManager {
+
+//    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(MyAPIResponse?) -> Void) {
+//        remoteDataManager.getPredictionForStation(city: city, type: type, name: name, completion: { res in
+//            completion(res)
+//        })
+//    }
+}
+
 extension DataManager: SettingsViewModelDataManager {
 
     func getCurrentCityFromDefaults(completion: @escaping (Result<City>) -> Void) {
@@ -70,7 +79,6 @@ extension DataManager: SettingsViewModelDataManager {
         })
     }
 
-
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void) {
 
         localDataManager.saveCurrentCity(apiCityName: apiCityName, completion: { saveCurrentCityResult in
@@ -78,7 +86,6 @@ extension DataManager: SettingsViewModelDataManager {
             case .success:
                 completion(.success(()))
             case .error(let err):
-                // TODO: Implementar gestión de error
                 completion(.error(err))
             }
         })

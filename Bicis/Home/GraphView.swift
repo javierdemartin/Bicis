@@ -214,29 +214,29 @@ class PredictionGraphView: UIView {
         drawingLayer.removeFromSuperlayer()
         stationTitle.text = ""
 
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
-
-            self.transform = CGAffineTransform(translationX: 0, y: -1 * (0 + 110.0))
-            self.layoutIfNeeded()
-        }, completion: { _ in
-
-            self.isShown = false
-        })
+//        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+//
+//            self.transform = CGAffineTransform(translationX: 0, y: -1 * (0 + 110.0))
+//            self.layoutIfNeeded()
+//        }, completion: { _ in
+//
+//            self.isShown = false
+//        })
 
     }
 
     func showView() {
 
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
-
-            self.transform = CGAffineTransform(translationX: 0, y: 0 + 55.0)
-
-            self.isHidden = false
-            self.layoutIfNeeded()
-        }, completion: {_ in
-            self.isShown = true
-
-        })
+//        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
+//
+//            self.transform = CGAffineTransform(translationX: 0, y: 0 + 55.0)
+//
+//            self.isHidden = false
+//            self.layoutIfNeeded()
+//        }, completion: {_ in
+//            self.isShown = true
+//
+//        })
 
     }
 }

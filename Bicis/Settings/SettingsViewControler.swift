@@ -43,9 +43,64 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 }
 
+extension SettingsViewController: SKProductsRequestDelegate, SKPaymentTransactionObserver {
+
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+
+        let count: Int = response.products.count
+        if count > 0 {
+            let validProduct: SKProduct = response.products[0] as SKProduct
+
+            guard let selectedPayment = selectedPayment else { return }
+
+            if validProduct.productIdentifier == selectedPayment {
+                print(validProduct.localizedTitle)
+                print(validProduct.localizedDescription)
+                print(validProduct.price)
+                buyProduct(product: validProduct)
+            } else {
+                print(validProduct.productIdentifier)
+            }
+        } else {
+            print("nothing")
+        }
+    }
+
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+
+        print("Received Payment Transaction Response from Apple")
+
+        for transaction: AnyObject in transactions {
+
+            if let trans: SKPaymentTransaction = transaction as? SKPaymentTransaction {
+
+                guard let transaction = transaction as? SKPaymentTransaction else { return }
+
+                switch trans.transactionState {
+                case .purchased:
+                    print("Product Purchased")
+
+                    SKPaymentQueue.default().finishTransaction(transaction)
+                case .failed:
+                    print("Purchased Failed")
+                    SKPaymentQueue.default().finishTransaction(transaction)
+
+                case .restored:
+                    print("Already Purchased")
+                    SKPaymentQueue.default().restoreCompletedTransactions()
+                default:
+                    break
+                }
+            }
+        }
+    }
+}
+
 class SettingsViewController: UIViewController {
 
     var citiesList = Array(availableCities.keys)
+
+    var selectedPayment: String?
 
     let compositeDisposable: CompositeDisposable
 
@@ -75,7 +130,7 @@ class SettingsViewController: UIViewController {
 
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, self.locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, self.cityPicker, locationServicesExplanationTextView])
+        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView, donationsHorizontalStackView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -131,9 +186,7 @@ class SettingsViewController: UIViewController {
 
         return textView
     }()
-
-
-
+    
     lazy var locationServicesStackView: UIStackView = {
 
         let stackView = UIStackView(arrangedSubviews: [self.imageIcon, locationServicesStatusImage])
@@ -274,8 +327,6 @@ class SettingsViewController: UIViewController {
         scrollView.addSubview(verticalStackView)
         view.addSubview(scrollView)
 
-//        view.addSubview(verticalStackView)
-
         let askForReviewTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(askForReview(_:)))
         imageIcon.addGestureRecognizer(askForReviewTapRecognizer)
 
@@ -302,12 +353,6 @@ class SettingsViewController: UIViewController {
             pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
             pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
-
-//        NSLayoutConstraint.activate([
-//            verticalStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0),
-//            verticalStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16.0),
-//            verticalStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16.0)
-//        ])
 
         NSLayoutConstraint.activate([
             cityPicker.leadingAnchor.constraint(equalTo: self.verticalStackView.leadingAnchor, constant: 16.0),
@@ -343,17 +388,13 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        SKPaymentQueue.default().add(self)
+
         setupBindings()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
-        print("> Saving \(citiesList[cityPicker.selectedRow(inComponent: 0)])")
-
-//        let pickerElementString = citiesList[cityPicker.selectedRow(inComponent: 0)]
-//
-//        guard let availableSelection = availableCities[pickerElementString] else { return }
 
         viewModel.dismissingSettingsViewController()
 
@@ -372,6 +413,31 @@ class SettingsViewController: UIViewController {
         viewModel.availableCitiesModel.bind { cities in
             self.citiesList = cities
         }
+
+        // MARK: Donation buttons
+
+        compositeDisposable += tipButtonTier1.reactive.controlEvents(.touchUpInside).observeValues({ [weak self] (_) in
+            self?.donateTip(quantity: .firstTier)
+        })
+    }
+
+    func donateTip(quantity: DonationDescriptions) {
+
+        if !SKPaymentQueue.canMakePayments() { return }
+
+        let productID = Set(arrayLiteral: quantity.rawValue)
+        let productsRequest: SKProductsRequest = SKProductsRequest(productIdentifiers: productID)
+        productsRequest.delegate = self
+
+        selectedPayment = quantity.rawValue
+        productsRequest.start()
+        print("Fetching Products")
+    }
+
+    func buyProduct(product: SKProduct) {
+        print("Sending the Payment Request to Apple")
+        let payment = SKPayment(product: product)
+        SKPaymentQueue.default().add(payment)
     }
 
     deinit {
@@ -382,29 +448,7 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: LocationServicesDelegate {
 
     func tracingLocation(_ currentLocation: CLLocation) {
-
-        guard let currentLocation = LocationServices.sharedInstance.currentLocation else { return }
-
         locationServicesStatusImage.image = UIImage(systemName: "location.fill")
-
-//        let nearestPin: City? = availableCities.reduce((CLLocationDistanceMax, nil)) { (nearest, pin) in
-//            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.value.latitude), longitude: CLLocationDegrees(pin.value.latitude))
-//            let loc = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
-//            let distance = currentLocation.distance(from: loc)
-//
-//            return distance < nearest.0 ? (distance, pin.value) : nearest
-//        }.1
-//
-//        guard let nearest = nearestPin else { return }
-//
-//        guard let firstIndex = citiesList.firstIndex(of: nearest.formalName) else { return }
-//
-//        self.cityPicker.selectRow(firstIndex, inComponent: 0, animated: true)
-//        self.pickerView(self.cityPicker, didSelectRow: firstIndex, inComponent: 0)
-//
-//        viewModel.changedCityInPickerView(city: citiesList[firstIndex])
-//
-//        cityPicker.reloadAllComponents()
     }
 
     func tracingLocationDidFailWithError(_ error: NSError) {
@@ -437,5 +481,14 @@ extension SettingsViewController: SettingsViewModelDelegate {
         let alert = UIAlertController(title: "ALERT_HEADER", message: errorString, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "CONFIRM_ALERT", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+
+    func presentAlertViewWithError(title: String, body: String) {
+
+        let alertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAction)
+
+        self.present(alertController, animated: true, completion: nil)
     }
 }

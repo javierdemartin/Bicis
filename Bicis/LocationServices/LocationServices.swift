@@ -17,7 +17,7 @@
 import Foundation
 import CoreLocation
 
-protocol LocationServicesDelegate {
+protocol LocationServicesDelegate: class {
     func tracingLocation(_ currentLocation: CLLocation)
     func tracingLocationDidFailWithError(_ error: NSError)
 }
@@ -30,7 +30,7 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
 
     var locationManager: CLLocationManager?
     var currentLocation: CLLocation?
-    var delegate: LocationServicesDelegate?
+    weak var delegate: LocationServicesDelegate?
 
     func isUITesting() -> Bool {
         return ProcessInfo.processInfo.arguments.contains("is_ui_testing")

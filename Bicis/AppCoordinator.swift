@@ -96,7 +96,7 @@ class AppCoordinator: Coordinator {
         self.window.rootViewController?.present(settingsViewController, animated: true, completion: nil)
     }
 
-    func handleModalDismissed() {
+    fileprivate func handleModalDismissed() {
 
         localDataManager.getCurrentCity(completion: { getCurrentCityResult in
             switch getCurrentCityResult {
@@ -104,9 +104,8 @@ class AppCoordinator: Coordinator {
             case .success(let suc):
                 self.homeViewModel?.city = suc
 
-            case .error(let err):
-                // TODO: Mostrar error
-                print(err.localizedDescription)
+            case .error:
+                break
             }
         })
     }
@@ -151,7 +150,27 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
     }
 }
 
+extension AppCoordinator: RoutePlannerViewModelCoordinatorDelegate {
+    func sendSelectedDestinationToHomeViewController(station: BikeStation) {
+        homeViewModel?.destinationStation.value = station
+    }
+}
+
 extension AppCoordinator: HomeViewModelCoordinatorDelegate {
+    func modallyPresentRoutePlanner(stationsDict: [String: BikeStation]) {
+        let compositeDisposable = CompositeDisposable()
+        let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: stationsDict)
+        routePlannerViewModel.coordinatorDelegate = self
+        let routePlannerViewController = RoutePlannerViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
+
+        //        routePlannerViewController.reactive.trigger(for: #selector(settingsViewController.viewDidDisappear(_:))).observe { _ in self.handleModalDismissed() }
+        //
+        //        settingsViewModel.coordinatorDelegate = self
+        //        settingsViewModel.delegate = settingsViewController
+        routePlannerViewController.modalPresentationStyle = .formSheet
+
+        self.window.rootViewController?.present(routePlannerViewController, animated: true, completion: nil)
+    }
 
     func didTapRestart() {
 

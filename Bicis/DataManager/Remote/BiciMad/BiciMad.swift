@@ -21,9 +21,11 @@ struct BiciMadRoot: Decodable {
 }
 
 struct BiciMadStation: BikeStation {
+
     var id: String
 
     var freeBikes: Int
+    var freeRacks: Int
 
     var stationName: String
 
@@ -37,8 +39,11 @@ struct BiciMadStation: BikeStation {
     var predictionArray: [Int]?
 
     var rmse: Double? {
+
             guard let availability = availabilityArray else { return nil }
             guard let prediction = predictionArray else { return nil }
+
+        let range = Double(max(availability.max()!, prediction.max()!))
 
             var rmseResult = 0.0
 
@@ -48,36 +53,20 @@ struct BiciMadStation: BikeStation {
 
             rmseResult = sqrt(1/Double(availability.count) * rmseResult)
 
-            return rmseResult
+            return (rmseResult/range * 100)
     }
 
-    var rmsePercentage: Double? {
-        //        get {
+    var inverseAccuracyRmse: Double? {
+        guard rmse != nil else { return nil }
 
-        guard let availability = availabilityArray else { return nil }
-        guard let prediction = predictionArray else { return nil }
-
-        guard let maxPrediction = prediction.max() else { return nil }
-        guard let maxAvailability = availability.max() else { return nil }
-        
-        let maxValue = Double(max(maxPrediction, maxAvailability))
-
-        var rmseResult = 0.0
-
-        for element in 0..<availability.count {
-            rmseResult += pow(Double(prediction[element] - availability[element]), 2.0)
-        }
-
-        rmseResult = (sqrt(1/Double(availability.count) * rmseResult) / maxValue) * 100
-
-        return rmseResult
-        //        }
+        return 100 - rmse!
     }
 
     enum CodingKeys: String, CodingKey {
         case id
         case stationName = "name"
         case freeBikes = "dock_bikes"
+        case freeRacks = "free_bases"
         case latitude
         case longitude
         case geometry
@@ -88,6 +77,7 @@ struct BiciMadStation: BikeStation {
 
         id = (try "\(values.decode(Int.self, forKey: .id))")
         freeBikes = try values.decode(Int.self, forKey: .freeBikes)
+        freeRacks = try values.decode(Int.self, forKey: .freeRacks)
         stationName = try values.decode(String.self, forKey: .stationName).replacingOccurrences(of: "\\d{1,}.", with: "", options: [.regularExpression])
 
         geometry = try values.decode(BiciMadStationGeometry.self, forKey: .geometry)

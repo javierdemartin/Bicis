@@ -11,6 +11,7 @@ import Foundation
 protocol BikeStation: Decodable {
     var id: String { get set }
     var freeBikes: Int { get set }
+    var freeRacks: Int { get set }
     var stationName: String { get set }
     var latitude: Double { get set }
     var longitude: Double { get set }
@@ -18,6 +19,7 @@ protocol BikeStation: Decodable {
     var availabilityArray: [Int]? { get set }
     var predictionArray: [Int]? { get set }
     var rmse: Double? { get }
+    var inverseAccuracyRmse: Double? { get }
 }
 
 struct CitiBikesStation: BikeStation {
@@ -26,15 +28,17 @@ struct CitiBikesStation: BikeStation {
     var stationName: String
     var id: String
     var freeBikes: Int
+    var freeRacks: Int
 
     var availabilityArray: [Int]?
     var predictionArray: [Int]?
 
     var rmse: Double? {
-        get {
 
             guard let availability = availabilityArray else { return nil }
             guard let prediction = predictionArray else { return nil }
+
+        let range = Double(max(availability.max()!, prediction.max()!))
 
             var rmseResult = 0.0
 
@@ -44,20 +48,28 @@ struct CitiBikesStation: BikeStation {
 
             rmseResult = sqrt(1/Double(availability.count) * rmseResult)
 
-            return rmseResult
-        }
+            print("RMSE (%) \(rmseResult)")
+
+            return (rmseResult/range * 100)
+    }
+
+    var inverseAccuracyRmse: Double? {
+        guard rmse != nil else { return nil }
+
+        return 100 - rmse!
     }
 
     init(from decoder: Decoder) throws {
-           let values = try decoder.container(keyedBy: CodingKeys.self)
+        let values = try decoder.container(keyedBy: CodingKeys.self)
 
-           id = (try "\(values.decode(Int.self, forKey: .id))")
+        id = (try "\(values.decode(Int.self, forKey: .id))")
 
-           freeBikes = try values.decode(Int.self, forKey: .freeBikes)
-           stationName = try values.decode(String.self, forKey: .stationName)
-           latitude = try values.decode(Double.self, forKey: .latitude)
-           longitude = try values.decode(Double.self, forKey: .longitude)
-       }
+        freeBikes = try values.decode(Int.self, forKey: .freeBikes)
+        freeRacks = try values.decode(Int.self, forKey: .freeRacks)
+        stationName = try values.decode(String.self, forKey: .stationName)
+        latitude = try values.decode(Double.self, forKey: .latitude)
+        longitude = try values.decode(Double.self, forKey: .longitude)
+    }
 
     enum CodingKeys: String, CodingKey {
         case latitude
@@ -65,6 +77,7 @@ struct CitiBikesStation: BikeStation {
         case stationName = "stationName"
         case id
         case freeBikes = "availableBikes"
+        case freeRacks = "availableDocks"
     }
 }
 

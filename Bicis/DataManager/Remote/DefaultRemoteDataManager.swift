@@ -96,8 +96,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
                                         let result = try JSONDecoder().decode(BiciMadRoot.self, from: data)
                                         completion(.success(result.data))
                                     default:
-                                        // TODO: GEstionar y devolver error
-                                        return
+                                        completion(.error(RemoteDataManagerError.couldntParseFeed))
                                     }
 
                                 } catch {
@@ -112,9 +111,9 @@ class DefaultRemoteDataManager: RemoteDataManager {
                     })
 
                     task.resume()
-                case .error(_):
-                    // TODO: Finish error management
-                    break
+
+                case .error:
+                    completion(.error(RemoteDataManagerError.couldntGetApiKeyFromBiciMad))
 
                 }
             })
@@ -139,8 +138,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
                                 let result = try JSONDecoder().decode(NextBikeRoot.self, from: data)
                                 completion(.success(result.countries[0].cities[0].places))
                             default:
-                                // TODO: GEstionar y devolver error
-                                return
+                                completion(.error(RemoteDataManagerError.didNotGetAnyStation))
                             }
 
                         } catch {

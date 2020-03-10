@@ -1,3 +1,1 @@
-· Fixed issue that changed the selected city to Madrid after reopening the app.
-· Bike sharing feed is updated frequently to show the newest data available
-· Every time the app is opened the closest bike sharing station will be selected
+Removed ads & irrelevant tracking. The app no longer uses a library that sends data to third parties with user's data.

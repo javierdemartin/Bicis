@@ -9,6 +9,7 @@
 import Foundation
 import ReactiveSwift
 import CoreLocation
+import StoreKit
 
 protocol SettingsViewModelDataManager {
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void)
@@ -20,11 +21,18 @@ protocol SettingsViewModelDelegate: class {
     func selectCityInPickerView(city: String)
     func errorSubmittingCode(with errorString: String)
     func updateCitiesPicker(sortedCities: [String])
+    func presentAlertViewWithError(title: String, body: String)
 }
 
 protocol SettingsViewModelCoordinatorDelegate: class {
 
     func changedCitySelectionInPickerView(city: City)
+}
+
+enum DonationDescriptions: String {
+
+    case firstTier = "com.javierdemartin.bici.level_one_donation"
+    case secondTier = "com.javierdemartin.bici.level_two_donation"
 }
 
 class SettingsViewModel {
@@ -33,30 +41,12 @@ class SettingsViewModel {
 
     weak var delegate: SettingsViewModelDelegate?
     weak var coordinatorDelegate: SettingsViewModelCoordinatorDelegate?
-
     var city: City?
-
     let usernameTextfieldContinuousTextValues = MutableProperty<String?>(nil)
     let passwordTextfieldContinuousTextValues = MutableProperty<String?>(nil)
     let logInButtonIsEnabled = MutableProperty(false)
-
     let compositeDisposable: CompositeDisposable
-
     let dataManager: SettingsViewModelDataManager
-
-    func saveCity(cityName: City) {
-
-        dataManager.saveCurrentCity(apiCityName: cityName, completion: { saveCurrentCityResult in
-            switch saveCurrentCityResult {
-
-            case .success:
-                break
-            case .error:
-                // TODO: Show error, prevent using the home view
-                break
-            }
-        })
-    }
 
     func sendFeedBackEmail() {
         guard let url = URL(string: "mailto:javierdemartin@gmail.com") else { return }
@@ -86,7 +76,6 @@ class SettingsViewModel {
                 self.dataManager.saveCurrentCity(apiCityName: availableCities.first!.value, completion: { _ in })
                 self.delegate?.selectCityInPickerView(city: availableCities.first!.value.formalName)
                 print(errorCity)
-                break
             }
         })
     }
@@ -99,7 +88,7 @@ class SettingsViewModel {
             case .success(let cityFromDefaults):
                 self.changedCityInPickerView(city: cityFromDefaults.formalName)
                 self.city = cityFromDefaults
-            case .error(_):
+            case .error:
                 break
             }
         })

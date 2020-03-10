@@ -1,0 +1,9 @@
+/* 
+  RoutePlanner.strings
+  Bicis
+
+  Created by Javier de Martín Gil on 09/03/2020.
+  Copyright © 2020 Javier de Martín Gil. All rights reserved.
+*/
+
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Elige una estación de destino para monitorizar la disponibilidad de anclajes conforme viajes";
