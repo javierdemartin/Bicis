@@ -13,3 +13,15 @@
 "ERROR_LOADING_FREE_DOCKS_AT_DESTINATION" = "Unable to retrieve details";
 
 "START_TRIP" = " Start commute ";
+
+"ESTIMATED_TIME_OF_ARRIVAL" = "Arriving at %time, riding %distanceUnits";
+
+"LOADING_ROUTE" = "Calculating time to destination...";
+
+"LOADING_PREDICTIONS" = "Loading predictions...";
+
+"ACCURACY_OF_MODEL" = "%percentage% prediction accuracy";
+
+"DESTINATION_DOCKS_LABEL" = "Free docks";
+
+"LOW_DOCK_AVAILABILITY_WARNING" = "Low dock predicted availability at arrival time!";

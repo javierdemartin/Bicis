@@ -13,3 +13,15 @@
 "ERROR_LOADING_FREE_DOCKS_AT_DESTINATION" = "No hay datos disponibles";
 
 "START_TRIP" = " Comenzar recorrido ";
+
+"ESTIMATED_TIME_OF_ARRIVAL" = "Llegada estimada a las %time, a %distanceUnits";
+
+"LOADING_ROUTE" = "Calculando tiempo hasta el destino...";
+
+"LOADING_PREDICTIONS" = "Cargando predicciones...";
+
+"ACCURACY_OF_MODEL" = "%percentage% de fiabilidad";
+
+"DESTINATION_DOCKS_LABEL" = "Anclajes libres";
+
+"LOW_DOCK_AVAILABILITY_WARNING" = "¡Baja disponibilidad de anclajes predichos en destino a la hora de llegada!";
