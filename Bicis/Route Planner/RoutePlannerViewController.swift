@@ -38,7 +38,6 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 
         destinationStationVerticalStackView.isHidden = false
         startTripButton.isHidden = false
-//        searchBar.isHidden = true
 
         distanceToDestinationLabel.text = "\(Double(round(100*route.distance/1000)/100))"
         timeToDestinationLabel.text = "\(route.expectedTravelTime.minutes)"
@@ -52,7 +51,33 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 
                 self.scoreOfDestinationLabel.text = "\(Int(rmseOfStation))"
             }
+
+            // Calculate the predicted availability at the arrival time
+            if self.viewModel.destinationStation!.availabilityArray!.count > 0 && self.viewModel.destinationStation!.predictionArray!.count > 0 {
+                let remainderPredictionOfTheDay = self.viewModel.destinationStation!.predictionArray![(self.viewModel.destinationStation!.availabilityArray!.count)...]
+                print(remainderPredictionOfTheDay.count)
+
+                // Current time
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "hh:mm"
+
+                // Replace last character by a 0, round to the nearest 10' interval
+                var roundedArrivalTime = dateFormatter.string(from: Date())
+                var arrayCharsOfTime = Array(roundedArrivalTime)
+                arrayCharsOfTime[arrayCharsOfTime.count - 1] = "0"
+
+                roundedArrivalTime = String(arrayCharsOfTime)
+
+                guard let indexOfTime = Constants.listHours.firstIndex(of: roundedArrivalTime) else { return }
+
+                // Calculate the availability at arrival
+                let timeStationWillBeEmpty = remainderPredictionOfTheDay.firstIndex(of: 0)
+
+                self.predictedDocksAtDestinationLabel.text = "\(self.viewModel.destinationStation!.predictionArray![indexOfTime])"
+            }
         })
+
+
     }
 
     func selectedDestination(station: BikeStation) {
@@ -124,6 +149,7 @@ class RoutePlannerViewController: UIViewController {
         textView.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
         textView.isEditable = false
         textView.isScrollEnabled = false
+        textView.sizeToFit()
         textView.isUserInteractionEnabled = true
         textView.text = "ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD".localize(file: "RoutePlanner")
         return textView
@@ -146,6 +172,7 @@ class RoutePlannerViewController: UIViewController {
 
         let searchBar = UISearchBar()
         searchBar.backgroundImage = UIImage() // Removes top and bottom lines
+        searchBar.placeholder = "STATION_SEARCH_PLACEHOLDER".localize(file: "RoutePlanner")
         return searchBar
     }()
 
@@ -160,9 +187,8 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, instructionsTextField, searchBar, tableView, destinationStationVerticalStackView, startTripButton])
+        let stackView = UIStackView(arrangedSubviews: [instructionsTextField, searchBar, tableView, destinationStationVerticalStackView])
         stackView.alignment = UIStackView.Alignment.center
-        stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalSpacing
         stackView.spacing = 10.0
@@ -173,13 +199,13 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var destinationStationVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [destinationStationLabel, statisticsVerticalStackView])
-        stackView.alignment = UIStackView.Alignment.center
+        let stackView = UIStackView(arrangedSubviews: [destinationStationLabel, statisticsVerticalStackView, startTripButton])
+        stackView.alignment = UIStackView.Alignment.top
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.isHidden = true
         stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 20.0
+        stackView.spacing = 10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -187,7 +213,7 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var statisticsVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [timeToDestinationVerticalStackView, distanceToDestinationVerticalStackView, freeRacksOnDestinationVerticalStackView, scoreOfDestinationVerticalStackView])
+        let stackView = UIStackView(arrangedSubviews: [timeToDestinationVerticalStackView, distanceToDestinationVerticalStackView, freeRacksOnDestinationVerticalStackView, scoreOfDestinationVerticalStackView, predictedDocksAtDestinationVerticalStackView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.horizontal
@@ -345,6 +371,37 @@ class RoutePlannerViewController: UIViewController {
         return label
     }()
 
+    lazy var predictedDocksAtDestinationVerticalStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [predictedDocksAtDestinationLabel, predictedDocksAtDestinationUnitsLabel])
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.backgroundColor = .white
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.spacing = 10.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        return stackView
+    }()
+
+    lazy var predictedDocksAtDestinationLabel: UILabel = {
+
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        label.text = "YY"
+
+        return label
+    }()
+
+    lazy var predictedDocksAtDestinationUnitsLabel: UILabel = {
+
+        let label = UILabel()
+
+        label.text = "@ time"
+        label.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        return label
+    }()
+
     init(viewModel: RoutePlannerViewModel, compositeDisposable: CompositeDisposable) {
 
         self.viewModel = viewModel
@@ -364,48 +421,39 @@ class RoutePlannerViewController: UIViewController {
         view = UIView()
         view.backgroundColor = .systemBackground
 
-        scrollView.addSubview(verticalStackView)
-        view.addSubview(scrollView)
+        view.addSubview(pullTabToDismissView)
+        view.addSubview(verticalStackView)
 
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0),
-            scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
-            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
-        ])
-
-
-
-        NSLayoutConstraint.activate([
-            verticalStackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: self.view.frame.width - 32.0)
+            pullTabToDismissView.heightAnchor.constraint(equalToConstant: 5),
+            pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
+            pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            pullTabToDismissView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0)
         ])
 
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            verticalStackView.topAnchor.constraint(equalTo: pullTabToDismissView.bottomAnchor, constant: 16.0),
+            verticalStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            verticalStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
+            verticalStackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+        ])
+
+        NSLayoutConstraint.activate([
+            tableView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
             tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
-//            tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.heightAnchor.constraint(equalToConstant: 300.0)
+//            tableView.heightAnchor.constraint(equalToConstant: 200)
+            tableView.bottomAnchor.constraint(equalTo: destinationStationVerticalStackView.topAnchor)
         ])
 
         NSLayoutConstraint.activate([
             searchBar.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor),
-//            searchBar.heightAnchor.constraint(equalToConstant: 32.0)
+//            searchBar.topAnchor.constraint(equalTo: instructionsTextField.bottomAnchor, constant: 16.0)
         ])
 
         NSLayoutConstraint.activate([
-            pullTabToDismissView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            pullTabToDismissView.heightAnchor.constraint(equalToConstant: 5),
-            pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
-            pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
-        ])
-
-        NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
-            verticalStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
-            verticalStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
-            verticalStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20.0)
+            destinationStationVerticalStackView.bottomAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 16.0),
         ])
     }
 

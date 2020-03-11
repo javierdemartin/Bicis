@@ -7,3 +7,4 @@
 */
 
 "ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Elige una estación de destino para monitorizar la disponibilidad de anclajes conforme viajes";
+"STATION_SEARCH_PLACEHOLDER" = "Busca la estación de destino";

@@ -50,8 +50,11 @@ class RoutePlannerViewModel: NSObject {
 
         self.destinationStation = destinationStation
 
+        // If no location is retrieved don't show the route in the map
+        guard let userLocation = LocationServices.sharedInstance.locationManager?.location?.coordinate else { return }
+
         // TODO: Delete force unwrap
-        calculateRouteToDestination(pickupCoordinate: (LocationServices.sharedInstance.locationManager?.location!.coordinate)!, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(destinationStation.latitude), longitude: CLLocationDegrees(destinationStation.longitude)))
+        calculateRouteToDestination(pickupCoordinate: userLocation, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(destinationStation.latitude), longitude: CLLocationDegrees(destinationStation.longitude)))
 
         coordinatorDelegate?.sendSelectedDestinationToHomeViewController(station: destinationStation)
     }
