@@ -1,0 +1,15 @@
+/* 
+  RoutePlanner.strings
+  Bicis
+
+  Created by Javier de Martín Gil on 09/03/2020.
+  Copyright © 2020 Javier de Martín Gil. All rights reserved.
+*/
+
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Choose a destination to start monitoring the docking availability as you commute";
+"STATION_SEARCH_PLACEHOLDER" = "Destination station";
+
+"FREE_DOCKS_AT_DESTINATION_LABEL" = "%number free docks";
+"ERROR_LOADING_FREE_DOCKS_AT_DESTINATION" = "Unable to retrieve details";
+
+"START_TRIP" = " Start commute ";

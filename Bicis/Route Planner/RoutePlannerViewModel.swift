@@ -9,6 +9,7 @@
 import Foundation
 import ReactiveSwift
 import MapKit
+import UserNotifications
 
 protocol RoutePlannerViewModelCoordinatorDelegate: class {
     func sendSelectedDestinationToHomeViewController(station: BikeStation)
@@ -43,6 +44,24 @@ class RoutePlannerViewModel: NSObject {
         self.stationsDict = stationsDict
 
         self.dataManager = dataManager
+    }
+
+    func checkUserNotificationStatus() {
+
+        let userNotificationCenter = UNUserNotificationCenter.current()
+
+        let authOptions = UNAuthorizationOptions.init(arrayLiteral: .alert, .badge, .sound)
+
+        userNotificationCenter.requestAuthorization(options: authOptions) { (success, error) in
+            if let error = error {
+                print("Error: ", error)
+            }
+
+            if success {
+                print("Starting timer!")
+                RoutePlannerTimerServices.sharedInstance.startTimer()
+            }
+        }
     }
 
     func selectedDestinationStation(name: String) {

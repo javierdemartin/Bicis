@@ -420,7 +420,6 @@ class HomeViewController: UIViewController {
             self.statisticsAndGraphViewStackView.transform = CGAffineTransform(translationX: 0, y: 0 + 5.0)
 
             self.statisticsAndGraphViewStackView.isHidden = false
-//            self.statisticsAndGraphViewStackView.isHidden = false
             self.statisticsAndGraphViewStackView.layoutIfNeeded()
         }, completion: {_ in
 
@@ -526,7 +525,8 @@ extension HomeViewController: MKMapViewDelegate {
 
             self.routeOverlay = response.routes[0]
 
-            self.mapView.addOverlay((self.routeOverlay.polyline), level: MKOverlayLevel.aboveRoads)
+            // TODO: quizás reactivar esto
+//            self.mapView.addOverlay((self.routeOverlay.polyline), level: MKOverlayLevel.aboveRoads)
 
             let rect = self.routeOverlay.polyline.boundingMapRect
             self.mapView.setRegion(MKCoordinateRegion(rect), animated: true)

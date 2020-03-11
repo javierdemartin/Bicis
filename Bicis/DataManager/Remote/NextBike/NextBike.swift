@@ -32,6 +32,10 @@ struct NextBikeStation: BikeStation {
     var availabilityArray: [Int]?
     var predictionArray: [Int]?
 
+    var totalAvailableDocks: Int {
+        return freeRacks + freeBikes
+    }
+
     var rmse: Double? {
 
             guard let availability = availabilityArray else { return nil }

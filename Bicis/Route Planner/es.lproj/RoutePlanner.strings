@@ -1,0 +1,15 @@
+/* 
+  RoutePlanner.strings
+  Bicis
+
+  Created by Javier de Martín Gil on 09/03/2020.
+  Copyright © 2020 Javier de Martín Gil. All rights reserved.
+*/
+
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Elige un destino para comenzar a monitorizar la disponibilidad de anclajes conforme viajas";
+"STATION_SEARCH_PLACEHOLDER" = "Estación de destino";
+
+"FREE_DOCKS_AT_DESTINATION_LABEL" = "%number anclajes libres";
+"ERROR_LOADING_FREE_DOCKS_AT_DESTINATION" = "No hay datos disponibles";
+
+"START_TRIP" = " Comenzar recorrido ";

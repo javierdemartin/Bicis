@@ -16,6 +16,7 @@ protocol BikeStation: Decodable {
     var latitude: Double { get set }
     var longitude: Double { get set }
     // Not parseable
+    var totalAvailableDocks: Int { get }
     var availabilityArray: [Int]? { get set }
     var predictionArray: [Int]? { get set }
     var rmse: Double? { get }
@@ -32,6 +33,10 @@ struct CitiBikesStation: BikeStation {
 
     var availabilityArray: [Int]?
     var predictionArray: [Int]?
+
+    var totalAvailableDocks: Int {
+        return freeRacks + freeBikes
+    }
 
     var rmse: Double? {
 
