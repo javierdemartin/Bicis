@@ -6,7 +6,8 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
-"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Elige un destino para comenzar a monitorizar la disponibilidad de anclajes conforme viajas";
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitoriza la disponibilidad de anclajes en el destino. Recibe una notificación si el número cae por debajo de un límite.";
+
 "STATION_SEARCH_PLACEHOLDER" = "Estación de destino";
 
 "FREE_DOCKS_AT_DESTINATION_LABEL" = "%number anclajes libres";
@@ -24,4 +25,7 @@
 
 "DESTINATION_DOCKS_LABEL" = "Anclajes libres";
 
-"LOW_DOCK_AVAILABILITY_WARNING" = "¡Baja disponibilidad de anclajes predichos en destino a la hora de llegada!";
+"LOW_DOCK_AVAILABILITY_WARNING" = "Nivel bajo de anclajes";
+
+"START_TIME_COMMUTE" = "Inicio";
+"END_TIME_COMMUTE" = "Fin";

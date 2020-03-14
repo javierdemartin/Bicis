@@ -12,34 +12,19 @@ import ReactiveSwift
 import UIKit
 import MapKit
 
-extension RoutePlannerViewController: UISearchBarDelegate {
-
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
-        filteredData = Array(self.viewModel.stationsDict.keys)
-
-        if searchText.isEmpty == false {
-            filteredData = Array(self.viewModel.stationsDict.keys).filter({ $0.lowercased().contains(searchText.lowercased()) })
-        }
-
-        if filteredData.count > 0 {
-            tableView.isHidden = false
-        } else if filteredData.count == 0 {
-            tableView.isHidden = true
-        }
-
-        tableView.reloadData()
-    }
-}
 
 extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 
-    func gotRouteCalculations(route: MKRoute) {
+    func gotDestinationRoute(station: BikeStation, route: MKRoute) {
 
-        destinationStationVerticalStackView.isHidden = false
-        startTripButton.isHidden = false
+        print("GOT DESTINATION ROUTE")
+
+        self.informationVerticalStackView.fadeIn(0.5, onCompletion: {
+            self.startTripButton.fadeIn()
+        })
 
         let calendar = Calendar.current
+        // TODO: Compensar el cálculo
         let date = calendar.date(byAdding: .minute, value: route.expectedTravelTime.minutes, to: Date())
 
         let dateFormatter = DateFormatter()
@@ -55,22 +40,28 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 
         let distanceMeasurement = Measurement(value: Double(round(100*route.distance/1000)/100), unit: UnitLength.kilometers)
 
-        timeToDestinationLabel.text = "ESTIMATED_TIME_OF_ARRIVAL".localize(file: "RoutePlanner").replacingOccurrences(of: "%time", with: roundedArrivalTime).replacingOccurrences(of: "%distanceUnits", with: formatter.string(from: distanceInMeters))
+        guard self.viewModel.destinationStation.value != nil else { return }
 
-        racksAvailableNowOnDestinationLabel.text = "\(self.viewModel.destinationStation!.freeRacks)"
-        destinationStationLabel.text = "\(self.viewModel.destinationStation!.stationName)"
+
+        racksAvailableNowOnDestinationImageView.text = "\(dateFormatter.string(from: Date()))"
+        predictedDocksAtDestinationUnitsLabel.text = "\(roundedArrivalTime)"
+
+        racksAvailableNowOnDestinationLabel.text = "\(self.viewModel.destinationStation.value!.freeRacks)"
+        destinationStationLabel.text = "\(self.viewModel.destinationStation.value!.stationName)"
 
         viewModel.calculateRmseForStationByQueryingPredictions(completion: {
 
-            if let rmseOfStation = self.viewModel.destinationStation!.inverseAccuracyRmse {
+            if let rmseOfStation = self.viewModel.destinationStation.value!.inverseAccuracyRmse {
 
                 self.accuracyOfPredictionLabel.text = "ACCURACY_OF_MODEL".localize(file: "RoutePlanner").replacingOccurrences(of: "%percentage", with: "\(Int(rmseOfStation))")
             }
 
-            // Calculate the predicted availability at the arrival time
-            if self.viewModel.destinationStation!.availabilityArray!.count > 0 && self.viewModel.destinationStation!.predictionArray!.count > 0 {
-                let remainderPredictionOfTheDay = self.viewModel.destinationStation!.predictionArray![(self.viewModel.destinationStation!.availabilityArray!.count)...]
-                print(remainderPredictionOfTheDay.count)
+            if let destinationStation = self.viewModel.destinationStation.value {
+
+                guard let availabilityArray = destinationStation.availabilityArray else { return }
+                guard let predictionArray = destinationStation.predictionArray else { return }
+
+                let remainderPredictionOfTheDay = predictionArray[(availabilityArray.count)...]
 
                 // Current time
                 let dateFormatter = DateFormatter()
@@ -86,17 +77,67 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
                 guard let indexOfTime = Constants.listHours.firstIndex(of: roundedArrivalTime) else { return }
 
                 // Calculate the availability at arrival
-                self.predictedDocksAtDestinationLabel.text = "\(self.viewModel.destinationStation!.totalAvailableDocks - self.viewModel.destinationStation!.predictionArray![indexOfTime])"
+                self.predictedDocksAtDestinationLabel.text = "\(destinationStation.totalAvailableDocks - predictionArray[indexOfTime])"
 
-                if (self.viewModel.destinationStation!.totalAvailableDocks - self.viewModel.destinationStation!.predictionArray![indexOfTime]) < 4  {
+                // TODO: Set a reasonable value
+                if (destinationStation.totalAvailableDocks - predictionArray[indexOfTime]) < 4  {
+                    self.lowDockAvailabilityLabel.text = "LOW_DOCK_AVAILABILITY_WARNING".localize(file: "RoutePlanner")
                     self.lowDockAvailabilityStackView.isHidden = false
                 }
+            }
+
+            // Arrays are epmty fill the info
+            else {
+                print("EMPTY DATA")
+
             }
         })
     }
 
-    func selectedDestination(station: BikeStation) {
+    func errorTooFarAway() {
 
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mm"
+
+
+        guard let stationDestination = self.viewModel.destinationStation.value else { return }
+
+        racksAvailableNowOnDestinationImageView.text = "\(dateFormatter.string(from: Date()))"
+        predictedDocksAtDestinationUnitsLabel.text = "Too far"
+        racksAvailableNowOnDestinationLabel.text = "\(stationDestination.freeRacks)"
+        predictedDocksAtDestinationLabel.text = "?"
+        destinationStationLabel.text = "\(stationDestination.stationName)"
+
+        // Only get the prediction
+        self.lowDockAvailabilityLabel.text = "TOO_FAR_AWAY_WARNING".localize(file: "RoutePlanner")
+
+        viewModel.calculateRmseForStationByQueryingPredictions(completion: {
+
+            if let rmseOfStation = self.viewModel.destinationStation.value!.inverseAccuracyRmse {
+
+                self.accuracyOfPredictionLabel.text = "ACCURACY_OF_MODEL".localize(file: "RoutePlanner").replacingOccurrences(of: "%percentage", with: "\(Int(rmseOfStation))")
+            }
+
+            if let destinationStation = self.viewModel.destinationStation.value {
+
+                guard let availabilityArray = destinationStation.availabilityArray else { return }
+                guard let predictionArray = destinationStation.predictionArray else { return }
+
+                let remainderPredictionOfTheDay = predictionArray[(availabilityArray.count)...]
+                print(remainderPredictionOfTheDay.count)
+
+                self.lowDockAvailabilityStackView.isHidden = false
+                self.lowDockAvailabilityLabel.text = "TOO_FAR_AWAY_WARNING".localize(file: "RoutePlanner")
+            }
+        })
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        viewModel.drawDataWhateverImTired()
     }
 
     func presentAlertViewWithError(title: String, body: String) {
@@ -110,6 +151,7 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 }
 
 extension  RoutePlannerViewController: UITableViewDelegate, UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredData.count
     }
@@ -119,12 +161,15 @@ extension  RoutePlannerViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 
         cell.selectionStyle = UITableViewCell.SelectionStyle.default
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+//        cell.isAccessibilityElement = true
+        cell.accessibilityIdentifier = "cell_\(indexPath.row)"
+        cell.textLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
         cell.textLabel?.text = "\(filteredData[indexPath.row])"
-        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 13.0, weight: .regular)
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .regular)
 
-        if let freeRacks = viewModel.stationsDict[filteredData[indexPath.row]]?.freeRacks {
+        guard let stationsDict = viewModel.stationsDict else { fatalError() }
 
+        if let freeRacks = stationsDict[filteredData[indexPath.row]]?.freeRacks {
             cell.detailTextLabel?.text = "FREE_DOCKS_AT_DESTINATION_LABEL".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(freeRacks)")
         } else {
             cell.detailTextLabel?.text = "ERROR_LOADING_FREE_DOCKS_AT_DESTINATION".localize(file: "RoutePlanner")
@@ -136,12 +181,7 @@ extension  RoutePlannerViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Selected \(filteredData[indexPath.row])")
 
-        tableView.isHidden = true
-
-        viewModel.selectedDestinationStation(name: filteredData[indexPath.row])
-
-        // Hides the keboard as the search has been completed
-        searchBar.resignFirstResponder()
+//        viewModel.selectedDestinationStation(name: filteredData[indexPath.row])
     }
 }
 
@@ -160,13 +200,13 @@ class RoutePlannerViewController: UIViewController {
         return view
     }()
 
-    let instructionsTextField: UITextView = {
+    let instructionsHeaderTextView: UITextView = {
 
         let textView = UITextView(frame: .zero, textContainer: nil)
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.backgroundColor = .clear
         textView.isSelectable = false
-        textView.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        textView.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.sizeToFit()
@@ -175,42 +215,22 @@ class RoutePlannerViewController: UIViewController {
         return textView
     }()
 
-    let searchBar: UISearchBar = {
+    lazy var containerStackView: UIStackView = {
 
-        let searchBar = UISearchBar()
-        searchBar.backgroundImage = UIImage() // Removes top and bottom lines
-        searchBar.placeholder = "STATION_SEARCH_PLACEHOLDER".localize(file: "RoutePlanner")
-        return searchBar
-    }()
-
-    let tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.isHidden = true
-        tableView.showsVerticalScrollIndicator = false
-        tableView.isUserInteractionEnabled = true
-        tableView.delaysContentTouches = false
-        tableView.showsHorizontalScrollIndicator = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.separatorStyle = .none
-        return tableView
-    }()
-
-    lazy var verticalStackView: UIStackView = {
-
-        let stackView = UIStackView(arrangedSubviews: [instructionsTextField, destinationStationVerticalStackView, searchBar])
+        let stackView = UIStackView(arrangedSubviews: [instructionsHeaderTextView, informationVerticalStackView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.axis = NSLayoutConstraint.Axis.vertical
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.distribution  = UIStackView.Distribution.equalCentering
         stackView.spacing = 10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
     }()
 
-    lazy var destinationStationVerticalStackView: UIStackView = {
+    lazy var informationVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [labelsDestinationStationVerticalStackView, statisticsVerticalStackView, lowDockAvailabilityStackView, startTripButton])
-        stackView.alignment = UIStackView.Alignment.top
+        let stackView = UIStackView(arrangedSubviews: [labelsDestinationStationVerticalStackView, statisticsAndLowDockStackView, startTripButton])
+        stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.isHidden = true
@@ -221,25 +241,53 @@ class RoutePlannerViewController: UIViewController {
         return stackView
     }()
 
-    lazy var statisticsVerticalStackView: UIStackView = {
+    lazy var statisticsAndLowDockStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [docksTextLabel, freeRacksOnDestinationVerticalStackView, predictedDocksAtDestinationVerticalStackView])
+        let stackView = UIStackView(arrangedSubviews: [statisticsVerticalStackView, lowDockAvailabilityStackView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
-        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.isHidden = false
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 20.0
+        stackView.addBackground(color: .systemGroupedBackground)
+        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.spacing = 25.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
+    }()
+
+    lazy var statisticsVerticalStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [freeRacksOnDestinationVerticalStackView, arrowImageView, predictedDocksAtDestinationVerticalStackView])
+        stackView.alignment = UIStackView.Alignment.center
+//        stackView.addBackground(color: .systemGroupedBackground)
+        stackView.backgroundColor = .white
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.isHidden = false
+//        stackView.distribution  = UIStackView.Distribution.fillProportionally
+        stackView.spacing = 48.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        return stackView
+    }()
+
+    let arrowImageView: UIImageView = {
+
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "arrow.right")
+        imageView.contentMode = .center
+        imageView.tintColor = .systemGray
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
     }()
 
     lazy var docksTextLabel: UILabel = {
 
         let label = UILabel()
         label.text = "DESTINATION_DOCKS_LABEL".localize(file: "RoutePlanner")
-        label.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
@@ -247,10 +295,10 @@ class RoutePlannerViewController: UIViewController {
     lazy var lowDockAvailabilityStackView: UIStackView = {
 
         let stackView = UIStackView(arrangedSubviews: [lowDockAvailabilityImageView, lowDockAvailabilityLabel])
-        stackView.alignment = UIStackView.Alignment.center
+        stackView.alignment = UIStackView.Alignment.leading
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.horizontal
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.distribution  = UIStackView.Distribution.equalCentering
         stackView.spacing = 10.0
         stackView.isHidden = true
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -262,7 +310,8 @@ class RoutePlannerViewController: UIViewController {
 
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "exclamationmark.triangle.fill")
-        imageView.tintColor = .black
+        imageView.contentMode = .center
+        imageView.tintColor = .systemGray
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
         return imageView
@@ -274,7 +323,7 @@ class RoutePlannerViewController: UIViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.backgroundColor = .clear
         textView.isSelectable = false
-        textView.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        textView.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.sizeToFit()
@@ -286,12 +335,11 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var freeRacksOnDestinationVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [racksAvailableNowOnDestinationLabel, racksAvailableNowOnDestinationImageView])
+        let stackView = UIStackView(arrangedSubviews: [racksAvailableNowOnDestinationImageView, racksAvailableNowOnDestinationLabel])
         stackView.alignment = UIStackView.Alignment.center
-        stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 10.0
+        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.spacing = 15.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -300,29 +348,21 @@ class RoutePlannerViewController: UIViewController {
     lazy var racksAvailableNowOnDestinationLabel: UILabel = {
 
         let label = UILabel()
-        label.text = "XX"
-        label.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        label.text = "..."
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
 
-    lazy var racksAvailableNowOnDestinationImageView: UIImageView = {
-
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "play.fill")
-        imageView.tintColor = .black
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-
-        return imageView
-    }()
-
-    lazy var timeToDestinationLabel: UILabel = {
+    lazy var racksAvailableNowOnDestinationImageView: UILabel = {
 
         let label = UILabel()
-        label.text = "XX"
-        label.font = UIFont.systemFont(ofSize: 13.0, weight: .regular)
+        label.text = "START_TIME_COMMUTE".localize(file: "RoutePlanner")
+        label.tintColor = .systemGray
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
+
         return label
     }()
 
@@ -330,18 +370,43 @@ class RoutePlannerViewController: UIViewController {
 
         let label = UILabel()
         label.text = "LOADING_PREDICTIONS".localize(file: "RoutePlanner")
-        label.font = UIFont.systemFont(ofSize: 13.0, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
+    lazy var destinationStationStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [destinationStationImageView, destinationStationLabel])
+
+        stackView.alignment = UIStackView.Alignment.leading
+        stackView.backgroundColor = .white
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.spacing = 10.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        return stackView
+    }()
+
+    let destinationStationImageView: UIImageView = {
+
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "mappin")
+        imageView.contentMode = .center
+        imageView.tintColor = .systemGray
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
+
     lazy var labelsDestinationStationVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [timeToDestinationLabel, destinationStationLabel, accuracyOfPredictionLabel])
+        let stackView = UIStackView(arrangedSubviews: [destinationStationStackView, accuracyOfPredictionLabel])
         stackView.alignment = UIStackView.Alignment.leading
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.distribution  = UIStackView.Distribution.equalCentering
         stackView.spacing = 10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -354,7 +419,7 @@ class RoutePlannerViewController: UIViewController {
         let label = UILabel()
         label.text = "Station Name"
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 17.0, weight: .black)
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .black)
 
         return label
     }()
@@ -365,8 +430,9 @@ class RoutePlannerViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.systemBlue
         button.layer.cornerRadius = 9.0
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
         button.isHidden = true
+        button.accessibilityIdentifier = "START_TRIP"
 
         button.setTitle("START_TRIP".localize(file: "RoutePlanner"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -375,12 +441,12 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var predictedDocksAtDestinationVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [predictedDocksAtDestinationLabel, predictedDocksAtDestinationUnitsLabel])
+        let stackView = UIStackView(arrangedSubviews: [predictedDocksAtDestinationUnitsLabel, predictedDocksAtDestinationLabel])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 10.0
+        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.spacing = 15.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -389,22 +455,23 @@ class RoutePlannerViewController: UIViewController {
     lazy var predictedDocksAtDestinationLabel: UILabel = {
 
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "YY"
+        label.text = "..."
 
         return label
     }()
 
-    lazy var predictedDocksAtDestinationUnitsLabel: UIImageView = {
+    lazy var predictedDocksAtDestinationUnitsLabel: UILabel = {
 
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "forward.fill")
-        imageView.tintColor = .black
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+            let label = UILabel()
+            label.text = "END_TIME_COMMUTE".localize(file: "RoutePlanner")
+            label.tintColor = .systemGray
+            label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
+        label.translatesAutoresizingMaskIntoConstraints = false
 
-        return imageView
-    }()
+            return label
+        }()
 
     init(viewModel: RoutePlannerViewModel, compositeDisposable: CompositeDisposable) {
 
@@ -420,76 +487,81 @@ class RoutePlannerViewController: UIViewController {
     }
 
     override func loadView() {
+
         super.loadView()
 
         view = UIView()
         view.backgroundColor = .systemBackground
 
         view.addSubview(pullTabToDismissView)
-        view.addSubview(verticalStackView)
-        view.addSubview(tableView)
+        view.addSubview(containerStackView)
 
         NSLayoutConstraint.activate([
             pullTabToDismissView.heightAnchor.constraint(equalToConstant: 5),
             pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
+
             pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             pullTabToDismissView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0)
         ])
 
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: pullTabToDismissView.bottomAnchor, constant: 16.0),
-            verticalStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            verticalStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0)
+            destinationStationStackView.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 32.0)
         ])
 
         NSLayoutConstraint.activate([
-            startTripButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
-        ])
-
-
-        NSLayoutConstraint.activate([
-            statisticsVerticalStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 32.0),
-            statisticsVerticalStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -32.0)
-//            statisticsVerticalStackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            destinationStationImageView.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 16.0),
+            destinationStationLabel.leadingAnchor.constraint(equalTo: destinationStationImageView.trailingAnchor, constant: 16.0)
         ])
 
         NSLayoutConstraint.activate([
-            searchBar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            searchBar.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0)
+            containerStackView.topAnchor.constraint(equalTo: pullTabToDismissView.bottomAnchor, constant: 16.0),
+            containerStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            containerStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0)
         ])
 
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
-            tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.topAnchor.constraint(equalTo: verticalStackView.bottomAnchor, constant: 16.0)
+            freeRacksOnDestinationVerticalStackView.widthAnchor.constraint(equalToConstant:
+                (racksAvailableNowOnDestinationImageView.text?.width(withConstrainedHeight: racksAvailableNowOnDestinationImageView.frame.width + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))!),
+            predictedDocksAtDestinationVerticalStackView.widthAnchor.constraint(equalToConstant: (predictedDocksAtDestinationUnitsLabel.text?.width(withConstrainedHeight: racksAvailableNowOnDestinationImageView.frame.width + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))!)
+        ])
+
+        NSLayoutConstraint.activate([
+            predictedDocksAtDestinationVerticalStackView.topAnchor.constraint(equalTo: statisticsVerticalStackView.topAnchor, constant: 16.0)
+        ])
+
+        NSLayoutConstraint.activate([
+            lowDockAvailabilityStackView.leadingAnchor.constraint(equalTo: statisticsAndLowDockStackView.leadingAnchor, constant: 0),
+            lowDockAvailabilityStackView.trailingAnchor.constraint(equalTo: statisticsAndLowDockStackView.trailingAnchor, constant: 0),
+            lowDockAvailabilityStackView.topAnchor.constraint(equalTo: statisticsVerticalStackView.bottomAnchor, constant: 0)
+        ])
+
+        NSLayoutConstraint.activate([
+            startTripButton.widthAnchor.constraint(equalToConstant:
+                startTripButton.titleLabel!.text!.width(withConstrainedHeight: startTripButton.titleLabel!.frame.height,
+                                                        font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)) + 20.0)
+        ])
+
+        NSLayoutConstraint.activate([
+            lowDockAvailabilityImageView.centerYAnchor.constraint(equalTo: lowDockAvailabilityLabel.centerYAnchor),
+            lowDockAvailabilityImageView.widthAnchor.constraint(equalToConstant: 80.0),
+            lowDockAvailabilityLabel.leadingAnchor.constraint(equalTo: lowDockAvailabilityImageView.trailingAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            informationVerticalStackView.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 0),
+            informationVerticalStackView.trailingAnchor.constraint(equalTo: containerStackView.trailingAnchor, constant: 0),
+            informationVerticalStackView.topAnchor.constraint(equalTo: instructionsHeaderTextView.bottomAnchor, constant: 16.0)
         ])
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        // When the view is loaded pop up the keyboard for faster interaction
-        searchBar.becomeFirstResponder()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         viewModel.delegate = self
-        searchBar.delegate = self
-        tableView.register(RoutePlannerTableViewCell.self, forCellReuseIdentifier: "cell")
-        tableView.dataSource = self
-        tableView.delegate = self
-
-        self.searchBar(searchBar, textDidChange: "")
-
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-
-//        view.addGestureRecognizer(tap)
 
         setUpBindings()
     }
@@ -502,30 +574,5 @@ class RoutePlannerViewController: UIViewController {
 
             self.viewModel.checkUserNotificationStatus()
         })
-    }
-
-    //Calls this function when the tap is recognized.
-    @objc func dismissKeyboard() {
-        //Causes the view (or one of its embedded text fields) to resign the first responder status.
-        view.endEditing(true)
-    }
-
-    @objc func keyboardWillShow(sender: NSNotification) {
-
-        if let keyboardFrame: NSValue = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-
-//            self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
-
-            // Moves the view to the next active view if it's out of the scope
-//            self.verticalScrollView.scrollRectToVisible(confirmationCodeTextField.frame, animated: true)
-        }
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-
-        let contentInset: UIEdgeInsets = UIEdgeInsets.zero
-//        scrollView.contentInset = contentInset
     }
 }

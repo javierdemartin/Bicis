@@ -157,16 +157,26 @@ extension AppCoordinator: RoutePlannerViewModelCoordinatorDelegate {
 }
 
 extension AppCoordinator: HomeViewModelCoordinatorDelegate {
-    func modallyPresentRoutePlanner(stationsDict: [String: BikeStation]) {
+
+    func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation) {
+
         let compositeDisposable = CompositeDisposable()
-        let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: stationsDict)
+        let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, destinationStation: stationsDict)
         routePlannerViewModel.coordinatorDelegate = self
         let routePlannerViewController = RoutePlannerViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
 
-        //        routePlannerViewController.reactive.trigger(for: #selector(settingsViewController.viewDidDisappear(_:))).observe { _ in self.handleModalDismissed() }
-        //
-        //        settingsViewModel.coordinatorDelegate = self
-        //        settingsViewModel.delegate = settingsViewController
+        routePlannerViewController.modalPresentationStyle = .formSheet
+
+        self.window.rootViewController?.present(routePlannerViewController, animated: true, completion: nil)
+    }
+
+    func modallyPresentRoutePlanner(stationsDict: [String: BikeStation]) {
+
+        let compositeDisposable = CompositeDisposable()
+        let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: stationsDict, destinationStation: nil)
+        routePlannerViewModel.coordinatorDelegate = self
+        let routePlannerViewController = RoutePlannerViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
+
         routePlannerViewController.modalPresentationStyle = .formSheet
 
         self.window.rootViewController?.present(routePlannerViewController, animated: true, completion: nil)

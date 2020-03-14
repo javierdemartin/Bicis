@@ -29,6 +29,10 @@ struct NextBikeStation: BikeStation {
     var latitude: Double
     var longitude: Double
 
+    var percentageOfFreeBikes: Double {
+        return (Double(freeBikes) / Double(totalAvailableDocks)) * 100
+    }
+
     var availabilityArray: [Int]?
     var predictionArray: [Int]?
 
@@ -50,8 +54,6 @@ struct NextBikeStation: BikeStation {
             }
 
             rmseResult = sqrt(1/Double(availability.count) * rmseResult)
-
-            print("RMSE (%) \(rmseResult)")
 
             return (rmseResult/range * 100)
     }

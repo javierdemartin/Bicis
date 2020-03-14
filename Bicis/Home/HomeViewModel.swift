@@ -15,6 +15,7 @@ protocol HomeViewModelCoordinatorDelegate: class {
     func didTapRestart()
     func showSettingsViewController()
     func modallyPresentRoutePlanner(stationsDict: [String:BikeStation])
+    func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation)
 }
 
 protocol HomeViewModelDataManager {
@@ -81,7 +82,14 @@ class HomeViewModel {
     var currentPredictions = [Int]()
     var currentAvailability = [Int]()
 
+    func selectedRoute(station: BikeStation) {
+
+        NSLog("> Tapped \(station.stationName)")
+        coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station)
+    }
+
     func modallyPresentRoutePlanner() {
+        // TODO: error in uitest
         coordinatorDelegate?.modallyPresentRoutePlanner(stationsDict: self.stationsDict.value)
     }
 
@@ -116,11 +124,6 @@ class HomeViewModel {
                     self.stationsDict.value[individualStation.stationName] = individualStation
                 })
 
-                dump(self.stationsDict)
-                print()
-
-                self.coordinatorDelegate?.modallyPresentRoutePlanner(stationsDict: self.stationsDict.value)
-
                 self.stations.value = res
             case .error:
                 break
@@ -133,6 +136,8 @@ class HomeViewModel {
         self.city = city
         self.compositeDisposable = compositeDisposable
         self.dataManager = dataManager
+
+        NSLog("INITED BOI")
 
         LocationServices.sharedInstance.delegate = self
         LocationServices.sharedInstance.locationManager?.requestWhenInUseAuthorization()

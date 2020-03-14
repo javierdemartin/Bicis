@@ -6,7 +6,7 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
-"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Choose a destination to start monitoring the docking availability as you commute";
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitor the available docks of the destination station as you travel. Receive a notification if the available number goes under a certain threshold";
 "STATION_SEARCH_PLACEHOLDER" = "Destination station";
 
 "FREE_DOCKS_AT_DESTINATION_LABEL" = "%number free docks";
@@ -24,4 +24,9 @@
 
 "DESTINATION_DOCKS_LABEL" = "Free docks";
 
-"LOW_DOCK_AVAILABILITY_WARNING" = "Low dock predicted availability at arrival time!";
+"LOW_DOCK_AVAILABILITY_WARNING" = "Low dock availability";
+
+"TOO_FAR_AWAY_WARNING" = "You are too far away to make predictions on your arrival time";
+
+"START_TIME_COMMUTE" = "Start time";
+"END_TIME_COMMUTE" = "End time";

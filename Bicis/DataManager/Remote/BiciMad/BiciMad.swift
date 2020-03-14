@@ -38,6 +38,10 @@ struct BiciMadStation: BikeStation {
     var availabilityArray: [Int]?
     var predictionArray: [Int]?
 
+    var percentageOfFreeBikes: Double {
+        return (Double(freeBikes) / Double(totalAvailableDocks)) * 100
+    }
+
     var totalAvailableDocks: Int {
         return freeRacks + freeBikes
     }

@@ -15,6 +15,7 @@ protocol BikeStation: Decodable {
     var stationName: String { get set }
     var latitude: Double { get set }
     var longitude: Double { get set }
+    var percentageOfFreeBikes: Double { get }
     // Not parseable
     var totalAvailableDocks: Int { get }
     var availabilityArray: [Int]? { get set }
@@ -38,6 +39,10 @@ struct CitiBikesStation: BikeStation {
         return freeRacks + freeBikes
     }
 
+    var percentageOfFreeBikes: Double {
+        return (Double(freeBikes) / Double(totalAvailableDocks)) * 100
+    }
+
     var rmse: Double? {
 
             guard let availability = availabilityArray else { return nil }
@@ -52,8 +57,6 @@ struct CitiBikesStation: BikeStation {
             }
 
             rmseResult = sqrt(1/Double(availability.count) * rmseResult)
-
-            print("RMSE (%) \(rmseResult)")
 
             return (rmseResult/range * 100)
     }

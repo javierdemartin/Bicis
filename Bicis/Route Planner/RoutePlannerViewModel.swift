@@ -12,13 +12,15 @@ import MapKit
 import UserNotifications
 
 protocol RoutePlannerViewModelCoordinatorDelegate: class {
-    func sendSelectedDestinationToHomeViewController(station: BikeStation)
+//    func sendSelectedDestinationToHomeViewController(station: BikeStation)
 }
 
 protocol RoutePlannerViewModelDelegate: class {
-    func selectedDestination(station: BikeStation)
+//    func selectedDestination(station: BikeStation)
     func presentAlertViewWithError(title: String, body: String)
-    func gotRouteCalculations(route: MKRoute)
+//    func gotRouteCalculations(route: MKRoute)
+    func errorTooFarAway()
+    func gotDestinationRoute(station: BikeStation, route: MKRoute)
 }
 
 protocol RoutePlannerViewModelDataManager: class {
@@ -29,21 +31,75 @@ protocol RoutePlannerViewModelDataManager: class {
 class RoutePlannerViewModel: NSObject {
 
     let compositeDisposable: CompositeDisposable
-    let stationsDict: [String: BikeStation]
+    let stationsDict: [String: BikeStation]?
     weak var coordinatorDelegate: RoutePlannerViewModelCoordinatorDelegate?
     weak var delegate: RoutePlannerViewModelDelegate?
 
     var destinationRoute = MKRoute()
-    var destinationStation: BikeStation?
+//    var destinationStation: BikeStation?
+    var destinationStation = Binding<BikeStation?>(value: nil)
 
     let dataManager: RoutePlannerViewModelDataManager
 
-    init(compositeDisposable: CompositeDisposable, dataManager: RoutePlannerViewModelDataManager, stationsDict: [String: BikeStation]) {
+    init(compositeDisposable: CompositeDisposable, dataManager: RoutePlannerViewModelDataManager, stationsDict: [String: BikeStation]?, destinationStation: BikeStation?) {
 
         self.compositeDisposable = compositeDisposable
         self.stationsDict = stationsDict
 
         self.dataManager = dataManager
+
+        super.init()
+
+        self.destinationStation.value = destinationStation
+    }
+
+    func drawDataWhateverImTired() {
+
+        guard let station = destinationStation.value else { return }
+
+        if isUITesting() {
+
+            let provisionalLocation = CLLocationCoordinate2D(latitude: CLLocationDegrees(43.263459), longitude: CLLocationDegrees(-2.937053))
+
+            self.calculateRouteToDestination(pickupCoordinate: provisionalLocation, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(station.latitude), longitude: CLLocationDegrees(station.longitude)), completion: { resultRoute in
+
+                switch resultRoute {
+
+                case .success(let route):
+                    // TODO: Work here later on pls
+                    print("!!!!!!!!!!!!GOT ROUTE")
+                    self.delegate?.gotDestinationRoute(station: station, route: route)
+                case .error(let err):
+                    dump(err)
+                    self.delegate?.errorTooFarAway()
+
+                }
+            })
+
+        } else {
+            guard let userLocation = LocationServices.sharedInstance.locationManager?.location?.coordinate else {
+                return
+            }
+
+            self.calculateRouteToDestination(pickupCoordinate: userLocation, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(station.latitude), longitude: CLLocationDegrees(station.longitude)), completion: { resultRoute in
+
+                switch resultRoute {
+
+                case .success(let route):
+                    // TODO: Work here later on pls
+                    print("!!!!!!!!!!!!GOT ROUTE")
+                    self.delegate?.gotDestinationRoute(station: station, route: route)
+                case .error(let err):
+                    dump(err)
+                    self.delegate?.errorTooFarAway()
+
+                }
+            })
+        }
+    }
+
+    func isUITesting() -> Bool {
+        return ProcessInfo.processInfo.arguments.contains("is_ui_testing")
     }
 
     func checkUserNotificationStatus() {
@@ -64,23 +120,11 @@ class RoutePlannerViewModel: NSObject {
         }
     }
 
-    func selectedDestinationStation(name: String) {
-        guard let destinationStation = stationsDict[name] else { return }
-
-        self.destinationStation = destinationStation
-
-        // If no location is retrieved don't show the route in the map
-        guard let userLocation = LocationServices.sharedInstance.locationManager?.location?.coordinate else { return }
-
-        // TODO: Delete force unwrap
-        calculateRouteToDestination(pickupCoordinate: userLocation, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(destinationStation.latitude), longitude: CLLocationDegrees(destinationStation.longitude)))
-
-        coordinatorDelegate?.sendSelectedDestinationToHomeViewController(station: destinationStation)
-    }
-
     func calculateRmseForStationByQueryingPredictions(completion: @escaping(Void) -> Void) {
 
         guard destinationStation != nil else { return }
+        guard self.destinationStation.value != nil else { return }
+
 
         dataManager.getCurrentCity(completion: { currentCityResult in
 
@@ -91,9 +135,9 @@ class RoutePlannerViewModel: NSObject {
                 var stationName = ""
 
                 if city.apiName != "bilbao" {
-                    stationName = self.destinationStation!.id
+                    stationName = self.destinationStation.value!.id
                 } else {
-                    stationName = self.destinationStation!.stationName
+                    stationName = self.destinationStation.value!.stationName
                 }
 
                 self.dataManager.getPredictionForStation(city: city.apiName, type: "prediction", name: stationName, completion: { predictionArray in
@@ -106,7 +150,7 @@ class RoutePlannerViewModel: NSObject {
 
                     sortedKeysAndValues.forEach({ predictionArrayFinal.append($0.value )})
 
-                    self.destinationStation!.predictionArray = predictionArrayFinal
+                    self.destinationStation.value!.predictionArray = predictionArrayFinal
 
                     self.dataManager.getPredictionForStation(city: city.apiName, type: "today", name: stationName, completion: { actualArray in
 
@@ -118,7 +162,7 @@ class RoutePlannerViewModel: NSObject {
 
                         sortedKeysAndValues.forEach({ todayArrayFinal.append($0.value )})
 
-                        self.destinationStation!.availabilityArray = todayArrayFinal
+                        self.destinationStation.value!.availabilityArray = todayArrayFinal
 
                         completion(())
                     })
@@ -133,7 +177,7 @@ class RoutePlannerViewModel: NSObject {
 
 extension RoutePlannerViewModel: MKMapViewDelegate {
 
-    func calculateRouteToDestination(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
+    func calculateRouteToDestination(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D, completion: @escaping(Result<MKRoute>) -> Void) {
 
         let sourcePlacemark = MKPlacemark(coordinate: pickupCoordinate, addressDictionary: nil)
         let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate, addressDictionary: nil)
@@ -165,7 +209,9 @@ extension RoutePlannerViewModel: MKMapViewDelegate {
 
             guard let response = response else {
                 if let error = error {
-                    print("Error: \(error)")
+                    dump(error)
+
+                    return completion(.error(error))
                 }
 
                 return
@@ -173,9 +219,7 @@ extension RoutePlannerViewModel: MKMapViewDelegate {
 
             self.destinationRoute = response.routes[0]
 
-            guard self.destinationStation != nil else { return }
-
-            self.delegate?.gotRouteCalculations(route: self.destinationRoute)
+            completion(.success(self.destinationRoute))
 
         }
     }

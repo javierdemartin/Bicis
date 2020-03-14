@@ -54,6 +54,10 @@
 		8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8099541624193F5600B44DC9 /* RoutePlanner.strings */; };
 		80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */; };
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
+		80B1D016241A95F20072D1D9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D015241A95F20072D1D9 /* UIView.swift */; };
+		80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */; };
+		80B1D019241ABCCC0072D1D9 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE45236F3C10003CFAF7 /* String.swift */; };
+		80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BC241BC52E004EE583 /* UIStackView.swift */; };
 		BB945FE472A23F11205BB191 /* Pods_Bicis_BicisUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BCE3AFEA221F7BFDEAB899 /* Pods_Bicis_BicisUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +132,9 @@
 		809954172419400A00B44DC9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RoutePlanner.strings; sourceTree = "<group>"; };
 		80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserInterfaceIdiom.swift; sourceTree = "<group>"; };
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		80B1D015241A95F20072D1D9 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerError.swift; sourceTree = "<group>"; };
+		80D288BC241BC52E004EE583 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		82BCE3AFEA221F7BFDEAB899 /* Pods_Bicis_BicisUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bicis_BicisUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3A858CABDDF9CD4FA0A1738 /* Pods-Bicis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis.debug.xcconfig"; path = "Target Support Files/Pods-Bicis/Pods-Bicis.debug.xcconfig"; sourceTree = "<group>"; };
 		E59531B5EA24EAA280BE3600 /* Pods_Bicis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bicis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -256,6 +263,8 @@
 				801ECE45236F3C10003CFAF7 /* String.swift */,
 				805B5A2223EE050C000F3CC5 /* Bundle.swift */,
 				8099540924181C5B00B44DC9 /* TimeInterval.swift */,
+				80B1D015241A95F20072D1D9 /* UIView.swift */,
+				80D288BC241BC52E004EE583 /* UIStackView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -367,6 +376,7 @@
 				809953F62416C77700B44DC9 /* RoutePlannerViewModel.swift */,
 				8099541624193F5600B44DC9 /* RoutePlanner.strings */,
 				8099541224193E2200B44DC9 /* RoutePlannerTableViewCell.swift */,
+				80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */,
 			);
 			path = "Route Planner";
 			sourceTree = "<group>";
@@ -589,6 +599,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80B1D019241ABCCC0072D1D9 /* String.swift in Sources */,
 				8000476F23EF425300492DFB /* BicisUITests.swift in Sources */,
 				8000477723EF426000492DFB /* SnapshotHelper.swift in Sources */,
 			);
@@ -609,9 +620,12 @@
 				80109143236E317700D3C45E /* HomeViewModel.swift in Sources */,
 				8010913E236E309300D3C45E /* OnboardingViewController.swift in Sources */,
 				8002ED83239801F9008ABB6B /* SettingsViewModel.swift in Sources */,
+				80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */,
 				800CE94423955A7F00674D1C /* LocalDataManagerError.swift in Sources */,
 				80109139236E2F9700D3C45E /* RemoteDataManager.swift in Sources */,
+				80B1D016241A95F20072D1D9 /* UIView.swift in Sources */,
 				801ECE3D236F3B90003CFAF7 /* CustomAnnotationView.swift in Sources */,
+				80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */,
 				801ECE3B236F3B7D003CFAF7 /* MapPin.swift in Sources */,
 				809953F72416C77700B44DC9 /* RoutePlannerViewModel.swift in Sources */,
 				80109141236E316E00D3C45E /* HomeViewController.swift in Sources */,

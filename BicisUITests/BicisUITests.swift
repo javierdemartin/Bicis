@@ -28,7 +28,7 @@ class BicisUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments.append("is_ui_testing")
 
-        app.launchArguments.append("-AppleInterfaceStyle Dark")
+//        app.launchArguments.append("-AppleInterfaceStyle Dark")
         // UI tests must launch the application that they test.
 
         setupSnapshot(app)
@@ -36,12 +36,23 @@ class BicisUITests: XCTestCase {
 
         snapshot("00-Home")
 
+        // Wait for the API information to be delivered
+        sleep(3)
+
+        // MARK: RoutePlanner
+        print("START_ROUTE".localize(file: "Home"))
+
+        let routePlannerButton = app.buttons["START_ROUTE"]
+        routePlannerButton.tap()
+
+//        let label = app.buttons["START_TRIP"]
+//        let exists = NSPredicate(format: "exists == 1")
+
         sleep(5)
 
-        let predictionGraph = app.otherElements["PredictionGraph"]
-        predictionGraph.tap()
 
-        snapshot("01-Settings")
+        // TODO: FAlla se queda en loading predictions
+        snapshot("01-RoutePlanner")
 
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.

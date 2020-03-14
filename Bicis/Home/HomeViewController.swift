@@ -21,6 +21,7 @@ class HomeViewController: UIViewController {
 
     var annotations: [MKAnnotation]?
     var latestSelectedAnnotation: MKAnnotation?
+    var latestSelectedBikeStation: BikeStation?
 
     weak var graphViewDelegate: HomeViewControllerGraphViewDelegate?
 
@@ -47,7 +48,7 @@ class HomeViewController: UIViewController {
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.distribution  = UIStackView.Distribution.equalCentering
         stackView.spacing = 10.0
         stackView.backgroundColor = .blue
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,12 +59,10 @@ class HomeViewController: UIViewController {
 
     lazy var belowGraphHorizontalStackView: UIStackView = {
 
-//        let stackView = UIStackView(arrangedSubviews: [startRouteButton, nextTimeEmptyHorizontalStackView])
         let stackView = UIStackView(arrangedSubviews: [startRouteButton])
         stackView.alignment = UIStackView.Alignment.center
-        stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.horizontal
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.distribution  = UIStackView.Distribution.equalCentering
         stackView.spacing = 10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -76,8 +75,10 @@ class HomeViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = Appearance().cornerRadius
-        button.backgroundColor = UIColor(named: "RedColor")
-        button.setTitle("START_ROUTE", for: .normal)
+        button.accessibilityLabel = "START_ROUTE"
+        button.backgroundColor = UIColor.systemBlue //UIColor(named: "RedColor")
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
+        button.setTitle("START_ROUTE".localize(file: "Home"), for: .normal)
         button.clipsToBounds = true
         return button
     }()
@@ -187,16 +188,14 @@ class HomeViewController: UIViewController {
 
         NSLayoutConstraint.activate([
 
-            belowGraphHorizontalStackView.leadingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.leadingAnchor),
-            belowGraphHorizontalStackView.trailingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.trailingAnchor),
+//            belowGraphHorizontalStackView.leadingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.leadingAnchor),
+//            belowGraphHorizontalStackView.trailingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.trailingAnchor),
             belowGraphHorizontalStackView.heightAnchor.constraint(equalToConstant: 50)
         ])
 
-//        NSLayoutConstraint.activate([
-//
-//            nextTimeEmptyHorizontalStackView.leadingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.leadingAnchor),
-//            nextTimeEmptyHorizontalStackView.trailingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.centerXAnchor),
-//        ])
+        NSLayoutConstraint.activate([
+            startRouteButton.widthAnchor.constraint(equalToConstant: startRouteButton.titleLabel!.text!.width(withConstrainedHeight: startRouteButton.titleLabel!.frame.height, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)) + 20.0)
+        ])
 
         NSLayoutConstraint.activate([
             graphView.leadingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.leadingAnchor),
@@ -262,6 +261,9 @@ class HomeViewController: UIViewController {
 
             if let foo = self.mapView.annotations.first(where: {$0.title == nearestStation.stationName}) {
                 self.mapView.selectAnnotation(foo, animated: true)
+
+                // TODO: DELETE
+                viewModel.selectedRoute(station: latestSelectedBikeStation!)
             }
         }
     }
@@ -345,7 +347,11 @@ class HomeViewController: UIViewController {
         compositeDisposable += startRouteButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             guard let self = self else { fatalError() }
 
-            self.viewModel.modallyPresentRoutePlanner()
+            guard let latestSelectedStation = self.latestSelectedBikeStation else { return }
+
+            self.viewModel.selectedRoute(station: latestSelectedStation)
+
+//            self.viewModel.modallyPresentRoutePlanner()
         })
 
         viewModel.stations.bind { stations in
@@ -381,7 +387,7 @@ class HomeViewController: UIViewController {
             guard let unwrappedLocation = currentLocationFromDevice else { return }
 
             // TODO: Undo this
-//            self.selectClosestAnnotationGraph(stations: stations, currentLocation: unwrappedLocation)
+            self.selectClosestAnnotationGraph(stations: stations, currentLocation: unwrappedLocation)
         }
     }
 
@@ -603,10 +609,22 @@ extension HomeViewController: MKMapViewDelegate {
             guard let unwrappedAnnotationTitle = annotationTitle else { return nil }
             guard let stationsDictFromViewModel = self.viewModel.stationsDict.value[unwrappedAnnotationTitle] else { return nil }
 
+
             let markerAnnotationView = MKMarkerAnnotationView()
             markerAnnotationView.tag = 199
-            markerAnnotationView.glyphTintColor = UIColor(named: "TextAndGraphColor")
-            markerAnnotationView.markerTintColor = UIColor(named: "RedColor")
+//            markerAnnotationView.textco = UIColor.quaternarySystemFill //UIColor(named: "TextAndGraphColor")
+
+            if stationsDictFromViewModel.percentageOfFreeBikes >= 66.0 {
+
+                markerAnnotationView.markerTintColor = UIColor.systemGreen
+            } else if stationsDictFromViewModel.percentageOfFreeBikes >= 33.0 && stationsDictFromViewModel.percentageOfFreeBikes < 66.0 {
+
+                markerAnnotationView.markerTintColor = UIColor.systemOrange
+            } else if stationsDictFromViewModel.percentageOfFreeBikes < 33.0 {
+
+                markerAnnotationView.markerTintColor = UIColor.systemRed //UIColor(named: "RedColor")
+            }
+
             markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeBikes)"
             markerAnnotationView.canShowCallout = false
 
@@ -633,6 +651,7 @@ extension HomeViewController: MKMapViewDelegate {
         mapView.removeOverlay(self.routeOverlay.polyline)
 
         latestSelectedAnnotation = annotationFromPin
+        latestSelectedBikeStation = annotationFromPin.stationInformation
 
         var apiQueryStationValue: String?
 
@@ -666,8 +685,6 @@ extension HomeViewController: MKMapViewDelegate {
                     case .success(let todayArray):
 
                         self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.availabilityArray = todayArray
-
-                        print("RMSE (%) \(self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.rmse!)")
 
                     case .error:
                         break

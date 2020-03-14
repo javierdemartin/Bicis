@@ -23,7 +23,7 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
         stationTitle = UILabel(frame: CGRect(x: 5, y: 5, width: self.frame.width, height: 40.0))
         stationTitle.text = name
 
-        let myFont = UIFont.systemFont(ofSize: 19.0, weight: .heavy)
+        let myFont = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .heavy) //UIFont.systemFont(ofSize: 19.0, weight: .heavy)
         stationTitle.textColor = UIColor(named: "TextAndGraphColor")
 
         stationTitle.frame.size.width = name.width(withConstrainedHeight: 19.0, font: myFont)
@@ -94,10 +94,11 @@ class PredictionGraphView: UIView {
         self.accessibilityIdentifier = "PredictionGraph"
         self.clipsToBounds = true
         self.layer.cornerRadius = Appearance().cornerRadius
-        self.backgroundColor = UIColor(named: "RedColor")
+        self.backgroundColor = UIColor.systemBlue //UIColor(named: "RedColor")
     }
 
     func addShadows() {
+        
         if shadowLayer == nil {
             shadowLayer = CAShapeLayer()
 
