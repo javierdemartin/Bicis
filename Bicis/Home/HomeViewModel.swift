@@ -12,17 +12,18 @@ import CoreLocation
 import MapKit
 
 protocol HomeViewModelCoordinatorDelegate: class {
-    func didTapRestart()
     func showSettingsViewController()
-    func modallyPresentRoutePlanner(stationsDict: [String:BikeStation])
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation)
+    func presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+
 }
 
 protocol HomeViewModelDataManager {
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
     func checkUserCredentials(completion: @escaping (Result<UserCredentials>) -> Void)
     func getStations(city: String, completion: @escaping (Result<[BikeStation]>) -> Void)
-    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(MyAPIResponse?) -> Void)
+    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void)
+    func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void)
 }
 
 protocol HomeViewModelDelegate: class {
@@ -30,28 +31,10 @@ protocol HomeViewModelDelegate: class {
     func segueToSettingsViewController()
     func drawPrediction(data: [Int], prediction: Bool)
     func changedUserLocation(location: CLLocation)
-    func centerMap(on point: CLLocationCoordinate2D)
+    func centerMap(on point: CLLocationCoordinate2D, coordinateSpan: MKCoordinateSpan)
     func dismissGraphView()
     func removePinsFromMap()
     func presentAlertViewWithError(title: String, body: String)
-    func updatePredictionStatus(imageString: String, nextHour: String)
-}
-
-class Binding<T> {
-
-    var value: T {
-        didSet {
-            listener?(value)
-        }
-    }
-    private var listener: ((T) -> Void)?
-    init(value: T) {
-        self.value = value
-    }
-    func bind(_ closure: @escaping (T) -> Void) {
-        closure(value)
-        listener = closure
-    }
 }
 
 extension HomeViewModel: LocationServicesDelegate {
@@ -84,13 +67,25 @@ class HomeViewModel {
 
     func selectedRoute(station: BikeStation) {
 
-        NSLog("> Tapped \(station.stationName)")
-        coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station)
-    }
+        dataManager.hasUnlockedFeatures(completion: { [weak self] hasUnlockedResult in
 
-    func modallyPresentRoutePlanner() {
-        // TODO: error in uitest
-        coordinatorDelegate?.modallyPresentRoutePlanner(stationsDict: self.stationsDict.value)
+            guard let self = self else { fatalError() }
+
+            switch hasUnlockedResult {
+
+            case .success(let hasUnlocked):
+                if hasUnlocked {
+                    self.coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station)
+                } else if !hasUnlocked {
+                    self.coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+                }
+            case .error(let error):
+                self.coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+            }
+        })
+
+        NSLog("> Tapped \(station.stationName)")
+
     }
 
     func getCurrentCity(completion: @escaping(Result<City>) -> Void) {
@@ -155,8 +150,9 @@ class HomeViewModel {
 
             guard let self = self else { fatalError() }
 
-            if let datos = res {
+            switch res {
 
+            case .success(let datos):
                 let sortedKeysAndValues = Array(datos.values).sorted(by: { $0.0 < $1.0 })
 
                 var datosa: [Int] = []
@@ -171,23 +167,12 @@ class HomeViewModel {
                     self.currentAvailability = datosa
                 }
 
-                if self.currentAvailability.count > 0 && self.currentPredictions.count > 0 {
-                    let remainderPredictionOfTheDay = self.currentPredictions[(self.currentAvailability.count)...]
-                    print(remainderPredictionOfTheDay.count)
-
-                    let timeStationWillBeEmpty = remainderPredictionOfTheDay.firstIndex(of: 0)
-
-                    if timeStationWillBeEmpty != nil {
-                        print("[\(Constants.listHours[self.currentAvailability.count])] Station will be empty at \(Constants.listHours[timeStationWillBeEmpty!])")
-                        print()
-
-                        self.delegate?.updatePredictionStatus(imageString: "0.fill", nextHour: Constants.listHours[timeStationWillBeEmpty!])
-                    }
-                }
-
                 self.delegate?.drawPrediction(data: datosa, prediction: prediction)
 
                 completion(.success(datosa))
+
+            case .error(let apiError):
+                self.delegate?.presentAlertViewWithError(title: "Error", body: apiError.localizedDescription)
 
             }
         })

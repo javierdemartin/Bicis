@@ -22,6 +22,7 @@ protocol LocationServicesDelegate: class {
     func tracingLocationDidFailWithError(_ error: NSError)
 }
 
+/// Singleton object to request user's location
 class LocationServices: NSObject, CLLocationManagerDelegate {
     static let sharedInstance: LocationServices = {
         let instance = LocationServices()
@@ -32,14 +33,10 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
     var currentLocation: CLLocation?
     weak var delegate: LocationServicesDelegate?
 
-    func isUITesting() -> Bool {
-        return ProcessInfo.processInfo.arguments.contains("is_ui_testing")
-    }
-
     override init() {
         super.init()
 
-        if !isUITesting() {
+        if !(UITestingHelper.sharedInstance.isUITesting()) {
 
             self.locationManager = CLLocationManager()
             guard let locationManager = self.locationManager else {
@@ -63,7 +60,7 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
     func startUpdatingLocation() {
         print("Starting Location Updates")
 
-        if !isUITesting() {
+        if !(UITestingHelper.sharedInstance.isUITesting()) {
             self.locationManager?.startUpdatingLocation()
         }
     }
@@ -71,7 +68,7 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
     func stopUpdatingLocation() {
         print("Stop Location Updates")
 
-        if !isUITesting() {
+        if !(UITestingHelper.sharedInstance.isUITesting()) {
 
             self.locationManager?.stopUpdatingLocation()
 
@@ -81,7 +78,7 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
     // CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
-        if !isUITesting() {
+        if !(UITestingHelper.sharedInstance.isUITesting()) {
 
             guard let location = locations.last else {
                 return
@@ -95,20 +92,30 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
         }
     }
 
+    /// Mock the user location if UI Tests are being done
+    func getLatestLocationCoordinates() -> CLLocationCoordinate2D? {
+
+        switch UITestingHelper.sharedInstance.isUITesting() {
+        case true:
+            return CLLocationCoordinate2D(latitude: CLLocationDegrees(43.263459), longitude: CLLocationDegrees(-2.937053))
+        case false:
+            return locationManager?.location?.coordinate
+        }
+    }
+
+    /// 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 
-        if !isUITesting() {
-
-            // do on error
+        // Don't display the error if UI Tests are being run
+        if !(UITestingHelper.sharedInstance.isUITesting()) {
             updateLocationDidFailWithError(error as NSError)
-
         }
     }
 
     // Private function
     fileprivate func updateLocation(_ currentLocation: CLLocation) {
 
-        if !isUITesting() {
+        if !(UITestingHelper.sharedInstance.isUITesting()) {
 
             guard let delegate = self.delegate else {
                 return
@@ -120,7 +127,7 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
 
     fileprivate func updateLocationDidFailWithError(_ error: NSError) {
 
-        if !isUITesting() {
+        if !(UITestingHelper.sharedInstance.isUITesting()) {
 
             guard let delegate = self.delegate else {
                 return

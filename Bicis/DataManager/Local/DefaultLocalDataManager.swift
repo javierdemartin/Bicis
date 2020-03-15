@@ -10,6 +10,17 @@ import Foundation
 
 class DefaultLocalDataManager: LocalDataManager {
 
+    func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
+
+        completion(.success(true))
+
+        guard let hasPaidBefore = defaults.value(forKey: Constants.hasUnlockedFeatures) as? Bool else {
+            return completion(.error(LocalDataManagerError.hasntPaid))
+        }
+
+        completion(.success(hasPaidBefore))
+    }
+
     let defaults = UserDefaults(suiteName: Constants.appGroupsBundleID)!
 
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void) {

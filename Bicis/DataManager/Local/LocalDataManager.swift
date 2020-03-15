@@ -13,4 +13,5 @@ protocol LocalDataManager {
     func getUserData(completion: @escaping (Result<UserCredentials>) -> Void)
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void)
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
+    func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void)
 }

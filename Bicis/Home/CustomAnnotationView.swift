@@ -9,8 +9,6 @@
 import UIKit
 import MapKit
 
-//class CustomAnnotationView: MKAnnotationView {
-//class CustomAnnotationView: MKPinAnnotationView {
 class CustomAnnotationView: MKMarkerAnnotationView {
 
     private let annotationFrame = CGRect(x: 0, y: 0, width: 40, height: 40)

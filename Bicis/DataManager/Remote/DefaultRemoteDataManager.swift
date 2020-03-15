@@ -21,7 +21,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
         myComponents.host = "javierdemart.in"
     }
 
-    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(MyAPIResponse?) -> Void) {
+    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void) {
 
         // PERCENT ENCODED: SAN%20PEDRO
         myComponents.path = "/api/v1/\(type)/\(city)/\(name)"
@@ -43,11 +43,13 @@ class DefaultRemoteDataManager: RemoteDataManager {
                         let decoder = JSONDecoder()
                         let decoded = try decoder.decode(MyAPIResponse.self, from: data)
 
-                        completion(decoded)
+                        completion(.success(decoded))
 
                     } catch {
-                        print("error trying to convert data to JSON")
-                        return
+                        print("[ERR] Error decoding API Response from \(city) for station \(name)")
+                        print("The received JSON String is")
+                        print(String(data: data, encoding: .utf8) as Any)
+                        return completion(.error(RemoteDataManagerError.errorParsingNeuralBikesApi))
                     }
                 }
             }
@@ -114,7 +116,6 @@ class DefaultRemoteDataManager: RemoteDataManager {
 
                 case .error:
                     completion(.error(RemoteDataManagerError.couldntGetApiKeyFromBiciMad))
-
                 }
             })
         } else {

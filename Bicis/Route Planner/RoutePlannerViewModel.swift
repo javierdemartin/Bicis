@@ -13,6 +13,7 @@ import UserNotifications
 
 protocol RoutePlannerViewModelCoordinatorDelegate: class {
 //    func sendSelectedDestinationToHomeViewController(station: BikeStation)
+    func dismissModalRoutePlannerViewController()
 }
 
 protocol RoutePlannerViewModelDelegate: class {
@@ -24,7 +25,7 @@ protocol RoutePlannerViewModelDelegate: class {
 }
 
 protocol RoutePlannerViewModelDataManager: class {
-    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(MyAPIResponse?) -> Void)
+    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void)
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
 }
 
@@ -36,7 +37,6 @@ class RoutePlannerViewModel: NSObject {
     weak var delegate: RoutePlannerViewModelDelegate?
 
     var destinationRoute = MKRoute()
-//    var destinationStation: BikeStation?
     var destinationStation = Binding<BikeStation?>(value: nil)
 
     let dataManager: RoutePlannerViewModelDataManager
@@ -57,74 +57,25 @@ class RoutePlannerViewModel: NSObject {
 
         guard let station = destinationStation.value else { return }
 
-        if isUITesting() {
+        guard let location = LocationServices.sharedInstance.getLatestLocationCoordinates() else { return }
 
-            let provisionalLocation = CLLocationCoordinate2D(latitude: CLLocationDegrees(43.263459), longitude: CLLocationDegrees(-2.937053))
+        self.calculateRouteToDestination(pickupCoordinate: location, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(station.latitude), longitude: CLLocationDegrees(station.longitude)), completion: { resultRoute in
 
-            self.calculateRouteToDestination(pickupCoordinate: provisionalLocation, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(station.latitude), longitude: CLLocationDegrees(station.longitude)), completion: { resultRoute in
+            switch resultRoute {
 
-                switch resultRoute {
+            case .success(let route):
+                self.delegate?.gotDestinationRoute(station: station, route: route)
+            case .error(let err):
+                dump(err)
+                self.delegate?.errorTooFarAway()
 
-                case .success(let route):
-                    // TODO: Work here later on pls
-                    print("!!!!!!!!!!!!GOT ROUTE")
-                    self.delegate?.gotDestinationRoute(station: station, route: route)
-                case .error(let err):
-                    dump(err)
-                    self.delegate?.errorTooFarAway()
-
-                }
-            })
-
-        } else {
-            guard let userLocation = LocationServices.sharedInstance.locationManager?.location?.coordinate else {
-                return
             }
-
-            self.calculateRouteToDestination(pickupCoordinate: userLocation, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(station.latitude), longitude: CLLocationDegrees(station.longitude)), completion: { resultRoute in
-
-                switch resultRoute {
-
-                case .success(let route):
-                    // TODO: Work here later on pls
-                    print("!!!!!!!!!!!!GOT ROUTE")
-                    self.delegate?.gotDestinationRoute(station: station, route: route)
-                case .error(let err):
-                    dump(err)
-                    self.delegate?.errorTooFarAway()
-
-                }
-            })
-        }
+        })
     }
 
-    func isUITesting() -> Bool {
-        return ProcessInfo.processInfo.arguments.contains("is_ui_testing")
-    }
+    func calculateRmseForStationByQueryingPredictions(completion: @escaping(()) -> Void) {
 
-    func checkUserNotificationStatus() {
-
-        let userNotificationCenter = UNUserNotificationCenter.current()
-
-        let authOptions = UNAuthorizationOptions.init(arrayLiteral: .alert, .badge, .sound)
-
-        userNotificationCenter.requestAuthorization(options: authOptions) { (success, error) in
-            if let error = error {
-                print("Error: ", error)
-            }
-
-            if success {
-                print("Starting timer!")
-                RoutePlannerTimerServices.sharedInstance.startTimer()
-            }
-        }
-    }
-
-    func calculateRmseForStationByQueryingPredictions(completion: @escaping(Void) -> Void) {
-
-        guard destinationStation != nil else { return }
         guard self.destinationStation.value != nil else { return }
-
 
         dataManager.getCurrentCity(completion: { currentCityResult in
 
@@ -142,30 +93,42 @@ class RoutePlannerViewModel: NSObject {
 
                 self.dataManager.getPredictionForStation(city: city.apiName, type: "prediction", name: stationName, completion: { predictionArray in
 
-                    guard predictionArray != nil else { return }
+                    switch predictionArray {
 
-                    let sortedKeysAndValues = Array(predictionArray!.values).sorted(by: { $0.0 < $1.0 })
+                    case .success(let predictionArray):
 
-                    var predictionArrayFinal: [Int] = []
+                        let sortedKeysAndValues = Array(predictionArray.values).sorted(by: { $0.0 < $1.0 })
 
-                    sortedKeysAndValues.forEach({ predictionArrayFinal.append($0.value )})
+                        var predictionArrayFinal: [Int] = []
 
-                    self.destinationStation.value!.predictionArray = predictionArrayFinal
+                        sortedKeysAndValues.forEach({ predictionArrayFinal.append($0.value )})
 
-                    self.dataManager.getPredictionForStation(city: city.apiName, type: "today", name: stationName, completion: { actualArray in
+                        self.destinationStation.value!.predictionArray = predictionArrayFinal
 
-                        guard actualArray != nil else { return }
+                        self.dataManager.getPredictionForStation(city: city.apiName, type: "today", name: stationName, completion: { actualArrayResult in
 
-                        let sortedKeysAndValues = Array(actualArray!.values).sorted(by: { $0.0 < $1.0 })
+                            switch actualArrayResult {
 
-                        var todayArrayFinal: [Int] = []
+                            case .success(let actualArray):
 
-                        sortedKeysAndValues.forEach({ todayArrayFinal.append($0.value )})
+                                let sortedKeysAndValues = Array(actualArray.values).sorted(by: { $0.0 < $1.0 })
 
-                        self.destinationStation.value!.availabilityArray = todayArrayFinal
+                                var todayArrayFinal: [Int] = []
 
-                        completion(())
-                    })
+                                sortedKeysAndValues.forEach({ todayArrayFinal.append($0.value )})
+
+                                self.destinationStation.value!.availabilityArray = todayArrayFinal
+
+                                completion(())
+                            case .error(let err):
+                                self.delegate?.presentAlertViewWithError(title: "Error", body: err.localizedDescription)
+                            }
+
+                        })
+                    case .error(let error):
+                        self.delegate?.presentAlertViewWithError(title: "Error", body: error.localizedDescription)
+                    }
+
                 })
             case .error:
                 break

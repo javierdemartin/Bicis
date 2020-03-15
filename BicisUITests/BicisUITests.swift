@@ -45,13 +45,8 @@ class BicisUITests: XCTestCase {
         let routePlannerButton = app.buttons["START_ROUTE"]
         routePlannerButton.tap()
 
-//        let label = app.buttons["START_TRIP"]
-//        let exists = NSPredicate(format: "exists == 1")
+        sleep(9)
 
-        sleep(5)
-
-
-        // TODO: FAlla se queda en loading predictions
         snapshot("01-RoutePlanner")
 
         // Use recording to get started writing UI tests.

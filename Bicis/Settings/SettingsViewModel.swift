@@ -27,6 +27,7 @@ protocol SettingsViewModelDelegate: class {
 protocol SettingsViewModelCoordinatorDelegate: class {
 
     func changedCitySelectionInPickerView(city: City)
+    func presentRestorePurchasesViewControllerFromCoordinatorDelegate()
 }
 
 enum DonationDescriptions: String {
@@ -61,6 +62,11 @@ class SettingsViewModel {
         dataManager.saveCurrentCity(apiCityName: selectedCity, completion: { _ in })
 
         coordinatorDelegate?.changedCitySelectionInPickerView(city: selectedCity)
+    }
+
+    /// Presents RestorePurchasesViewController and dismisses SettingsViewController that is currently presented as a modal
+    func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
+        coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
     }
 
     func prepareViewForAppearance() {

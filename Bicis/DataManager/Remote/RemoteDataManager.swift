@@ -15,9 +15,10 @@ enum RemoteDataManagerError: Error {
     case couldntParseFeed
     case couldntGetApiKeyFromBiciMad
     case didNotGetAnyStation
+    case errorParsingNeuralBikesApi
 }
 
 protocol RemoteDataManager {
     func getStations(city: String, completion: @escaping (Result<[BikeStation]>) -> Void)
-    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(MyAPIResponse?) -> Void)
+    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void)
 }

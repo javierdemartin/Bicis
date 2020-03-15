@@ -20,17 +20,22 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
 
         stationTitle.removeFromSuperview()
 
-        stationTitle = UILabel(frame: CGRect(x: 5, y: 5, width: self.frame.width, height: 40.0))
-        stationTitle.text = name
+        stationTitle = {
 
-        let myFont = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .heavy) //UIFont.systemFont(ofSize: 19.0, weight: .heavy)
-        stationTitle.textColor = UIColor(named: "TextAndGraphColor")
+            let label = UILabel(frame: CGRect(x: 5, y: 5, width: self.frame.width, height: 40.0))
+            label.text = name
 
-        stationTitle.frame.size.width = name.width(withConstrainedHeight: 19.0, font: myFont)
-        stationTitle.font = myFont
-        stationTitle.layer.masksToBounds = false
 
-        stationTitle.sizeToFit()
+            label.textColor = UIColor(named: "TextAndGraphColor")
+
+            label.frame.size.width = name.width(withConstrainedHeight: 19.0, font: Constants.headerFont)
+            label.font = Constants.headerFont
+            label.layer.masksToBounds = false
+
+            label.sizeToFit()
+
+            return label
+        }()
 
         addSubview(stationTitle)
     }
@@ -43,6 +48,7 @@ class PredictionGraphView: UIView {
     }
 
     var isShown: Bool
+
 
     var stationTitle = UILabel()
     var stationTitleText: String?
@@ -94,7 +100,7 @@ class PredictionGraphView: UIView {
         self.accessibilityIdentifier = "PredictionGraph"
         self.clipsToBounds = true
         self.layer.cornerRadius = Appearance().cornerRadius
-        self.backgroundColor = UIColor.systemBlue //UIColor(named: "RedColor")
+        self.backgroundColor = UIColor.systemBlue
     }
 
     func addShadows() {

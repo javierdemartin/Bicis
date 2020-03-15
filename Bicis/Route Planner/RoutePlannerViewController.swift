@@ -12,19 +12,14 @@ import ReactiveSwift
 import UIKit
 import MapKit
 
-
 extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 
     func gotDestinationRoute(station: BikeStation, route: MKRoute) {
 
-        print("GOT DESTINATION ROUTE")
-
         self.informationVerticalStackView.fadeIn(0.5, onCompletion: {
-            self.startTripButton.fadeIn()
         })
 
         let calendar = Calendar.current
-        // TODO: Compensar el cálculo
         let date = calendar.date(byAdding: .minute, value: route.expectedTravelTime.minutes, to: Date())
 
         let dateFormatter = DateFormatter()
@@ -36,12 +31,7 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
         formatter.unitStyle = .short
         formatter.locale = Locale(identifier: Locale.current.languageCode!)
 
-        let distanceInMeters = Measurement(value: Double(round(100*route.distance/1000)/100), unit: UnitLength.kilometers) // 2.0 m
-
-        let distanceMeasurement = Measurement(value: Double(round(100*route.distance/1000)/100), unit: UnitLength.kilometers)
-
         guard self.viewModel.destinationStation.value != nil else { return }
-
 
         racksAvailableNowOnDestinationImageView.text = "\(dateFormatter.string(from: Date()))"
         predictedDocksAtDestinationUnitsLabel.text = "\(roundedArrivalTime)"
@@ -54,6 +44,12 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
             if let rmseOfStation = self.viewModel.destinationStation.value!.inverseAccuracyRmse {
 
                 self.accuracyOfPredictionLabel.text = "ACCURACY_OF_MODEL".localize(file: "RoutePlanner").replacingOccurrences(of: "%percentage", with: "\(Int(rmseOfStation))")
+
+                // Warn the user of the low accuracy
+                if Int(rmseOfStation) < 50 {
+                    self.accuracyOfPredictionLabel.textColor = .systemRed
+                    self.accuracyOfPredictionLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .bold)
+                }
             }
 
             if let destinationStation = self.viewModel.destinationStation.value {
@@ -79,10 +75,10 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
                 // Calculate the availability at arrival
                 self.predictedDocksAtDestinationLabel.text = "\(destinationStation.totalAvailableDocks - predictionArray[indexOfTime])"
 
-                // TODO: Set a reasonable value
-                if (destinationStation.totalAvailableDocks - predictionArray[indexOfTime]) < 4  {
+                // Predicted available docks = Docks(t) - (Available docks - BikePredictions(t))
+                if (destinationStation.totalAvailableDocks - (destinationStation.totalAvailableDocks - predictionArray[indexOfTime])) < 4  {
                     self.lowDockAvailabilityLabel.text = "LOW_DOCK_AVAILABILITY_WARNING".localize(file: "RoutePlanner")
-                    self.lowDockAvailabilityStackView.isHidden = false
+                    self.lowDockAvailabilityLabel.fadeOut()
                 }
             }
 
@@ -99,6 +95,7 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm"
 
+        self.informationVerticalStackView.fadeIn(0.5, onCompletion: nil)
 
         guard let stationDestination = self.viewModel.destinationStation.value else { return }
 
@@ -116,6 +113,11 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
             if let rmseOfStation = self.viewModel.destinationStation.value!.inverseAccuracyRmse {
 
                 self.accuracyOfPredictionLabel.text = "ACCURACY_OF_MODEL".localize(file: "RoutePlanner").replacingOccurrences(of: "%percentage", with: "\(Int(rmseOfStation))")
+
+                if Int(rmseOfStation) < 50 {
+                    self.accuracyOfPredictionLabel.textColor = .systemRed
+                    self.accuracyOfPredictionLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .bold)
+                }
             }
 
             if let destinationStation = self.viewModel.destinationStation.value {
@@ -135,8 +137,6 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
         viewModel.drawDataWhateverImTired()
     }
 
@@ -147,41 +147,6 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
         alertController.addAction(okAction)
 
         self.present(alertController, animated: true, completion: nil)
-    }
-}
-
-extension  RoutePlannerViewController: UITableViewDelegate, UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredData.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
-        cell.selectionStyle = UITableViewCell.SelectionStyle.default
-//        cell.isAccessibilityElement = true
-        cell.accessibilityIdentifier = "cell_\(indexPath.row)"
-        cell.textLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
-        cell.textLabel?.text = "\(filteredData[indexPath.row])"
-        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .regular)
-
-        guard let stationsDict = viewModel.stationsDict else { fatalError() }
-
-        if let freeRacks = stationsDict[filteredData[indexPath.row]]?.freeRacks {
-            cell.detailTextLabel?.text = "FREE_DOCKS_AT_DESTINATION_LABEL".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(freeRacks)")
-        } else {
-            cell.detailTextLabel?.text = "ERROR_LOADING_FREE_DOCKS_AT_DESTINATION".localize(file: "RoutePlanner")
-        }
-
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Selected \(filteredData[indexPath.row])")
-
-//        viewModel.selectedDestinationStation(name: filteredData[indexPath.row])
     }
 }
 
@@ -229,7 +194,7 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var informationVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [labelsDestinationStationVerticalStackView, statisticsAndLowDockStackView, startTripButton])
+        let stackView = UIStackView(arrangedSubviews: [labelsDestinationStationVerticalStackView, statisticsAndLowDockStackView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -360,6 +325,7 @@ class RoutePlannerViewController: UIViewController {
         let label = UILabel()
         label.text = "START_TIME_COMMUTE".localize(file: "RoutePlanner")
         label.tintColor = .systemGray
+        label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -424,21 +390,6 @@ class RoutePlannerViewController: UIViewController {
         return label
     }()
 
-    lazy var startTripButton: UIButton = {
-
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 9.0
-        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
-        button.isHidden = true
-        button.accessibilityIdentifier = "START_TRIP"
-
-        button.setTitle("START_TRIP".localize(file: "RoutePlanner"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
     lazy var predictedDocksAtDestinationVerticalStackView: UIStackView = {
 
         let stackView = UIStackView(arrangedSubviews: [predictedDocksAtDestinationUnitsLabel, predictedDocksAtDestinationLabel])
@@ -465,6 +416,7 @@ class RoutePlannerViewController: UIViewController {
     lazy var predictedDocksAtDestinationUnitsLabel: UILabel = {
 
             let label = UILabel()
+        label.textAlignment = .center
             label.text = "END_TIME_COMMUTE".localize(file: "RoutePlanner")
             label.tintColor = .systemGray
             label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
@@ -520,9 +472,9 @@ class RoutePlannerViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            freeRacksOnDestinationVerticalStackView.widthAnchor.constraint(equalToConstant:
+            racksAvailableNowOnDestinationImageView.widthAnchor.constraint(equalToConstant:
                 (racksAvailableNowOnDestinationImageView.text?.width(withConstrainedHeight: racksAvailableNowOnDestinationImageView.frame.width + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))!),
-            predictedDocksAtDestinationVerticalStackView.widthAnchor.constraint(equalToConstant: (predictedDocksAtDestinationUnitsLabel.text?.width(withConstrainedHeight: racksAvailableNowOnDestinationImageView.frame.width + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))!)
+            predictedDocksAtDestinationUnitsLabel.widthAnchor.constraint(equalToConstant: (predictedDocksAtDestinationUnitsLabel.text?.width(withConstrainedHeight: predictedDocksAtDestinationUnitsLabel.frame.width + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))!)
         ])
 
         NSLayoutConstraint.activate([
@@ -533,12 +485,6 @@ class RoutePlannerViewController: UIViewController {
             lowDockAvailabilityStackView.leadingAnchor.constraint(equalTo: statisticsAndLowDockStackView.leadingAnchor, constant: 0),
             lowDockAvailabilityStackView.trailingAnchor.constraint(equalTo: statisticsAndLowDockStackView.trailingAnchor, constant: 0),
             lowDockAvailabilityStackView.topAnchor.constraint(equalTo: statisticsVerticalStackView.bottomAnchor, constant: 0)
-        ])
-
-        NSLayoutConstraint.activate([
-            startTripButton.widthAnchor.constraint(equalToConstant:
-                startTripButton.titleLabel!.text!.width(withConstrainedHeight: startTripButton.titleLabel!.frame.height,
-                                                        font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)) + 20.0)
         ])
 
         NSLayoutConstraint.activate([
@@ -567,12 +513,5 @@ class RoutePlannerViewController: UIViewController {
     }
 
     func setUpBindings() {
-
-        compositeDisposable += startTripButton.reactive.controlEvents(.touchUpInside).observeValues({ [weak self] (_) in
-
-            guard let self = self else { fatalError() }
-
-            self.viewModel.checkUserNotificationStatus()
-        })
     }
 }

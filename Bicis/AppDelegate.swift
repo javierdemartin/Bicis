@@ -34,9 +34,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
+
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        application.registerUserNotificationSettings(UIUserNotificationSettings(types: [.sound, .alert, .badge], categories: nil))
+
+        application.beginBackgroundTask(withName: "showNotification", expirationHandler: nil)
+
+            return true
+        }
+
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
-
             return .portrait
         } else {
             return UIInterfaceOrientationMask.all

@@ -9,8 +9,8 @@
 import UIKit
 import ReactiveCocoa
 import ReactiveSwift
-import StoreKit
 import CoreLocation
+import StoreKit
 
 extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
@@ -43,64 +43,10 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 }
 
-extension SettingsViewController: SKProductsRequestDelegate, SKPaymentTransactionObserver {
-
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-
-        let count: Int = response.products.count
-        if count > 0 {
-            let validProduct: SKProduct = response.products[0] as SKProduct
-
-            guard let selectedPayment = selectedPayment else { return }
-
-            if validProduct.productIdentifier == selectedPayment {
-                print(validProduct.localizedTitle)
-                print(validProduct.localizedDescription)
-                print(validProduct.price)
-                buyProduct(product: validProduct)
-            } else {
-                print(validProduct.productIdentifier)
-            }
-        } else {
-            print("nothing")
-        }
-    }
-
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-
-        print("Received Payment Transaction Response from Apple")
-
-        for transaction: AnyObject in transactions {
-
-            if let trans: SKPaymentTransaction = transaction as? SKPaymentTransaction {
-
-                guard let transaction = transaction as? SKPaymentTransaction else { return }
-
-                switch trans.transactionState {
-                case .purchased:
-                    print("Product Purchased")
-
-                    SKPaymentQueue.default().finishTransaction(transaction)
-                case .failed:
-                    print("Purchased Failed")
-                    SKPaymentQueue.default().finishTransaction(transaction)
-
-                case .restored:
-                    print("Already Purchased")
-                    SKPaymentQueue.default().restoreCompletedTransactions()
-                default:
-                    break
-                }
-            }
-        }
-    }
-}
 
 class SettingsViewController: UIViewController {
 
     var citiesList = Array(availableCities.keys)
-
-    var selectedPayment: String?
 
     let compositeDisposable: CompositeDisposable
 
@@ -130,7 +76,7 @@ class SettingsViewController: UIViewController {
 
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView, donationsHorizontalStackView])
+        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView, restorePurchasesButton])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -156,7 +102,7 @@ class SettingsViewController: UIViewController {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .bold)
         label.numberOfLines = 0
 
         return label
@@ -166,7 +112,7 @@ class SettingsViewController: UIViewController {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 21.0, weight: .heavy)
+        label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .heavy)
         label.numberOfLines = 0
         label.text = "TITLE_LABEL_HEADER".localize(file: "Settings")
 
@@ -181,7 +127,7 @@ class SettingsViewController: UIViewController {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = true
-        textView.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        textView.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .bold)
         textView.text = "HOW_TO_USE".localize(file: "Settings")
 
         return textView
@@ -222,39 +168,17 @@ class SettingsViewController: UIViewController {
         return button
     }()
 
-    lazy var donationsHorizontalStackView: UIStackView = {
-
-        let stackView = UIStackView(arrangedSubviews: [tipButtonTier1, tipButtonTier2])
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.backgroundColor = .white
-        stackView.axis = NSLayoutConstraint.Axis.horizontal
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 10.0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        return stackView
-    }()
-
-    lazy var tipButtonTier1: UIButton = {
+    lazy var restorePurchasesButton: UIButton = {
 
         let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.setTitle("RESTORE_PURCHASES_BUTTON".localize(file: "Settings"), for:
+            .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 9.0
+        button.layer.cornerRadius = 4
 
-        button.setTitle("TIER_1_DONATION".localize(file: "Settings"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    lazy var tipButtonTier2: UIButton = {
-
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 9.0
-
-        button.setTitle("TIER_2_DONATION".localize(file: "Settings"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -265,7 +189,7 @@ class SettingsViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.setTitle("FEEDBACK_BUTTON".localize(file: "Settings"), for: .normal)
         button.layer.cornerRadius = 4
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
         button.backgroundColor = UIColor.systemBlue
         button.sizeToFit()
 
@@ -292,7 +216,7 @@ class SettingsViewController: UIViewController {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = true
-        textView.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        textView.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .bold)
         textView.text = "LOCATION_SERVICES_PRIVACY".localize(file: "Settings")
 
         return textView
@@ -359,6 +283,10 @@ class SettingsViewController: UIViewController {
             cityPicker.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor, constant: -16.0)
         ])
 
+        NSLayoutConstraint.activate([
+            restorePurchasesButton.widthAnchor.constraint(equalToConstant: (restorePurchasesButton.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0)
+        ])
+
         guard let versionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
 
         guard let bundleString = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else { return }
@@ -414,31 +342,14 @@ class SettingsViewController: UIViewController {
             self.citiesList = cities
         }
 
-        // MARK: Donation buttons
-
-        compositeDisposable += tipButtonTier1.reactive.controlEvents(.touchUpInside).observeValues({ [weak self] (_) in
-            self?.donateTip(quantity: .firstTier)
+        compositeDisposable += restorePurchasesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+            self?.dismiss(animated: true, completion: {
+                self?.viewModel.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+            })
         })
     }
 
-    func donateTip(quantity: DonationDescriptions) {
 
-        if !SKPaymentQueue.canMakePayments() { return }
-
-        let productID = Set(arrayLiteral: quantity.rawValue)
-        let productsRequest: SKProductsRequest = SKProductsRequest(productIdentifiers: productID)
-        productsRequest.delegate = self
-
-        selectedPayment = quantity.rawValue
-        productsRequest.start()
-        print("Fetching Products")
-    }
-
-    func buyProduct(product: SKProduct) {
-        print("Sending the Payment Request to Apple")
-        let payment = SKPayment(product: product)
-        SKPaymentQueue.default().add(payment)
-    }
 
     deinit {
         compositeDisposable.dispose()

@@ -51,6 +51,7 @@ class HomeViewController: UIViewController {
         stackView.distribution  = UIStackView.Distribution.equalCentering
         stackView.spacing = 10.0
         stackView.backgroundColor = .blue
+        stackView.isHidden = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -79,7 +80,9 @@ class HomeViewController: UIViewController {
         button.backgroundColor = UIColor.systemBlue //UIColor(named: "RedColor")
         button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
         button.setTitle("START_ROUTE".localize(file: "Home"), for: .normal)
+        button.setTitleColor(UIColor.systemGray4, for: .disabled)
         button.clipsToBounds = true
+        button.isEnabled = false
         return button
     }()
 
@@ -127,7 +130,7 @@ class HomeViewController: UIViewController {
     var graphView: PredictionGraphView = {
         let view = PredictionGraphView()
         view.translatesAutoresizingMaskIntoConstraints = false
-//        view.isHidden = true
+        view.isHidden = true
 
         return view
     }()
@@ -151,13 +154,6 @@ class HomeViewController: UIViewController {
         self.compositeDisposable = compositeDisposable
 
         super.init(nibName: nil, bundle: nil)
-
-        if let cityFromModel = viewModel.city {
-
-            let centerCoordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(cityFromModel.latitude), longitude: CLLocationDegrees(cityFromModel.longitude))
-
-            self.centerMap(on: centerCoordinates)
-        }
     }
 
     override func viewWillLayoutSubviews() {
@@ -187,9 +183,6 @@ class HomeViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-
-//            belowGraphHorizontalStackView.leadingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.leadingAnchor),
-//            belowGraphHorizontalStackView.trailingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.trailingAnchor),
             belowGraphHorizontalStackView.heightAnchor.constraint(equalToConstant: 50)
         ])
 
@@ -200,14 +193,16 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate([
             graphView.leadingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.leadingAnchor),
             graphView.trailingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.trailingAnchor),
-            graphView.heightAnchor.constraint(equalToConstant: 110)
+            graphView.heightAnchor.constraint(equalToConstant: 110),
+
         ])
 
         if UIDevice.current.userInterfaceIdiom == .pad {
 
             NSLayoutConstraint.activate([
                 statisticsAndGraphViewStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 32),
-                statisticsAndGraphViewStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -32)
+                statisticsAndGraphViewStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -32),
+                statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0)
 
             ])
 
@@ -215,7 +210,8 @@ class HomeViewController: UIViewController {
 
             NSLayoutConstraint.activate([
                 statisticsAndGraphViewStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16.0),
-                statisticsAndGraphViewStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16.0)
+                statisticsAndGraphViewStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16.0),
+                statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0)
             ])
         }
 
@@ -234,11 +230,32 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-//        graphView.hideView()
-//        graphView.isHidden = true
+        viewModel.getCurrentCity(completion: { [weak self] cityResult in
+
+            guard let self = self else { fatalError() }
+
+            switch cityResult {
+
+            case .success(let city):
+
+                let cityCoordinates: CLLocationCoordinate2D = {
+
+                    let latitude = CLLocationDegrees(city.latitude)
+                    let longitude = CLLocationDegrees(city.longitude)
+
+                    let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+
+                    return coordinates
+                }()
+
+                self.centerMap(on: cityCoordinates, coordinateSpan: Constants.wideCoordinateSpan)
+
+            case .error(_):
+                break
+            }
+        })
 
         self.hideStackView()
-
     }
 
     func selectClosestAnnotationGraph(stations: [BikeStation], currentLocation: CLLocation) {
@@ -255,7 +272,7 @@ class HomeViewController: UIViewController {
         guard let nearestStation = self.viewModel.stationsDict.value[nearest.stationName] else { return }
 
         self.centerMap(on: CLLocationCoordinate2D(latitude: CLLocationDegrees(nearestStation.latitude),
-                                                  longitude: CLLocationDegrees(nearestStation.longitude)))
+                                                  longitude: CLLocationDegrees(nearestStation.longitude)), coordinateSpan: Constants.narrowCoordinateSpan)
 
         if self.mapView.annotations.contains(where: {$0.title == nearestStation.stationName}) {
 
@@ -263,7 +280,7 @@ class HomeViewController: UIViewController {
                 self.mapView.selectAnnotation(foo, animated: true)
 
                 // TODO: DELETE
-                viewModel.selectedRoute(station: latestSelectedBikeStation!)
+//                viewModel.selectedRoute(station: latestSelectedBikeStation!)
             }
         }
     }
@@ -272,7 +289,7 @@ class HomeViewController: UIViewController {
         print("App moved to ForeGround!")
 
         if let currentUserLcoation = LocationServices.sharedInstance.currentLocation {
-            centerMap(on: CLLocationCoordinate2D(latitude: currentUserLcoation.coordinate.latitude, longitude: currentUserLcoation.coordinate.longitude))
+            centerMap(on: CLLocationCoordinate2D(latitude: currentUserLcoation.coordinate.latitude, longitude: currentUserLcoation.coordinate.longitude), coordinateSpan: Constants.narrowCoordinateSpan)
         }
 
         viewModel.getCurrentCity(completion: { currentCityResult in
@@ -307,16 +324,10 @@ class HomeViewController: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
 
-//        mapView.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-
         mapView.delegate = self
         graphViewDelegate = graphView
 
         setupBindings()
-    }
-
-    func isUITesting() -> Bool {
-        return ProcessInfo.processInfo.arguments.contains("is_ui_testing")
     }
 
     override func viewDidLayoutSubviews() {
@@ -336,58 +347,58 @@ class HomeViewController: UIViewController {
 
     fileprivate func setupBindings() {
 
-        viewModel.destinationStation.bind({ st in
-
-            guard st != nil else { return }
-
-            // TODO: Remove force unwrap
-            self.showRouteOnMap(pickupCoordinate: (LocationServices.sharedInstance.locationManager?.location!.coordinate)!, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(st!.latitude), longitude: CLLocationDegrees(st!.longitude)))
-        })
-
         compositeDisposable += startRouteButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             guard let self = self else { fatalError() }
 
             guard let latestSelectedStation = self.latestSelectedBikeStation else { return }
 
             self.viewModel.selectedRoute(station: latestSelectedStation)
-
-//            self.viewModel.modallyPresentRoutePlanner()
         })
 
         viewModel.stations.bind { stations in
 
             stations.forEach({ pin in
 
-                let annotation = MKPointAnnotation()
+                let pinCoordinate: CLLocationCoordinate2D = {
+                    let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.latitude),
+                                                            longitude: CLLocationDegrees(pin.longitude))
+                    return coordinate
+                }()
 
-                let latitude = CLLocationDegrees(pin.latitude)
-                let longitude = CLLocationDegrees(pin.longitude)
+                let annotation: MKAnnotation = {
 
-                annotation.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                annotation.title = pin.stationName
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = pinCoordinate
+                    annotation.title = pin.stationName
+
+                    return annotation
+                }()
 
                 self.annotations?.append(annotation)
 
                 self.mapView.addAnnotation(MapPin(title: pin.stationName,
-                                                  coordinate: CLLocationCoordinate2D(latitude: latitude,
-                                                                                     longitude: longitude),
+                                                  coordinate: pinCoordinate,
                                                   stationInformation: pin))
             })
 
-            var currentLocationFromDevice: CLLocation?
+            var currentLocationFromDevice = CLLocation()
 
-            guard let unwrappedCity = self.viewModel.city else { return }
+            switch UITestingHelper.sharedInstance.isUITesting() {
+            case true:
 
-            if self.isUITesting() {
+                guard let unwrappedCity = self.viewModel.city else { return }
+
                 currentLocationFromDevice = CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude), longitude: CLLocationDegrees(unwrappedCity.longitude))
-            } else {
-                currentLocationFromDevice = LocationServices.sharedInstance.currentLocation
+            case false:
+                guard let locationFromDevice = LocationServices.sharedInstance.currentLocation else { return }
+
+                currentLocationFromDevice = locationFromDevice
             }
 
-            guard let unwrappedLocation = currentLocationFromDevice else { return }
-
-            // TODO: Undo this
-            self.selectClosestAnnotationGraph(stations: stations, currentLocation: unwrappedLocation)
+            // TODO: Eliminar
+//            if !UITestingHelper.sharedInstance.isUITesting() {
+//                self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
+//            }
         }
     }
 
@@ -395,9 +406,7 @@ class HomeViewController: UIViewController {
         dismissGraphView()
     }
 
-    func centerMap(on point: CLLocationCoordinate2D) {
-
-        let coordinateSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+    func centerMap(on point: CLLocationCoordinate2D, coordinateSpan: MKCoordinateSpan) {
 
         let region = MKCoordinateRegion(center: point, span: coordinateSpan)
 
@@ -405,41 +414,18 @@ class HomeViewController: UIViewController {
     }
 
     func hideStackView() {
-
-        self.graphView.hideView()
-
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
-
-            self.statisticsAndGraphViewStackView.transform = CGAffineTransform(translationX: 0, y: -1 * (0 + 110.0))
-            self.statisticsAndGraphViewStackView.layoutIfNeeded()
-        }, completion: { _ in
-
-            self.statisticsAndGraphViewStackView.isHidden = true
-        })
+        graphView.fadeOut(0.2)
     }
 
     func showStackView() {
 
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
-
-//            self.statisticsAndGraphViewStackView.transform = CGAffineTransform(translationX: 0, y: 0 + 55.0)
-            self.statisticsAndGraphViewStackView.transform = CGAffineTransform(translationX: 0, y: 0 + 5.0)
-
-            self.statisticsAndGraphViewStackView.isHidden = false
-            self.statisticsAndGraphViewStackView.layoutIfNeeded()
-        }, completion: {_ in
-
-        })
-
+        graphView.fadeIn(0.2)
     }
 }
 
 // MARK: HomeViewModelDelegate
 
 extension HomeViewController: HomeViewModelDelegate {
-    func updatePredictionStatus(imageString: String, nextHour: String) {
-        nextRefilTimeLabel.text = "~\(nextHour)"
-    }
 
     func presentAlertViewWithError(title: String, body: String) {
 
@@ -459,7 +445,6 @@ extension HomeViewController: HomeViewModelDelegate {
     func dismissGraphView() {
 
         self.hideStackView()
-//        self.graphView.hideView()
     }
 
     func changedUserLocation(location: CLLocation) {
@@ -469,6 +454,8 @@ extension HomeViewController: HomeViewModelDelegate {
     }
 
     func drawPrediction(data: [Int], prediction: Bool) {
+
+
         graphView.drawLine(values: data, isPrediction: prediction)
     }
 
@@ -487,69 +474,19 @@ extension HomeViewController: HomeViewModelDelegate {
 
 extension HomeViewController: MKMapViewDelegate {
 
-    // MARK: - showRouteOnMap
-
-    func showRouteOnMap(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
-
-        let sourcePlacemark = MKPlacemark(coordinate: pickupCoordinate, addressDictionary: nil)
-        let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate, addressDictionary: nil)
-
-        let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
-        let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-
-        let sourceAnnotation = MKPointAnnotation()
-
-        if let location = sourcePlacemark.location {
-            sourceAnnotation.coordinate = location.coordinate
-        }
-
-        let destinationAnnotation = MKPointAnnotation()
-
-        if let location = destinationPlacemark.location {
-            destinationAnnotation.coordinate = location.coordinate
-        }
-
-        self.mapView.showAnnotations([sourceAnnotation, destinationAnnotation], animated: true)
-
-        let directionRequest = MKDirections.Request()
-        directionRequest.source = sourceMapItem
-        directionRequest.destination = destinationMapItem
-        directionRequest.transportType = .automobile
-
-        // Calculate the direction
-        let directions = MKDirections(request: directionRequest)
-
-        directions.calculate { (response, error) -> Void in
-
-            guard let response = response else {
-                if let error = error {
-                    print("Error: \(error)")
-                }
-
-                return
-            }
-
-            self.routeOverlay = response.routes[0]
-
-            // TODO: quizás reactivar esto
-//            self.mapView.addOverlay((self.routeOverlay.polyline), level: MKOverlayLevel.aboveRoads)
-
-            let rect = self.routeOverlay.polyline.boundingMapRect
-            self.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
-        }
-    }
-
     // MARK: - MKMapViewDelegate
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
 
-        let renderer = MKPolylineRenderer(overlay: overlay)
+        let polylineRenderer: MKPolylineRenderer = {
 
-        renderer.strokeColor = UIColor(red: 17.0/255.0, green: 147.0/255.0, blue: 255.0/255.0, alpha: 1)
+            let renderer = MKPolylineRenderer(overlay: overlay)
+            renderer.strokeColor = UIColor(red: 17.0/255.0, green: 147.0/255.0, blue: 255.0/255.0, alpha: 1)
+            renderer.lineWidth = 5.0
+            return renderer
+        }()
 
-        renderer.lineWidth = 5.0
-
-        return renderer
+        return polylineRenderer
     }
 
     private func customAnnotationView(in mapView: MKMapView, for annotation: MKAnnotation) -> CustomAnnotationView {
@@ -575,7 +512,7 @@ extension HomeViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
-        // Don't want to show a custom image if the annotation is the user's location.
+        // Don't show a custom image if the annotation is the user's location.
         guard !(annotation is MKUserLocation) else {
             return nil
         }
@@ -593,6 +530,7 @@ extension HomeViewController: MKMapViewDelegate {
         let annotationIdentifier = MKMapViewDefaultAnnotationViewReuseIdentifier
 
         var annotationView: MKAnnotationView?
+
         if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) as? CustomAnnotationView {
             annotationView = dequeuedAnnotationView
             annotationView?.annotation = annotation
@@ -602,31 +540,31 @@ extension HomeViewController: MKMapViewDelegate {
         }
 
         if let annotationView = annotationView {
-            // Configure your annotation view here
+
             annotationView.canShowCallout = false
 
             guard let annotationTitle = annotation.title else { return nil }
             guard let unwrappedAnnotationTitle = annotationTitle else { return nil }
             guard let stationsDictFromViewModel = self.viewModel.stationsDict.value[unwrappedAnnotationTitle] else { return nil }
 
+            let markerAnnotationView: MKMarkerAnnotationView = {
+                let marker = MKMarkerAnnotationView()
+                marker.glyphText = "\(stationsDictFromViewModel.freeBikes)"
 
-            let markerAnnotationView = MKMarkerAnnotationView()
-            markerAnnotationView.tag = 199
-//            markerAnnotationView.textco = UIColor.quaternarySystemFill //UIColor(named: "TextAndGraphColor")
+                return marker
+            }()
 
-            if stationsDictFromViewModel.percentageOfFreeBikes >= 66.0 {
-
+            // Stablish the color coding of the availability
+            switch stationsDictFromViewModel.percentageOfFreeBikes {
+            case 66.0..<100.0:
                 markerAnnotationView.markerTintColor = UIColor.systemGreen
-            } else if stationsDictFromViewModel.percentageOfFreeBikes >= 33.0 && stationsDictFromViewModel.percentageOfFreeBikes < 66.0 {
-
+            case 33.0...66.0:
                 markerAnnotationView.markerTintColor = UIColor.systemOrange
-            } else if stationsDictFromViewModel.percentageOfFreeBikes < 33.0 {
-
-                markerAnnotationView.markerTintColor = UIColor.systemRed //UIColor(named: "RedColor")
+            case ..<33.0:
+                markerAnnotationView.markerTintColor = UIColor.systemRed
+            default:
+                break
             }
-
-            markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeBikes)"
-            markerAnnotationView.canShowCallout = false
 
             return markerAnnotationView
         }
@@ -641,9 +579,11 @@ extension HomeViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         generator.impactOccurred()
         hideStackView()
-//        graphView.hideView()
+        startRouteButton.isEnabled = false
     }
 
+    /// Annotation was selected
+    /// 1. Set the GraphView title with the
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 
         guard let annotationFromPin = view.annotation as? MapPin else { return }
@@ -663,7 +603,11 @@ extension HomeViewController: MKMapViewDelegate {
 
         graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationInformation.stationName)
 
-        centerMap(on: annotationFromPin.coordinate)
+        centerMap(on: annotationFromPin.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
+
+        guard apiQueryStationValue != nil else { return }
+
+        guard viewModel.city != nil else { return }
 
         viewModel.getApiData(city: viewModel.city!.apiName, type: "prediction", station: apiQueryStationValue!, prediction: true, completion: { result in
 
@@ -683,17 +627,15 @@ extension HomeViewController: MKMapViewDelegate {
                     switch todayResult {
 
                     case .success(let todayArray):
-
                         self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.availabilityArray = todayArray
 
+                        self.startRouteButton.isEnabled = true
                     case .error:
                         break
                     }
                 })
-
             case .error:
                 break
-
             }
 
         })

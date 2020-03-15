@@ -33,13 +33,9 @@ class AppCoordinator: Coordinator {
         self.window = window
     }
 
-    func isUITesting() -> Bool {
-        return ProcessInfo.processInfo.arguments.contains("is_ui_testing")
-    }
-
     override func start() {
 
-        if isUITesting() {
+        if UITestingHelper.sharedInstance.isUITesting() {
             currentCity = availableCities["Bilbao"]
             showHomeViewController()
         } else {
@@ -62,10 +58,13 @@ class AppCoordinator: Coordinator {
     }
 
     override func finish() {
+        
     }
 
     var homeViewModel: HomeViewModel?
     var currentCity: City?
+
+    var routePlannerViewController: RoutePlannerViewController?
 
     fileprivate func showHomeViewController() {
 
@@ -112,6 +111,16 @@ class AppCoordinator: Coordinator {
 }
 
 extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
+    func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
+
+        let compositeDisposable = CompositeDisposable()
+        let restorePurchasesViewModel = RestorePurchasesViewModel(compositeDisposable: compositeDisposable)
+        let restorePurchasesViewController = RestorePurchasesViewController(compositeDisposable: compositeDisposable, viewModel: restorePurchasesViewModel)
+
+        restorePurchasesViewController.modalPresentationStyle = .formSheet
+
+        self.window.rootViewController?.present(restorePurchasesViewController, animated: true, completion: nil)
+    }
 
     // Re-centers the map when the UIPickerView changes value
     func changedCitySelectionInPickerView(city: City) {
@@ -124,7 +133,7 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
 
         let centerCoordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(city.latitude), longitude: CLLocationDegrees(city.longitude))
 
-        homeViewModel.delegate?.centerMap(on: centerCoordinates)
+        homeViewModel.delegate?.centerMap(on: centerCoordinates, coordinateSpan: Constants.narrowCoordinateSpan)
 
         homeViewModel.stations.value = []
         homeViewModel.stationsDict.value = [:]
@@ -151,6 +160,16 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
 }
 
 extension AppCoordinator: RoutePlannerViewModelCoordinatorDelegate {
+
+    /// Dismisses the UIViewController presented after starting the commute
+    func dismissModalRoutePlannerViewController() {
+
+        DispatchQueue.main.async {
+            self.routePlannerViewController?.dismiss(animated: true, completion: nil)
+        }
+    }
+
+    /// Send the route between the user's current location to the destination station to be drawn on the map
     func sendSelectedDestinationToHomeViewController(station: BikeStation) {
         homeViewModel?.destinationStation.value = station
     }
@@ -158,32 +177,17 @@ extension AppCoordinator: RoutePlannerViewModelCoordinatorDelegate {
 
 extension AppCoordinator: HomeViewModelCoordinatorDelegate {
 
+    /// Presents the UIViewController in charge of planning the route to the destination station
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation) {
 
         let compositeDisposable = CompositeDisposable()
         let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, destinationStation: stationsDict)
         routePlannerViewModel.coordinatorDelegate = self
-        let routePlannerViewController = RoutePlannerViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
+        routePlannerViewController = RoutePlannerViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
 
-        routePlannerViewController.modalPresentationStyle = .formSheet
+        routePlannerViewController!.modalPresentationStyle = .formSheet
 
-        self.window.rootViewController?.present(routePlannerViewController, animated: true, completion: nil)
-    }
-
-    func modallyPresentRoutePlanner(stationsDict: [String: BikeStation]) {
-
-        let compositeDisposable = CompositeDisposable()
-        let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: stationsDict, destinationStation: nil)
-        routePlannerViewModel.coordinatorDelegate = self
-        let routePlannerViewController = RoutePlannerViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
-
-        routePlannerViewController.modalPresentationStyle = .formSheet
-
-        self.window.rootViewController?.present(routePlannerViewController, animated: true, completion: nil)
-    }
-
-    func didTapRestart() {
-
+        self.window.rootViewController?.present(routePlannerViewController!, animated: true, completion: nil)
     }
 
     func showSettingsViewController() {
