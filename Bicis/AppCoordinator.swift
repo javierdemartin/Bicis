@@ -137,7 +137,7 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
 
         let centerCoordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(city.latitude), longitude: CLLocationDegrees(city.longitude))
 
-        homeViewModel.delegate?.centerMap(on: centerCoordinates, coordinateSpan: Constants.narrowCoordinateSpan)
+        homeViewModel.delegate?.centerMap(on: centerCoordinates, coordinateSpan: Constants.wideCoordinateSpan)
 
         homeViewModel.stations.value = []
         homeViewModel.stationsDict.value = [:]
@@ -170,10 +170,6 @@ extension AppCoordinator: RoutePlannerViewModelCoordinatorDelegate {
 
         DispatchQueue.main.async {
             self.routePlannerViewController?.dismiss(animated: true, completion: nil)
-
-            if UITestingHelper().isUITesting() {
-                self.homeViewController?.hideStackView()
-            }
         }
     }
 

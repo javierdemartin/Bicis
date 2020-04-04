@@ -9,7 +9,6 @@
 import Foundation
 import ReactiveSwift
 import MapKit
-import UserNotifications
 
 protocol RoutePlannerViewModelCoordinatorDelegate: class {
 //    func sendSelectedDestinationToHomeViewController(station: BikeStation)

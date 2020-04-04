@@ -80,7 +80,7 @@ class HomeViewModel {
                 } else if !hasUnlocked {
                     self.coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
                 }
-            case .error(let error):
+            case .error:
                 self.coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
             }
         })
@@ -153,13 +153,11 @@ class HomeViewModel {
 
             case .success(let datos):
 
-
                 let sortedNowKeysAndValues = Array(datos.values.today).sorted(by: { $0.0 < $1.0 })
                 let sortedPredictionKeysAndValues = Array(datos.values.prediction).sorted(by: { $0.0 < $1.0 })
 
                 var sortedNow: [Int] = []
                 var sortedPrediction: [Int] = []
-
 
                 sortedNowKeysAndValues.forEach({ sortedNow.append($0.value )})
                 sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})

@@ -38,6 +38,7 @@ class HomeViewController: UIViewController {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.showsUserLocation = true
+        map.accessibilityIdentifier = "MAP"
 
         return map
     }()
@@ -194,7 +195,7 @@ class HomeViewController: UIViewController {
         NSLayoutConstraint.activate([
             graphView.leadingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.leadingAnchor),
             graphView.trailingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.trailingAnchor),
-            graphView.heightAnchor.constraint(equalToConstant: 110),
+            graphView.heightAnchor.constraint(equalToConstant: 110)
 
         ])
 
@@ -251,14 +252,12 @@ class HomeViewController: UIViewController {
                     return coordinates
                 }()
 
-                self.centerMap(on: cityCoordinates, coordinateSpan: Constants.wideCoordinateSpan)
+                self.centerMap(on: cityCoordinates, coordinateSpan: Constants.narrowCoordinateSpan)
 
-            case .error(_):
+            case .error:
                 break
             }
         })
-
-
     }
 
     func selectClosestAnnotationGraph(stations: [BikeStation], currentLocation: CLLocation) {
@@ -281,9 +280,6 @@ class HomeViewController: UIViewController {
 
             if let foo = self.mapView.annotations.first(where: {$0.title == nearestStation.stationName}) {
                 self.mapView.selectAnnotation(foo, animated: true)
-
-                // TODO: DELETE
-//                viewModel.selectedRoute(station: latestSelectedBikeStation!)
             }
         }
     }
@@ -398,11 +394,12 @@ class HomeViewController: UIViewController {
                 currentLocationFromDevice = locationFromDevice
             }
 
-            // TODO: Eliminar
             if !UITestingHelper.sharedInstance.isUITesting() {
                 self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
             } else {
-                self.selectClosestAnnotationGraph(stations: stations, currentLocation: CLLocation(latitude: CLLocationDegrees(self.viewModel.city!.latitude), longitude: CLLocationDegrees(self.viewModel.city!.longitude)))
+                self.selectClosestAnnotationGraph(stations: stations,
+                                                  currentLocation: CLLocation(latitude: CLLocationDegrees(self.viewModel.city!.latitude),
+                                                                              longitude: CLLocationDegrees(self.viewModel.city!.longitude)))
             }
         }
     }
@@ -423,7 +420,7 @@ class HomeViewController: UIViewController {
         graphView.fadeOut(0.2)
         hideRoutePlannerButton()
 
-        if let latestAnnotation = latestSelectedAnnotation {
+        if latestSelectedAnnotation != nil {
             mapView.deselectAnnotation(latestSelectedAnnotation, animated: false)
         }
     }

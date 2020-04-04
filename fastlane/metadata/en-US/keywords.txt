@@ -1,1 +1,1 @@
-bike,sharing,citibike,travel,service,predictions,availability,Lyft,bikes,neural,networks,ofo
+navigation, new york, motivate, lyft, predictions, bikes, sharing, nyc, rental

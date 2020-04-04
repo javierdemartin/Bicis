@@ -24,10 +24,7 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
 
             let label = UILabel(frame: CGRect(x: 5, y: 5, width: self.frame.width, height: 40.0))
             label.text = name
-
-
             label.textColor = UIColor(named: "TextAndGraphColor")
-
             label.frame.size.width = name.width(withConstrainedHeight: 19.0, font: Constants.headerFont)
             label.font = Constants.headerFont
             label.layer.masksToBounds = false
@@ -48,7 +45,6 @@ class PredictionGraphView: UIView {
     }
 
     var isShown: Bool
-
 
     var stationTitle = UILabel()
     var stationTitleText: String?
@@ -104,7 +100,7 @@ class PredictionGraphView: UIView {
     }
 
     func addShadows() {
-        
+
         if shadowLayer == nil {
             shadowLayer = CAShapeLayer()
 

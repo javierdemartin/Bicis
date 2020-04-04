@@ -46,7 +46,7 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 
                 // Warn the user of the low accuracy
                 if Int(rmseOfStation) < 50 {
-                    self.accuracyOfPredictionLabel.textColor = .systemRed
+//                    self.accuracyOfPredictionLabel.textColor = .systemRed
                     self.accuracyOfPredictionLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .bold)
                 }
             }
@@ -158,6 +158,7 @@ class RoutePlannerViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray
         view.layer.cornerRadius = 2.5
+        view.accessibilityIdentifier = "PULL_DOWN_TAB"
         return view
     }()
 
@@ -182,7 +183,7 @@ class RoutePlannerViewController: UIViewController {
         stackView.alignment = UIStackView.Alignment.top
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 10.0
+        stackView.spacing = 0.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -196,7 +197,7 @@ class RoutePlannerViewController: UIViewController {
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.isHidden = true
         stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 25.0
+        stackView.spacing = 10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -384,6 +385,8 @@ class RoutePlannerViewController: UIViewController {
         let label = UILabel()
         label.text = "Station Name"
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+//        label.lines
         label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .black)
 
         return label
@@ -421,7 +424,6 @@ class RoutePlannerViewController: UIViewController {
         label.text = "END_TIME_COMMUTE".localize(file: "RoutePlanner")
         label.tintColor = .systemGray
         label.numberOfLines = 0
-//        label.lineBreakMode = .byClipping
         label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -465,24 +467,18 @@ class RoutePlannerViewController: UIViewController {
         NSLayoutConstraint.activate([
             destinationStationImageView.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 16.0),
             destinationStationLabel.leadingAnchor.constraint(equalTo: destinationStationImageView.trailingAnchor, constant: 16.0)
+
         ])
 
         NSLayoutConstraint.activate([
             containerStackView.topAnchor.constraint(equalTo: pullTabToDismissView.bottomAnchor, constant: 16.0),
             containerStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            containerStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
-//            containerStackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+            containerStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0)
         ])
 
         NSLayoutConstraint.activate([
-//            currentHourLabel.widthAnchor.constraint(equalToConstant:
-//                (currentHourLabel.text?.width(withConstrainedHeight: currentHourLabel.frame.height + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))! + 30.0),
-//            predictedDocksAtDestinationUnitsLabel.widthAnchor.constraint(equalToConstant: (predictedDocksAtDestinationUnitsLabel.text?.width(withConstrainedHeight: predictedDocksAtDestinationUnitsLabel.frame.height + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))! + 30.0)
-
             currentHourLabel.widthAnchor.constraint(equalToConstant: 100.0),
-            predictedDocksAtDestinationUnitsLabel.widthAnchor.constraint(equalToConstant: 100.0),
-//            currentDocksLabel.widthAnchor.constraint(equalToConstant: 100.0),
-//            predictedDocksAtDestinationUnitsLabel.widthAnchor.constraint(equalToConstant: 100.0),
+            predictedDocksAtDestinationUnitsLabel.widthAnchor.constraint(equalToConstant: 100.0)
         ])
 
         NSLayoutConstraint.activate([
@@ -492,10 +488,6 @@ class RoutePlannerViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             predictedDocksAtDestinationVerticalStackView.topAnchor.constraint(equalTo: statisticsVerticalStackView.topAnchor, constant: 16.0)
-        ])
-
-        NSLayoutConstraint.activate([
-            destinationStationLabel.heightAnchor.constraint(equalToConstant: 100.0)
         ])
 
         NSLayoutConstraint.activate([
@@ -511,16 +503,12 @@ class RoutePlannerViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            instructionsHeaderTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+            instructionsHeaderTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor)
         ])
 
         NSLayoutConstraint.activate([
-            currentHourLabel.bottomAnchor.constraint(equalTo: currentDocksLabel.topAnchor, constant: -32),
-            predictedDocksAtDestinationUnitsLabel.bottomAnchor.constraint(equalTo: predictedDocksAtDestinationLabel.topAnchor, constant: -32),
-        ])
-
-        NSLayoutConstraint.activate([
-            destinationStationStackView.bottomAnchor.constraint(equalToSystemSpacingBelow: accuracyOfPredictionLabel.topAnchor, multiplier: -16.0)
+            currentHourLabel.bottomAnchor.constraint(equalTo: currentDocksLabel.topAnchor, constant: -16),
+            predictedDocksAtDestinationUnitsLabel.bottomAnchor.constraint(equalTo: predictedDocksAtDestinationLabel.topAnchor, constant: -16)
         ])
     }
 

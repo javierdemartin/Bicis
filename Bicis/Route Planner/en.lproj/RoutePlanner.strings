@@ -6,7 +6,7 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
-"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitor the available docks of the destination station as you travel. Receive a notification if the available number goes under a certain threshold";
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitor the available docks of the destination station for your expected arrival time";
 "STATION_SEARCH_PLACEHOLDER" = "Destination station";
 
 "FREE_DOCKS_AT_DESTINATION_LABEL" = "%number free docks";
@@ -26,7 +26,7 @@
 
 "LOW_DOCK_AVAILABILITY_WARNING" = "Low dock availability";
 
-"TOO_FAR_AWAY_WARNING" = "You are too far away to make predictions on your arrival time";
+"TOO_FAR_AWAY_WARNING" = "You are too far away!";
 
 "START_TIME_COMMUTE" = "Start time";
 "END_TIME_COMMUTE" = "End time";

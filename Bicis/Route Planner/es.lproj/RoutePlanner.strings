@@ -6,7 +6,7 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
-"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitoriza la disponibilidad de anclajes en el destino. Recibe una notificación si el número cae por debajo de un límite.";
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Comprueba si tendrás una bicicleta disponible a la hora de llegada";
 
 "STATION_SEARCH_PLACEHOLDER" = "Estación de destino";
 
@@ -29,7 +29,6 @@
 
 "START_TIME_COMMUTE" = "Inicio";
 
-"TOO_FAR_AWAY_WARNING" = "Estás muy lejos como para predecir tu llegada";
-
+"TOO_FAR_AWAY_WARNING" = "¡Estás muy lejos!";
 
 "END_TIME_COMMUTE" = "Fin";

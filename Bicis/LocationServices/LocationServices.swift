@@ -100,7 +100,7 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
             return CLLocationCoordinate2D(latitude: CLLocationDegrees(availableCities["New York"]!.latitude), longitude: CLLocationDegrees(availableCities["New York"]!.longitude))
         case false:
 
-            #if (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
+            #if targetEnvironment(simulator)
                 return CLLocationCoordinate2D(latitude: CLLocationDegrees(availableCities["New York"]!.latitude), longitude: CLLocationDegrees(availableCities["New York"]!.longitude))
             #endif
 

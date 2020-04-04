@@ -48,7 +48,6 @@ class BicisUITests: XCTestCase {
 
         label.tap()
 
-//        sleep(5)
 
         let textPredicate = NSPredicate(format: "label != %@", "...")
         expectation(for: textPredicate, evaluatedWith: app.staticTexts["DESTINATION_BIKES"], handler: nil)
@@ -56,34 +55,24 @@ class BicisUITests: XCTestCase {
 
         snapshot("01-RoutePlanner")
 
+//        let pullDownTab = app.otherElements["PULL_DOWN_TAB"]
+//
+//        let start = pullDownTab.coordinate(withNormalizedOffset: CGVector(dx: 10, dy: 20))
+//        let finish = pullDownTab.coordinate(withNormalizedOffset: CGVector(dx: 10, dy: 200))
+//        start.press(forDuration: 0.01, thenDragTo: finish)
+
+//        pullDownTab.swipeDown()
+
+
         // MARK: RoutePlanner
-//        print("START_ROUTE".localize(file: "Home"))
-//
-//        let routePlannerButton = app.buttons["START_ROUTE"]
-//        routePlannerButton.tap()
-//
-//        sleep(9)
-//
-//        snapshot("01-RoutePlanner")
-
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-
-        app.swipeDown()
-
-        sleep(1)
-
-        print("Presenting ")
-
-        snapshot("02-Overall")
     }
 
-    func testLaunchPerformance() {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
+//    func testLaunchPerformance() {
+//        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
+//            // This measures how long it takes to launch your application.
+//            measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
+//                XCUIApplication().launch()
+//            }
+//        }
+//    }
 }

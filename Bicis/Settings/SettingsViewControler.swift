@@ -283,10 +283,6 @@ class SettingsViewController: UIViewController {
             cityPicker.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor, constant: -16.0)
         ])
 
-//        NSLayoutConstraint.activate([
-//            restorePurchasesButton.widthAnchor.constraint(equalToConstant: (restorePurchasesButton.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0)
-//        ])
-
         guard let versionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
 
         guard let bundleString = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else { return }
@@ -346,8 +342,6 @@ class SettingsViewController: UIViewController {
             })
         })
     }
-
-
 
     deinit {
         compositeDisposable.dispose()
