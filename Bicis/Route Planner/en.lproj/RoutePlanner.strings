@@ -6,7 +6,7 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
-"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitor the available docks of the destination station for your expected arrival time";
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitor the available number of docks of the destination station at your expected arrival time";
 "STATION_SEARCH_PLACEHOLDER" = "Destination station";
 
 "FREE_DOCKS_AT_DESTINATION_LABEL" = "%number free docks";

@@ -133,8 +133,6 @@ class HomeViewModel {
         self.compositeDisposable = compositeDisposable
         self.dataManager = dataManager
 
-        NSLog("INITED BOI")
-
         LocationServices.sharedInstance.delegate = self
         LocationServices.sharedInstance.locationManager?.requestWhenInUseAuthorization()
         LocationServices.sharedInstance.locationManager?.startUpdatingLocation()
@@ -173,7 +171,6 @@ class HomeViewModel {
 
             case .error(let apiError):
                 self.delegate?.presentAlertViewWithError(title: "Error", body: apiError.localizedDescription)
-
             }
         })
     }

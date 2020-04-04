@@ -16,9 +16,7 @@ protocol RoutePlannerViewModelCoordinatorDelegate: class {
 }
 
 protocol RoutePlannerViewModelDelegate: class {
-//    func selectedDestination(station: BikeStation)
     func presentAlertViewWithError(title: String, body: String)
-//    func gotRouteCalculations(route: MKRoute)
     func errorTooFarAway()
     func gotDestinationRoute(station: BikeStation, route: MKRoute)
 }
@@ -26,6 +24,7 @@ protocol RoutePlannerViewModelDelegate: class {
 protocol RoutePlannerViewModelDataManager: class {
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void)
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
+    func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
 }
 
 class RoutePlannerViewModel: NSObject {
@@ -90,45 +89,32 @@ class RoutePlannerViewModel: NSObject {
                     stationName = self.destinationStation.value!.stationName
                 }
 
-                self.dataManager.getPredictionForStation(city: city.apiName, type: "prediction", name: stationName, completion: { predictionArray in
+                self.dataManager.getAllDataFromApi(city: city.apiName, station: stationName, completion: { result in
 
-                    switch predictionArray {
+                    switch result {
 
-                    case .success(let predictionArray):
+                    case .success(let datos):
 
-                        let sortedKeysAndValues = Array(predictionArray.values).sorted(by: { $0.0 < $1.0 })
+                        let sortedNowKeysAndValues = Array(datos.values.today).sorted(by: { $0.0 < $1.0 })
+                        let sortedPredictionKeysAndValues = Array(datos.values.prediction).sorted(by: { $0.0 < $1.0 })
 
-                        var predictionArrayFinal: [Int] = []
+                        var sortedNow: [Int] = []
+                        var sortedPrediction: [Int] = []
 
-                        sortedKeysAndValues.forEach({ predictionArrayFinal.append($0.value )})
+                        sortedNowKeysAndValues.forEach({ sortedNow.append($0.value )})
+                        sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})
 
-                        self.destinationStation.value!.predictionArray = predictionArrayFinal
+                        self.destinationStation.value!.availabilityArray = sortedNow
+                        self.destinationStation.value!.predictionArray = sortedPrediction
 
-                        self.dataManager.getPredictionForStation(city: city.apiName, type: "today", name: stationName, completion: { actualArrayResult in
+                        completion(())
+                        
+                    case .error(let apiError):
+                        self.delegate?.presentAlertViewWithError(title: "Error", body: apiError.localizedDescription)
 
-                            switch actualArrayResult {
-
-                            case .success(let actualArray):
-
-                                let sortedKeysAndValues = Array(actualArray.values).sorted(by: { $0.0 < $1.0 })
-
-                                var todayArrayFinal: [Int] = []
-
-                                sortedKeysAndValues.forEach({ todayArrayFinal.append($0.value )})
-
-                                self.destinationStation.value!.availabilityArray = todayArrayFinal
-
-                                completion(())
-                            case .error(let err):
-                                self.delegate?.presentAlertViewWithError(title: "Error", body: err.localizedDescription)
-                            }
-
-                        })
-                    case .error(let error):
-                        self.delegate?.presentAlertViewWithError(title: "Error", body: error.localizedDescription)
                     }
-
                 })
+
             case .error:
                 break
             }

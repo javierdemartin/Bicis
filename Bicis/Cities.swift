@@ -20,8 +20,8 @@ struct City: Codable {
 var availableCities: [String: City] = [
     "New York": City(apiName: "new_york",
                      formalName: "New York",
-                     latitude: 40.765546,
-                     longitude: -73.957734,
+                     latitude: 40.769320,
+                     longitude: -73.969301,
                      apiUrl: "https://feeds.citibikenyc.com/stations/stations.json"),
     "Bilbao": City(apiName: "bilbao",
                    formalName: "Bilbao",

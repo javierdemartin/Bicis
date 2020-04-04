@@ -18,6 +18,7 @@ class DataManager {
     }
 }
 
+// MARK: HomeViewModelDataManager
 extension DataManager: HomeViewModelDataManager {
 
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
@@ -67,19 +68,14 @@ extension DataManager: HomeViewModelDataManager {
     }
 }
 
+// MARK: RoutePlannerViewModelDataManager
 extension DataManager: RoutePlannerViewModelDataManager {
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping (MyAPIResponse?) -> Void) {
 
     }
-
-
-//    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(MyAPIResponse?) -> Void) {
-//        remoteDataManager.getPredictionForStation(city: city, type: type, name: name, completion: { res in
-//            completion(res)
-//        })
-//    }
 }
 
+// MARK: SettingsViewModelDataManager
 extension DataManager: SettingsViewModelDataManager {
 
     func getCurrentCityFromDefaults(completion: @escaping (Result<City>) -> Void) {

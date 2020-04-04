@@ -6,7 +6,7 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
-"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Comprueba si tendrás una bicicleta disponible a la hora de llegada";
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Comprueba la cantidad de anclajes en destino con el tiempo que te costará llegar hasta ahí";
 
 "STATION_SEARCH_PLACEHOLDER" = "Estación de destino";
 

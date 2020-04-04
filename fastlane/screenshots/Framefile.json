@@ -1,4 +1,6 @@
 {
+   
+   "device_frame_version": "1572609390",
     "default": {
         
         "keyword": {
@@ -11,7 +13,7 @@
         "background": "./background.png",
         "padding": 50,
         "show_complete_frame": false,
-	"stack_title": true,
+	   "stack_title": false,
         "title_below_image": false
     },
     

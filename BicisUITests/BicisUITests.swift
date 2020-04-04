@@ -15,8 +15,6 @@ class BicisUITests: XCTestCase {
 
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
 
     override func tearDown() {
@@ -28,14 +26,11 @@ class BicisUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments.append("is_ui_testing")
 
-//        app.launchArguments.append("-AppleInterfaceStyle Dark")
-        // UI tests must launch the application that they test.
-
         setupSnapshot(app)
         app.launch()
 
-        // Wait for the map to load
-        sleep(3)
+
+        sleep(3) // Wait for the map to load
 
         snapshot("00-Home")
 
