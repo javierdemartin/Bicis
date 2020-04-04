@@ -19,6 +19,7 @@ class DataManager {
 }
 
 extension DataManager: HomeViewModelDataManager {
+
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
         localDataManager.hasUnlockedFeatures(completion: { hasUnlockedResult in
             completion(hasUnlockedResult)
@@ -55,6 +56,12 @@ extension DataManager: HomeViewModelDataManager {
 
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping (Result<MyAPIResponse>) -> Void) {
         remoteDataManager.getPredictionForStation(city: city, type: type, name: name, completion: { res in
+            completion(res)
+        })
+    }
+
+    func getAllDataFromApi(city: String, station: String, completion: @escaping (Result<MyAllAPIResponse>) -> Void) {
+        remoteDataManager.getAllDataFromApi(city: city, station: station, completion: { res in
             completion(res)
         })
     }

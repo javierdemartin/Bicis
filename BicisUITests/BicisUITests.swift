@@ -34,31 +34,56 @@ class BicisUITests: XCTestCase {
         setupSnapshot(app)
         app.launch()
 
+        // Wait for the map to load
+        sleep(3)
+
         snapshot("00-Home")
 
         // Wait for the API information to be delivered
-        sleep(3)
+        let label = app.buttons["START_ROUTE"]
+        let exists = NSPredicate(format: "exists == 1")
 
-        // MARK: RoutePlanner
-        print("START_ROUTE".localize(file: "Home"))
+        expectation(for: exists, evaluatedWith: label, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
 
-        let routePlannerButton = app.buttons["START_ROUTE"]
-        routePlannerButton.tap()
+        label.tap()
 
-        sleep(9)
+//        sleep(5)
+
+        let textPredicate = NSPredicate(format: "label != %@", "...")
+        expectation(for: textPredicate, evaluatedWith: app.staticTexts["DESTINATION_BIKES"], handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
 
         snapshot("01-RoutePlanner")
 
+        // MARK: RoutePlanner
+//        print("START_ROUTE".localize(file: "Home"))
+//
+//        let routePlannerButton = app.buttons["START_ROUTE"]
+//        routePlannerButton.tap()
+//
+//        sleep(9)
+//
+//        snapshot("01-RoutePlanner")
+
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+        app.swipeDown()
+
+        sleep(1)
+
+        print("Presenting ")
+
+        snapshot("02-Overall")
     }
 
-//    func testLaunchPerformance() {
-//        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-//            // This measures how long it takes to launch your application.
-//            measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
-//                XCUIApplication().launch()
-//            }
-//        }
-//    }
+    func testLaunchPerformance() {
+        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
+            // This measures how long it takes to launch your application.
+            measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
+                XCUIApplication().launch()
+            }
+        }
+    }
 }

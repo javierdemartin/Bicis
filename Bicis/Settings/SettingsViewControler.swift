@@ -27,7 +27,8 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        viewModel.changedCityInPickerView(city: citiesList[row])
+//        viewModel.changedCityInPickerView(city: citiesList[row])
+        self.viewModel.city = availableCities[citiesList[row]]
     }
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
@@ -42,7 +43,6 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         return pickerLabel!
     }
 }
-
 
 class SettingsViewController: UIViewController {
 
@@ -76,7 +76,8 @@ class SettingsViewController: UIViewController {
 
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView, restorePurchasesButton])
+//        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView, restorePurchasesButton])
+        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -132,7 +133,7 @@ class SettingsViewController: UIViewController {
 
         return textView
     }()
-    
+
     lazy var locationServicesStackView: UIStackView = {
 
         let stackView = UIStackView(arrangedSubviews: [self.imageIcon, locationServicesStatusImage])
@@ -140,7 +141,6 @@ class SettingsViewController: UIViewController {
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.horizontal
         stackView.distribution  = UIStackView.Distribution.equalCentering
-
         stackView.alignment = .bottom
         stackView.spacing = -10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -246,7 +246,7 @@ class SettingsViewController: UIViewController {
         super.loadView()
 
         view = UIView()
-        view.backgroundColor = UIColor(named: "SettingsBackgroundColor")
+        view.backgroundColor = .systemBackground
 
         scrollView.addSubview(verticalStackView)
         view.addSubview(scrollView)
@@ -283,9 +283,9 @@ class SettingsViewController: UIViewController {
             cityPicker.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor, constant: -16.0)
         ])
 
-        NSLayoutConstraint.activate([
-            restorePurchasesButton.widthAnchor.constraint(equalToConstant: (restorePurchasesButton.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0)
-        ])
+//        NSLayoutConstraint.activate([
+//            restorePurchasesButton.widthAnchor.constraint(equalToConstant: (restorePurchasesButton.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0)
+//        ])
 
         guard let versionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
 
@@ -315,8 +315,6 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        SKPaymentQueue.default().add(self)
 
         setupBindings()
     }

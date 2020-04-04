@@ -7,15 +7,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4B885FF4-87A6-4868-98E7-542D3F591F53"
+            uuid = "029C8CDD-63DD-4997-88C9-7F34DF6C6BEB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BicisUITests/BicisUITests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
             landmarkName = "testExample()"
             landmarkType = "7">
          </BreakpointContent>
@@ -23,32 +23,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7526F5B1-58D4-41CE-BD13-2BE2BDE7E5A8"
-            shouldBeEnabled = "No"
+            uuid = "E536B385-E728-41F7-BEEC-7E4FF8FAF63F"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Bicis/DataManager/Remote/DefaultRemoteDataManager.swift"
+            filePath = "Bicis/DataManager/Remote/CityBikes/CityBikes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "getPredictionForStation(city:type:name:completion:)"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
+            landmarkName = "rmse"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4DB3646B-F8FD-4190-9B34-6F00BC17DBF8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Bicis/DataManager/Remote/NextBike/NextBike.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "rmse"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "707D6056-D981-4F27-8490-558E8D14389B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Bicis/Route Planner/RoutePlannerViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "gotDestinationRoute(station:route:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "83ABC04E-1A76-4AA6-B18C-ADDE749907BD"
+            uuid = "130D3ECA-F0A8-4D3C-B5A5-F68D7CDAA8CB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Bicis/RoutePlannerTimerServices.swift"
+            filePath = "Bicis/Route Planner/RoutePlannerViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
-            landmarkName = "sendNotification(notification:)"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "gotDestinationRoute(station:route:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

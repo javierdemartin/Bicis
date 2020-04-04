@@ -16,8 +16,7 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 
     func gotDestinationRoute(station: BikeStation, route: MKRoute) {
 
-        self.informationVerticalStackView.fadeIn(0.5, onCompletion: {
-        })
+        self.informationVerticalStackView.fadeIn(0.5, onCompletion: { })
 
         let calendar = Calendar.current
         let date = calendar.date(byAdding: .minute, value: route.expectedTravelTime.minutes, to: Date())
@@ -33,10 +32,10 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 
         guard self.viewModel.destinationStation.value != nil else { return }
 
-        racksAvailableNowOnDestinationImageView.text = "\(dateFormatter.string(from: Date()))"
+        currentHourLabel.text = "\(dateFormatter.string(from: Date()))"
         predictedDocksAtDestinationUnitsLabel.text = "\(roundedArrivalTime)"
 
-        racksAvailableNowOnDestinationLabel.text = "\(self.viewModel.destinationStation.value!.freeRacks)"
+        currentDocksLabel.text = "\(self.viewModel.destinationStation.value!.freeRacks)"
         destinationStationLabel.text = "\(self.viewModel.destinationStation.value!.stationName)"
 
         viewModel.calculateRmseForStationByQueryingPredictions(completion: {
@@ -78,30 +77,27 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
                 // Predicted available docks = Docks(t) - (Available docks - BikePredictions(t))
                 if (destinationStation.totalAvailableDocks - (destinationStation.totalAvailableDocks - predictionArray[indexOfTime])) < 4  {
                     self.lowDockAvailabilityLabel.text = "LOW_DOCK_AVAILABILITY_WARNING".localize(file: "RoutePlanner")
-                    self.lowDockAvailabilityLabel.fadeOut()
+                    self.lowDockAvailabilityLabel.fadeIn()
                 }
-            }
-
-            // Arrays are epmty fill the info
-            else {
-                print("EMPTY DATA")
-
             }
         })
     }
 
     func errorTooFarAway() {
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm"
+        let dateFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "hh:mm"
+            return dateFormatter
+        }()
 
         self.informationVerticalStackView.fadeIn(0.5, onCompletion: nil)
 
         guard let stationDestination = self.viewModel.destinationStation.value else { return }
 
-        racksAvailableNowOnDestinationImageView.text = "\(dateFormatter.string(from: Date()))"
+        currentHourLabel.text = "\(dateFormatter.string(from: Date()))"
         predictedDocksAtDestinationUnitsLabel.text = "Too far"
-        racksAvailableNowOnDestinationLabel.text = "\(stationDestination.freeRacks)"
+        currentDocksLabel.text = "\(stationDestination.freeRacks)"
         predictedDocksAtDestinationLabel.text = "?"
         destinationStationLabel.text = "\(stationDestination.stationName)"
 
@@ -182,10 +178,10 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var containerStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [instructionsHeaderTextView, informationVerticalStackView])
-        stackView.alignment = UIStackView.Alignment.center
+        let stackView = UIStackView(arrangedSubviews: [informationVerticalStackView])
+        stackView.alignment = UIStackView.Alignment.top
         stackView.axis = NSLayoutConstraint.Axis.vertical
-        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.distribution  = UIStackView.Distribution.equalSpacing
         stackView.spacing = 10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -194,12 +190,12 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var informationVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [labelsDestinationStationVerticalStackView, statisticsAndLowDockStackView])
+        let stackView = UIStackView(arrangedSubviews: [instructionsHeaderTextView, labelsDestinationStationVerticalStackView, statisticsAndLowDockStackView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.isHidden = true
-        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.distribution  = UIStackView.Distribution.equalSpacing
         stackView.spacing = 25.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -225,12 +221,12 @@ class RoutePlannerViewController: UIViewController {
 
         let stackView = UIStackView(arrangedSubviews: [freeRacksOnDestinationVerticalStackView, arrowImageView, predictedDocksAtDestinationVerticalStackView])
         stackView.alignment = UIStackView.Alignment.center
-//        stackView.addBackground(color: .systemGroupedBackground)
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.horizontal
         stackView.isHidden = false
-//        stackView.distribution  = UIStackView.Distribution.fillProportionally
-        stackView.spacing = 48.0
+        stackView.distribution  = UIStackView.Distribution.equalSpacing
+
+        stackView.spacing = 32.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -247,15 +243,15 @@ class RoutePlannerViewController: UIViewController {
         return imageView
     }()
 
-    lazy var docksTextLabel: UILabel = {
-
-        let label = UILabel()
-        label.text = "DESTINATION_DOCKS_LABEL".localize(file: "RoutePlanner")
-        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
-        label.translatesAutoresizingMaskIntoConstraints = false
-
-        return label
-    }()
+//    lazy var docksTextLabel: UILabel = {
+//
+//        let label = UILabel()
+//        label.text = "DESTINATION_DOCKS_LABEL".localize(file: "RoutePlanner")
+//        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//
+//        return label
+//    }()
 
     lazy var lowDockAvailabilityStackView: UIStackView = {
 
@@ -300,7 +296,7 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var freeRacksOnDestinationVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [racksAvailableNowOnDestinationImageView, racksAvailableNowOnDestinationLabel])
+        let stackView = UIStackView(arrangedSubviews: [currentHourLabel, currentDocksLabel])
         stackView.alignment = UIStackView.Alignment.center
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalCentering
@@ -310,22 +306,25 @@ class RoutePlannerViewController: UIViewController {
         return stackView
     }()
 
-    lazy var racksAvailableNowOnDestinationLabel: UILabel = {
+    lazy var currentDocksLabel: UILabel = {
 
         let label = UILabel()
         label.text = "..."
         label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label
     }()
 
-    lazy var racksAvailableNowOnDestinationImageView: UILabel = {
+    lazy var currentHourLabel: UILabel = {
 
         let label = UILabel()
         label.text = "START_TIME_COMMUTE".localize(file: "RoutePlanner")
         label.tintColor = .systemGray
         label.textAlignment = .center
+        label.numberOfLines = 0
+//        label.lineBreakMode = .byClipping
         label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
 
@@ -345,7 +344,7 @@ class RoutePlannerViewController: UIViewController {
 
         let stackView = UIStackView(arrangedSubviews: [destinationStationImageView, destinationStationLabel])
 
-        stackView.alignment = UIStackView.Alignment.leading
+        stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.horizontal
         stackView.distribution  = UIStackView.Distribution.equalCentering
@@ -369,7 +368,7 @@ class RoutePlannerViewController: UIViewController {
     lazy var labelsDestinationStationVerticalStackView: UIStackView = {
 
         let stackView = UIStackView(arrangedSubviews: [destinationStationStackView, accuracyOfPredictionLabel])
-        stackView.alignment = UIStackView.Alignment.leading
+        stackView.alignment = UIStackView.Alignment.top
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalCentering
@@ -408,6 +407,8 @@ class RoutePlannerViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityIdentifier = "DESTINATION_BIKES"
+        label.textAlignment = .center
         label.text = "..."
 
         return label
@@ -415,11 +416,13 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var predictedDocksAtDestinationUnitsLabel: UILabel = {
 
-            let label = UILabel()
+        let label = UILabel()
         label.textAlignment = .center
-            label.text = "END_TIME_COMMUTE".localize(file: "RoutePlanner")
-            label.tintColor = .systemGray
-            label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
+        label.text = "END_TIME_COMMUTE".localize(file: "RoutePlanner")
+        label.tintColor = .systemGray
+        label.numberOfLines = 0
+//        label.lineBreakMode = .byClipping
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
 
             return label
@@ -451,7 +454,6 @@ class RoutePlannerViewController: UIViewController {
         NSLayoutConstraint.activate([
             pullTabToDismissView.heightAnchor.constraint(equalToConstant: 5),
             pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
-
             pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             pullTabToDismissView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0)
         ])
@@ -468,17 +470,32 @@ class RoutePlannerViewController: UIViewController {
         NSLayoutConstraint.activate([
             containerStackView.topAnchor.constraint(equalTo: pullTabToDismissView.bottomAnchor, constant: 16.0),
             containerStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            containerStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0)
+            containerStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
+//            containerStackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         ])
 
         NSLayoutConstraint.activate([
-            racksAvailableNowOnDestinationImageView.widthAnchor.constraint(equalToConstant:
-                (racksAvailableNowOnDestinationImageView.text?.width(withConstrainedHeight: racksAvailableNowOnDestinationImageView.frame.width + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))!),
-            predictedDocksAtDestinationUnitsLabel.widthAnchor.constraint(equalToConstant: (predictedDocksAtDestinationUnitsLabel.text?.width(withConstrainedHeight: predictedDocksAtDestinationUnitsLabel.frame.width + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))!)
+//            currentHourLabel.widthAnchor.constraint(equalToConstant:
+//                (currentHourLabel.text?.width(withConstrainedHeight: currentHourLabel.frame.height + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))! + 30.0),
+//            predictedDocksAtDestinationUnitsLabel.widthAnchor.constraint(equalToConstant: (predictedDocksAtDestinationUnitsLabel.text?.width(withConstrainedHeight: predictedDocksAtDestinationUnitsLabel.frame.height + 20.0, font: UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)))! + 30.0)
+
+            currentHourLabel.widthAnchor.constraint(equalToConstant: 100.0),
+            predictedDocksAtDestinationUnitsLabel.widthAnchor.constraint(equalToConstant: 100.0),
+//            currentDocksLabel.widthAnchor.constraint(equalToConstant: 100.0),
+//            predictedDocksAtDestinationUnitsLabel.widthAnchor.constraint(equalToConstant: 100.0),
+        ])
+
+        NSLayoutConstraint.activate([
+            currentDocksLabel.centerXAnchor.constraint(equalTo: currentHourLabel.centerXAnchor),
+            predictedDocksAtDestinationLabel.centerXAnchor.constraint(equalTo: predictedDocksAtDestinationUnitsLabel.centerXAnchor)
         ])
 
         NSLayoutConstraint.activate([
             predictedDocksAtDestinationVerticalStackView.topAnchor.constraint(equalTo: statisticsVerticalStackView.topAnchor, constant: 16.0)
+        ])
+
+        NSLayoutConstraint.activate([
+            destinationStationLabel.heightAnchor.constraint(equalToConstant: 100.0)
         ])
 
         NSLayoutConstraint.activate([
@@ -494,9 +511,16 @@ class RoutePlannerViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            informationVerticalStackView.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 0),
-            informationVerticalStackView.trailingAnchor.constraint(equalTo: containerStackView.trailingAnchor, constant: 0),
-            informationVerticalStackView.topAnchor.constraint(equalTo: instructionsHeaderTextView.bottomAnchor, constant: 16.0)
+            instructionsHeaderTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
+        ])
+
+        NSLayoutConstraint.activate([
+            currentHourLabel.bottomAnchor.constraint(equalTo: currentDocksLabel.topAnchor, constant: -32),
+            predictedDocksAtDestinationUnitsLabel.bottomAnchor.constraint(equalTo: predictedDocksAtDestinationLabel.topAnchor, constant: -32),
+        ])
+
+        NSLayoutConstraint.activate([
+            destinationStationStackView.bottomAnchor.constraint(equalToSystemSpacingBelow: accuracyOfPredictionLabel.topAnchor, multiplier: -16.0)
         ])
     }
 

@@ -36,8 +36,11 @@ class AppCoordinator: Coordinator {
     override func start() {
 
         if UITestingHelper.sharedInstance.isUITesting() {
-            currentCity = availableCities["Bilbao"]
+            currentCity = availableCities["New York"]
+            localDataManager.saveCurrentCity(apiCityName: availableCities["New York"]!, completion: { _ in })
             showHomeViewController()
+
+
         } else {
 
             localDataManager.getCurrentCity { (getCurrentCityResult) in
@@ -62,6 +65,7 @@ class AppCoordinator: Coordinator {
     }
 
     var homeViewModel: HomeViewModel?
+    var homeViewController: HomeViewController?
     var currentCity: City?
 
     var routePlannerViewController: RoutePlannerViewController?
@@ -70,7 +74,7 @@ class AppCoordinator: Coordinator {
 
         let compositeDisposable = CompositeDisposable()
         homeViewModel = HomeViewModel(city: currentCity ?? nil, compositeDisposable: compositeDisposable, dataManager: dataManager)
-        let homeViewController = HomeViewController(viewModel: homeViewModel!, compositeDisposable: compositeDisposable)
+        homeViewController = HomeViewController(viewModel: homeViewModel!, compositeDisposable: compositeDisposable)
         self.window.rootViewController = homeViewController
 
         homeViewModel!.coordinatorDelegate = self
@@ -166,6 +170,10 @@ extension AppCoordinator: RoutePlannerViewModelCoordinatorDelegate {
 
         DispatchQueue.main.async {
             self.routePlannerViewController?.dismiss(animated: true, completion: nil)
+
+            if UITestingHelper().isUITesting() {
+                self.homeViewController?.hideStackView()
+            }
         }
     }
 

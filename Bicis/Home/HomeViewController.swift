@@ -76,13 +76,14 @@ class HomeViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = Appearance().cornerRadius
-        button.accessibilityLabel = "START_ROUTE"
+        button.accessibilityIdentifier = "START_ROUTE"
         button.backgroundColor = UIColor.systemBlue //UIColor(named: "RedColor")
         button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
         button.setTitle("START_ROUTE".localize(file: "Home"), for: .normal)
         button.setTitleColor(UIColor.systemGray4, for: .disabled)
         button.clipsToBounds = true
         button.isEnabled = false
+        button.isHidden = true
         return button
     }()
 
@@ -230,6 +231,8 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        self.hideStackView()
+
         viewModel.getCurrentCity(completion: { [weak self] cityResult in
 
             guard let self = self else { fatalError() }
@@ -255,7 +258,7 @@ class HomeViewController: UIViewController {
             }
         })
 
-        self.hideStackView()
+
     }
 
     func selectClosestAnnotationGraph(stations: [BikeStation], currentLocation: CLLocation) {
@@ -396,9 +399,11 @@ class HomeViewController: UIViewController {
             }
 
             // TODO: Eliminar
-//            if !UITestingHelper.sharedInstance.isUITesting() {
-//                self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
-//            }
+            if !UITestingHelper.sharedInstance.isUITesting() {
+                self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
+            } else {
+                self.selectClosestAnnotationGraph(stations: stations, currentLocation: CLLocation(latitude: CLLocationDegrees(self.viewModel.city!.latitude), longitude: CLLocationDegrees(self.viewModel.city!.longitude)))
+            }
         }
     }
 
@@ -414,17 +419,32 @@ class HomeViewController: UIViewController {
     }
 
     func hideStackView() {
+        generator.impactOccurred()
         graphView.fadeOut(0.2)
+        hideRoutePlannerButton()
+
+        if let latestAnnotation = latestSelectedAnnotation {
+            mapView.deselectAnnotation(latestSelectedAnnotation, animated: false)
+        }
     }
 
+    /// Hide the `PredictionGraphView` pushing the Start commute ubtton up
     func showStackView() {
 
+        generator.impactOccurred()
         graphView.fadeIn(0.2)
+    }
+
+    func showRoutePlannerButton() {
+        startRouteButton.fadeIn(0.2)
+    }
+
+    func hideRoutePlannerButton() {
+        startRouteButton.fadeOut(0.2)
     }
 }
 
 // MARK: HomeViewModelDelegate
-
 extension HomeViewController: HomeViewModelDelegate {
 
     func presentAlertViewWithError(title: String, body: String) {
@@ -454,8 +474,6 @@ extension HomeViewController: HomeViewModelDelegate {
     }
 
     func drawPrediction(data: [Int], prediction: Bool) {
-
-
         graphView.drawLine(values: data, isPrediction: prediction)
     }
 
@@ -577,7 +595,6 @@ extension HomeViewController: MKMapViewDelegate {
     }
 
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-        generator.impactOccurred()
         hideStackView()
         startRouteButton.isEnabled = false
     }
@@ -609,35 +626,23 @@ extension HomeViewController: MKMapViewDelegate {
 
         guard viewModel.city != nil else { return }
 
-        viewModel.getApiData(city: viewModel.city!.apiName, type: "prediction", station: apiQueryStationValue!, prediction: true, completion: { result in
+        viewModel.getAllDataFromApi(city: viewModel.city!.apiName, station: apiQueryStationValue!, completion: { res in
 
-            self.generator.impactOccurred()
             self.showStackView()
 
-            switch result {
+            switch res {
 
-            case .success(let predictionArray):
+            case .success(let payload):
 
-                guard self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName] != nil else { return }
+                self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.availabilityArray = payload["today"]
+                self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.predictionArray = payload["prediction"]
 
-                self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.predictionArray = predictionArray
+                self.startRouteButton.isEnabled = true
+                self.showRoutePlannerButton()
 
-                self.viewModel.getApiData(city: self.viewModel.city!.apiName, type: "today", station: apiQueryStationValue!, prediction: false, completion: { todayResult in
-
-                    switch todayResult {
-
-                    case .success(let todayArray):
-                        self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.availabilityArray = todayArray
-
-                        self.startRouteButton.isEnabled = true
-                    case .error:
-                        break
-                    }
-                })
             case .error:
                 break
             }
-
         })
     }
 }

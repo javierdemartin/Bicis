@@ -97,8 +97,13 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
 
         switch UITestingHelper.sharedInstance.isUITesting() {
         case true:
-            return CLLocationCoordinate2D(latitude: CLLocationDegrees(43.263459), longitude: CLLocationDegrees(-2.937053))
+            return CLLocationCoordinate2D(latitude: CLLocationDegrees(availableCities["New York"]!.latitude), longitude: CLLocationDegrees(availableCities["New York"]!.longitude))
         case false:
+
+            #if (arch(i386) || arch(x86_64)) && (os(iOS) || os(watchOS) || os(tvOS))
+                return CLLocationCoordinate2D(latitude: CLLocationDegrees(availableCities["New York"]!.latitude), longitude: CLLocationDegrees(availableCities["New York"]!.longitude))
+            #endif
+
             return locationManager?.location?.coordinate
         }
     }

@@ -142,3 +142,12 @@ struct RentalCollection: Codable {
 struct MyAPIResponse: Codable {
     let values: [String: Int]
 }
+
+struct MyAllAPIResponseItem: Codable {
+    let today: [String: Int]
+    let prediction: [String: Int]
+}
+
+struct MyAllAPIResponse: Codable {
+    let values: MyAllAPIResponseItem
+}

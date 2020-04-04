@@ -35,7 +35,6 @@
 		80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */; };
 		80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */; };
 		80395209241E92B000E15B87 /* RestorePurchases.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80395208241E92B000E15B87 /* RestorePurchases.strings */; };
-		8039520B241EA7FE00E15B87 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8039520A241EA7FE00E15B87 /* IAPHelper.swift */; };
 		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
 		805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B5A2223EE050C000F3CC5 /* Bundle.swift */; };
 		80628461236E34C500717472 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628460236E34C500717472 /* Coordinator.swift */; };
@@ -113,7 +112,6 @@
 		80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewController.swift; sourceTree = "<group>"; };
 		80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewModel.swift; sourceTree = "<group>"; };
 		80395208241E92B000E15B87 /* RestorePurchases.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = RestorePurchases.strings; sourceTree = "<group>"; };
-		8039520A241EA7FE00E15B87 /* IAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		803FD8A023C71FAF008DDE91 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		805B5A2223EE050C000F3CC5 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		80628460236E34C500717472 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -402,7 +400,6 @@
 				80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */,
 				80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */,
 				80395208241E92B000E15B87 /* RestorePurchases.strings */,
-				8039520A241EA7FE00E15B87 /* IAPHelper.swift */,
 			);
 			path = RestorePurchases;
 			sourceTree = "<group>";
@@ -674,7 +671,6 @@
 				8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */,
 				8010913C236E308700D3C45E /* OnboardingViewModel.swift in Sources */,
 				8002ED82239801F9008ABB6B /* SettingsViewControler.swift in Sources */,
-				8039520B241EA7FE00E15B87 /* IAPHelper.swift in Sources */,
 				80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */,
 				8099541324193E2200B44DC9 /* RoutePlannerTableViewCell.swift in Sources */,
 				80628463236ED79300717472 /* Result.swift in Sources */,

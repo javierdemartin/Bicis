@@ -21,6 +21,46 @@ class DefaultRemoteDataManager: RemoteDataManager {
         myComponents.host = "javierdemart.in"
     }
 
+    func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void) {
+
+        myComponents.path = "/api/v1/all/\(city)/\(station)"
+
+        guard let url = myComponents.url else {
+            preconditionFailure("Failed to construct URL")
+        }
+
+        dump(url)
+
+        let task = URLSession.shared.dataTask(with: url) { data, _, _ in
+
+            DispatchQueue.main.async {
+
+                if let data = data {
+
+                    do {
+
+                        let decoder = JSONDecoder()
+
+                        dump(String(data: data, encoding:.utf8))
+
+                        let decoded = try decoder.decode(MyAllAPIResponse.self, from: data)
+
+                        completion(.success(decoded))
+
+                    } catch {
+                        print("[ERR] Error decoding API Response from \(city) for station \(station)")
+                        print("The received JSON String is")
+                        print(String(data: data, encoding: .utf8) as Any)
+                        return completion(.error(RemoteDataManagerError.errorParsingNeuralBikesApi))
+                    }
+                }
+            }
+        }
+
+        task.resume()
+
+    }
+
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void) {
 
         // PERCENT ENCODED: SAN%20PEDRO

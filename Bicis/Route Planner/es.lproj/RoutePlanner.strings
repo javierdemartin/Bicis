@@ -28,4 +28,8 @@
 "LOW_DOCK_AVAILABILITY_WARNING" = "Nivel bajo de anclajes";
 
 "START_TIME_COMMUTE" = "Inicio";
+
+"TOO_FAR_AWAY_WARNING" = "Estás muy lejos como para predecir tu llegada";
+
+
 "END_TIME_COMMUTE" = "Fin";
