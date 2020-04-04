@@ -8,7 +8,7 @@
 
 iOS app to check on the status of bike sharing services. Currently available for Bilbao, Madrid and New York. 
 
-Gets the predictions from the [Neural Bikes](http://neural.bike) API and compares the real availability of each station with the predicted availability. The predictions are handled and created by the Machine Learning backend, [Neural Bikes](https://github.com/javierdemartin/neural-bikes).
+Compares the daily historic availability against the predictions made by [Neural Bikes](http://neural.bike). The predictions are handled and created by the Machine Learning backend, [Neural Bikes](https://github.com/javierdemartin/neural-bikes).
 
 ## Tech Stack
 
