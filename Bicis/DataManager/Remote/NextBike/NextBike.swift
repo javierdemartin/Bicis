@@ -21,38 +21,59 @@ struct NextBikePlaces: Decodable {
 }
 
 struct NextBikeStation: BikeStation {
+
     var id: String
     var freeBikes: Int
+    var freeRacks: Int
     var stationName: String
     var latitude: Double
     var longitude: Double
 
+    var percentageOfFreeBikes: Double {
+        return (Double(freeBikes) / Double(totalAvailableDocks)) * 100
+    }
+
     var availabilityArray: [Int]?
     var predictionArray: [Int]?
 
+    var totalAvailableDocks: Int {
+        return freeRacks + freeBikes
+    }
+
     var rmse: Double? {
-        get {
 
-            guard let availability = availabilityArray else { return nil }
-            guard let prediction = predictionArray else { return nil }
 
-            var maxValue = max(availability.max()!, prediction.max()!)
 
-            var rmseResult = 0.0
+        guard let availability = availabilityArray else { return nil }
+        guard let prediction = predictionArray else { return nil }
 
-            for element in 0..<availability.count {
-                rmseResult += pow(Double(prediction[element] - availability[element]), 2.0)
-            }
+        let range = Double(max(availability.max()!, prediction.max()!))
 
-            rmseResult = sqrt(1/Double(availability.count) * rmseResult)
-
-            return rmseResult
+        if range == 0 {
+            return nil
         }
+
+        var rmseResult = 0.0
+
+        for element in 0..<availability.count {
+            rmseResult += pow(Double(prediction[element] - availability[element]), 2.0)
+        }
+
+        rmseResult = sqrt(1/Double(availability.count) * rmseResult)
+
+        return (rmseResult/range * 100)
+    }
+
+    var inverseAccuracyRmse: Double? {
+        guard rmse != nil else { return nil }
+
+        return 100 - rmse!
     }
 
     enum CodingKeys: String, CodingKey {
         case id = "uid"
         case freeBikes = "bikes"
+        case freeRacks = "free_racks"
         case stationName = "name"
         case latitude = "lat"
         case longitude = "lng"
@@ -64,6 +85,7 @@ struct NextBikeStation: BikeStation {
         id = (try "\(values.decode(Int.self, forKey: .id))")
 
         freeBikes = try values.decode(Int.self, forKey: .freeBikes)
+        freeRacks = try values.decode(Int.self, forKey: .freeRacks)
         stationName = try values.decode(String.self, forKey: .stationName).replacingOccurrences(of: "\\d{1,}.", with: "", options: [.regularExpression])
         latitude = try values.decode(Double.self, forKey: .latitude)
         longitude = try values.decode(Double.self, forKey: .longitude)

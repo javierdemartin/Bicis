@@ -12,7 +12,21 @@ Gets the predictions from the [Neural Bikes](http://neural.bike) API and compare
 
 ## Tech Stack
 
-MVVM & AppCoordinator pattern. Writen natively in Swift. Slowly migrating some parts to use Reactive Swift and learn it. 
+* MVVM
+* Coordinator Pattern
+* Swift + Reactive Swift & Reactive Cocoa
+
+## Dependencies
+
+Managed using [CocoaPods](https://cocoapods.org), to install them:
+
+```
+pod install
+```
+
+* ReactiveCocoa
+* ReactiveSwift
+* SwiftLint
 
 ## Acknowledgements
 

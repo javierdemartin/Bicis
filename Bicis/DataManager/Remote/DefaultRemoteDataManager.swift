@@ -21,7 +21,47 @@ class DefaultRemoteDataManager: RemoteDataManager {
         myComponents.host = "javierdemart.in"
     }
 
-    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(MyAPIResponse?) -> Void) {
+    func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void) {
+
+        myComponents.path = "/api/v1/all/\(city)/\(station)"
+
+        guard let url = myComponents.url else {
+            preconditionFailure("Failed to construct URL")
+        }
+
+        dump(url)
+
+        let task = URLSession.shared.dataTask(with: url) { data, _, _ in
+
+            DispatchQueue.main.async {
+
+                if let data = data {
+
+                    do {
+
+                        let decoder = JSONDecoder()
+
+                        dump(String(data: data, encoding:.utf8))
+
+                        let decoded = try decoder.decode(MyAllAPIResponse.self, from: data)
+
+                        completion(.success(decoded))
+
+                    } catch {
+                        print("[ERR] Error decoding API Response from \(city) for station \(station)")
+                        print("The received JSON String is")
+                        print(String(data: data, encoding: .utf8) as Any)
+                        return completion(.error(RemoteDataManagerError.errorParsingNeuralBikesApi))
+                    }
+                }
+            }
+        }
+
+        task.resume()
+
+    }
+
+    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void) {
 
         // PERCENT ENCODED: SAN%20PEDRO
         myComponents.path = "/api/v1/\(type)/\(city)/\(name)"
@@ -30,7 +70,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
             preconditionFailure("Failed to construct URL")
         }
 
-        print(url)
+//        print("> Querying \(url)")
 
         let task = URLSession.shared.dataTask(with: url) { data, _, _ in
 
@@ -43,11 +83,13 @@ class DefaultRemoteDataManager: RemoteDataManager {
                         let decoder = JSONDecoder()
                         let decoded = try decoder.decode(MyAPIResponse.self, from: data)
 
-                        completion(decoded)
+                        completion(.success(decoded))
 
                     } catch {
-                        print("error trying to convert data to JSON")
-                        return
+                        print("[ERR] Error decoding API Response from \(city) for station \(name)")
+                        print("The received JSON String is")
+                        print(String(data: data, encoding: .utf8) as Any)
+                        return completion(.error(RemoteDataManagerError.errorParsingNeuralBikesApi))
                     }
                 }
             }
@@ -96,8 +138,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
                                         let result = try JSONDecoder().decode(BiciMadRoot.self, from: data)
                                         completion(.success(result.data))
                                     default:
-                                        // TODO: GEstionar y devolver error
-                                        return
+                                        completion(.error(RemoteDataManagerError.couldntParseFeed))
                                     }
 
                                 } catch {
@@ -112,10 +153,9 @@ class DefaultRemoteDataManager: RemoteDataManager {
                     })
 
                     task.resume()
-                case .error(_):
-                    // TODO: Finish error management
-                    break
 
+                case .error:
+                    completion(.error(RemoteDataManagerError.couldntGetApiKeyFromBiciMad))
                 }
             })
         } else {
@@ -139,8 +179,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
                                 let result = try JSONDecoder().decode(NextBikeRoot.self, from: data)
                                 completion(.success(result.countries[0].cities[0].places))
                             default:
-                                // TODO: GEstionar y devolver error
-                                return
+                                completion(.error(RemoteDataManagerError.didNotGetAnyStation))
                             }
 
                         } catch {

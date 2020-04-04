@@ -20,17 +20,19 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
 
         stationTitle.removeFromSuperview()
 
-        stationTitle = UILabel(frame: CGRect(x: 5, y: 5, width: self.frame.width, height: 40.0))
-        stationTitle.text = name
+        stationTitle = {
 
-        let myFont = UIFont.systemFont(ofSize: 19.0, weight: .heavy)
-        stationTitle.textColor = UIColor(named: "TextAndGraphColor")
+            let label = UILabel(frame: CGRect(x: 5, y: 5, width: self.frame.width, height: 40.0))
+            label.text = name
+            label.textColor = UIColor(named: "TextAndGraphColor")
+            label.frame.size.width = name.width(withConstrainedHeight: 19.0, font: Constants.headerFont)
+            label.font = Constants.headerFont
+            label.layer.masksToBounds = false
 
-        stationTitle.frame.size.width = name.width(withConstrainedHeight: 19.0, font: myFont)
-        stationTitle.font = myFont
-        stationTitle.layer.masksToBounds = false
+            label.sizeToFit()
 
-        stationTitle.sizeToFit()
+            return label
+        }()
 
         addSubview(stationTitle)
     }
@@ -94,10 +96,11 @@ class PredictionGraphView: UIView {
         self.accessibilityIdentifier = "PredictionGraph"
         self.clipsToBounds = true
         self.layer.cornerRadius = Appearance().cornerRadius
-        self.backgroundColor = UIColor(named: "RedColor")
+        self.backgroundColor = UIColor.systemBlue
     }
 
     func addShadows() {
+
         if shadowLayer == nil {
             shadowLayer = CAShapeLayer()
 
@@ -214,29 +217,29 @@ class PredictionGraphView: UIView {
         drawingLayer.removeFromSuperlayer()
         stationTitle.text = ""
 
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
-
-            self.transform = CGAffineTransform(translationX: 0, y: -1 * (0 + 110.0))
-            self.layoutIfNeeded()
-        }, completion: { _ in
-
-            self.isShown = false
-        })
+//        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions.curveEaseOut, animations: {
+//
+//            self.transform = CGAffineTransform(translationX: 0, y: -1 * (0 + 110.0))
+//            self.layoutIfNeeded()
+//        }, completion: { _ in
+//
+//            self.isShown = false
+//        })
 
     }
 
     func showView() {
 
-        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
-
-            self.transform = CGAffineTransform(translationX: 0, y: 0 + 55.0)
-
-            self.isHidden = false
-            self.layoutIfNeeded()
-        }, completion: {_ in
-            self.isShown = true
-
-        })
+//        UIView.animate(withDuration: 0.25, delay: 0.0, options: UIView.AnimationOptions.curveEaseIn, animations: {
+//
+//            self.transform = CGAffineTransform(translationX: 0, y: 0 + 55.0)
+//
+//            self.isHidden = false
+//            self.layoutIfNeeded()
+//        }, completion: {_ in
+//            self.isShown = true
+//
+//        })
 
     }
 }

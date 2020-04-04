@@ -9,6 +9,7 @@
 import Foundation
 import ReactiveSwift
 import CoreLocation
+import StoreKit
 
 protocol SettingsViewModelDataManager {
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void)
@@ -20,11 +21,19 @@ protocol SettingsViewModelDelegate: class {
     func selectCityInPickerView(city: String)
     func errorSubmittingCode(with errorString: String)
     func updateCitiesPicker(sortedCities: [String])
+    func presentAlertViewWithError(title: String, body: String)
 }
 
 protocol SettingsViewModelCoordinatorDelegate: class {
 
     func changedCitySelectionInPickerView(city: City)
+    func presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+}
+
+enum DonationDescriptions: String {
+
+    case firstTier = "com.javierdemartin.bici.level_one_donation"
+    case secondTier = "com.javierdemartin.bici.level_two_donation"
 }
 
 class SettingsViewModel {
@@ -33,44 +42,21 @@ class SettingsViewModel {
 
     weak var delegate: SettingsViewModelDelegate?
     weak var coordinatorDelegate: SettingsViewModelCoordinatorDelegate?
-
     var city: City?
-
     let usernameTextfieldContinuousTextValues = MutableProperty<String?>(nil)
     let passwordTextfieldContinuousTextValues = MutableProperty<String?>(nil)
     let logInButtonIsEnabled = MutableProperty(false)
-
     let compositeDisposable: CompositeDisposable
-
     let dataManager: SettingsViewModelDataManager
-
-    func saveCity(cityName: City) {
-
-        dataManager.saveCurrentCity(apiCityName: cityName, completion: { saveCurrentCityResult in
-            switch saveCurrentCityResult {
-
-            case .success:
-                break
-            case .error:
-                // TODO: Show error, prevent using the home view
-                break
-            }
-        })
-    }
 
     func sendFeedBackEmail() {
         guard let url = URL(string: "mailto:javierdemartin@gmail.com") else { return }
         UIApplication.shared.openURL(url)
     }
 
-    func changedCityInPickerView(city: String) {
-
-        // Get the correct `City` data structure
-        guard let selectedCity = availableCities[city] else { return }
-
-        dataManager.saveCurrentCity(apiCityName: selectedCity, completion: { _ in })
-
-        coordinatorDelegate?.changedCitySelectionInPickerView(city: selectedCity)
+    /// Presents RestorePurchasesViewController and dismisses SettingsViewController that is currently presented as a modal
+    func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
+        coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
     }
 
     func prepareViewForAppearance() {
@@ -86,23 +72,37 @@ class SettingsViewModel {
                 self.dataManager.saveCurrentCity(apiCityName: availableCities.first!.value, completion: { _ in })
                 self.delegate?.selectCityInPickerView(city: availableCities.first!.value.formalName)
                 print(errorCity)
-                break
             }
         })
     }
 
     func dismissingSettingsViewController() {
 
-        dataManager.getCurrentCityFromDefaults(completion: { cityResult in
-            switch cityResult {
+//        guard let selectedCity = self.city else { return }
 
-            case .success(let cityFromDefaults):
-                self.changedCityInPickerView(city: cityFromDefaults.formalName)
-                self.city = cityFromDefaults
-            case .error(_):
-                break
-            }
-        })
+//        self.changedCityInPickerView(city: selectedCity.formalName)
+
+        guard let city = self.city else { return }
+
+        // Get the correct `City` data structure
+        guard let selectedCity = availableCities[city.formalName] else { return }
+
+        self.city = selectedCity
+
+        dataManager.saveCurrentCity(apiCityName: selectedCity, completion: { _ in })
+
+        coordinatorDelegate?.changedCitySelectionInPickerView(city: selectedCity)
+
+//        dataManager.getCurrentCityFromDefaults(completion: { cityResult in
+//            switch cityResult {
+//
+//            case .success(let cityFromDefaults):
+//                self.changedCityInPickerView(city: cityFromDefaults.formalName)
+//                self.city = cityFromDefaults
+//            case .error:
+//                break
+//            }
+//        })
 
     }
 

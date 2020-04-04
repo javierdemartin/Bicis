@@ -26,11 +26,15 @@
 		80109143236E317700D3C45E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80109142236E317700D3C45E /* HomeViewModel.swift */; };
 		80109145236E320300D3C45E /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80109144236E320300D3C45E /* AppCoordinator.swift */; };
 		8010914B236E330100D3C45E /* Pods_Bicis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8010914A236E330100D3C45E /* Pods_Bicis.framework */; };
+		80167168240F08F400957EA9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80167167240F08F400957EA9 /* StoreKit.framework */; };
 		801ECE3B236F3B7D003CFAF7 /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE3A236F3B7D003CFAF7 /* MapPin.swift */; };
 		801ECE3D236F3B90003CFAF7 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE3C236F3B90003CFAF7 /* CustomAnnotationView.swift */; };
 		801ECE42236F3BD1003CFAF7 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE41236F3BD1003CFAF7 /* UIColor.swift */; };
 		801ECE44236F3BEA003CFAF7 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE43236F3BEA003CFAF7 /* Appearance.swift */; };
 		801ECE46236F3C10003CFAF7 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE45236F3C10003CFAF7 /* String.swift */; };
+		80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */; };
+		80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */; };
+		80395209241E92B000E15B87 /* RestorePurchases.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80395208241E92B000E15B87 /* RestorePurchases.strings */; };
 		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
 		805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B5A2223EE050C000F3CC5 /* Bundle.swift */; };
 		80628461236E34C500717472 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628460236E34C500717472 /* Coordinator.swift */; };
@@ -45,8 +49,20 @@
 		8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8085CC5C236E2CB500B45A7C /* AppDelegate.swift */; };
 		8085CC66236E2CB800B45A7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8085CC65236E2CB800B45A7C /* Assets.xcassets */; };
 		8085CC69236E2CB800B45A7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8085CC67236E2CB800B45A7C /* LaunchScreen.storyboard */; };
+		809953F52416C76F00B44DC9 /* RoutePlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809953F42416C76F00B44DC9 /* RoutePlannerViewController.swift */; };
+		809953F72416C77700B44DC9 /* RoutePlannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809953F62416C77700B44DC9 /* RoutePlannerViewModel.swift */; };
+		8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099540924181C5B00B44DC9 /* TimeInterval.swift */; };
+		8099541324193E2200B44DC9 /* RoutePlannerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099541224193E2200B44DC9 /* RoutePlannerTableViewCell.swift */; };
+		8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8099541624193F5600B44DC9 /* RoutePlanner.strings */; };
 		80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */; };
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
+		80B1D016241A95F20072D1D9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D015241A95F20072D1D9 /* UIView.swift */; };
+		80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */; };
+		80B1D019241ABCCC0072D1D9 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE45236F3C10003CFAF7 /* String.swift */; };
+		80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BC241BC52E004EE583 /* UIStackView.swift */; };
+		80D288BF241D5150004EE583 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BE241D5150004EE583 /* Binding.swift */; };
+		80D288C1241D5200004EE583 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
+		80D288C3241E3063004EE583 /* RoutePlannerStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */; };
 		BB945FE472A23F11205BB191 /* Pods_Bicis_BicisUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 82BCE3AFEA221F7BFDEAB899 /* Pods_Bicis_BicisUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,11 +103,15 @@
 		80109144236E320300D3C45E /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		80109146236E32F300D3C45E /* Pods_Bicis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Bicis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8010914A236E330100D3C45E /* Pods_Bicis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Bicis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80167167240F08F400957EA9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		801ECE3A236F3B7D003CFAF7 /* MapPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		801ECE3C236F3B90003CFAF7 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		801ECE41236F3BD1003CFAF7 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		801ECE43236F3BEA003CFAF7 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		801ECE45236F3C10003CFAF7 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewController.swift; sourceTree = "<group>"; };
+		80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewModel.swift; sourceTree = "<group>"; };
+		80395208241E92B000E15B87 /* RestorePurchases.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = RestorePurchases.strings; sourceTree = "<group>"; };
 		803FD8A023C71FAF008DDE91 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		805B5A2223EE050C000F3CC5 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		80628460236E34C500717472 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -111,8 +131,20 @@
 		8085CC65236E2CB800B45A7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8085CC68236E2CB800B45A7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8085CC6A236E2CB800B45A7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		809953F42416C76F00B44DC9 /* RoutePlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerViewController.swift; sourceTree = "<group>"; };
+		809953F62416C77700B44DC9 /* RoutePlannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerViewModel.swift; sourceTree = "<group>"; };
+		8099540924181C5B00B44DC9 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
+		8099541224193E2200B44DC9 /* RoutePlannerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerTableViewCell.swift; sourceTree = "<group>"; };
+		8099541524193F5600B44DC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RoutePlanner.strings; sourceTree = "<group>"; };
+		809954172419400A00B44DC9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RoutePlanner.strings; sourceTree = "<group>"; };
 		80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserInterfaceIdiom.swift; sourceTree = "<group>"; };
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		80B1D015241A95F20072D1D9 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerError.swift; sourceTree = "<group>"; };
+		80D288BC241BC52E004EE583 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
+		80D288BE241D5150004EE583 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
+		80D288C0241D5200004EE583 /* UITestingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingHelper.swift; sourceTree = "<group>"; };
+		80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerStationModel.swift; sourceTree = "<group>"; };
 		82BCE3AFEA221F7BFDEAB899 /* Pods_Bicis_BicisUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bicis_BicisUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3A858CABDDF9CD4FA0A1738 /* Pods-Bicis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis.debug.xcconfig"; path = "Target Support Files/Pods-Bicis/Pods-Bicis.debug.xcconfig"; sourceTree = "<group>"; };
 		E59531B5EA24EAA280BE3600 /* Pods_Bicis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bicis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +165,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8010914B236E330100D3C45E /* Pods_Bicis.framework in Frameworks */,
+				80167168240F08F400957EA9 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +175,7 @@
 		5949BD66B4AC3B1C21CA4D42 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				80167167240F08F400957EA9 /* StoreKit.framework */,
 				8010914A236E330100D3C45E /* Pods_Bicis.framework */,
 				80109146236E32F300D3C45E /* Pods_Bicis.framework */,
 				E59531B5EA24EAA280BE3600 /* Pods_Bicis.framework */,
@@ -187,6 +221,7 @@
 				80109134236E2DEC00D3C45E /* LocalDataManager.swift */,
 				800CE94323955A7F00674D1C /* LocalDataManagerError.swift */,
 				80628469236EE22F00717472 /* DefaultLocalDataManager.swift */,
+				80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -238,6 +273,9 @@
 				801ECE41236F3BD1003CFAF7 /* UIColor.swift */,
 				801ECE45236F3C10003CFAF7 /* String.swift */,
 				805B5A2223EE050C000F3CC5 /* Bundle.swift */,
+				8099540924181C5B00B44DC9 /* TimeInterval.swift */,
+				80B1D015241A95F20072D1D9 /* UIView.swift */,
+				80D288BC241BC52E004EE583 /* UIStackView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -318,6 +356,8 @@
 		8085CC5B236E2CB500B45A7C /* Bicis */ = {
 			isa = PBXGroup;
 			children = (
+				80D288C7241E4952004EE583 /* RestorePurchases */,
+				809953F32416C50100B44DC9 /* Route Planner */,
 				800CE94523955BD400674D1C /* Bicis.entitlements */,
 				801ECE40236F3BC3003CFAF7 /* Extensions */,
 				80628466236EDA3600717472 /* Model */,
@@ -336,8 +376,32 @@
 				80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */,
 				80A8216923D9B7E4003DD67D /* Cities.swift */,
 				8000477A23F06C1100492DFB /* StoreKitHelper.swift */,
+				80D288BE241D5150004EE583 /* Binding.swift */,
+				80D288C0241D5200004EE583 /* UITestingHelper.swift */,
 			);
 			path = Bicis;
+			sourceTree = "<group>";
+		};
+		809953F32416C50100B44DC9 /* Route Planner */ = {
+			isa = PBXGroup;
+			children = (
+				809953F42416C76F00B44DC9 /* RoutePlannerViewController.swift */,
+				809953F62416C77700B44DC9 /* RoutePlannerViewModel.swift */,
+				8099541624193F5600B44DC9 /* RoutePlanner.strings */,
+				8099541224193E2200B44DC9 /* RoutePlannerTableViewCell.swift */,
+				80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */,
+			);
+			path = "Route Planner";
+			sourceTree = "<group>";
+		};
+		80D288C7241E4952004EE583 /* RestorePurchases */ = {
+			isa = PBXGroup;
+			children = (
+				80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */,
+				80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */,
+				80395208241E92B000E15B87 /* RestorePurchases.strings */,
+			);
+			path = RestorePurchases;
 			sourceTree = "<group>";
 		};
 		A46C4047EA8A6CBF9DA58A66 /* Pods */ = {
@@ -447,7 +511,9 @@
 			files = (
 				8085CC69236E2CB800B45A7C /* LaunchScreen.storyboard in Resources */,
 				8085CC66236E2CB800B45A7C /* Assets.xcassets in Resources */,
+				8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */,
 				807C88A323EAD638003BA644 /* Home.strings in Resources */,
+				80395209241E92B000E15B87 /* RestorePurchases.strings in Resources */,
 				807C88A923EAD692003BA644 /* Settings.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -557,6 +623,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80B1D019241ABCCC0072D1D9 /* String.swift in Sources */,
 				8000476F23EF425300492DFB /* BicisUITests.swift in Sources */,
 				8000477723EF426000492DFB /* SnapshotHelper.swift in Sources */,
 			);
@@ -567,19 +634,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				80109145236E320300D3C45E /* AppCoordinator.swift in Sources */,
+				8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */,
+				80D288C1241D5200004EE583 /* UITestingHelper.swift in Sources */,
 				80109137236E2DFA00D3C45E /* DataManager.swift in Sources */,
 				8002ED84239801F9008ABB6B /* SettingsErrors.swift in Sources */,
 				801ECE46236F3C10003CFAF7 /* String.swift in Sources */,
 				80109135236E2DEC00D3C45E /* LocalDataManager.swift in Sources */,
 				807C88B323EB17EC003BA644 /* NextBike.swift in Sources */,
 				807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */,
+				80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */,
 				80109143236E317700D3C45E /* HomeViewModel.swift in Sources */,
 				8010913E236E309300D3C45E /* OnboardingViewController.swift in Sources */,
 				8002ED83239801F9008ABB6B /* SettingsViewModel.swift in Sources */,
+				80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */,
 				800CE94423955A7F00674D1C /* LocalDataManagerError.swift in Sources */,
 				80109139236E2F9700D3C45E /* RemoteDataManager.swift in Sources */,
+				80B1D016241A95F20072D1D9 /* UIView.swift in Sources */,
 				801ECE3D236F3B90003CFAF7 /* CustomAnnotationView.swift in Sources */,
+				80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */,
 				801ECE3B236F3B7D003CFAF7 /* MapPin.swift in Sources */,
+				80D288C3241E3063004EE583 /* RoutePlannerStationModel.swift in Sources */,
+				809953F72416C77700B44DC9 /* RoutePlannerViewModel.swift in Sources */,
 				80109141236E316E00D3C45E /* HomeViewController.swift in Sources */,
 				80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */,
 				800DDD4C23ED510700FCE4E5 /* BiciMad.swift in Sources */,
@@ -591,11 +666,15 @@
 				80628461236E34C500717472 /* Coordinator.swift in Sources */,
 				801ECE44236F3BEA003CFAF7 /* Appearance.swift in Sources */,
 				80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */,
+				80D288BF241D5150004EE583 /* Binding.swift in Sources */,
 				803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */,
 				8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */,
 				8010913C236E308700D3C45E /* OnboardingViewModel.swift in Sources */,
 				8002ED82239801F9008ABB6B /* SettingsViewControler.swift in Sources */,
+				80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */,
+				8099541324193E2200B44DC9 /* RoutePlannerTableViewCell.swift in Sources */,
 				80628463236ED79300717472 /* Result.swift in Sources */,
+				809953F52416C76F00B44DC9 /* RoutePlannerViewController.swift in Sources */,
 				8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */,
 				800CE942239559F700674D1C /* Constants.swift in Sources */,
 				8002ED7C2397FC5E008ABB6B /* LocationServices.swift in Sources */,
@@ -639,6 +718,15 @@
 				807C88A223EAD62B003BA644 /* es */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		8099541624193F5600B44DC9 /* RoutePlanner.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8099541524193F5600B44DC9 /* en */,
+				809954172419400A00B44DC9 /* es */,
+			);
+			name = RoutePlanner.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -809,7 +897,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = Bicis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -817,7 +905,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.3.1;
+				MARKETING_VERSION = 2020.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -833,7 +921,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 19;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = Bicis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -841,7 +929,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.3.1;
+				MARKETING_VERSION = 2020.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;

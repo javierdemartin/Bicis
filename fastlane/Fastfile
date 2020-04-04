@@ -20,6 +20,11 @@ platform :ios do
   lane :beta do
     build_app(workspace: "Bicis.xcworkspace", scheme: "Bicis")
     upload_to_testflight
+
+	deliver(
+  		automatic_release: true
+  	)
+
     skip_waiting_for_build_processing
   end
 end

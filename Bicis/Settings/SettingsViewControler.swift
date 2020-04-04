@@ -9,8 +9,8 @@
 import UIKit
 import ReactiveCocoa
 import ReactiveSwift
-import StoreKit
 import CoreLocation
+import StoreKit
 
 extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
@@ -27,7 +27,8 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        viewModel.changedCityInPickerView(city: citiesList[row])
+//        viewModel.changedCityInPickerView(city: citiesList[row])
+        self.viewModel.city = availableCities[citiesList[row]]
     }
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
@@ -75,7 +76,8 @@ class SettingsViewController: UIViewController {
 
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, self.locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, self.cityPicker, locationServicesExplanationTextView])
+//        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView, restorePurchasesButton])
+        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -101,7 +103,7 @@ class SettingsViewController: UIViewController {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .bold)
         label.numberOfLines = 0
 
         return label
@@ -111,7 +113,7 @@ class SettingsViewController: UIViewController {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 21.0, weight: .heavy)
+        label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .heavy)
         label.numberOfLines = 0
         label.text = "TITLE_LABEL_HEADER".localize(file: "Settings")
 
@@ -126,13 +128,11 @@ class SettingsViewController: UIViewController {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = true
-        textView.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        textView.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .bold)
         textView.text = "HOW_TO_USE".localize(file: "Settings")
 
         return textView
     }()
-
-
 
     lazy var locationServicesStackView: UIStackView = {
 
@@ -141,7 +141,6 @@ class SettingsViewController: UIViewController {
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.horizontal
         stackView.distribution  = UIStackView.Distribution.equalCentering
-
         stackView.alignment = .bottom
         stackView.spacing = -10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -169,39 +168,17 @@ class SettingsViewController: UIViewController {
         return button
     }()
 
-    lazy var donationsHorizontalStackView: UIStackView = {
-
-        let stackView = UIStackView(arrangedSubviews: [tipButtonTier1, tipButtonTier2])
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.backgroundColor = .white
-        stackView.axis = NSLayoutConstraint.Axis.horizontal
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 10.0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        return stackView
-    }()
-
-    lazy var tipButtonTier1: UIButton = {
+    lazy var restorePurchasesButton: UIButton = {
 
         let button = UIButton()
+        button.setTitleColor(.black, for: .normal)
+        button.setTitle("RESTORE_PURCHASES_BUTTON".localize(file: "Settings"), for:
+            .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 9.0
+        button.layer.cornerRadius = 4
 
-        button.setTitle("TIER_1_DONATION".localize(file: "Settings"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    lazy var tipButtonTier2: UIButton = {
-
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 9.0
-
-        button.setTitle("TIER_2_DONATION".localize(file: "Settings"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -212,7 +189,7 @@ class SettingsViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.setTitle("FEEDBACK_BUTTON".localize(file: "Settings"), for: .normal)
         button.layer.cornerRadius = 4
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
         button.backgroundColor = UIColor.systemBlue
         button.sizeToFit()
 
@@ -239,7 +216,7 @@ class SettingsViewController: UIViewController {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = true
-        textView.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
+        textView.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .bold)
         textView.text = "LOCATION_SERVICES_PRIVACY".localize(file: "Settings")
 
         return textView
@@ -269,12 +246,10 @@ class SettingsViewController: UIViewController {
         super.loadView()
 
         view = UIView()
-        view.backgroundColor = UIColor(named: "SettingsBackgroundColor")
+        view.backgroundColor = .systemBackground
 
         scrollView.addSubview(verticalStackView)
         view.addSubview(scrollView)
-
-//        view.addSubview(verticalStackView)
 
         let askForReviewTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(askForReview(_:)))
         imageIcon.addGestureRecognizer(askForReviewTapRecognizer)
@@ -302,12 +277,6 @@ class SettingsViewController: UIViewController {
             pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
             pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
-
-//        NSLayoutConstraint.activate([
-//            verticalStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0),
-//            verticalStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 16.0),
-//            verticalStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -16.0)
-//        ])
 
         NSLayoutConstraint.activate([
             cityPicker.leadingAnchor.constraint(equalTo: self.verticalStackView.leadingAnchor, constant: 16.0),
@@ -349,12 +318,6 @@ class SettingsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
-        print("> Saving \(citiesList[cityPicker.selectedRow(inComponent: 0)])")
-
-//        let pickerElementString = citiesList[cityPicker.selectedRow(inComponent: 0)]
-//
-//        guard let availableSelection = availableCities[pickerElementString] else { return }
-
         viewModel.dismissingSettingsViewController()
 
     }
@@ -372,6 +335,12 @@ class SettingsViewController: UIViewController {
         viewModel.availableCitiesModel.bind { cities in
             self.citiesList = cities
         }
+
+        compositeDisposable += restorePurchasesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+            self?.dismiss(animated: true, completion: {
+                self?.viewModel.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+            })
+        })
     }
 
     deinit {
@@ -382,29 +351,7 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: LocationServicesDelegate {
 
     func tracingLocation(_ currentLocation: CLLocation) {
-
-        guard let currentLocation = LocationServices.sharedInstance.currentLocation else { return }
-
         locationServicesStatusImage.image = UIImage(systemName: "location.fill")
-
-//        let nearestPin: City? = availableCities.reduce((CLLocationDistanceMax, nil)) { (nearest, pin) in
-//            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.value.latitude), longitude: CLLocationDegrees(pin.value.latitude))
-//            let loc = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
-//            let distance = currentLocation.distance(from: loc)
-//
-//            return distance < nearest.0 ? (distance, pin.value) : nearest
-//        }.1
-//
-//        guard let nearest = nearestPin else { return }
-//
-//        guard let firstIndex = citiesList.firstIndex(of: nearest.formalName) else { return }
-//
-//        self.cityPicker.selectRow(firstIndex, inComponent: 0, animated: true)
-//        self.pickerView(self.cityPicker, didSelectRow: firstIndex, inComponent: 0)
-//
-//        viewModel.changedCityInPickerView(city: citiesList[firstIndex])
-//
-//        cityPicker.reloadAllComponents()
     }
 
     func tracingLocationDidFailWithError(_ error: NSError) {
@@ -437,5 +384,14 @@ extension SettingsViewController: SettingsViewModelDelegate {
         let alert = UIAlertController(title: "ALERT_HEADER", message: errorString, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "CONFIRM_ALERT", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+
+    func presentAlertViewWithError(title: String, body: String) {
+
+        let alertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAction)
+
+        self.present(alertController, animated: true, completion: nil)
     }
 }

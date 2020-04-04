@@ -15,7 +15,7 @@ struct StoreKitHelper {
 
     static func displayStoreKit() {
 
-        if (ProcessInfo.processInfo.arguments.contains("is_ui_testing")) { return }
+        if ProcessInfo.processInfo.arguments.contains("is_ui_testing") { return }
 
         guard let currentVersion = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String else {
             return

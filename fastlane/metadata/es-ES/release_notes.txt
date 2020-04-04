@@ -1,3 +1,2 @@
-· Solucionado error que provocaba que se seleccionara automáticamente la ciudad de Madrid al abrir la app y guardado otra ubicación.
-· Actualización frecuente del feed de datos para mostrar siempre los datos más actualizados
-· Cada vez que se abra la aplicación se seleccionará de forma automática la estación más cercana
+· Añadidos identificadores de colores para comprobar la disponibilidad de estaciones a lo largo de la ciudad
+· ¡Nueva característica! Al seleccionar la estación de destino puedes obtener una estimación del número de anclajes disponibles que habrá a tu hora de llegada. De esta forma no llegarás para ver que no hay sitio donde dejar tu bicicleta

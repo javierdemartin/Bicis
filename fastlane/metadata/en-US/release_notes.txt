@@ -1,3 +1,2 @@
-· Fixed issue that changed the selected city to Madrid after reopening the app.
-· Bike sharing feed is updated frequently to show the newest data available
-· Every time the app is opened the closest bike sharing station will be selected
+· Added color coding to identify the number of free bikes on each station
+· Introducing destination station predictions! After selecting your destination station you will receive an estimate of the number of docking stations available at your arrival time. You will not arrive and discover there are no free docks to leave your bike

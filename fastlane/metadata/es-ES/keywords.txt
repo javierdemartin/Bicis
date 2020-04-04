@@ -1,1 +1,1 @@
-bicis,viaje,bilbao,bizi,predicciones,redes,neuronales,madrid,bilbao,bilbo,ofo,emt,transportes
+emt, madrid, bicicletas, mad, bilbao, bici, transporte, sharing, ofo, bizi,

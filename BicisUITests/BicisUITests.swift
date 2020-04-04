@@ -15,8 +15,6 @@ class BicisUITests: XCTestCase {
 
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
     }
 
     override func tearDown() {
@@ -28,23 +26,40 @@ class BicisUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments.append("is_ui_testing")
 
-        app.launchArguments.append("-AppleInterfaceStyle Dark")
-        // UI tests must launch the application that they test.
-
         setupSnapshot(app)
         app.launch()
 
+
+        sleep(3) // Wait for the map to load
+
         snapshot("00-Home")
 
-        sleep(5)
+        // Wait for the API information to be delivered
+        let label = app.buttons["START_ROUTE"]
+        let exists = NSPredicate(format: "exists == 1")
 
-        let predictionGraph = app.otherElements["PredictionGraph"]
-        predictionGraph.tap()
+        expectation(for: exists, evaluatedWith: label, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
 
-        snapshot("01-Settings")
+        label.tap()
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+
+        let textPredicate = NSPredicate(format: "label != %@", "...")
+        expectation(for: textPredicate, evaluatedWith: app.staticTexts["DESTINATION_BIKES"], handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
+
+        snapshot("01-RoutePlanner")
+
+//        let pullDownTab = app.otherElements["PULL_DOWN_TAB"]
+//
+//        let start = pullDownTab.coordinate(withNormalizedOffset: CGVector(dx: 10, dy: 20))
+//        let finish = pullDownTab.coordinate(withNormalizedOffset: CGVector(dx: 10, dy: 200))
+//        start.press(forDuration: 0.01, thenDragTo: finish)
+
+//        pullDownTab.swipeDown()
+
+
+        // MARK: RoutePlanner
     }
 
 //    func testLaunchPerformance() {

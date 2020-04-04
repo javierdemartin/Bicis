@@ -1,0 +1,32 @@
+/* 
+  RoutePlanner.strings
+  Bicis
+
+  Created by Javier de Martín Gil on 09/03/2020.
+  Copyright © 2020 Javier de Martín Gil. All rights reserved.
+*/
+
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitor the available number of docks of the destination station at your expected arrival time";
+"STATION_SEARCH_PLACEHOLDER" = "Destination station";
+
+"FREE_DOCKS_AT_DESTINATION_LABEL" = "%number free docks";
+"ERROR_LOADING_FREE_DOCKS_AT_DESTINATION" = "Unable to retrieve details";
+
+"START_TRIP" = " Start commute ";
+
+"ESTIMATED_TIME_OF_ARRIVAL" = "Arriving at %time, riding %distanceUnits";
+
+"LOADING_ROUTE" = "Calculating time to destination...";
+
+"LOADING_PREDICTIONS" = "Loading predictions...";
+
+"ACCURACY_OF_MODEL" = "%percentage% prediction accuracy";
+
+"DESTINATION_DOCKS_LABEL" = "Free docks";
+
+"LOW_DOCK_AVAILABILITY_WARNING" = "Low dock availability";
+
+"TOO_FAR_AWAY_WARNING" = "You are too far away!";
+
+"START_TIME_COMMUTE" = "Start time";
+"END_TIME_COMMUTE" = "End time";
