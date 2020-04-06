@@ -14,11 +14,16 @@ protocol RestorePurchasesViewModelDelegate: class {
     func celebratePurchase()
 }
 
+protocol RestorePurchasesViewModelCoordinatorDelegate: class {
+    func reParseMainFeedShowingNewColors()
+}
+
 class RestorePurchasesViewModel: NSObject {
 
     let compositeDisposable: CompositeDisposable
 
     weak var delegate: RestorePurchasesViewModelDelegate?
+    weak var coordinatorDelegate: RestorePurchasesViewModelCoordinatorDelegate?
 
     func unlockDataInsights() {
 
@@ -42,7 +47,7 @@ class RestorePurchasesViewModel: NSObject {
 
     @objc func didSuccessfullyFinishStoreKitOperation() {
 
-//        coordinatorDelegate?.presentRoutePlannerAfterSuccessfullyUnlockingFeatures()
+        coordinatorDelegate?.reParseMainFeedShowingNewColors()
         delegate?.celebratePurchase()
     }
 

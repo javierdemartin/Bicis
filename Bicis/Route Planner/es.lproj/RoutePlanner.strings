@@ -23,6 +23,10 @@
 
 "ACCURACY_OF_MODEL" = "%percentage% de fiabilidad";
 
+"RECHARGE" = "Siguiente recarga";
+
+"DISCHARGE" = "Siguiente vaciamiento";
+
 "ACCURACY_OF_MODEL_ERROR" = "Error calculando precisión de las predicciones";
 
 "DESTINATION_DOCKS_LABEL" = "Anclajes libres";

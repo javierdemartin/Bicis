@@ -1,3 +1,7 @@
-· Añadidos identificadores de colores para comprobar la disponibilidad de estaciones a lo largo de la ciudad
-· ¡Nueva característica! Al seleccionar la estación de destino puedes obtener una estimación del número de anclajes disponibles que habrá a tu hora de llegada. De esta forma no llegarás para ver que no hay sitio donde dejar tu bicicleta
-· Arreglados errores al recibir errores de la API
+¡Nuevas funcionalidades!
+
+Al seleccionar tu estación de destino puedes comprobar la predicción de anclajes libres que habrá al tiempo estimado de llegada. Esto puede ayudarte evitando llegar al destino y que no haya sitio donde depositar tu bicicleta.
+
+Además, también se muestra de forma alternativa la estación más cercana que también dispone de anclajes libres.
+
+Se realizan más análisis en el servidor para detectar las recargas y vaciamientos de las estaciones por los operadores del servicio. 

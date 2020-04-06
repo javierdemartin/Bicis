@@ -114,11 +114,28 @@ class AppCoordinator: Coordinator {
     }
 }
 
+extension AppCoordinator: RestorePurchasesViewModelCoordinatorDelegate {
+    func reParseMainFeedShowingNewColors() {
+
+        localDataManager.getCurrentCity(completion: { cityResult in
+
+            switch cityResult {
+
+            case .success(let city):
+                self.homeViewModel?.getMapPinsFrom(city: city)
+            case .error:
+                break
+            }
+        })
+    }
+}
+
 extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
     func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
 
         let compositeDisposable = CompositeDisposable()
         let restorePurchasesViewModel = RestorePurchasesViewModel(compositeDisposable: compositeDisposable)
+        restorePurchasesViewModel.coordinatorDelegate = self
         let restorePurchasesViewController = RestorePurchasesViewController(compositeDisposable: compositeDisposable, viewModel: restorePurchasesViewModel)
 
         restorePurchasesViewController.modalPresentationStyle = .formSheet

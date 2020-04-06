@@ -555,17 +555,22 @@ extension HomeViewController: MKMapViewDelegate {
                 return marker
             }()
 
-            // Stablish the color coding of the availability
-            switch stationsDictFromViewModel.percentageOfFreeBikes {
-            case 66.0..<100.0:
-                markerAnnotationView.markerTintColor = UIColor.systemGreen
-            case 33.0...66.0:
-                markerAnnotationView.markerTintColor = UIColor.systemOrange
-            case ..<33.0:
-                markerAnnotationView.markerTintColor = UIColor.systemRed
-            default:
-                break
-            }
+            self.viewModel.hasUnlockedFeatures(completion: { hasPaid in
+
+                if hasPaid {
+                    // Stablish the color coding of the availability
+                    switch stationsDictFromViewModel.percentageOfFreeBikes {
+                    case 66.0..<100.0:
+                        markerAnnotationView.markerTintColor = UIColor.systemGreen
+                    case 33.0...66.0:
+                        markerAnnotationView.markerTintColor = UIColor.systemOrange
+                    case ..<33.0:
+                        markerAnnotationView.markerTintColor = UIColor.systemRed
+                    default:
+                        break
+                    }
+                }
+            })
 
             return markerAnnotationView
         }

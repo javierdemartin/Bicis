@@ -26,6 +26,10 @@
 
 "DESTINATION_DOCKS_LABEL" = "Free docks";
 
+"RECHARGE" = "Next recharge";
+
+"DISCHARGE" = "Next discharge";
+
 "LOW_DOCK_AVAILABILITY_WARNING" = "Low dock availability";
 
 "TOO_FAR_AWAY_WARNING" = "You are too far away!";

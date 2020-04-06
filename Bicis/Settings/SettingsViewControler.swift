@@ -158,31 +158,6 @@ class SettingsViewController: UIViewController {
         return picker
     }()
 
-    lazy var requestLocationServicesButton: UIButton = {
-
-        let button = UIButton()
-        button.setTitleColor(.black, for: .normal)
-        button.setTitle("REQUEST_LOCATION_SERVICES_BUTTON".localize(file: "Settings"), for:
-            .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
-    lazy var restorePurchasesButton: UIButton = {
-
-        let button = UIButton()
-        button.setTitleColor(.black, for: .normal)
-        button.setTitle("RESTORE_PURCHASES_BUTTON".localize(file: "Settings"), for:
-            .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 4
-
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-
     lazy var requestFeedBackButton: UIButton = {
 
         let button = UIButton()
@@ -324,10 +299,6 @@ class SettingsViewController: UIViewController {
 
     fileprivate func setupBindings() {
 
-        compositeDisposable += requestLocationServicesButton.reactive.controlEvents(.touchUpInside).observe({ (_) in
-            print("\(#file) \(#function)")
-        })
-
         compositeDisposable += requestFeedBackButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             self?.viewModel.sendFeedBackEmail()
         })
@@ -335,12 +306,6 @@ class SettingsViewController: UIViewController {
         viewModel.availableCitiesModel.bind { cities in
             self.citiesList = cities
         }
-
-        compositeDisposable += restorePurchasesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
-            self?.dismiss(animated: true, completion: {
-                self?.viewModel.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
-            })
-        })
     }
 
     deinit {

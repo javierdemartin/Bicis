@@ -14,6 +14,11 @@ class DefaultLocalDataManager: LocalDataManager {
 
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
 
+        // When UITesting skip th epurchase step
+        if UITestingHelper.sharedInstance.isUITesting() {
+            completion(.success(true))
+        }
+
         guard let hasPaidBefore = defaults.value(forKey: Constants.hasUnlockedFeatures) as? Bool else {
             return completion(.error(LocalDataManagerError.hasntPaid))
         }

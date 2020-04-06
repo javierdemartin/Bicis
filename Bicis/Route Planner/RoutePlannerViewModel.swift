@@ -83,9 +83,30 @@ class RoutePlannerViewModel: NSObject {
         })
     }
 
+//    let dateFormatter: DateFormatter = {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "hh:mm"
+//
+//        return dateFormatter
+//    }()
+
+    let dateFormatter = DateFormatter()
+
+//    var date = dateFormatter.dateFromString("00:00")
+//    var str_from_date = dateFormatter.stringFromDate (date)
+
     func calculateRmseForStationByQueryingPredictions(completion: @escaping(()) -> Void) {
 
+        dateFormatter.dateFormat = "HH:mm"
+//        dateFormatter.locale = .
+
+
         guard self.destinationStation.value != nil else { return }
+
+        let date = Date()
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: date)
+        let minutes = calendar.component(.minute, from: date)
 
         dataManager.getCurrentCity(completion: { currentCityResult in
 
@@ -119,14 +140,19 @@ class RoutePlannerViewModel: NSObject {
                         self.destinationStation.value!.availabilityArray = sortedNow
                         self.destinationStation.value!.predictionArray = sortedPrediction
 
-                        let nextRefill = datos.refill.first
-                        let nextDischarge = datos.discharges.first
+                        // Get local time
+                        let closestNextRefillTime = datos.refill.reversed().first(where: {
+                            calendar.component(.hour, from: date) < calendar.component(.hour, from: self.dateFormatter.date(from: $0)!)
+                        })
+
+                        let closestNextDischargeTime = datos.discharges.reversed().first(where: {
+                            calendar.component(.hour, from: self.dateFormatter.date(from: $0)!) < calendar.component(.hour, from: date)
+                        })
 
                         // Fill refill/discharge times for the station
-                        self.delegate?.updateBikeStationOperations(nextRefill: nextRefill, nextDischarge: nextDischarge)
+                        self.delegate?.updateBikeStationOperations(nextRefill: closestNextRefillTime, nextDischarge: closestNextDischargeTime)
 
                         completion(())
-                        
                     case .error(let apiError):
 //                        self.delegate?.presentAlertViewWithError(title: "Error", body: apiError.localizedDescription)
                         break

@@ -73,11 +73,28 @@ class HomeViewModel {
         LocationServices.sharedInstance.locationManager?.requestWhenInUseAuthorization()
         LocationServices.sharedInstance.locationManager?.startUpdatingLocation()
 
-        
-
         if let currentCity = self.city {
             getMapPinsFrom(city: currentCity)
         }
+    }
+
+    func hasUnlockedFeatures(completion: @escaping(Bool) -> Void) {
+
+        if UITestingHelper.sharedInstance.isUITesting() {
+            completion(true)
+        }
+
+        dataManager.hasUnlockedFeatures(completion: { result in
+
+            switch result {
+
+            case .success(let hasUnlocked):
+                completion(hasUnlocked)
+            case .error:
+                completion(false)
+            }
+
+        })
     }
 
     func selectedRoute(station: BikeStation) {

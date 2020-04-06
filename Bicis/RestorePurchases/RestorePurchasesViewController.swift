@@ -60,7 +60,7 @@ class RestorePurchasesViewController: UIViewController {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = true
-        textView.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
+        textView.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .regular)
         textView.text = "GIVE_ME_YOUR_MONEY".localize(file: "RestorePurchases")
 
         return textView
@@ -99,7 +99,7 @@ class RestorePurchasesViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
         label.text = "RESTORE_PURCHASES_TITLE".localize(file: "RestorePurchases")
-        label.textColor = UIColor.black
+//        label.textColor = UIColor.black
         label.textAlignment = .left
 
         return label
@@ -135,7 +135,7 @@ class RestorePurchasesViewController: UIViewController {
 
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .heavy)
-        label.textColor = .black
+//        label.textColor = .black
         label.text = "HAS_NOT_PURCHASED".localize(file: "RestorePurchases")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -211,6 +211,13 @@ class RestorePurchasesViewController: UIViewController {
 
             pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             pullTabToDismissView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0)
+        ])
+
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: whyYouShouldGiveMeMoneyTextView.leadingAnchor, constant: 0),
+            purchaseStatusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 16.0),
+            purchaseStatusLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: -16.0)
+//            unlockFeaturesLabel.leadingAnchor.constraint(equalTo: whyYouShouldGiveMeMoneyTextView., constant: -16.0)
         ])
     }
 

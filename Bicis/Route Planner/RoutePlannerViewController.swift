@@ -427,7 +427,7 @@ class RoutePlannerViewController: UIViewController {
 
     let dischargeTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Discharge"
+        label.text = "DISCHARGE".localize(file: "RoutePlanner")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
@@ -485,7 +485,7 @@ class RoutePlannerViewController: UIViewController {
 
     let refillTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Recarga"
+        label.text = "RECHARGE".localize(file: "RoutePlanner")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
@@ -520,15 +520,13 @@ class RoutePlannerViewController: UIViewController {
 
     let refillLabel: UILabel = {
         let label = UILabel()
-        label.text = "Next refill time"
+        label.text = "DISCHARGE".localize(file: "RoutePlanner")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .black)
 
         return label
     }()
-
-
 
     lazy var labelsDestinationStationVerticalStackView: UIStackView = {
 
