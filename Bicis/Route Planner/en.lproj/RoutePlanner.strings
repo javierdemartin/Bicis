@@ -22,6 +22,8 @@
 
 "ACCURACY_OF_MODEL" = "%percentage% prediction accuracy";
 
+"ACCURACY_OF_MODEL_ERROR" = "Error calculating the precission of the predictions";
+
 "DESTINATION_DOCKS_LABEL" = "Free docks";
 
 "LOW_DOCK_AVAILABILITY_WARNING" = "Low dock availability";
@@ -29,4 +31,11 @@
 "TOO_FAR_AWAY_WARNING" = "You are too far away!";
 
 "START_TIME_COMMUTE" = "Start time";
+
 "END_TIME_COMMUTE" = "End time";
+
+"CLOSEST_ANNOTATION_DESCRIPTION" = "%number free docks at %distance kms.";
+
+"CLOSEST_ANNOTATION_DESCRIPTION_WO_LOCATION" = "%number free docks";
+
+"CLOSEST_ANNOTATION_HEADER" = "Closest alternative station";

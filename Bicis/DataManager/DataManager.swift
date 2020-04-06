@@ -9,6 +9,7 @@
 import Foundation
 
 class DataManager {
+
     let localDataManager: LocalDataManager
     let remoteDataManager: RemoteDataManager
 
@@ -28,7 +29,6 @@ extension DataManager: HomeViewModelDataManager {
     }
 
     func getCurrentCity(completion: @escaping (Result<City>) -> Void) {
-
         localDataManager.getCurrentCity(completion: { getCurrentCityResult in
             switch getCurrentCityResult {
 
@@ -41,22 +41,13 @@ extension DataManager: HomeViewModelDataManager {
     }
 
     func checkUserCredentials(completion: @escaping (Result<UserCredentials>) -> Void) {
-
         localDataManager.getUserData(completion: { userDataResult in
-
             completion(userDataResult)
         })
     }
 
     func getStations(city: String, completion: @escaping (Result<[BikeStation]>) -> Void) {
         remoteDataManager.getStations(city: city, completion: { res in
-
-            completion(res)
-        })
-    }
-
-    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping (Result<MyAPIResponse>) -> Void) {
-        remoteDataManager.getPredictionForStation(city: city, type: type, name: name, completion: { res in
             completion(res)
         })
     }
@@ -70,8 +61,10 @@ extension DataManager: HomeViewModelDataManager {
 
 // MARK: RoutePlannerViewModelDataManager
 extension DataManager: RoutePlannerViewModelDataManager {
-    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping (MyAPIResponse?) -> Void) {
-
+    func getPredictionForStation(city: String, type: String, name: String, completion: @escaping (Result<MyAPIResponse>) -> Void) {
+        remoteDataManager.getPredictionForStation(city: city, type: type, name: name, completion: { res in
+            completion(res)
+        })
     }
 }
 
@@ -92,7 +85,6 @@ extension DataManager: SettingsViewModelDataManager {
     }
 
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void) {
-
         localDataManager.saveCurrentCity(apiCityName: apiCityName, completion: { saveCurrentCityResult in
             switch saveCurrentCityResult {
             case .success:

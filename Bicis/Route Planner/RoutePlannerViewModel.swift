@@ -19,6 +19,8 @@ protocol RoutePlannerViewModelDelegate: class {
     func presentAlertViewWithError(title: String, body: String)
     func errorTooFarAway()
     func gotDestinationRoute(station: BikeStation, route: MKRoute)
+    func updateBikeStationOperations(nextRefill: String?, nextDischarge: String?)
+    func fillClosestStationInformation(station: BikeStation)
 }
 
 protocol RoutePlannerViewModelDataManager: class {
@@ -39,12 +41,16 @@ class RoutePlannerViewModel: NSObject {
 
     let dataManager: RoutePlannerViewModelDataManager
 
-    init(compositeDisposable: CompositeDisposable, dataManager: RoutePlannerViewModelDataManager, stationsDict: [String: BikeStation]?, destinationStation: BikeStation?) {
+    var closestAnnotations: [BikeStation]
+
+    init(compositeDisposable: CompositeDisposable, dataManager: RoutePlannerViewModelDataManager, stationsDict: [String: BikeStation]?, closestAnnotations: [BikeStation], destinationStation: BikeStation?) {
 
         self.compositeDisposable = compositeDisposable
         self.stationsDict = stationsDict
 
         self.dataManager = dataManager
+
+        self.closestAnnotations = closestAnnotations
 
         super.init()
 
@@ -52,6 +58,12 @@ class RoutePlannerViewModel: NSObject {
     }
 
     func drawDataWhateverImTired() {
+
+        // Get the closest annotation from the filtered array with the most number of free bikes
+        closestAnnotations.sort(by: { $0.freeRacks > $1.freeRacks })
+
+        // Sorting is a mutable operation, the first station will be the one from the closer ones that has the most number of free docks available
+        delegate?.fillClosestStationInformation(station: closestAnnotations.first!)
 
         guard let station = destinationStation.value else { return }
 
@@ -107,11 +119,17 @@ class RoutePlannerViewModel: NSObject {
                         self.destinationStation.value!.availabilityArray = sortedNow
                         self.destinationStation.value!.predictionArray = sortedPrediction
 
+                        let nextRefill = datos.refill.first
+                        let nextDischarge = datos.discharges.first
+
+                        // Fill refill/discharge times for the station
+                        self.delegate?.updateBikeStationOperations(nextRefill: nextRefill, nextDischarge: nextDischarge)
+
                         completion(())
                         
                     case .error(let apiError):
-                        self.delegate?.presentAlertViewWithError(title: "Error", body: apiError.localizedDescription)
-
+//                        self.delegate?.presentAlertViewWithError(title: "Error", body: apiError.localizedDescription)
+                        break
                     }
                 })
 

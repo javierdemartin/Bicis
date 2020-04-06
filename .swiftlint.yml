@@ -8,3 +8,6 @@ file_length:
 identifier_name:
   excluded: # excluded via string array
     - id
+disabled_rules:
+    - type_body_length
+    - identifier_name

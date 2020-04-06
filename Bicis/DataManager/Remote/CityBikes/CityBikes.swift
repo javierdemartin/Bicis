@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CoreLocation
+
 
 protocol BikeStation: Decodable {
     var id: String { get set }
@@ -22,6 +24,9 @@ protocol BikeStation: Decodable {
     var predictionArray: [Int]? { get set }
     var rmse: Double? { get }
     var inverseAccuracyRmse: Double? { get }
+
+    var location: CLLocation { get }
+    func distance(to location: CLLocation) -> CLLocationDistance
 }
 
 struct CitiBikesStation: BikeStation {
@@ -34,6 +39,14 @@ struct CitiBikesStation: BikeStation {
 
     var availabilityArray: [Int]?
     var predictionArray: [Int]?
+
+    var location: CLLocation {
+        return CLLocation(latitude: self.latitude, longitude: self.longitude)
+    }
+
+    func distance(to location: CLLocation) -> CLLocationDistance {
+        return location.distance(from: self.location)
+    }
 
     var totalAvailableDocks: Int {
         return freeRacks + freeBikes

@@ -182,10 +182,10 @@ extension AppCoordinator: RoutePlannerViewModelCoordinatorDelegate {
 extension AppCoordinator: HomeViewModelCoordinatorDelegate {
 
     /// Presents the UIViewController in charge of planning the route to the destination station
-    func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation) {
+    func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation]) {
 
         let compositeDisposable = CompositeDisposable()
-        let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, destinationStation: stationsDict)
+        let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, closestAnnotations: closestAnnotations, destinationStation: stationsDict)
         routePlannerViewModel.coordinatorDelegate = self
         routePlannerViewController = RoutePlannerViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
 

@@ -1,0 +1,16 @@
+/* 
+  RestorePurchases.strings
+  Bicis
+
+  Created by Javier de Martín Gil on 15/03/2020.
+  Copyright © 2020 Javier de Martín Gil. All rights reserved.
+*/
+
+"GIVE_ME_YOUR_MONEY" = "This app is solely maintained by one individual. Not only you can unlock new features but help me continue the development of this app.";
+
+"RESTORE_PURCHASES" = "Restore Purchases";
+"UNLOCK_FEATURE_PRE_LOAD" = " Unlock features";
+
+"HAS_PURCHASED" = "Thank you for your purchase & support! :)";
+"HAS_NOT_PURCHASED" = "You have not unlocked any paid features yet :(";
+"RESTORE_PURCHASES_TITLE" = "Unlock features";

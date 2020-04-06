@@ -23,6 +23,8 @@
 
 "ACCURACY_OF_MODEL" = "%percentage% de fiabilidad";
 
+"ACCURACY_OF_MODEL_ERROR" = "Error calculando precisión de las predicciones";
+
 "DESTINATION_DOCKS_LABEL" = "Anclajes libres";
 
 "LOW_DOCK_AVAILABILITY_WARNING" = "Nivel bajo de anclajes";
@@ -32,3 +34,9 @@
 "TOO_FAR_AWAY_WARNING" = "¡Estás muy lejos!";
 
 "END_TIME_COMMUTE" = "Fin";
+
+"CLOSEST_ANNOTATION_DESCRIPTION" = "%number anclajes libres a %distance kms.";
+
+"CLOSEST_ANNOTATION_DESCRIPTION_WO_LOCATION" = "%number anclajes libres";
+
+"CLOSEST_ANNOTATION_HEADER" = "Estación alternativa más cercana";

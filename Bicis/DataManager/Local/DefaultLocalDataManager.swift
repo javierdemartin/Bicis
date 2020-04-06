@@ -10,9 +10,9 @@ import Foundation
 
 class DefaultLocalDataManager: LocalDataManager {
 
-    func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
+    let defaults = UserDefaults(suiteName: Constants.appGroupsBundleID)!
 
-        completion(.success(true))
+    func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
 
         guard let hasPaidBefore = defaults.value(forKey: Constants.hasUnlockedFeatures) as? Bool else {
             return completion(.error(LocalDataManagerError.hasntPaid))
@@ -21,7 +21,9 @@ class DefaultLocalDataManager: LocalDataManager {
         completion(.success(hasPaidBefore))
     }
 
-    let defaults = UserDefaults(suiteName: Constants.appGroupsBundleID)!
+    func setUnlockedDataInsights() {
+
+    }
 
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void) {
 

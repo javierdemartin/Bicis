@@ -9,8 +9,30 @@
 import Foundation
 import ReactiveSwift
 import ReactiveCocoa
-import StoreKit
+import SpriteKit
 
+extension RestorePurchasesViewController: RestorePurchasesViewModelDelegate {
+    func celebratePurchase() {
+
+        DispatchQueue.main.async {
+            self.purchaseStatusLabel.text = "HAS_PURCHASED".localize(file: "RestorePurchases")
+        }
+
+
+        createParticles()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
+            self.particleEmitter.removeFromSuperlayer()
+        })
+    }
+
+    func updatePriceForIap(price: NSDecimalNumber) {
+        DispatchQueue.main.async {
+            self.unlockFeaturesLabel.titleLabel?.text = "UNLOCK_FEATURE_POST_LOAD".localize(file: "RestorePurchases").replacingOccurrences(of: "%price", with: "\(price)")
+            self.unlockFeaturesLabel.sizeToFit()
+        }
+    }
+}
 
 class RestorePurchasesViewController: UIViewController {
 
@@ -46,12 +68,12 @@ class RestorePurchasesViewController: UIViewController {
 
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [whyYouShouldGiveMeMoneyTextView, donationsHorizontalStackView, restorePurchasesButton, purchaseStatusLabel])
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, whyYouShouldGiveMeMoneyTextView, donationsHorizontalStackView, restorePurchasesButton, purchaseStatusLabel])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 10.0
+        stackView.spacing = 32.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -59,38 +81,40 @@ class RestorePurchasesViewController: UIViewController {
 
     lazy var donationsHorizontalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [tipButtonTier1, tipButtonTier2])
+        let stackView = UIStackView(arrangedSubviews: [unlockFeaturesLabel])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.horizontal
         stackView.distribution  = UIStackView.Distribution.equalSpacing
+
         stackView.spacing = 10.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
     }()
 
-    lazy var tipButtonTier1: UIButton = {
+    lazy var titleLabel: UILabel = {
 
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 9.0
-        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
-        button.setTitle("TIER_1_DONATION".localize(file: "RestorePurchases"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
+        label.text = "RESTORE_PURCHASES_TITLE".localize(file: "RestorePurchases")
+        label.textColor = UIColor.black
+        label.textAlignment = .left
+
+        return label
     }()
 
-    lazy var tipButtonTier2: UIButton = {
+    lazy var unlockFeaturesLabel: UIButton = {
 
         let button = UIButton()
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.systemBlue
         button.layer.cornerRadius = 9.0
-        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
-        button.setTitle("TIER_2_DONATION".localize(file: "RestorePurchases"), for: .normal)
+        button.titleLabel?.numberOfLines = 0
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .regular)
+        button.setTitle("UNLOCK_FEATURE_PRE_LOAD".localize(file: "RestorePurchases"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -101,7 +125,7 @@ class RestorePurchasesViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.systemBlue
         button.layer.cornerRadius = 9.0
-        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .regular)
         button.setTitle("RESTORE_PURCHASES".localize(file: "RestorePurchases"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -129,12 +153,16 @@ class RestorePurchasesViewController: UIViewController {
         return view
     }()
 
+    let particles = GameScene()
+
     init(compositeDisposable: CompositeDisposable, viewModel: RestorePurchasesViewModel) {
 
         self.compositeDisposable = compositeDisposable
         self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
+
+        self.viewModel.delegate = self
     }
 
     var selectedPayment: String?
@@ -154,8 +182,7 @@ class RestorePurchasesViewController: UIViewController {
         view.addSubview(scrollView)
 
         NSLayoutConstraint.activate([
-            tipButtonTier1.widthAnchor.constraint(equalToConstant: (tipButtonTier1.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0),
-            tipButtonTier2.widthAnchor.constraint(equalToConstant: (tipButtonTier2.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0),
+            unlockFeaturesLabel.widthAnchor.constraint(equalToConstant: (unlockFeaturesLabel.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0),
             restorePurchasesButton.widthAnchor.constraint(equalToConstant: (restorePurchasesButton.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0),
 //            restorePurchasesButton.widthAnchor.constraint(equalToConstant: (restorePurchasesButton.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0),
         ])
@@ -193,33 +220,57 @@ class RestorePurchasesViewController: UIViewController {
         setUpBindings()
     }
 
-    func donateTip(quantity: DonationDescriptions) {
-
-        if !SKPaymentQueue.canMakePayments() { return }
-
-        let productID = Set(arrayLiteral: quantity.rawValue)
-        let productsRequest: SKProductsRequest = SKProductsRequest(productIdentifiers: productID)
-//        productsRequest.delegate = self
-
-        selectedPayment = quantity.rawValue
-        productsRequest.start()
-        print("Fetching Products")
-    }
-
-    func buyProduct(product: SKProduct) {
-        print("Sending the Payment Request to Apple")
-        let payment = SKPayment(product: product)
-        SKPaymentQueue.default().add(payment)
-    }
-
     func setUpBindings() {
 
-        compositeDisposable += tipButtonTier1.reactive.controlEvents(.touchUpInside).observeValues({ [weak self] (_) in
-            self?.donateTip(quantity: .firstTier)
+        compositeDisposable += unlockFeaturesLabel.reactive.controlEvents(.touchUpInside).observeValues({ [weak self] (_) in
+            self?.viewModel.unlockDataInsights()
+        })
+
+        compositeDisposable += restorePurchasesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+
+            self?.viewModel.restorePurchases()
         })
     }
 
     deinit {
         compositeDisposable.dispose()
     }
+
+    let particleEmitter = CAEmitterLayer()
+
+    func createParticles() {
+
+        particleEmitter.emitterPosition = CGPoint(x: view.center.x, y: -96)
+        particleEmitter.emitterShape = .line
+        particleEmitter.emitterSize = CGSize(width: view.frame.size.width, height: 1)
+
+        let red = makeEmitterCell(color: UIColor.systemRed)
+        let green = makeEmitterCell(color: UIColor.systemIndigo)
+        let blue = makeEmitterCell(color: UIColor.systemOrange
+        )
+
+        particleEmitter.emitterCells = [red, green, blue]
+
+         view.layer.insertSublayer(particleEmitter, at: 0)
+    }
+
+    func makeEmitterCell(color: UIColor) -> CAEmitterCell {
+        let cell = CAEmitterCell()
+        cell.birthRate = 10
+        cell.lifetime = 5.0
+        cell.lifetimeRange = 0
+        cell.color = color.cgColor
+        cell.velocity = 200
+        cell.velocityRange = 50
+        cell.emissionLongitude = CGFloat.pi
+        cell.emissionRange = CGFloat.pi / 4
+        cell.spin = 2
+        cell.spinRange = 3
+        cell.scaleRange = 0.5
+        cell.scaleSpeed = -0.05
+
+        cell.contents = UIImage(named: "particle_confetti")?.cgImage
+        return cell
+    }
+
 }
