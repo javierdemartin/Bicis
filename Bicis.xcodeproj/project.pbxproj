@@ -32,9 +32,14 @@
 		801ECE42236F3BD1003CFAF7 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE41236F3BD1003CFAF7 /* UIColor.swift */; };
 		801ECE44236F3BEA003CFAF7 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE43236F3BEA003CFAF7 /* Appearance.swift */; };
 		801ECE46236F3C10003CFAF7 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE45236F3C10003CFAF7 /* String.swift */; };
+		80299FDB243B80BC0094EDB2 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FDA243B80BC0094EDB2 /* IAPHelper.swift */; };
+		80299FDE243B860F0094EDB2 /* StoreKitProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */; };
+		80299FE1243B94C40094EDB2 /* ConfettiKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE0243B94C40094EDB2 /* ConfettiKit.swift */; };
+		80299FE4243B9A5E0094EDB2 /* RestorePurchases.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80299FE6243B9A5E0094EDB2 /* RestorePurchases.strings */; };
+		80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */; };
 		80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */; };
 		80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */; };
-		80395209241E92B000E15B87 /* RestorePurchases.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80395208241E92B000E15B87 /* RestorePurchases.strings */; };
+		803B6D0A243A88010080E115 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6D09243A88010080E115 /* Double.swift */; };
 		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
 		805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B5A2223EE050C000F3CC5 /* Bundle.swift */; };
 		80628461236E34C500717472 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628460236E34C500717472 /* Coordinator.swift */; };
@@ -109,9 +114,15 @@
 		801ECE41236F3BD1003CFAF7 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		801ECE43236F3BEA003CFAF7 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		801ECE45236F3C10003CFAF7 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		80299FDA243B80BC0094EDB2 /* IAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
+		80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitProducts.swift; sourceTree = "<group>"; };
+		80299FE0243B94C40094EDB2 /* ConfettiKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiKit.swift; sourceTree = "<group>"; };
+		80299FE5243B9A5E0094EDB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RestorePurchases.strings; sourceTree = "<group>"; };
+		80299FE7243B9A600094EDB2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RestorePurchases.strings; sourceTree = "<group>"; };
+		80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackGenerator.swift; sourceTree = "<group>"; };
 		80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewController.swift; sourceTree = "<group>"; };
 		80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewModel.swift; sourceTree = "<group>"; };
-		80395208241E92B000E15B87 /* RestorePurchases.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = RestorePurchases.strings; sourceTree = "<group>"; };
+		803B6D09243A88010080E115 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		803FD8A023C71FAF008DDE91 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		805B5A2223EE050C000F3CC5 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		80628460236E34C500717472 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -276,8 +287,26 @@
 				8099540924181C5B00B44DC9 /* TimeInterval.swift */,
 				80B1D015241A95F20072D1D9 /* UIView.swift */,
 				80D288BC241BC52E004EE583 /* UIStackView.swift */,
+				803B6D09243A88010080E115 /* Double.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		80299FDC243B86040094EDB2 /* Store Kit */ = {
+			isa = PBXGroup;
+			children = (
+				80299FDA243B80BC0094EDB2 /* IAPHelper.swift */,
+				80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */,
+			);
+			path = "Store Kit";
+			sourceTree = "<group>";
+		};
+		80299FDF243B94B20094EDB2 /* Confetti */ = {
+			isa = PBXGroup;
+			children = (
+				80299FE0243B94C40094EDB2 /* ConfettiKit.swift */,
+			);
+			path = Confetti;
 			sourceTree = "<group>";
 		};
 		805B5A2423EE0A95000F3CC5 /* Resources */ = {
@@ -356,6 +385,7 @@
 		8085CC5B236E2CB500B45A7C /* Bicis */ = {
 			isa = PBXGroup;
 			children = (
+				80299FDF243B94B20094EDB2 /* Confetti */,
 				80D288C7241E4952004EE583 /* RestorePurchases */,
 				809953F32416C50100B44DC9 /* Route Planner */,
 				800CE94523955BD400674D1C /* Bicis.entitlements */,
@@ -376,7 +406,9 @@
 				80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */,
 				80A8216923D9B7E4003DD67D /* Cities.swift */,
 				8000477A23F06C1100492DFB /* StoreKitHelper.swift */,
+				80299FDC243B86040094EDB2 /* Store Kit */,
 				80D288BE241D5150004EE583 /* Binding.swift */,
+				80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */,
 				80D288C0241D5200004EE583 /* UITestingHelper.swift */,
 			);
 			path = Bicis;
@@ -399,7 +431,7 @@
 			children = (
 				80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */,
 				80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */,
-				80395208241E92B000E15B87 /* RestorePurchases.strings */,
+				80299FE6243B9A5E0094EDB2 /* RestorePurchases.strings */,
 			);
 			path = RestorePurchases;
 			sourceTree = "<group>";
@@ -513,7 +545,7 @@
 				8085CC66236E2CB800B45A7C /* Assets.xcassets in Resources */,
 				8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */,
 				807C88A323EAD638003BA644 /* Home.strings in Resources */,
-				80395209241E92B000E15B87 /* RestorePurchases.strings in Resources */,
+				80299FE4243B9A5E0094EDB2 /* RestorePurchases.strings in Resources */,
 				807C88A923EAD692003BA644 /* Settings.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -641,6 +673,7 @@
 				801ECE46236F3C10003CFAF7 /* String.swift in Sources */,
 				80109135236E2DEC00D3C45E /* LocalDataManager.swift in Sources */,
 				807C88B323EB17EC003BA644 /* NextBike.swift in Sources */,
+				80299FDB243B80BC0094EDB2 /* IAPHelper.swift in Sources */,
 				807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */,
 				80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */,
 				80109143236E317700D3C45E /* HomeViewModel.swift in Sources */,
@@ -656,8 +689,10 @@
 				80D288C3241E3063004EE583 /* RoutePlannerStationModel.swift in Sources */,
 				809953F72416C77700B44DC9 /* RoutePlannerViewModel.swift in Sources */,
 				80109141236E316E00D3C45E /* HomeViewController.swift in Sources */,
+				80299FE1243B94C40094EDB2 /* ConfettiKit.swift in Sources */,
 				80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */,
 				800DDD4C23ED510700FCE4E5 /* BiciMad.swift in Sources */,
+				80299FDE243B860F0094EDB2 /* StoreKitProducts.swift in Sources */,
 				80628468236EDA5000717472 /* Responses.swift in Sources */,
 				805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */,
 				8062846A236EE22F00717472 /* DefaultLocalDataManager.swift in Sources */,
@@ -666,7 +701,9 @@
 				80628461236E34C500717472 /* Coordinator.swift in Sources */,
 				801ECE44236F3BEA003CFAF7 /* Appearance.swift in Sources */,
 				80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */,
+				80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */,
 				80D288BF241D5150004EE583 /* Binding.swift in Sources */,
+				803B6D0A243A88010080E115 /* Double.swift in Sources */,
 				803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */,
 				8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */,
 				8010913C236E308700D3C45E /* OnboardingViewModel.swift in Sources */,
@@ -692,6 +729,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		80299FE6243B9A5E0094EDB2 /* RestorePurchases.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				80299FE5243B9A5E0094EDB2 /* en */,
+				80299FE7243B9A600094EDB2 /* es */,
+			);
+			name = RestorePurchases.strings;
+			sourceTree = "<group>";
+		};
 		807C88A523EAD638003BA644 /* Home.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -897,7 +943,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = Bicis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -905,7 +951,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.4;
+				MARKETING_VERSION = 2020.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -921,7 +967,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = Bicis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -929,7 +975,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.4;
+				MARKETING_VERSION = 2020.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;

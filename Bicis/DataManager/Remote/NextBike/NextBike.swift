@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct NextBikeRoot: Decodable {
     let countries: [NextBikeCities]
@@ -29,6 +30,14 @@ struct NextBikeStation: BikeStation {
     var latitude: Double
     var longitude: Double
 
+    var location: CLLocation {
+        return CLLocation(latitude: self.latitude, longitude: self.longitude)
+    }
+
+    func distance(to location: CLLocation) -> CLLocationDistance {
+        return location.distance(from: self.location)
+    }
+
     var percentageOfFreeBikes: Double {
         return (Double(freeBikes) / Double(totalAvailableDocks)) * 100
     }
@@ -41,8 +50,6 @@ struct NextBikeStation: BikeStation {
     }
 
     var rmse: Double? {
-
-
 
         guard let availability = availabilityArray else { return nil }
         guard let prediction = predictionArray else { return nil }

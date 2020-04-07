@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 struct BiciMadOpenApiTokenResponse: Decodable {
     let data: [BiciMadApiTokenData]
@@ -37,6 +38,14 @@ struct BiciMadStation: BikeStation {
 
     var availabilityArray: [Int]?
     var predictionArray: [Int]?
+
+    var location: CLLocation {
+        return CLLocation(latitude: self.latitude, longitude: self.longitude)
+    }
+
+    func distance(to location: CLLocation) -> CLLocationDistance {
+        return location.distance(from: self.location)
+    }
 
     var percentageOfFreeBikes: Double {
         return (Double(freeBikes) / Double(totalAvailableDocks)) * 100

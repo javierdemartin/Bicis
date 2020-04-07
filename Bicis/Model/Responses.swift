@@ -110,10 +110,6 @@ struct RentResponse: Codable {
 //
 //}
 
-
-
-
-
 struct BikeList: Codable {
 
     let number: String
@@ -148,6 +144,9 @@ struct MyAllAPIResponseItem: Codable {
     let prediction: [String: Int]
 }
 
+/// Endpoint: https:://javierdemart.in/api/v1/all/STATION_ID
 struct MyAllAPIResponse: Codable {
     let values: MyAllAPIResponseItem
+    let discharges: [String]
+    let refill: [String]
 }

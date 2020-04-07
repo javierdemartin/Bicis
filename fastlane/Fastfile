@@ -27,4 +27,12 @@ platform :ios do
 
     skip_waiting_for_build_processing
   end
+
+  lane :shipit do
+  	# precheck
+  	build_app(workspace: "Bicis.xcworkspace", scheme: "Bicis")
+  	# snapshot
+  	# frameit
+  	deliver
+  end
 end
