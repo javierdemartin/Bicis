@@ -5,3 +5,5 @@ When selecting your destination station you can check the predicted docks that w
 Just in case you will be shown the closest annotation that also has free docks.
 
 More analysis is being performed in the backend to detect the predicted discharges and refill operations by the service managers.
+
+Thank you por supporting the development of this app!

@@ -168,7 +168,7 @@ class HomeViewModel {
         return Array(stations.value.dropFirst().prefix(3))
     }
 
-    func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<[String:[Int]]>) -> Void) {
+    func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<[String: [Int]]>) -> Void) {
 
         dataManager.getAllDataFromApi(city: city, station: station, completion: { result in
 
@@ -194,8 +194,7 @@ class HomeViewModel {
 
                 completion(.success(payload))
 
-            case .error(let apiError):
-                //self.delegate?.presentAlertViewWithError(title: "Error", body: apiError.localizedDescription)
+            case .error:
                 break
             }
         })

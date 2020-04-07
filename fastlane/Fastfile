@@ -31,10 +31,8 @@ platform :ios do
   lane :shipit do
   	# precheck
   	build_app(workspace: "Bicis.xcworkspace", scheme: "Bicis")
-    frameit download_frames
-  	snapshot
-  	frameit
+  	# snapshot
+  	# frameit
   	deliver
-
   end
 end

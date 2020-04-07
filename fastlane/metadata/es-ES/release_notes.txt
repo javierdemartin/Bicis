@@ -5,3 +5,5 @@ Al seleccionar tu estación de destino puedes comprobar la predicción de anclaj
 Además, también se muestra de forma alternativa la estación más cercana que también dispone de anclajes libres.
 
 Se realizan más análisis en el servidor para detectar las recargas y vaciamientos de las estaciones por los operadores del servicio. 
+
+¡Gracias por apoyar el desarrollo de esta app!

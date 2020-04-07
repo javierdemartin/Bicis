@@ -40,7 +40,6 @@ class AppCoordinator: Coordinator {
             localDataManager.saveCurrentCity(apiCityName: availableCities["New York"]!, completion: { _ in })
             showHomeViewController()
 
-
         } else {
 
             localDataManager.getCurrentCity { (getCurrentCityResult) in
@@ -61,7 +60,7 @@ class AppCoordinator: Coordinator {
     }
 
     override func finish() {
-        
+
     }
 
     var homeViewModel: HomeViewModel?

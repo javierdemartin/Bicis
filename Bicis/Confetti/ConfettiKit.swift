@@ -12,13 +12,13 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
     let emitter = SKEmitterNode(fileNamed: "particle")
-    let colors = [SKColor.white,SKColor.gray,SKColor.green,SKColor.red,SKColor.black]
+    let colors = [SKColor.white, SKColor.gray, SKColor.green, SKColor.red, SKColor.black]
 
     override func didMove(to view: SKView) {
 
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
 
-        emitter!.position = CGPoint(x: 200, y:300)
+        emitter!.position = CGPoint(x: 200, y: 300)
 
         emitter!.particleColorSequence = nil
         emitter!.particleColorBlendFactor = 1.0
@@ -29,13 +29,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             [unowned self] in
             let random = Int(arc4random_uniform(UInt32(self.colors.count)))
 
-            self.emitter!.particleColor = self.colors[random];
+            self.emitter!.particleColor = self.colors[random]
             print(random)
         })
 
         let wait = SKAction.wait(forDuration: 0.1)
 
-        self.run(SKAction.repeatForever( SKAction.sequence([action,wait])))
+        self.run(SKAction.repeatForever( SKAction.sequence([action, wait])))
 
     }
 

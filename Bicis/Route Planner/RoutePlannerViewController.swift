@@ -30,7 +30,6 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
             return
         }
 
-        // TODO: Iterar si hay estaicones con mas bicis
         closestAnnotationCommentsLabel.text = "CLOSEST_ANNOTATION_DESCRIPTION".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(Int(station.freeRacks))").replacingOccurrences(of: "%distance", with: "\(distance.rounded(toPlaces: 2))")
 
     }
@@ -118,7 +117,7 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
                 self.predictedDocksAtDestinationLabel.text = "\(destinationStation.totalAvailableDocks - predictionArray[indexOfTime])"
 
                 // Predicted available docks = Docks(t) - (Available docks - BikePredictions(t))
-                if (destinationStation.totalAvailableDocks - (destinationStation.totalAvailableDocks - predictionArray[indexOfTime])) < 4  {
+                if (destinationStation.totalAvailableDocks - (destinationStation.totalAvailableDocks - predictionArray[indexOfTime])) < 4 {
                     self.lowDockAvailabilityLabel.text = "LOW_DOCK_AVAILABILITY_WARNING".localize(file: "RoutePlanner")
                     self.lowDockAvailabilityLabel.fadeIn()
                 }
@@ -591,7 +590,6 @@ class RoutePlannerViewController: UIViewController {
             return label
         }()
 
-
     lazy var closestStationStackView: UIStackView = {
 
         let stackView = UIStackView(arrangedSubviews: [closestAnnotationCommentsHeaderLabel, closestStationWrapperStackView, closestAnnotationCommentsLabel])
@@ -695,7 +693,7 @@ class RoutePlannerViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            destinationStationImageView.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 16.0),
+            destinationStationImageView.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 32.0),
             destinationStationLabel.leadingAnchor.constraint(equalTo: destinationStationImageView.trailingAnchor, constant: 16.0)
         ])
 
@@ -732,9 +730,9 @@ class RoutePlannerViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            destinationStationImageView.widthAnchor.constraint(equalToConstant: 80.0),
-            closestAnnotationIcon.widthAnchor.constraint(equalToConstant: 80.0),
-            closestAnnotationIcon.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 16.0),
+            destinationStationImageView.widthAnchor.constraint(equalToConstant: 50.0),
+            closestAnnotationIcon.widthAnchor.constraint(equalToConstant: 50.0),
+            closestAnnotationIcon.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 32.0),
             closestAnnotationStationNameLabel.leadingAnchor.constraint(equalTo: closestAnnotationIcon.trailingAnchor, constant: 16.0)
 
         ])

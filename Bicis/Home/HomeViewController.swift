@@ -17,8 +17,6 @@ protocol HomeViewControllerGraphViewDelegate: class {
 
 class HomeViewController: UIViewController {
 
-    let generator = UIImpactFeedbackGenerator(style: .light)
-
     var annotations: [MKAnnotation]?
     var latestSelectedAnnotation: MKAnnotation?
     var latestSelectedBikeStation: BikeStation?
@@ -351,6 +349,7 @@ class HomeViewController: UIViewController {
 
             guard let latestSelectedStation = self.latestSelectedBikeStation else { return }
 
+            FeedbackGenerator.sharedInstance.generator.impactOccurred()
             self.viewModel.selectedRoute(station: latestSelectedStation)
         })
 
@@ -416,7 +415,9 @@ class HomeViewController: UIViewController {
     }
 
     func hideStackView() {
-        generator.impactOccurred()
+
+        FeedbackGenerator.sharedInstance.generator.impactOccurred()
+
         graphView.fadeOut(0.2)
         hideRoutePlannerButton()
 
@@ -428,7 +429,7 @@ class HomeViewController: UIViewController {
     /// Hide the `PredictionGraphView` pushing the Start commute ubtton up
     func showStackView() {
 
-        generator.impactOccurred()
+        FeedbackGenerator.sharedInstance.generator.impactOccurred()
         graphView.fadeIn(0.2)
     }
 

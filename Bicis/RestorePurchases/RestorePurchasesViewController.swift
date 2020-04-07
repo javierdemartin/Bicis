@@ -18,7 +18,7 @@ extension RestorePurchasesViewController: RestorePurchasesViewModelDelegate {
             self.purchaseStatusLabel.text = "HAS_PURCHASED".localize(file: "RestorePurchases")
         }
 
-
+        FeedbackGenerator.sharedInstance.generator.impactOccurred()
         createParticles()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 10.0, execute: {
@@ -183,8 +183,7 @@ class RestorePurchasesViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             unlockFeaturesLabel.widthAnchor.constraint(equalToConstant: (unlockFeaturesLabel.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0),
-            restorePurchasesButton.widthAnchor.constraint(equalToConstant: (restorePurchasesButton.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0),
-//            restorePurchasesButton.widthAnchor.constraint(equalToConstant: (restorePurchasesButton.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0),
+            restorePurchasesButton.widthAnchor.constraint(equalToConstant: (restorePurchasesButton.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0)
         ])
 
         NSLayoutConstraint.activate([
@@ -217,7 +216,6 @@ class RestorePurchasesViewController: UIViewController {
             titleLabel.leadingAnchor.constraint(equalTo: whyYouShouldGiveMeMoneyTextView.leadingAnchor, constant: 0),
             purchaseStatusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 16.0),
             purchaseStatusLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: -16.0)
-//            unlockFeaturesLabel.leadingAnchor.constraint(equalTo: whyYouShouldGiveMeMoneyTextView., constant: -16.0)
         ])
     }
 
@@ -230,11 +228,13 @@ class RestorePurchasesViewController: UIViewController {
     func setUpBindings() {
 
         compositeDisposable += unlockFeaturesLabel.reactive.controlEvents(.touchUpInside).observeValues({ [weak self] (_) in
+            FeedbackGenerator.sharedInstance.generator.impactOccurred()
             self?.viewModel.unlockDataInsights()
         })
 
         compositeDisposable += restorePurchasesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
 
+            FeedbackGenerator.sharedInstance.generator.impactOccurred()
             self?.viewModel.restorePurchases()
         })
     }

@@ -110,10 +110,6 @@ struct RentResponse: Codable {
 //
 //}
 
-
-
-
-
 struct BikeList: Codable {
 
     let number: String

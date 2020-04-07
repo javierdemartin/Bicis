@@ -29,7 +29,6 @@ class BicisUITests: XCTestCase {
         setupSnapshot(app)
         app.launch()
 
-
         sleep(3) // Wait for the map to load
 
         snapshot("00-Home")
@@ -42,7 +41,6 @@ class BicisUITests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
 
         label.tap()
-
 
         let textPredicate = NSPredicate(format: "label != %@", "...")
         expectation(for: textPredicate, evaluatedWith: app.staticTexts["DESTINATION_BIKES"], handler: nil)
@@ -57,7 +55,6 @@ class BicisUITests: XCTestCase {
 //        start.press(forDuration: 0.01, thenDragTo: finish)
 
 //        pullDownTab.swipeDown()
-
 
         // MARK: RoutePlanner
     }

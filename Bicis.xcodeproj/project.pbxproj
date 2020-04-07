@@ -36,6 +36,7 @@
 		80299FDE243B860F0094EDB2 /* StoreKitProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */; };
 		80299FE1243B94C40094EDB2 /* ConfettiKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE0243B94C40094EDB2 /* ConfettiKit.swift */; };
 		80299FE4243B9A5E0094EDB2 /* RestorePurchases.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80299FE6243B9A5E0094EDB2 /* RestorePurchases.strings */; };
+		80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */; };
 		80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */; };
 		80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */; };
 		803B6D0A243A88010080E115 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6D09243A88010080E115 /* Double.swift */; };
@@ -118,6 +119,7 @@
 		80299FE0243B94C40094EDB2 /* ConfettiKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiKit.swift; sourceTree = "<group>"; };
 		80299FE5243B9A5E0094EDB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RestorePurchases.strings; sourceTree = "<group>"; };
 		80299FE7243B9A600094EDB2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RestorePurchases.strings; sourceTree = "<group>"; };
+		80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackGenerator.swift; sourceTree = "<group>"; };
 		80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewController.swift; sourceTree = "<group>"; };
 		80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewModel.swift; sourceTree = "<group>"; };
 		803B6D09243A88010080E115 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 				8000477A23F06C1100492DFB /* StoreKitHelper.swift */,
 				80299FDC243B86040094EDB2 /* Store Kit */,
 				80D288BE241D5150004EE583 /* Binding.swift */,
+				80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */,
 				80D288C0241D5200004EE583 /* UITestingHelper.swift */,
 			);
 			path = Bicis;
@@ -698,6 +701,7 @@
 				80628461236E34C500717472 /* Coordinator.swift in Sources */,
 				801ECE44236F3BEA003CFAF7 /* Appearance.swift in Sources */,
 				80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */,
+				80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */,
 				80D288BF241D5150004EE583 /* Binding.swift in Sources */,
 				803B6D0A243A88010080E115 /* Double.swift in Sources */,
 				803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */,

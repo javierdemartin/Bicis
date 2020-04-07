@@ -35,6 +35,7 @@ class RoutePlannerViewModel: NSObject {
     let stationsDict: [String: BikeStation]?
     weak var coordinatorDelegate: RoutePlannerViewModelCoordinatorDelegate?
     weak var delegate: RoutePlannerViewModelDelegate?
+    let dateFormatter = DateFormatter()
 
     var destinationRoute = MKRoute()
     var destinationStation = Binding<BikeStation?>(value: nil)
@@ -69,7 +70,9 @@ class RoutePlannerViewModel: NSObject {
 
         guard let location = LocationServices.sharedInstance.getLatestLocationCoordinates() else { return }
 
-        self.calculateRouteToDestination(pickupCoordinate: location, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(station.latitude), longitude: CLLocationDegrees(station.longitude)), completion: { resultRoute in
+        let destinationCoordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(station.latitude), longitude: CLLocationDegrees(station.longitude))
+
+        self.calculateRouteToDestination(pickupCoordinate: location, destinationCoordinate: destinationCoordinates, completion: { resultRoute in
 
             switch resultRoute {
 
@@ -83,30 +86,15 @@ class RoutePlannerViewModel: NSObject {
         })
     }
 
-//    let dateFormatter: DateFormatter = {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "hh:mm"
-//
-//        return dateFormatter
-//    }()
-
-    let dateFormatter = DateFormatter()
-
-//    var date = dateFormatter.dateFromString("00:00")
-//    var str_from_date = dateFormatter.stringFromDate (date)
-
     func calculateRmseForStationByQueryingPredictions(completion: @escaping(()) -> Void) {
 
+        // Date retrieved from the API uses 24 hour formand intependently of the user's locale
         dateFormatter.dateFormat = "HH:mm"
-//        dateFormatter.locale = .
-
 
         guard self.destinationStation.value != nil else { return }
 
         let date = Date()
         let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: date)
-        let minutes = calendar.component(.minute, from: date)
 
         dataManager.getCurrentCity(completion: { currentCityResult in
 
@@ -153,8 +141,7 @@ class RoutePlannerViewModel: NSObject {
                         self.delegate?.updateBikeStationOperations(nextRefill: closestNextRefillTime, nextDischarge: closestNextDischargeTime)
 
                         completion(())
-                    case .error(let apiError):
-//                        self.delegate?.presentAlertViewWithError(title: "Error", body: apiError.localizedDescription)
+                    case .error:
                         break
                     }
                 })

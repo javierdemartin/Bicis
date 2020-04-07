@@ -9,7 +9,6 @@
 import Foundation
 import CoreLocation
 
-
 protocol BikeStation: Decodable {
     var id: String { get set }
     var freeBikes: Int { get set }
@@ -57,25 +56,24 @@ struct CitiBikesStation: BikeStation {
     }
 
     var rmse: Double? {
-        
+
         guard let availability = availabilityArray else { return nil }
         guard let prediction = predictionArray else { return nil }
-        
+
         let range = Double(max(availability.max()!, prediction.max()!))
-        
-        
+
         if range == 0 {
             return nil
         }
-        
+
         var rmseResult = 0.0
-        
+
         for element in 0..<availability.count {
             rmseResult += pow(Double(prediction[element] - availability[element]), 2.0)
         }
-        
+
         rmseResult = sqrt(1/Double(availability.count) * rmseResult)
-        
+
         return (rmseResult/range * 100)
     }
 

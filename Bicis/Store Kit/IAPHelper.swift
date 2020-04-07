@@ -9,8 +9,6 @@
 import Foundation
 import StoreKit
 
-import StoreKit
-
 public typealias ProductIdentifier = String
 public typealias ProductsRequestCompletionHandler = (_ success: Bool, _ products: [SKProduct]?) -> Void
 
@@ -18,7 +16,7 @@ extension Notification.Name {
   static let IAPHelperPurchaseNotification = Notification.Name("IAPHelperPurchaseNotification")
 }
 
-open class IAPHelper: NSObject  {
+open class IAPHelper: NSObject {
 
   private let productIdentifiers: Set<ProductIdentifier>
   private var purchasedProductIdentifiers: Set<ProductIdentifier> = []
@@ -108,16 +106,13 @@ extension IAPHelper: SKPaymentTransactionObserver {
 
   public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
     for transaction in transactions {
-      switch (transaction.transactionState) {
+      switch transaction.transactionState {
       case .purchased:
         complete(transaction: transaction)
-        break
       case .failed:
         fail(transaction: transaction)
-        break
       case .restored:
         restore(transaction: transaction)
-        break
       case .deferred:
         break
       case .purchasing:
