@@ -40,7 +40,6 @@ class AppCoordinator: Coordinator {
             localDataManager.saveCurrentCity(apiCityName: availableCities["New York"]!, completion: { _ in })
             showHomeViewController()
 
-
         } else {
 
             localDataManager.getCurrentCity { (getCurrentCityResult) in
@@ -61,7 +60,7 @@ class AppCoordinator: Coordinator {
     }
 
     override func finish() {
-        
+
     }
 
     var homeViewModel: HomeViewModel?
@@ -114,11 +113,28 @@ class AppCoordinator: Coordinator {
     }
 }
 
+extension AppCoordinator: RestorePurchasesViewModelCoordinatorDelegate {
+    func reParseMainFeedShowingNewColors() {
+
+        localDataManager.getCurrentCity(completion: { cityResult in
+
+            switch cityResult {
+
+            case .success(let city):
+                self.homeViewModel?.getMapPinsFrom(city: city)
+            case .error:
+                break
+            }
+        })
+    }
+}
+
 extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
     func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
 
         let compositeDisposable = CompositeDisposable()
         let restorePurchasesViewModel = RestorePurchasesViewModel(compositeDisposable: compositeDisposable)
+        restorePurchasesViewModel.coordinatorDelegate = self
         let restorePurchasesViewController = RestorePurchasesViewController(compositeDisposable: compositeDisposable, viewModel: restorePurchasesViewModel)
 
         restorePurchasesViewController.modalPresentationStyle = .formSheet
@@ -182,10 +198,10 @@ extension AppCoordinator: RoutePlannerViewModelCoordinatorDelegate {
 extension AppCoordinator: HomeViewModelCoordinatorDelegate {
 
     /// Presents the UIViewController in charge of planning the route to the destination station
-    func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation) {
+    func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation]) {
 
         let compositeDisposable = CompositeDisposable()
-        let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, destinationStation: stationsDict)
+        let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, closestAnnotations: closestAnnotations, destinationStation: stationsDict)
         routePlannerViewModel.coordinatorDelegate = self
         routePlannerViewController = RoutePlannerViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
 

@@ -19,6 +19,8 @@ protocol RoutePlannerViewModelDelegate: class {
     func presentAlertViewWithError(title: String, body: String)
     func errorTooFarAway()
     func gotDestinationRoute(station: BikeStation, route: MKRoute)
+    func updateBikeStationOperations(nextRefill: String?, nextDischarge: String?)
+    func fillClosestStationInformation(station: BikeStation)
 }
 
 protocol RoutePlannerViewModelDataManager: class {
@@ -33,18 +35,23 @@ class RoutePlannerViewModel: NSObject {
     let stationsDict: [String: BikeStation]?
     weak var coordinatorDelegate: RoutePlannerViewModelCoordinatorDelegate?
     weak var delegate: RoutePlannerViewModelDelegate?
+    let dateFormatter = DateFormatter()
 
     var destinationRoute = MKRoute()
     var destinationStation = Binding<BikeStation?>(value: nil)
 
     let dataManager: RoutePlannerViewModelDataManager
 
-    init(compositeDisposable: CompositeDisposable, dataManager: RoutePlannerViewModelDataManager, stationsDict: [String: BikeStation]?, destinationStation: BikeStation?) {
+    var closestAnnotations: [BikeStation]
+
+    init(compositeDisposable: CompositeDisposable, dataManager: RoutePlannerViewModelDataManager, stationsDict: [String: BikeStation]?, closestAnnotations: [BikeStation], destinationStation: BikeStation?) {
 
         self.compositeDisposable = compositeDisposable
         self.stationsDict = stationsDict
 
         self.dataManager = dataManager
+
+        self.closestAnnotations = closestAnnotations
 
         super.init()
 
@@ -53,11 +60,19 @@ class RoutePlannerViewModel: NSObject {
 
     func drawDataWhateverImTired() {
 
+        // Get the closest annotation from the filtered array with the most number of free bikes
+        closestAnnotations.sort(by: { $0.freeRacks > $1.freeRacks })
+
+        // Sorting is a mutable operation, the first station will be the one from the closer ones that has the most number of free docks available
+        delegate?.fillClosestStationInformation(station: closestAnnotations.first!)
+
         guard let station = destinationStation.value else { return }
 
         guard let location = LocationServices.sharedInstance.getLatestLocationCoordinates() else { return }
 
-        self.calculateRouteToDestination(pickupCoordinate: location, destinationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(station.latitude), longitude: CLLocationDegrees(station.longitude)), completion: { resultRoute in
+        let destinationCoordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(station.latitude), longitude: CLLocationDegrees(station.longitude))
+
+        self.calculateRouteToDestination(pickupCoordinate: location, destinationCoordinate: destinationCoordinates, completion: { resultRoute in
 
             switch resultRoute {
 
@@ -73,7 +88,13 @@ class RoutePlannerViewModel: NSObject {
 
     func calculateRmseForStationByQueryingPredictions(completion: @escaping(()) -> Void) {
 
+        // Date retrieved from the API uses 24 hour formand intependently of the user's locale
+        dateFormatter.dateFormat = "HH:mm"
+
         guard self.destinationStation.value != nil else { return }
+
+        let date = Date()
+        let calendar = Calendar.current
 
         dataManager.getCurrentCity(completion: { currentCityResult in
 
@@ -107,11 +128,21 @@ class RoutePlannerViewModel: NSObject {
                         self.destinationStation.value!.availabilityArray = sortedNow
                         self.destinationStation.value!.predictionArray = sortedPrediction
 
-                        completion(())
-                        
-                    case .error(let apiError):
-                        self.delegate?.presentAlertViewWithError(title: "Error", body: apiError.localizedDescription)
+                        // Get local time
+                        let closestNextRefillTime = datos.refill.reversed().first(where: {
+                            calendar.component(.hour, from: date) < calendar.component(.hour, from: self.dateFormatter.date(from: $0)!)
+                        })
 
+                        let closestNextDischargeTime = datos.discharges.reversed().first(where: {
+                            calendar.component(.hour, from: self.dateFormatter.date(from: $0)!) < calendar.component(.hour, from: date)
+                        })
+
+                        // Fill refill/discharge times for the station
+                        self.delegate?.updateBikeStationOperations(nextRefill: closestNextRefillTime, nextDischarge: closestNextDischargeTime)
+
+                        completion(())
+                    case .error:
+                        break
                     }
                 })
 

@@ -6,14 +6,6 @@
 //  Copyright © 2019 Javier de Martín Gil. All rights reserved.
 //
 
-//
-//  LocationService.swift
-//
-//
-//  Created by Anak Mirasing on 5/18/2558 BE.
-//
-//
-
 import Foundation
 import CoreLocation
 

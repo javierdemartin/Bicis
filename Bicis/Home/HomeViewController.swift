@@ -17,8 +17,6 @@ protocol HomeViewControllerGraphViewDelegate: class {
 
 class HomeViewController: UIViewController {
 
-    let generator = UIImpactFeedbackGenerator(style: .light)
-
     var annotations: [MKAnnotation]?
     var latestSelectedAnnotation: MKAnnotation?
     var latestSelectedBikeStation: BikeStation?
@@ -351,6 +349,7 @@ class HomeViewController: UIViewController {
 
             guard let latestSelectedStation = self.latestSelectedBikeStation else { return }
 
+            FeedbackGenerator.sharedInstance.generator.impactOccurred()
             self.viewModel.selectedRoute(station: latestSelectedStation)
         })
 
@@ -416,7 +415,9 @@ class HomeViewController: UIViewController {
     }
 
     func hideStackView() {
-        generator.impactOccurred()
+
+        FeedbackGenerator.sharedInstance.generator.impactOccurred()
+
         graphView.fadeOut(0.2)
         hideRoutePlannerButton()
 
@@ -428,7 +429,7 @@ class HomeViewController: UIViewController {
     /// Hide the `PredictionGraphView` pushing the Start commute ubtton up
     func showStackView() {
 
-        generator.impactOccurred()
+        FeedbackGenerator.sharedInstance.generator.impactOccurred()
         graphView.fadeIn(0.2)
     }
 
@@ -453,14 +454,13 @@ extension HomeViewController: HomeViewModelDelegate {
         self.present(alertController, animated: true, completion: nil)
     }
 
+    /// Called when a new city is selected, removing the pins from the previous city
     func removePinsFromMap() {
-
         self.annotations?.removeAll()
         mapView.removeAnnotations(mapView.annotations)
     }
 
     func dismissGraphView() {
-
         self.hideStackView()
     }
 
@@ -490,20 +490,6 @@ extension HomeViewController: HomeViewModelDelegate {
 extension HomeViewController: MKMapViewDelegate {
 
     // MARK: - MKMapViewDelegate
-
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-
-        let polylineRenderer: MKPolylineRenderer = {
-
-            let renderer = MKPolylineRenderer(overlay: overlay)
-            renderer.strokeColor = UIColor(red: 17.0/255.0, green: 147.0/255.0, blue: 255.0/255.0, alpha: 1)
-            renderer.lineWidth = 5.0
-            return renderer
-        }()
-
-        return polylineRenderer
-    }
-
     private func customAnnotationView(in mapView: MKMapView, for annotation: MKAnnotation) -> CustomAnnotationView {
 
         let identifier = "CustomAnnotationViewID"
@@ -515,16 +501,17 @@ extension HomeViewController: MKMapViewDelegate {
         } else {
             let customAnnotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             customAnnotationView.canShowCallout = true
-
             return customAnnotationView
         }
     }
 
+    /// Handle the user location, disabling the callout when it's tapped
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         let userLocationView = mapView.view(for: userLocation)
         userLocationView?.canShowCallout = false
     }
 
+    /// Prepare the `AnnotationView` & set up the clustering for the stations
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
         // Don't show a custom image if the annotation is the user's location.
@@ -556,11 +543,11 @@ extension HomeViewController: MKMapViewDelegate {
 
         if let annotationView = annotationView {
 
+            // Disable the callout showing the title, the title will be shown in the GraphView
             annotationView.canShowCallout = false
 
-            guard let annotationTitle = annotation.title else { return nil }
-            guard let unwrappedAnnotationTitle = annotationTitle else { return nil }
-            guard let stationsDictFromViewModel = self.viewModel.stationsDict.value[unwrappedAnnotationTitle] else { return nil }
+            guard let annotationTitle = annotation.title! else { return nil }
+            guard let stationsDictFromViewModel = self.viewModel.stationsDict.value[annotationTitle] else { return nil }
 
             let markerAnnotationView: MKMarkerAnnotationView = {
                 let marker = MKMarkerAnnotationView()
@@ -569,17 +556,22 @@ extension HomeViewController: MKMapViewDelegate {
                 return marker
             }()
 
-            // Stablish the color coding of the availability
-            switch stationsDictFromViewModel.percentageOfFreeBikes {
-            case 66.0..<100.0:
-                markerAnnotationView.markerTintColor = UIColor.systemGreen
-            case 33.0...66.0:
-                markerAnnotationView.markerTintColor = UIColor.systemOrange
-            case ..<33.0:
-                markerAnnotationView.markerTintColor = UIColor.systemRed
-            default:
-                break
-            }
+            self.viewModel.hasUnlockedFeatures(completion: { hasPaid in
+
+                if hasPaid {
+                    // Stablish the color coding of the availability
+                    switch stationsDictFromViewModel.percentageOfFreeBikes {
+                    case 66.0..<100.0:
+                        markerAnnotationView.markerTintColor = UIColor.systemGreen
+                    case 33.0...66.0:
+                        markerAnnotationView.markerTintColor = UIColor.systemOrange
+                    case ..<33.0:
+                        markerAnnotationView.markerTintColor = UIColor.systemRed
+                    default:
+                        break
+                    }
+                }
+            })
 
             return markerAnnotationView
         }
@@ -591,18 +583,25 @@ extension HomeViewController: MKMapViewDelegate {
         return MKClusterAnnotation(memberAnnotations: memberAnnotations)
     }
 
+    /// As the annotation is deselected hde the `GraphView` and disable the route planner button
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         hideStackView()
         startRouteButton.isEnabled = false
     }
 
     /// Annotation was selected
-    /// 1. Set the GraphView title with the
+    /// 1. Query the API for the prediction and availability data
+    /// 2. Center the MapView
+    /// 3. Set the `GraphView`'s title using the selected station name
+    /// 4. Show the route planner view controller
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+
+        // If for any reason the current city is not saved cancel the operation
+        guard viewModel.city != nil else { return }
 
         guard let annotationFromPin = view.annotation as? MapPin else { return }
 
-        mapView.removeOverlay(self.routeOverlay.polyline)
+        centerMap(on: annotationFromPin.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
 
         latestSelectedAnnotation = annotationFromPin
         latestSelectedBikeStation = annotationFromPin.stationInformation
@@ -615,16 +614,14 @@ extension HomeViewController: MKMapViewDelegate {
             apiQueryStationValue = annotationFromPin.stationInformation.stationName
         }
 
+        // Set the selected station name as the graph's title
         graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationInformation.stationName)
-
-        centerMap(on: annotationFromPin.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
 
         guard apiQueryStationValue != nil else { return }
 
-        guard viewModel.city != nil else { return }
-
         viewModel.getAllDataFromApi(city: viewModel.city!.apiName, station: apiQueryStationValue!, completion: { res in
 
+            // As soon as new data is retrieved from the API show the graph
             self.showStackView()
 
             switch res {

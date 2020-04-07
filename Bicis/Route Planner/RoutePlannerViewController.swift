@@ -11,8 +11,46 @@ import ReactiveCocoa
 import ReactiveSwift
 import UIKit
 import MapKit
+import CoreLocation
 
 extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
+
+    func fillClosestStationInformation(station: BikeStation) {
+        closestAnnotationStationNameLabel.text = station.stationName
+
+        guard let location = LocationServices.sharedInstance.locationManager?.location else {
+            closestAnnotationCommentsLabel.text = "CLOSEST_ANNOTATION_DESCRIPTION_WO_LOCATION".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(Int(station.freeRacks))")
+            return
+        }
+
+        let distance = station.distance(to: location) / 1000
+
+        if distance > 10 {
+            closestAnnotationCommentsLabel.text = "CLOSEST_ANNOTATION_DESCRIPTION_WO_LOCATION".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(Int(station.freeRacks))")
+            return
+        }
+
+        closestAnnotationCommentsLabel.text = "CLOSEST_ANNOTATION_DESCRIPTION".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(Int(station.freeRacks))").replacingOccurrences(of: "%distance", with: "\(distance.rounded(toPlaces: 2))")
+
+    }
+
+    func updateBikeStationOperations(nextRefill: String?, nextDischarge: String?) {
+
+        if let refillText = nextRefill {
+
+            refillGrouperStackView.isHidden = false
+            refillLabel.text = refillText
+        } else {
+            refillGrouperStackView.isHidden = true
+        }
+
+        if let dischargeText = nextDischarge {
+            dischargeGrouperStackView.isHidden = false
+            dischargeLabel.text = dischargeText
+        } else {
+            dischargeGrouperStackView.isHidden = true
+        }
+    }
 
     func gotDestinationRoute(station: BikeStation, route: MKRoute) {
 
@@ -42,12 +80,16 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 
             if let rmseOfStation = self.viewModel.destinationStation.value!.inverseAccuracyRmse {
 
-                self.accuracyOfPredictionLabel.text = "ACCURACY_OF_MODEL".localize(file: "RoutePlanner").replacingOccurrences(of: "%percentage", with: "\(Int(rmseOfStation))")
+                if !rmseOfStation.isNaN {
 
-                // Warn the user of the low accuracy
-                if Int(rmseOfStation) < 50 {
-//                    self.accuracyOfPredictionLabel.textColor = .systemRed
-                    self.accuracyOfPredictionLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .bold)
+                    self.accuracyOfPredictionLabel.text = "ACCURACY_OF_MODEL".localize(file: "RoutePlanner").replacingOccurrences(of: "%percentage", with: "\(Int(rmseOfStation))")
+
+                    // Warn the user of the low accuracy
+                    if Int(rmseOfStation) < 50 {
+                        self.accuracyOfPredictionLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .bold)
+                    }
+                } else {
+                    self.accuracyOfPredictionLabel.text = "ACCURACY_OF_MODEL_ERROR".localize(file: "RoutePlanner")
                 }
             }
 
@@ -75,7 +117,7 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
                 self.predictedDocksAtDestinationLabel.text = "\(destinationStation.totalAvailableDocks - predictionArray[indexOfTime])"
 
                 // Predicted available docks = Docks(t) - (Available docks - BikePredictions(t))
-                if (destinationStation.totalAvailableDocks - (destinationStation.totalAvailableDocks - predictionArray[indexOfTime])) < 4  {
+                if (destinationStation.totalAvailableDocks - (destinationStation.totalAvailableDocks - predictionArray[indexOfTime])) < 4 {
                     self.lowDockAvailabilityLabel.text = "LOW_DOCK_AVAILABILITY_WARNING".localize(file: "RoutePlanner")
                     self.lowDockAvailabilityLabel.fadeIn()
                 }
@@ -191,7 +233,7 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var informationVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [instructionsHeaderTextView, labelsDestinationStationVerticalStackView, statisticsAndLowDockStackView])
+        let stackView = UIStackView(arrangedSubviews: [instructionsHeaderTextView, labelsDestinationStationVerticalStackView, statisticsAndLowDockStackView, dockOperationsStackView, closestStationStackView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -243,16 +285,6 @@ class RoutePlannerViewController: UIViewController {
 
         return imageView
     }()
-
-//    lazy var docksTextLabel: UILabel = {
-//
-//        let label = UILabel()
-//        label.text = "DESTINATION_DOCKS_LABEL".localize(file: "RoutePlanner")
-//        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//
-//        return label
-//    }()
 
     lazy var lowDockAvailabilityStackView: UIStackView = {
 
@@ -366,6 +398,135 @@ class RoutePlannerViewController: UIViewController {
         return imageView
     }()
 
+    lazy var dockOperationsStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [refillGrouperStackView, dischargeGrouperStackView])
+        stackView.alignment = UIStackView.Alignment.leading
+        stackView.backgroundColor = .white
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.spacing = 10.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        return stackView
+    }()
+
+    lazy var dischargeGrouperStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [dischargeStackView, dischargeTitleLabel])
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.backgroundColor = .white
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.isHidden = true
+        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.spacing = 10.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
+    let dischargeTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "DISCHARGE".localize(file: "RoutePlanner")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
+
+        return label
+    }()
+
+    lazy var dischargeStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [dischargeImageView, dischargeLabel])
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.backgroundColor = .white
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.spacing = 10.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        return stackView
+
+    }()
+
+    let dischargeImageView: UIImageView = {
+
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "chevron.down")
+        imageView.contentMode = .center
+        imageView.tintColor = .systemGray
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
+
+    let dischargeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Next refill time"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .black)
+
+        return label
+    }()
+
+    lazy var refillGrouperStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [refillStackView, refillTitleLabel])
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.backgroundColor = .white
+        stackView.isHidden = true
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.spacing = 10.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
+    let refillTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "RECHARGE".localize(file: "RoutePlanner")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
+
+        return label
+    }()
+
+    lazy var refillStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [refillImageView, refillLabel])
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.backgroundColor = .white
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.spacing = 10.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        return stackView
+
+    }()
+
+    let refillImageView: UIImageView = {
+
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "chevron.up")
+        imageView.contentMode = .center
+        imageView.tintColor = .systemGray
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
+
+    let refillLabel: UILabel = {
+        let label = UILabel()
+        label.text = "DISCHARGE".localize(file: "RoutePlanner")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .black)
+
+        return label
+    }()
+
     lazy var labelsDestinationStationVerticalStackView: UIStackView = {
 
         let stackView = UIStackView(arrangedSubviews: [destinationStationStackView, accuracyOfPredictionLabel])
@@ -386,7 +547,6 @@ class RoutePlannerViewController: UIViewController {
         label.text = "Station Name"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
-//        label.lines
         label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .black)
 
         return label
@@ -430,6 +590,74 @@ class RoutePlannerViewController: UIViewController {
             return label
         }()
 
+    lazy var closestStationStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [closestAnnotationCommentsHeaderLabel, closestStationWrapperStackView, closestAnnotationCommentsLabel])
+        stackView.alignment = UIStackView.Alignment.leading
+        stackView.backgroundColor = .white
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.distribution  = UIStackView.Distribution.fill
+        stackView.spacing = 15.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+
+    lazy var closestStationWrapperStackView: UIStackView = {
+
+        let stackView = UIStackView(arrangedSubviews: [closestAnnotationIcon, closestAnnotationStationNameLabel])
+        stackView.alignment = UIStackView.Alignment.leading
+        stackView.backgroundColor = .white
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution  = UIStackView.Distribution.equalCentering
+        stackView.spacing = 15.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        return stackView
+    }()
+
+    lazy var closestAnnotationStationNameLabel: UILabel = {
+
+        let label = UILabel()
+        label.textAlignment = .center
+        label.text = "Station Name"
+        label.tintColor = .systemGray
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .heavy)
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        return label
+    }()
+
+    lazy var closestAnnotationIcon: UIImageView = {
+
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "hand.point.right.fill")
+        imageView.contentMode = .center
+        imageView.tintColor = .systemGray
+        imageView.sizeToFit()
+        return imageView
+    }()
+
+    lazy var closestAnnotationCommentsHeaderLabel: UILabel = {
+
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.tintColor = .systemGray
+        label.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .regular)
+        label.text = "CLOSEST_ANNOTATION_HEADER".localize(file: "RoutePlanner")
+        return label
+    }()
+
+    lazy var closestAnnotationCommentsLabel: UILabel = {
+
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .regular)
+        label.tintColor = .systemGray
+        return label
+    }()
+
     init(viewModel: RoutePlannerViewModel, compositeDisposable: CompositeDisposable) {
 
         self.viewModel = viewModel
@@ -465,9 +693,8 @@ class RoutePlannerViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            destinationStationImageView.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 16.0),
+            destinationStationImageView.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 32.0),
             destinationStationLabel.leadingAnchor.constraint(equalTo: destinationStationImageView.trailingAnchor, constant: 16.0)
-
         ])
 
         NSLayoutConstraint.activate([
@@ -503,12 +730,32 @@ class RoutePlannerViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
+            destinationStationImageView.widthAnchor.constraint(equalToConstant: 50.0),
+            closestAnnotationIcon.widthAnchor.constraint(equalToConstant: 50.0),
+            closestAnnotationIcon.leadingAnchor.constraint(equalTo: containerStackView.leadingAnchor, constant: 32.0),
+            closestAnnotationStationNameLabel.leadingAnchor.constraint(equalTo: closestAnnotationIcon.trailingAnchor, constant: 16.0)
+
+        ])
+
+        NSLayoutConstraint.activate([
             instructionsHeaderTextView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor)
         ])
 
         NSLayoutConstraint.activate([
             currentHourLabel.bottomAnchor.constraint(equalTo: currentDocksLabel.topAnchor, constant: -16),
             predictedDocksAtDestinationUnitsLabel.bottomAnchor.constraint(equalTo: predictedDocksAtDestinationLabel.topAnchor, constant: -16)
+        ])
+
+        NSLayoutConstraint.activate([
+            dockOperationsStackView.leadingAnchor.constraint(equalTo: informationVerticalStackView.leadingAnchor, constant: 0.0),
+            closestStationStackView.leadingAnchor.constraint(equalTo: destinationStationStackView.leadingAnchor, constant: 0.0),
+            closestStationStackView.trailingAnchor.constraint(equalTo: destinationStationStackView.trailingAnchor, constant: 0.0)
+        ])
+
+        // 
+        NSLayoutConstraint.activate([
+            closestAnnotationStationNameLabel.leadingAnchor.constraint(equalTo: closestAnnotationIcon.trailingAnchor, constant: 16.0),
+            closestAnnotationStationNameLabel.trailingAnchor.constraint(equalTo: destinationStationStackView.trailingAnchor, constant: 0.0)
         ])
     }
 
@@ -525,5 +772,6 @@ class RoutePlannerViewController: UIViewController {
     }
 
     func setUpBindings() {
+
     }
 }
