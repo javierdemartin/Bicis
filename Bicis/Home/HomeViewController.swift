@@ -36,6 +36,7 @@ class HomeViewController: UIViewController {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.showsUserLocation = true
+        map.showsCompass = false
         map.accessibilityIdentifier = "MAP"
 
         return map
@@ -77,7 +78,7 @@ class HomeViewController: UIViewController {
         button.layer.cornerRadius = Appearance().cornerRadius
         button.accessibilityIdentifier = "START_ROUTE"
         button.backgroundColor = UIColor.systemBlue //UIColor(named: "RedColor")
-        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
+        button.titleLabel?.font = Constants.buttonFont
         button.setTitle("START_ROUTE".localize(file: "Home"), for: .normal)
         button.setTitleColor(UIColor.systemGray4, for: .disabled)
         button.clipsToBounds = true

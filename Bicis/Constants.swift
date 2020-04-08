@@ -18,6 +18,14 @@ struct Constants {
 
     static let labelFont: UIFont = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .heavy)
     static let headerFont: UIFont = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .black)
+    static let vcTitleFont: UIFont = UIFont.systemFont(ofSize: 34.0, weight: .bold)
+
+    static let paragraphFont: UIFont = UIFont.systemFont(ofSize: 17.0, weight: .regular)
+    static let secondaryFont: UIFont = UIFont.systemFont(ofSize: 15.0, weight: .medium)
+    static let tertiaryFont: UIFont = UIFont.systemFont(ofSize: 13.0, weight: .light)
+    static let buttonFont: UIFont = UIFont.systemFont(ofSize: 17.0, weight: .medium)
+
+    static let spacing: CGFloat = 16.0
 
     static let narrowCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     static let wideCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)

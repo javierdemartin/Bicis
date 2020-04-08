@@ -82,20 +82,22 @@ class AppCoordinator: Coordinator {
         window.makeKeyAndVisible()
     }
 
+    var settingsViewController: SettingsViewController?
+
     fileprivate func presentModallySettingsViewController() {
 
         let compositeDisposable = CompositeDisposable()
         let settingsViewModel = SettingsViewModel(currentCity: currentCity ?? nil, compositeDisposable: compositeDisposable, dataManager: dataManager)
 
-        let settingsViewController = SettingsViewController(viewModel: settingsViewModel, compositeDisposable: compositeDisposable)
+        settingsViewController = SettingsViewController(viewModel: settingsViewModel, compositeDisposable: compositeDisposable)
 
-        settingsViewController.reactive.trigger(for: #selector(settingsViewController.viewDidDisappear(_:))).observe { _ in self.handleModalDismissed() }
+        settingsViewController?.reactive.trigger(for: #selector(settingsViewController?.viewDidDisappear(_:))).observe { _ in self.handleModalDismissed() }
 
         settingsViewModel.coordinatorDelegate = self
         settingsViewModel.delegate = settingsViewController
-        settingsViewController.modalPresentationStyle = .formSheet
+        settingsViewController?.modalPresentationStyle = .formSheet
 
-        self.window.rootViewController?.present(settingsViewController, animated: true, completion: nil)
+        self.window.rootViewController?.present(settingsViewController!, animated: true, completion: nil)
     }
 
     fileprivate func handleModalDismissed() {
@@ -131,6 +133,8 @@ extension AppCoordinator: RestorePurchasesViewModelCoordinatorDelegate {
 
 extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
     func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
+
+        self.settingsViewController?.dismiss(animated: true, completion: nil)
 
         let compositeDisposable = CompositeDisposable()
         let restorePurchasesViewModel = RestorePurchasesViewModel(compositeDisposable: compositeDisposable)

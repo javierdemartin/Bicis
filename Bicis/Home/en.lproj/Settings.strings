@@ -10,7 +10,7 @@
 "PASSWORD_PLACEHOLDER" = "Password";
 "SUBMIT_LOGIN_BUTTON_TITLE" = "Log In";
 "TITLE_LABEL_HEADER" = "Settings";
-"HOW_TO_USE" = "Never arrive to an empty station ever again. Compare the availability against the prediction and choose the best station";
+"HOW_TO_USE" = "Bike sharing predictions for each station using neural networks. Compare the daily historic availability with the prediction to schedule your commute.";
 "REQUEST_LOCATION_SERVICES_BUTTON" = "Location services";
 "UNAUTHORISED_LOCATION_SERVICES" = "Not granted";
 "AUTHORISED_LOCATION_SERVICES" = "Granted";
@@ -23,4 +23,4 @@
 "HOW_TO_USE_SETTINGS_PAGE" = "To bring up again the Settings controls tap on the graph view of any station";
 "FEEDBACK_BUTTON" = "  Send feedback  ";
 
-"RESTORE_PURCHASES_BUTTON" = "Restore Purchases";
+"RESTORE_PURCHASES_BUTTON" = "  Restore Purchases  ";

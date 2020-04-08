@@ -61,6 +61,7 @@
 		8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8099541624193F5600B44DC9 /* RoutePlanner.strings */; };
 		80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */; };
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
+		80ABE1F0243E148E004920D8 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ABE1EF243E148E004920D8 /* UIAlertController.swift */; };
 		80B1D016241A95F20072D1D9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D015241A95F20072D1D9 /* UIView.swift */; };
 		80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */; };
 		80B1D019241ABCCC0072D1D9 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE45236F3C10003CFAF7 /* String.swift */; };
@@ -150,6 +151,7 @@
 		809954172419400A00B44DC9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RoutePlanner.strings; sourceTree = "<group>"; };
 		80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserInterfaceIdiom.swift; sourceTree = "<group>"; };
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		80ABE1EF243E148E004920D8 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		80B1D015241A95F20072D1D9 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerError.swift; sourceTree = "<group>"; };
 		80D288BC241BC52E004EE583 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				80B1D015241A95F20072D1D9 /* UIView.swift */,
 				80D288BC241BC52E004EE583 /* UIStackView.swift */,
 				803B6D09243A88010080E115 /* Double.swift */,
+				80ABE1EF243E148E004920D8 /* UIAlertController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -681,6 +684,7 @@
 				8002ED83239801F9008ABB6B /* SettingsViewModel.swift in Sources */,
 				80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */,
 				800CE94423955A7F00674D1C /* LocalDataManagerError.swift in Sources */,
+				80ABE1F0243E148E004920D8 /* UIAlertController.swift in Sources */,
 				80109139236E2F9700D3C45E /* RemoteDataManager.swift in Sources */,
 				80B1D016241A95F20072D1D9 /* UIView.swift in Sources */,
 				801ECE3D236F3B90003CFAF7 /* CustomAnnotationView.swift in Sources */,
@@ -943,7 +947,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = Bicis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -951,7 +955,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.4.1;
+				MARKETING_VERSION = 2020.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -967,7 +971,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = Bicis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -975,7 +979,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.4.1;
+				MARKETING_VERSION = 2020.4.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;

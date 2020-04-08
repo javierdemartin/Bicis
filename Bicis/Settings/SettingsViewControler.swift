@@ -77,12 +77,12 @@ class SettingsViewController: UIViewController {
     lazy var verticalStackView: UIStackView = {
 
 //        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView, restorePurchasesButton])
-        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView])
+        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, restorePurchasesButton])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 10.0
+        stackView.spacing = Constants.spacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -103,19 +103,8 @@ class SettingsViewController: UIViewController {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .bold)
+        label.font = Constants.labelFont
         label.numberOfLines = 0
-
-        return label
-    }()
-
-    lazy var titleLabel: UILabel = {
-
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .heavy)
-        label.numberOfLines = 0
-        label.text = "TITLE_LABEL_HEADER".localize(file: "Settings")
 
         return label
     }()
@@ -128,7 +117,7 @@ class SettingsViewController: UIViewController {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.isUserInteractionEnabled = true
-        textView.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .bold)
+        textView.font = Constants.paragraphFont
         textView.text = "HOW_TO_USE".localize(file: "Settings")
 
         return textView
@@ -164,7 +153,21 @@ class SettingsViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.setTitle("FEEDBACK_BUTTON".localize(file: "Settings"), for: .normal)
         button.layer.cornerRadius = 4
-        button.titleLabel?.font = UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)
+        button.titleLabel?.font = Constants.buttonFont
+        button.backgroundColor = UIColor.systemBlue
+        button.sizeToFit()
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    lazy var restorePurchasesButton: UIButton = {
+
+        let button = UIButton()
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("RESTORE_PURCHASES_BUTTON".localize(file: "Settings"), for: .normal)
+        button.layer.cornerRadius = 4
+        button.titleLabel?.font = Constants.buttonFont
         button.backgroundColor = UIColor.systemBlue
         button.sizeToFit()
 
@@ -183,19 +186,19 @@ class SettingsViewController: UIViewController {
         return imageView
     }()
 
-    lazy var locationServicesExplanationTextView: UITextView = {
-
-        let textView = UITextView(frame: .zero, textContainer: nil)
-        textView.backgroundColor = .clear
-        textView.isSelectable = false
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        textView.isUserInteractionEnabled = true
-        textView.font = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .bold)
-        textView.text = "LOCATION_SERVICES_PRIVACY".localize(file: "Settings")
-
-        return textView
-    }()
+//    lazy var locationServicesExplanationTextView: UITextView = {
+//
+//        let textView = UITextView(frame: .zero, textContainer: nil)
+//        textView.backgroundColor = .clear
+//        textView.isSelectable = false
+//        textView.isEditable = false
+//        textView.isScrollEnabled = false
+//        textView.isUserInteractionEnabled = true
+//        textView.font = Constants.paragraphFont
+//        textView.text = "LOCATION_SERVICES_PRIVACY".localize(file: "Settings")
+//
+//        return textView
+//    }()
 
     init(viewModel: SettingsViewModel, compositeDisposable: CompositeDisposable) {
 
@@ -306,6 +309,10 @@ class SettingsViewController: UIViewController {
         viewModel.availableCitiesModel.bind { cities in
             self.citiesList = cities
         }
+
+        compositeDisposable += restorePurchasesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+            self?.viewModel.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+        })
     }
 
     deinit {

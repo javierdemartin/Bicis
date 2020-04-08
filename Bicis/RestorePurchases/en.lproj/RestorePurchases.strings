@@ -14,3 +14,8 @@
 "HAS_PURCHASED" = "Thank you for your purchase & support! :)";
 "HAS_NOT_PURCHASED" = "You have not unlocked any features yet 🧐";
 "RESTORE_PURCHASES_TITLE" = "Unlock features";
+
+"LOADING_ALERT" = "Loading";
+"WAIT_ALERT" = "Please wait...";
+
+"DID_NOT_PURCHASE" = "There are no purchases to restore";

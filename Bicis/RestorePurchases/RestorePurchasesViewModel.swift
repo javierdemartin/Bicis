@@ -10,7 +10,6 @@ import Foundation
 import ReactiveSwift
 
 protocol RestorePurchasesViewModelDelegate: class {
-
     func celebratePurchase()
 }
 
@@ -24,6 +23,8 @@ class RestorePurchasesViewModel: NSObject {
 
     weak var delegate: RestorePurchasesViewModelDelegate?
     weak var coordinatorDelegate: RestorePurchasesViewModelCoordinatorDelegate?
+
+    var hasPurchased = Binding<Bool>(value: false)
 
     func unlockDataInsights() {
 
@@ -68,5 +69,6 @@ class RestorePurchasesViewModel: NSObject {
 
     func setUpBindings() {
 
+        hasPurchased.value = StoreKitProducts.store.isProductPurchased(StoreKitProducts.DataInsights)
     }
 }
