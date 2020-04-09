@@ -1,4 +1,4 @@
-fastlane/screenshots
+fastlane/screenshots/*/*.png
 Bicis.xcodeproj/project.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/UserInterfaceState.xcuserstate
 Bicis.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/UserInterfaceState.xcuserstate
 Bicis.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
