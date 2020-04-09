@@ -30,10 +30,10 @@
             filePath = "Bicis/Store Kit/IAPHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -46,10 +46,10 @@
             filePath = "Bicis/Store Kit/IAPHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -62,10 +62,10 @@
             filePath = "Bicis/Store Kit/IAPHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "130"
-            endingLineNumber = "130"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -78,10 +78,10 @@
             filePath = "Bicis/Store Kit/IAPHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -94,10 +94,10 @@
             filePath = "Bicis/Store Kit/IAPHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "121"
+            endingLineNumber = "121"
+            landmarkName = "paymentQueue(_:updatedTransactions:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -110,10 +110,10 @@
             filePath = "Bicis/Store Kit/IAPHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "150"
+            endingLineNumber = "150"
+            landmarkName = "fail(transaction:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -126,10 +126,10 @@
             filePath = "Bicis/Store Kit/IAPHelper.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "fail(transaction:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

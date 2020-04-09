@@ -40,7 +40,6 @@ open class IAPHelper: NSObject {
         print("Previously purchased: \(productIdentifier)")
       } else {
         print("Not purchased: \(productIdentifier)")
-//        delegate?.didFail(with: "DID_NOT_PURCHASE".localize(file: "RestorePurchases"))
       }
 
         delegate?.previouslyPurchased(status: purchased)
