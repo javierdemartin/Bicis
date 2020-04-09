@@ -20,3 +20,4 @@ public struct StoreKitProducts {
 func resourceNameForProductIdentifier(_ productIdentifier: String) -> String? {
   return productIdentifier.components(separatedBy: ".").last
 }
+

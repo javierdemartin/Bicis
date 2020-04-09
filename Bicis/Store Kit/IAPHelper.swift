@@ -16,12 +16,20 @@ extension Notification.Name {
   static let IAPHelperPurchaseNotification = Notification.Name("IAPHelperPurchaseNotification")
 }
 
+protocol IAPHelperDelegate: class {
+
+    func didFail(with error: String)
+    func previouslyPurchased(status: Bool)
+}
+
 open class IAPHelper: NSObject {
 
-  private let productIdentifiers: Set<ProductIdentifier>
-  private var purchasedProductIdentifiers: Set<ProductIdentifier> = []
-  private var productsRequest: SKProductsRequest?
-  private var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
+    private let productIdentifiers: Set<ProductIdentifier>
+    private var purchasedProductIdentifiers: Set<ProductIdentifier> = []
+    private var productsRequest: SKProductsRequest?
+    private var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
+
+    weak var delegate: IAPHelperDelegate?
 
   public init(productIds: Set<ProductIdentifier>) {
     productIdentifiers = productIds
@@ -33,6 +41,8 @@ open class IAPHelper: NSObject {
       } else {
         print("Not purchased: \(productIdentifier)")
       }
+
+        delegate?.previouslyPurchased(status: purchased)
     }
     super.init()
 
@@ -141,6 +151,7 @@ extension IAPHelper: SKPaymentTransactionObserver {
       let localizedDescription = transaction.error?.localizedDescription,
         transactionError.code != SKError.paymentCancelled.rawValue {
         print("Transaction Error: \(localizedDescription)")
+        delegate?.didFail(with: localizedDescription)
       }
 
     SKPaymentQueue.default().finishTransaction(transaction)
