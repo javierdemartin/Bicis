@@ -587,9 +587,6 @@ class RoutePlannerViewController: UIViewController {
 
     }()
 
-
-
-
     let destinationStationLabel: UILabel = {
 
         let label = UILabel()
@@ -597,7 +594,7 @@ class RoutePlannerViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .black)
+        label.font = Constants.labelFont
 
         return label
     }()

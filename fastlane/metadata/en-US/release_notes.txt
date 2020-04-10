@@ -1,9 +1,2 @@
-New features!
-
-When selecting your destination station you can check the predicted docks that will be by calculating your estimated travel time. This can potentially avoid a surprise when arriving to a full station and no place to leave your bike. 
-
-Just in case you will be shown the closest annotation that also has free docks.
-
-More analysis is being performed in the backend to detect the predicted discharges and refill operations by the service managers.
-
-Thank you por supporting the development of this app!
+· Improved the interface of the insights panel
+· Fixed little issues in the behavior

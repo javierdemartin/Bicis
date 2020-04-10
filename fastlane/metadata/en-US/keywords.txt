@@ -1,1 +1,1 @@
-navigation, new york, motivate, lyft, predictions, bikes, sharing, nyc, rental
+navigation, new york, motivate, lyft, predictions, bikes, sharing, nyc, rental, citibike
