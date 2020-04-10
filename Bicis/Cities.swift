@@ -15,6 +15,7 @@ struct City: Codable {
     var latitude: Double
     var longitude: Double
     var apiUrl: String
+    var allowsLogIn: Bool
 }
 
 var availableCities: [String: City] = [
@@ -22,17 +23,17 @@ var availableCities: [String: City] = [
                      formalName: "New York",
                      latitude: 40.769320,
                      longitude: -73.969301,
-                     apiUrl: "https://feeds.citibikenyc.com/stations/stations.json"),
+                     apiUrl: "https://feeds.citibikenyc.com/stations/stations.json", allowsLogIn: false),
     "Bilbao": City(apiName: "bilbao",
                    formalName: "Bilbao",
                    latitude: 43.263459,
                    longitude: -2.937053,
-                   apiUrl: "https://nextbike.net/maps/nextbike-official.json?city=532"),
+                   apiUrl: "https://nextbike.net/maps/nextbike-official.json?city=532", allowsLogIn: true),
     "Madrid": City(apiName: "madrid",
                    formalName: "Madrid",
                    latitude: 40.416775,
                    longitude: -3.703790,
-                   apiUrl: "https://openapi.emtmadrid.es/v1/transport/bicimad/stations/")
+                   apiUrl: "https://openapi.emtmadrid.es/v1/transport/bicimad/stations/", allowsLogIn: false)
 ]
 
 enum AvailableCities: String {

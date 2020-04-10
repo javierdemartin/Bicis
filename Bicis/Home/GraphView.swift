@@ -40,27 +40,18 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
 
 class PredictionGraphView: UIView {
 
-    enum Shown {
-        case shown, hidden
-    }
-
-    var isShown: Bool
-
+    // MARK: Instance Properties
     var stationTitle = UILabel()
     var stationTitleText: String?
 
     var viewHeight: CGFloat = -1.0
     var viewWidth: CGFloat = -1.0
 
-    let lenDay = 144.0 //predictionData.count
     let shapeLayer = CAShapeLayer()
     let actualAvailabilityLayer = CAShapeLayer()
     let drawingLayer = CAShapeLayer()
 
-    var maxValue: Int = 0
-
     private var shadowLayer: CAShapeLayer!
-    private var cornerRadius: CGFloat = 25.0
 
     func getPercentageOfDay() -> (CGFloat, Int) {
 
@@ -71,18 +62,16 @@ class PredictionGraphView: UIView {
 
         let step: Double = Double(hour * 6 + minute)
 
-        let consumedDayPercentage: CGFloat = CGFloat((step / lenDay))
+        let consumedDayPercentage: CGFloat = CGFloat((step / Constants.lengthOfTheDay))
 
         return (consumedDayPercentage, Int(step))
     }
 
     override init(frame: CGRect) {
-        isShown = false
         super.init(frame: frame)
     }
 
     required init?(coder aDecoder: NSCoder) {
-        isShown = false
         super.init(coder: aDecoder)
     }
 
@@ -95,51 +84,17 @@ class PredictionGraphView: UIView {
 
         self.accessibilityIdentifier = "PredictionGraph"
         self.clipsToBounds = true
-        self.layer.cornerRadius = Appearance().cornerRadius
+        self.layer.cornerRadius = Constants.cornerRadius
         self.backgroundColor = UIColor.systemBlue
-    }
-
-    func addShadows() {
-
-        if shadowLayer == nil {
-            shadowLayer = CAShapeLayer()
-
-            shadowLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
-            shadowLayer.fillColor = UIColor.clear.cgColor
-
-            shadowLayer.shadowColor = UIColor.black.cgColor
-            shadowLayer.shadowPath = shadowLayer.path
-            shadowLayer.shadowOffset = .zero
-            shadowLayer.shadowOpacity = 1
-            shadowLayer.shadowRadius = 3
-
-            layer.insertSublayer(shadowLayer, at: 0)
-        }
-    }
-
-    @objc func didPan(recognizer: UIPanGestureRecognizer) {
-
-        print("-- \(recognizer.location(in: self))")
-    }
-
-    func initGestureRecognizers() {
-
-        let panGR = UIPanGestureRecognizer(target: self, action: #selector(didPan(recognizer:)))
-        addGestureRecognizer(panGR)
     }
 
     func drawLine(values: [Int], isPrediction: Bool) {
 
-        if !isPrediction {
-            actualAvailabilityLayer.removeFromSuperlayer()
-        }
+        viewHeight = (self.frame.size.height - stationTitle.frame.size.height * 1.4)
+        // Esto se deberia poder sustituir por el porcentaje del día que se tiene ya
+        viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
 
-        viewHeight = (self.frame.size.height - stationTitle.frame.size.height * 1.5)
-        viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(lenDay)
-
-        guard let maxVal = values.max() else { return }
-
-        if maxVal > maxValue { maxValue = values.max()! }
+//        let maxValue = max(values.max()!, maxValue)
 
         if values.count > 0 {
 
@@ -147,7 +102,7 @@ class PredictionGraphView: UIView {
             let path = UIBezierPath()
             var nextPoint = CGPoint()
 
-            var heightProportion = CGFloat(values[0]) / CGFloat(maxValue)
+            var heightProportion = CGFloat(values[0]) / CGFloat(values.max()!)
 
             // Mover el punto inicial al origen de X y a la altura que corresponde al valor obtenido.
             let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.9)
@@ -156,7 +111,7 @@ class PredictionGraphView: UIView {
 
             for element in 0..<values.count {
 
-                heightProportion = CGFloat(values[element]) / CGFloat(maxValue)
+                heightProportion = CGFloat(values[element]) / CGFloat(values.max()!)
 
                 let xPosition = CGFloat(element) * viewWidth / CGFloat(values.count)
                 let yPosition = viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height*0.9
@@ -211,6 +166,7 @@ class PredictionGraphView: UIView {
         super.draw(rect)
     }
 
+    /// As the view hides remove all information related to the
     func hideView() {
 
         actualAvailabilityLayer.removeFromSuperlayer()

@@ -70,7 +70,11 @@ extension IAPHelper {
   }
 
   public func isProductPurchased(_ productIdentifier: ProductIdentifier) -> Bool {
-    return purchasedProductIdentifiers.contains(productIdentifier)
+//    return purchasedProductIdentifiers.contains(productIdentifier)
+
+    let defaults = UserDefaults(suiteName: Constants.appGroupsBundleID)!
+
+    return defaults.bool(forKey: StoreKitProducts.DataInsights)
   }
 
   public class func canMakePayments() -> Bool {
@@ -163,7 +167,7 @@ extension IAPHelper: SKPaymentTransactionObserver {
     purchasedProductIdentifiers.insert(identifier)
     let defaults = UserDefaults(suiteName: Constants.appGroupsBundleID)!
 
-    defaults.set(true, forKey: Constants.hasUnlockedFeatures)
+    defaults.set(true, forKey: StoreKitProducts.DataInsights)
     NotificationCenter.default.post(name: .IAPHelperPurchaseNotification, object: identifier)
   }
 }

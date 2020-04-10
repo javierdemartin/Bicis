@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80002919243F9AC000862C75 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80002918243F9AC000862C75 /* Button.swift */; };
+		80002921243FB92F00862C75 /* BicisTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80002920243FB92F00862C75 /* BicisTests.swift */; };
+		8000292A243FBBB200862C75 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
 		8000476F23EF425300492DFB /* BicisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000476E23EF425300492DFB /* BicisUITests.swift */; };
 		8000477723EF426000492DFB /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000477623EF426000492DFB /* SnapshotHelper.swift */; };
 		8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000477A23F06C1100492DFB /* StoreKitHelper.swift */; };
@@ -30,7 +33,6 @@
 		801ECE3B236F3B7D003CFAF7 /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE3A236F3B7D003CFAF7 /* MapPin.swift */; };
 		801ECE3D236F3B90003CFAF7 /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE3C236F3B90003CFAF7 /* CustomAnnotationView.swift */; };
 		801ECE42236F3BD1003CFAF7 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE41236F3BD1003CFAF7 /* UIColor.swift */; };
-		801ECE44236F3BEA003CFAF7 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE43236F3BEA003CFAF7 /* Appearance.swift */; };
 		801ECE46236F3C10003CFAF7 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE45236F3C10003CFAF7 /* String.swift */; };
 		80299FDB243B80BC0094EDB2 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FDA243B80BC0094EDB2 /* IAPHelper.swift */; };
 		80299FDE243B860F0094EDB2 /* StoreKitProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */; };
@@ -73,6 +75,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		80002923243FB92F00862C75 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8085CC51236E2CB500B45A7C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8085CC58236E2CB500B45A7C;
+			remoteInfo = Bicis;
+		};
 		8000477123EF425300492DFB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8085CC51236E2CB500B45A7C /* Project object */;
@@ -86,6 +95,10 @@
 		1472B5D618BCE2E94598894E /* Pods_BicisTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BicisTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		644E8E3F87CF67AFCCA7E9B0 /* Pods-Bicis-BicisUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis-BicisUITests.debug.xcconfig"; path = "Target Support Files/Pods-Bicis-BicisUITests/Pods-Bicis-BicisUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		79D733FBA41973B1311630B3 /* Pods-Bicis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis.release.xcconfig"; path = "Target Support Files/Pods-Bicis/Pods-Bicis.release.xcconfig"; sourceTree = "<group>"; };
+		80002918243F9AC000862C75 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		8000291E243FB92F00862C75 /* BicisTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BicisTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		80002920243FB92F00862C75 /* BicisTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BicisTests.swift; sourceTree = "<group>"; };
+		80002922243FB92F00862C75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8000476C23EF425300492DFB /* BicisUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BicisUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8000476E23EF425300492DFB /* BicisUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BicisUITests.swift; sourceTree = "<group>"; };
 		8000477023EF425300492DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -113,7 +126,6 @@
 		801ECE3A236F3B7D003CFAF7 /* MapPin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		801ECE3C236F3B90003CFAF7 /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		801ECE41236F3BD1003CFAF7 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
-		801ECE43236F3BEA003CFAF7 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		801ECE45236F3C10003CFAF7 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		80299FDA243B80BC0094EDB2 /* IAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitProducts.swift; sourceTree = "<group>"; };
@@ -165,6 +177,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8000291B243FB92F00862C75 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8000476923EF425300492DFB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,6 +215,15 @@
 				1472B5D618BCE2E94598894E /* Pods_BicisTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8000291F243FB92F00862C75 /* BicisTests */ = {
+			isa = PBXGroup;
+			children = (
+				80002920243FB92F00862C75 /* BicisTests.swift */,
+				80002922243FB92F00862C75 /* Info.plist */,
+			);
+			path = BicisTests;
 			sourceTree = "<group>";
 		};
 		8000476D23EF425300492DFB /* BicisUITests */ = {
@@ -332,7 +360,6 @@
 			isa = PBXGroup;
 			children = (
 				80628467236EDA5000717472 /* Responses.swift */,
-				801ECE43236F3BEA003CFAF7 /* Appearance.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -370,6 +397,7 @@
 			children = (
 				8085CC5B236E2CB500B45A7C /* Bicis */,
 				8000476D23EF425300492DFB /* BicisUITests */,
+				8000291F243FB92F00862C75 /* BicisTests */,
 				8085CC5A236E2CB500B45A7C /* Products */,
 				A46C4047EA8A6CBF9DA58A66 /* Pods */,
 				5949BD66B4AC3B1C21CA4D42 /* Frameworks */,
@@ -381,6 +409,7 @@
 			children = (
 				8085CC59236E2CB500B45A7C /* Bicis.app */,
 				8000476C23EF425300492DFB /* BicisUITests.xctest */,
+				8000291E243FB92F00862C75 /* BicisTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -413,6 +442,7 @@
 				80D288BE241D5150004EE583 /* Binding.swift */,
 				80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */,
 				80D288C0241D5200004EE583 /* UITestingHelper.swift */,
+				80002918243F9AC000862C75 /* Button.swift */,
 			);
 			path = Bicis;
 			sourceTree = "<group>";
@@ -453,6 +483,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8000291D243FB92F00862C75 /* BicisTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 80002925243FB92F00862C75 /* Build configuration list for PBXNativeTarget "BicisTests" */;
+			buildPhases = (
+				8000291A243FB92F00862C75 /* Sources */,
+				8000291B243FB92F00862C75 /* Frameworks */,
+				8000291C243FB92F00862C75 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				80002924243FB92F00862C75 /* PBXTargetDependency */,
+			);
+			name = BicisTests;
+			productName = BicisTests;
+			productReference = 8000291E243FB92F00862C75 /* BicisTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		8000476B23EF425300492DFB /* BicisUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8000477323EF425300492DFB /* Build configuration list for PBXNativeTarget "BicisUITests" */;
@@ -499,10 +547,14 @@
 		8085CC51236E2CB500B45A7C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Javier de Martín Gil";
 				TargetAttributes = {
+					8000291D243FB92F00862C75 = {
+						CreatedOnToolsVersion = 11.4;
+						TestTargetID = 8085CC58236E2CB500B45A7C;
+					};
 					8000476B23EF425300492DFB = {
 						CreatedOnToolsVersion = 11.3.1;
 						TestTargetID = 8085CC58236E2CB500B45A7C;
@@ -528,11 +580,19 @@
 			targets = (
 				8085CC58236E2CB500B45A7C /* Bicis */,
 				8000476B23EF425300492DFB /* BicisUITests */,
+				8000291D243FB92F00862C75 /* BicisTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8000291C243FB92F00862C75 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8000476A23EF425300492DFB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -654,6 +714,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8000291A243FB92F00862C75 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8000292A243FBBB200862C75 /* Cities.swift in Sources */,
+				80002921243FB92F00862C75 /* BicisTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8000476823EF425300492DFB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -679,6 +748,7 @@
 				80299FDB243B80BC0094EDB2 /* IAPHelper.swift in Sources */,
 				807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */,
 				80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */,
+				80002919243F9AC000862C75 /* Button.swift in Sources */,
 				80109143236E317700D3C45E /* HomeViewModel.swift in Sources */,
 				8010913E236E309300D3C45E /* OnboardingViewController.swift in Sources */,
 				8002ED83239801F9008ABB6B /* SettingsViewModel.swift in Sources */,
@@ -703,7 +773,6 @@
 				801ECE42236F3BD1003CFAF7 /* UIColor.swift in Sources */,
 				80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */,
 				80628461236E34C500717472 /* Coordinator.swift in Sources */,
-				801ECE44236F3BEA003CFAF7 /* Appearance.swift in Sources */,
 				80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */,
 				80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */,
 				80D288BF241D5150004EE583 /* Binding.swift in Sources */,
@@ -725,6 +794,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		80002924243FB92F00862C75 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8085CC58236E2CB500B45A7C /* Bicis */;
+			targetProxy = 80002923243FB92F00862C75 /* PBXContainerItemProxy */;
+		};
 		8000477223EF425300492DFB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 8085CC58236E2CB500B45A7C /* Bicis */;
@@ -782,6 +856,48 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		80002926243FB92F00862C75 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z3PCB8TM76;
+				INFOPLIST_FILE = BicisTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.BicisTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bicis.app/Bicis";
+			};
+			name = Debug;
+		};
+		80002927243FB92F00862C75 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Z3PCB8TM76;
+				INFOPLIST_FILE = BicisTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.BicisTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bicis.app/Bicis";
+			};
+			name = Release;
+		};
 		8000477423EF425300492DFB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 644E8E3F87CF67AFCCA7E9B0 /* Pods-Bicis-BicisUITests.debug.xcconfig */;
@@ -874,6 +990,8 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -929,6 +1047,8 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -947,7 +1067,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = Bicis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -955,7 +1075,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.4.3;
+				MARKETING_VERSION = 2020.4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -971,7 +1091,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = Bicis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -979,7 +1099,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.4.3;
+				MARKETING_VERSION = 2020.4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
@@ -991,6 +1111,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		80002925243FB92F00862C75 /* Build configuration list for PBXNativeTarget "BicisTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80002926243FB92F00862C75 /* Debug */,
+				80002927243FB92F00862C75 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8000477323EF425300492DFB /* Build configuration list for PBXNativeTarget "BicisUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

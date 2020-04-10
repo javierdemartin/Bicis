@@ -14,6 +14,8 @@
 
 "START_TRIP" = " Start commute ";
 
+"NOW" = "Now";
+
 "ESTIMATED_TIME_OF_ARRIVAL" = "Arriving at %time, riding %distanceUnits";
 
 "LOADING_ROUTE" = "Calculating time to destination...";
@@ -43,3 +45,5 @@
 "CLOSEST_ANNOTATION_DESCRIPTION_WO_LOCATION" = "%number free docks";
 
 "CLOSEST_ANNOTATION_HEADER" = "Closest alternative station";
+
+"FREE_DOCKS_AT_DESTINATION_LABEL" = "Free docks at destination";

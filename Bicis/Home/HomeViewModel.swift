@@ -28,13 +28,13 @@ protocol HomeViewModelDataManager {
 
 protocol HomeViewModelDelegate: class {
     func receivedError(with errorString: String)
-    func segueToSettingsViewController()
     func drawPrediction(data: [Int], prediction: Bool)
     func changedUserLocation(location: CLLocation)
     func centerMap(on point: CLLocationCoordinate2D, coordinateSpan: MKCoordinateSpan)
     func dismissGraphView()
     func removePinsFromMap()
     func presentAlertViewWithError(title: String, body: String)
+    func shouldShowRentBikeButton()
 }
 
 extension HomeViewModel: LocationServicesDelegate {
@@ -49,8 +49,12 @@ extension HomeViewModel: LocationServicesDelegate {
 
 class HomeViewModel {
 
-    var city: City?
-    let compositeDisposable: CompositeDisposable
+    private let compositeDisposable: CompositeDisposable
+
+    var currentCity: City?
+
+    var latestSelectedAnnotation: MKAnnotation?
+    var latestSelectedBikeStation: BikeStation?
 
     var destinationStation = Binding<BikeStation?>(value: nil)
 
@@ -65,7 +69,7 @@ class HomeViewModel {
 
     init(city: City?, compositeDisposable: CompositeDisposable, dataManager: HomeViewModelDataManager) {
 
-        self.city = city
+        self.currentCity = city
         self.compositeDisposable = compositeDisposable
         self.dataManager = dataManager
 
@@ -73,8 +77,12 @@ class HomeViewModel {
         LocationServices.sharedInstance.locationManager?.requestWhenInUseAuthorization()
         LocationServices.sharedInstance.locationManager?.startUpdatingLocation()
 
-        if let currentCity = self.city {
+        if let currentCity = self.currentCity {
             getMapPinsFrom(city: currentCity)
+
+            if currentCity.allowsLogIn {
+                delegate?.shouldShowRentBikeButton()
+            }
         }
     }
 
@@ -108,7 +116,7 @@ class HomeViewModel {
             case .success(let hasUnlocked):
                 if hasUnlocked {
 
-                    let closestAnnotations = self.sortStationsNearTo(location: station.location)
+                    let closestAnnotations = Array(self.stations.value.dropFirst().prefix(3))
 
                     self.coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station, closestAnnotations: closestAnnotations)
                 } else if !hasUnlocked {
@@ -154,18 +162,25 @@ class HomeViewModel {
                 })
 
                 self.stations.value = res
+
+                if let locationFromDevice = LocationServices.sharedInstance.currentLocation {
+
+                    self.stations.value = self.sortStationsNearTo(res, location: locationFromDevice)
+                }
+
             case .error:
                 break
             }
         })
     }
 
-    func sortStationsNearTo(location: CLLocation) -> [BikeStation] {
+    func sortStationsNearTo(_ values: [BikeStation], location: CLLocation) -> [BikeStation] {
 
         /// Mutating operation
         stations.value.sort(by: { $0.distance(to: location) < $1.distance(to: $0.location) })
 
-        return Array(stations.value.dropFirst().prefix(3))
+//        return Array(stations.value.dropFirst().prefix(3))
+        return Array(stations.value)
     }
 
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<[String: [Int]]>) -> Void) {

@@ -54,11 +54,10 @@ class CustomAnnotationView: MKMarkerAnnotationView {
 
         self.canShowCallout = false
         selectedLabel.backgroundColor = UIColor(named: "RedColor")
-        selectedLabel.textColor = UIColor(named: "TextAndGraphColor") // Colors().annotationTextColor
-        selectedLabel.tag = 199
+        selectedLabel.textColor = UIColor(named: "TextAndGraphColor")
         selectedLabel.layer.borderWidth = 5.0
         selectedLabel.layer.borderColor = UIColor(named: "TextAndGraphColor")?.cgColor
-        selectedLabel.layer.cornerRadius = Appearance().cornerRadius
+        selectedLabel.layer.cornerRadius = Constants.cornerRadius
         selectedLabel.clipsToBounds = true
         selectedLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
 
@@ -79,7 +78,6 @@ class CustomAnnotationView: MKMarkerAnnotationView {
         selectedLabel.isHidden = true
 
         self.canShowCallout = false
-        self.tag = 200
     }
 
     func setTitle(forStation name: String) {

@@ -1,5 +1,6 @@
 {
     "default": {
+        "frame": "BLACK",
         "keyword": {
 	    "font": "./fonts/SFProDisplay-Bold.otf"
         },
@@ -10,7 +11,7 @@
         "background": "./background.png",
         "padding": 50,
         "show_complete_frame": false,
-	   "stack_title": false,
+	   "stack_title": true,
         "title_below_image": false
     },
     

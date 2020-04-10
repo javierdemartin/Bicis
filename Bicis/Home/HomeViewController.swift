@@ -17,21 +17,13 @@ protocol HomeViewControllerGraphViewDelegate: class {
 
 class HomeViewController: UIViewController {
 
-    var annotations: [MKAnnotation]?
-    var latestSelectedAnnotation: MKAnnotation?
-    var latestSelectedBikeStation: BikeStation?
+    private weak var graphViewDelegate: HomeViewControllerGraphViewDelegate?
 
-    weak var graphViewDelegate: HomeViewControllerGraphViewDelegate?
+    private let compositeDisposable: CompositeDisposable
 
-    let compositeDisposable: CompositeDisposable
+    private let viewModel: HomeViewModel
 
-    var currentCity: City?
-
-    var routeOverlay = MKRoute()
-
-    let viewModel: HomeViewModel
-
-    var mapView: MKMapView = {
+    private var mapView: MKMapView = {
 
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
@@ -42,7 +34,7 @@ class HomeViewController: UIViewController {
         return map
     }()
 
-    lazy var statisticsAndGraphViewStackView: UIStackView = {
+    private lazy var statisticsAndGraphViewStackView: UIStackView = {
 
         let stackView = UIStackView(arrangedSubviews: [graphView, belowGraphHorizontalStackView])
         stackView.alignment = UIStackView.Alignment.center
@@ -58,7 +50,7 @@ class HomeViewController: UIViewController {
 
     }()
 
-    lazy var belowGraphHorizontalStackView: UIStackView = {
+    private lazy var belowGraphHorizontalStackView: UIStackView = {
 
         let stackView = UIStackView(arrangedSubviews: [startRouteButton])
         stackView.alignment = UIStackView.Alignment.center
@@ -68,16 +60,15 @@ class HomeViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
-
     }()
 
-    var startRouteButton: UIButton = {
+    private var startRouteButton: UIButton = {
 
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = Appearance().cornerRadius
+        button.layer.cornerRadius = Constants.cornerRadius
         button.accessibilityIdentifier = "START_ROUTE"
-        button.backgroundColor = UIColor.systemBlue //UIColor(named: "RedColor")
+        button.backgroundColor = UIColor.systemBlue
         button.titleLabel?.font = Constants.buttonFont
         button.setTitle("START_ROUTE".localize(file: "Home"), for: .normal)
         button.setTitleColor(UIColor.systemGray4, for: .disabled)
@@ -87,48 +78,7 @@ class HomeViewController: UIViewController {
         return button
     }()
 
-    lazy var nextTimeEmptyHorizontalStackView: UIStackView = {
-
-        let stackView = UIStackView(arrangedSubviews: [emptyStationTimeImageView, nextRefilTimeLabel])
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.backgroundColor = .white
-        stackView.axis = NSLayoutConstraint.Axis.horizontal
-        stackView.distribution  = UIStackView.Distribution.equalCentering
-        stackView.spacing = 10.0
-        stackView.backgroundColor = .blue
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        // UIStackView is a non-drawing view, add a background adding a view
-        stackView.addSubview(nextTimeEmptyStationView)
-
-        return stackView
-    }()
-
-    var nextTimeEmptyStationView: UIView = {
-
-        let view = UIView()
-        view.layer.cornerRadius = Appearance().cornerRadius
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    var emptyStationTimeImageView: UIImageView = {
-
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "0.circle")
-
-        return imageView
-    }()
-
-    var nextRefilTimeLabel: UILabel =  {
-
-        let label = UILabel()
-        label.text = "16:00"
-
-        return label
-    }()
-
-    var graphView: PredictionGraphView = {
+    private var graphView: PredictionGraphView = {
         let view = PredictionGraphView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
@@ -141,12 +91,53 @@ class HomeViewController: UIViewController {
         viewModel.coordinatorDelegate?.showSettingsViewController()
     }
 
-    var label: UILabel = {
+    private var label: UILabel = {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = true
         label.text = ""
         return label
+    }()
+
+    // MARK: Renting
+
+    private var rentButton: UIButton = {
+
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = Constants.cornerRadius
+        button.accessibilityIdentifier = "RENT_BIKE"
+        button.backgroundColor = UIColor.systemBlue
+        button.setImage(UIImage(systemName: "bolt.fill"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.imageView?.tintColor = .systemFill
+        button.clipsToBounds = true
+//        button.imageEdgeInsets = UIEdgeInsets(top: 10.0,left: 10.0,bottom:10.0,right: 10.0)
+
+//        button.isEnabled = false
+//        button.contentVerticalAlignment = .fill
+//        button.contentHorizontalAlignment = .fill
+        button.imageEdgeInsets = UIEdgeInsets(top: 40, left: 0, bottom: 40, right: 0)
+        button.isHidden = true
+        return button
+    }()
+
+    private var settingsButton: UIButton = {
+
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = Constants.cornerRadius
+        button.accessibilityIdentifier = "RENT_BIKE"
+        button.backgroundColor = UIColor.systemBlue //UIColor(named: "RedColor")
+        button.setImage(UIImage(systemName: "gear"), for: .normal)
+//        button.imageView?.contentMode = .scaleAspectFit
+        button.imageView?.tintColor = .white
+
+        button.clipsToBounds = true
+        button.isHidden = false
+        // Spacing between the UIImageView and the UIButton's edges
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return button
     }()
 
     init(viewModel: HomeViewModel, compositeDisposable: CompositeDisposable) {
@@ -174,6 +165,7 @@ class HomeViewController: UIViewController {
 
         view.addSubview(statisticsAndGraphViewStackView)
         view.bringSubviewToFront(statisticsAndGraphViewStackView)
+        view.addSubview(settingsButton)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         graphView.addGestureRecognizer(tap)
@@ -185,6 +177,15 @@ class HomeViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             belowGraphHorizontalStackView.heightAnchor.constraint(equalToConstant: 50)
+        ])
+
+        // MARK: Settings Button constraints
+
+        // Bottom right
+        // TODO: Add setting to support left/right-hand users
+        NSLayoutConstraint.activate([
+            settingsButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -2 * Constants.spacing),
+            settingsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -2 * Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
@@ -294,9 +295,9 @@ class HomeViewController: UIViewController {
             switch currentCityResult {
 
             case .success(let currentCity):
-                self.currentCity = currentCity
+                self.viewModel.currentCity = currentCity
 
-                guard let unwrappedCity = self.currentCity else { return }
+                guard let unwrappedCity = self.viewModel.currentCity else { return }
 
                 self.viewModel.getMapPinsFrom(city: unwrappedCity)
 
@@ -310,7 +311,7 @@ class HomeViewController: UIViewController {
     @objc func appMovedToBackground() {
         print("App moved to Background!")
 
-        guard let didSelectAnnotation = latestSelectedAnnotation else { return }
+        guard let didSelectAnnotation = viewModel.latestSelectedAnnotation else { return }
 
         mapView.deselectAnnotation(didSelectAnnotation, animated: false)
     }
@@ -348,10 +349,14 @@ class HomeViewController: UIViewController {
         compositeDisposable += startRouteButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             guard let self = self else { fatalError() }
 
-            guard let latestSelectedStation = self.latestSelectedBikeStation else { return }
+            guard let latestSelectedStation = self.viewModel.latestSelectedBikeStation else { return }
 
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
             self.viewModel.selectedRoute(station: latestSelectedStation)
+        })
+
+        compositeDisposable += settingsButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+            self?.viewModel.coordinatorDelegate?.showSettingsViewController()
         })
 
         viewModel.stations.bind { stations in
@@ -364,17 +369,6 @@ class HomeViewController: UIViewController {
                     return coordinate
                 }()
 
-                let annotation: MKAnnotation = {
-
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = pinCoordinate
-                    annotation.title = pin.stationName
-
-                    return annotation
-                }()
-
-                self.annotations?.append(annotation)
-
                 self.mapView.addAnnotation(MapPin(title: pin.stationName,
                                                   coordinate: pinCoordinate,
                                                   stationInformation: pin))
@@ -385,7 +379,7 @@ class HomeViewController: UIViewController {
             switch UITestingHelper.sharedInstance.isUITesting() {
             case true:
 
-                guard let unwrappedCity = self.viewModel.city else { return }
+                guard let unwrappedCity = self.viewModel.currentCity else { return }
 
                 currentLocationFromDevice = CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude), longitude: CLLocationDegrees(unwrappedCity.longitude))
             case false:
@@ -398,8 +392,8 @@ class HomeViewController: UIViewController {
                 self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
             } else {
                 self.selectClosestAnnotationGraph(stations: stations,
-                                                  currentLocation: CLLocation(latitude: CLLocationDegrees(self.viewModel.city!.latitude),
-                                                                              longitude: CLLocationDegrees(self.viewModel.city!.longitude)))
+                                                  currentLocation: CLLocation(latitude: CLLocationDegrees(self.viewModel.currentCity!.latitude),
+                                                                              longitude: CLLocationDegrees(self.viewModel.currentCity!.longitude)))
             }
         }
     }
@@ -422,8 +416,8 @@ class HomeViewController: UIViewController {
         graphView.fadeOut(0.2)
         hideRoutePlannerButton()
 
-        if latestSelectedAnnotation != nil {
-            mapView.deselectAnnotation(latestSelectedAnnotation, animated: false)
+        if viewModel.latestSelectedAnnotation != nil {
+            mapView.deselectAnnotation(viewModel.latestSelectedAnnotation, animated: false)
         }
     }
 
@@ -446,6 +440,10 @@ class HomeViewController: UIViewController {
 // MARK: HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
 
+    func shouldShowRentBikeButton() {
+        rentButton.isEnabled = true
+    }
+
     func presentAlertViewWithError(title: String, body: String) {
 
         let alertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
@@ -457,7 +455,6 @@ extension HomeViewController: HomeViewModelDelegate {
 
     /// Called when a new city is selected, removing the pins from the previous city
     func removePinsFromMap() {
-        self.annotations?.removeAll()
         mapView.removeAnnotations(mapView.annotations)
     }
 
@@ -473,10 +470,6 @@ extension HomeViewController: HomeViewModelDelegate {
 
     func drawPrediction(data: [Int], prediction: Bool) {
         graphView.drawLine(values: data, isPrediction: prediction)
-    }
-
-    func segueToSettingsViewController() {
-        viewModel.coordinatorDelegate?.showSettingsViewController()
     }
 
     func receivedError(with errorString: String) {
@@ -598,18 +591,18 @@ extension HomeViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 
         // If for any reason the current city is not saved cancel the operation
-        guard viewModel.city != nil else { return }
+        guard viewModel.currentCity != nil else { return }
 
         guard let annotationFromPin = view.annotation as? MapPin else { return }
 
         centerMap(on: annotationFromPin.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
 
-        latestSelectedAnnotation = annotationFromPin
-        latestSelectedBikeStation = annotationFromPin.stationInformation
+        viewModel.latestSelectedAnnotation = annotationFromPin
+        viewModel.latestSelectedBikeStation = annotationFromPin.stationInformation
 
         var apiQueryStationValue: String?
 
-        if viewModel.city?.apiName != "bilbao" {
+        if viewModel.currentCity?.apiName != "bilbao" {
             apiQueryStationValue = annotationFromPin.stationInformation.id
         } else {
             apiQueryStationValue = annotationFromPin.stationInformation.stationName
@@ -620,7 +613,7 @@ extension HomeViewController: MKMapViewDelegate {
 
         guard apiQueryStationValue != nil else { return }
 
-        viewModel.getAllDataFromApi(city: viewModel.city!.apiName, station: apiQueryStationValue!, completion: { res in
+        viewModel.getAllDataFromApi(city: viewModel.currentCity!.apiName, station: apiQueryStationValue!, completion: { res in
 
             // As soon as new data is retrieved from the API show the graph
             self.showStackView()

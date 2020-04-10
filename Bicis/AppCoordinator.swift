@@ -106,7 +106,7 @@ class AppCoordinator: Coordinator {
             switch getCurrentCityResult {
 
             case .success(let suc):
-                self.homeViewModel?.city = suc
+                self.homeViewModel?.currentCity = suc
 
             case .error:
                 break
