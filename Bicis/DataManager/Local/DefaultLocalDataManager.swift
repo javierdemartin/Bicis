@@ -12,22 +12,20 @@ class DefaultLocalDataManager: LocalDataManager {
 
     let defaults = UserDefaults(suiteName: Constants.appGroupsBundleID)!
 
+    /// Reads the UserDefault bool value
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
 
-        // When UITesting skip th epurchase step
+        completion(.success(true))
+
+        // Automatically unlock the purchases if doing UI Tests, mainly to
+        // facilitate fastlane's snapshot
         if UITestingHelper.sharedInstance.isUITesting() {
             completion(.success(true))
         }
 
-        guard let hasPaidBefore = defaults.value(forKey: Constants.hasUnlockedFeatures) as? Bool else {
-            return completion(.error(LocalDataManagerError.hasntPaid))
-        }
+        let hasPaidBefore = defaults.bool(forKey: StoreKitProducts.DataInsights)
 
         completion(.success(hasPaidBefore))
-    }
-
-    func setUnlockedDataInsights() {
-
     }
 
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void) {
