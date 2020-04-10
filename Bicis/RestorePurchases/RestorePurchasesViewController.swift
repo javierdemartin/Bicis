@@ -33,10 +33,8 @@ extension RestorePurchasesViewController: RestorePurchasesViewModelDelegate {
         restorePurchasesButton.tintColor = .systemGray
         unlockFeaturesLabel.isEnabled = false
         unlockFeaturesLabel.tintColor = .systemGray
-//        unlockFeaturesLabel.backgroundColor = .systemFill
 
         DispatchQueue.main.async {
-//            self.dismissActivityIndicatorAlert()
             self.purchaseStatusLabel.text = "HAS_PURCHASED".localize(file: "RestorePurchases")
         }
 
@@ -133,7 +131,7 @@ class RestorePurchasesViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.systemGray, for: .disabled)
         button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 9.0
+        button.layer.cornerRadius = Constants.cornerRadius
         button.titleLabel?.numberOfLines = 0
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = Constants.buttonFont
@@ -148,7 +146,7 @@ class RestorePurchasesViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.systemGray, for: .disabled)
         button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = 9.0
+        button.layer.cornerRadius = Constants.cornerRadius
         button.isEnabled = true
         button.titleLabel?.font = Constants.buttonFont
         button.setTitle("RESTORE_PURCHASES".localize(file: "RestorePurchases"), for: .normal)
@@ -265,11 +263,11 @@ class RestorePurchasesViewController: UIViewController {
 
         viewModel.hasPurchased.bind({ transaction in
 
-//            if transaction {
-//                self.celebratePurchase()
-//            } else {
-//                self.restorePurchasesButton.isEnabled = false
-//            }
+            if transaction {
+                self.viewModel.didSuccessfullyFinishStoreKitOperation()
+                self.restorePurchasesButton.isEnabled = false
+                self.unlockFeaturesLabel.isEnabled = false
+            }
         })
     }
 
@@ -311,24 +309,5 @@ class RestorePurchasesViewController: UIViewController {
 
         cell.contents = UIImage(named: "particle_confetti")?.cgImage
         return cell
-    }
-}
-
-extension RestorePurchasesViewController {
-
-    func displayActivityIndicatorAlert() {
-        activityIndicatorAlert = UIAlertController(title: "LOADING_ALERT".localize(file: "RestorePurchases"), message: "WAIT_ALERT".localize(file: "RestorePurchases"), preferredStyle: UIAlertController.Style.alert)
-        activityIndicatorAlert!.addActivityIndicator()
-        var topController:UIViewController = UIApplication.shared.keyWindow!.rootViewController!
-        while ((topController.presentedViewController) != nil) {
-            topController = topController.presentedViewController!
-        }
-
-        topController.present(activityIndicatorAlert!, animated: true, completion: nil)
-    }
-
-    func dismissActivityIndicatorAlert() {
-        activityIndicatorAlert!.dismissActivityIndicator()
-        activityIndicatorAlert = nil
     }
 }
