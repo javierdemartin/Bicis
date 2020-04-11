@@ -26,13 +26,15 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES"
+      localizableStringsDataGatheringEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8085CC6E236E2CB800B45A7C"
+               BlueprintIdentifier = "8000291D243FB92F00862C75"
                BuildableName = "BicisTests.xctest"
                BlueprintName = "BicisTests"
                ReferencedContainer = "container:Bicis.xcodeproj">
@@ -42,7 +44,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "807BA62E23EE140B00F2D9E4"
+               BlueprintIdentifier = "8000476B23EF425300492DFB"
                BuildableName = "BicisUITests.xctest"
                BlueprintName = "BicisUITests"
                ReferencedContainer = "container:Bicis.xcodeproj">
