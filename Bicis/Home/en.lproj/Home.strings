@@ -7,3 +7,11 @@
 */
 
 "START_ROUTE" = "Start commute";
+
+"OPEN_SETTINGS_KEYBOARD" = "Open Settings";
+
+"OPEN_INSIGHTS_KEYBOARD" = "Open Insights";
+
+"NEXT_STATION_KEYBOARD" = "Select Next Station";
+
+"PREVIOUS_STATION_KEYBOARD" = "Select Next Station";

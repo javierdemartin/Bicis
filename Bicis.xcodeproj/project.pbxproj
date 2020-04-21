@@ -1083,7 +1083,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = Bicis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1091,9 +1091,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.4.4;
+				MARKETING_VERSION = 2020.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Bicis;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1107,7 +1107,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Bicis/Bicis.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 33;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = Bicis/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1115,9 +1115,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.4.4;
+				MARKETING_VERSION = 2020.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Bicis;
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

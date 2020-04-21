@@ -201,6 +201,16 @@ class RoutePlannerViewController: UIViewController {
         view.backgroundColor = .systemGray
         view.layer.cornerRadius = 2.5
         view.accessibilityIdentifier = "PULL_DOWN_TAB"
+
+        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
+        view.addGestureRecognizer(gesture)
+        if #available(iOS 13.4, *) {
+            let interaction = UIPointerInteraction(delegate: nil)
+            view.addInteraction(interaction)
+        } else {
+            // Fallback on earlier versions
+        }
+
         return view
     }()
 
@@ -246,7 +256,7 @@ class RoutePlannerViewController: UIViewController {
 
     lazy var informationVerticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [instructionsHeaderTextView, labelsDestinationStationVerticalStackView, destinationStationFreeDocksLabel, statisticsAndLowDockStackView, dockOperationsStackView, closestStationStackView])
+        let stackView = UIStackView(arrangedSubviews: [instructionsHeaderTextView, labelsDestinationStationVerticalStackView, docksAvailabilityAtDestinationStackView, statisticsAndLowDockStackView, dockOperationsStackView, closestStationStackView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -258,7 +268,7 @@ class RoutePlannerViewController: UIViewController {
         return stackView
     }()
 
-    lazy var destinationStationFreeDocksLabel: UILabel = {
+    lazy var docksAvailabilityAtDestinationStackView: UILabel = {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -401,6 +411,7 @@ class RoutePlannerViewController: UIViewController {
         label.text = "LOADING_PREDICTIONS".localize(file: "RoutePlanner")
         label.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
     }()
 
@@ -566,7 +577,7 @@ class RoutePlannerViewController: UIViewController {
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalCentering
-        stackView.spacing = 10.0
+        stackView.spacing = Constants.spacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -580,7 +591,7 @@ class RoutePlannerViewController: UIViewController {
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalCentering
-        stackView.spacing = 10.0
+        stackView.spacing = Constants.spacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -606,7 +617,7 @@ class RoutePlannerViewController: UIViewController {
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalCentering
-        stackView.spacing = 15.0
+        stackView.spacing = Constants.spacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -640,11 +651,11 @@ class RoutePlannerViewController: UIViewController {
     lazy var closestStationStackView: UIStackView = {
 
         let stackView = UIStackView(arrangedSubviews: [alternativeStationComments, closestStationWrapperStackView])
-        stackView.alignment = UIStackView.Alignment.leading
+        stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.fill
-        stackView.spacing = 15.0
+        stackView.spacing = Constants.spacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -657,7 +668,7 @@ class RoutePlannerViewController: UIViewController {
 
         stackView.axis = NSLayoutConstraint.Axis.horizontal
         stackView.distribution  = UIStackView.Distribution.equalCentering
-        stackView.spacing = 15.0
+        stackView.spacing = Constants.spacing
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
@@ -734,6 +745,32 @@ class RoutePlannerViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var keyCommands: [UIKeyCommand]? {
+           return [
+               UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: .command, action: #selector(dismiss(animated:completion:)
+                   ), discoverabilityTitle: "CLOSE_INSIGHTS_KEYBOARD".localize(file: "RoutePlanner"))
+           ]
+       }
+
+    override var canBecomeFirstResponder: Bool {
+           return true
+       }
+
+
+
+    @objc private func viewHoverChanged(_ gesture: UIHoverGestureRecognizer, _ sender: UIButton) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
+            switch gesture.state {
+            case .began, .changed:
+                sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1)
+            case .ended:
+                sender.layer.transform = CATransform3DIdentity
+            default: break
+            }
+        }, completion: nil)
+    }
+
+
     override func loadView() {
 
         super.loadView()
@@ -746,8 +783,8 @@ class RoutePlannerViewController: UIViewController {
         view.addSubview(pullTabToDismissView)
 
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0),
-            scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: Constants.spacing),
+            scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: Constants.spacing),
             scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
             scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         ])
@@ -763,29 +800,24 @@ class RoutePlannerViewController: UIViewController {
             pullTabToDismissView.heightAnchor.constraint(equalToConstant: 5),
             pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
             pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            pullTabToDismissView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0)
+            pullTabToDismissView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: Constants.spacing)
         ])
 
-        // TODO: MAYBE DELETE
-//        NSLayoutConstraint.activate([
-//            destinationStationStackView.leadingAnchor.constraint(equalTo: statisticsAndLowDockStackView.leadingAnchor, constant: 0.0),
-//            destinationStationStackView.trailingAnchor.constraint(equalTo: statisticsAndLowDockStackView.trailingAnchor, constant: 0.0)
-//        ])
 
-//        NSLayoutConstraint.activate([
-//            destinationStationStackView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: 32.0)
-//        ])
+        // Center horizontally the destination UIStackView
+        NSLayoutConstraint.activate([
+            labelsDestinationStationVerticalStackView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor)
+        ])
 
         NSLayoutConstraint.activate([
-            destinationStationImageView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: Constants.spacing * 2),
             destinationStationLabel.leadingAnchor.constraint(equalTo: destinationStationImageView.trailingAnchor, constant: Constants.spacing),
-            destinationStationFreeDocksLabel.leadingAnchor.constraint(equalTo: statisticsAndLowDockStackView.leadingAnchor, constant: 0.0),
+            docksAvailabilityAtDestinationStackView.leadingAnchor.constraint(equalTo: statisticsAndLowDockStackView.leadingAnchor, constant: 0.0),
             destinationStationImageView.widthAnchor.constraint(equalToConstant: 50.0),
             destinationStationImageView.heightAnchor.constraint(equalTo: destinationStationVerticalStackView.heightAnchor, constant: Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: pullTabToDismissView.bottomAnchor, constant: 16.0),
+            verticalStackView.topAnchor.constraint(equalTo: pullTabToDismissView.bottomAnchor, constant: Constants.spacing),
             verticalStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
             verticalStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0)
         ])
@@ -801,13 +833,12 @@ class RoutePlannerViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            predictedDocksAtDestinationVerticalStackView.topAnchor.constraint(equalTo: statisticsVerticalStackView.topAnchor, constant: 16.0)
+            predictedDocksAtDestinationVerticalStackView.topAnchor.constraint(equalTo: statisticsVerticalStackView.topAnchor, constant: Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
             lowDockAvailabilityStackView.leadingAnchor.constraint(equalTo: statisticsAndLowDockStackView.leadingAnchor, constant: 0),
             lowDockAvailabilityStackView.trailingAnchor.constraint(equalTo: statisticsAndLowDockStackView.trailingAnchor, constant: 0),
-//            lowDockAvailabilityStackView.topAnchor.constraint(equalTo: statisticsVerticalStackView.bottomAnchor, constant: 0)
         ])
 
         NSLayoutConstraint.activate([
@@ -822,8 +853,8 @@ class RoutePlannerViewController: UIViewController {
             alternativeStationIcon.widthAnchor.constraint(equalToConstant: 50.0),
             // Give extre
             alternativeStationIcon.heightAnchor.constraint(equalTo: closestStationInnerStackView.heightAnchor, constant: Constants.spacing),
-            alternativeStationIcon.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: 32.0),
-            alternativeStationNameLabel.leadingAnchor.constraint(equalTo: alternativeStationIcon.trailingAnchor, constant: 16.0)
+//            alternativeStationIcon.leadingAnchor.constraint(equalTo: closestStationWrapperStackView.leadingAnchor, constant: Constants.spacing),
+            alternativeStationNameLabel.leadingAnchor.constraint(equalTo: alternativeStationIcon.trailingAnchor, constant: Constants.spacing)
 
         ])
 
@@ -833,18 +864,24 @@ class RoutePlannerViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             currentHourLabel.bottomAnchor.constraint(equalTo: currentDocksLabel.topAnchor, constant: -16),
-            predictedDocksAtDestinationUnitsLabel.bottomAnchor.constraint(equalTo: predictedDocksAtDestinationLabel.topAnchor, constant: -16)
+            predictedDocksAtDestinationUnitsLabel.bottomAnchor.constraint(equalTo: predictedDocksAtDestinationLabel.topAnchor, constant: -Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
             dockOperationsStackView.leadingAnchor.constraint(equalTo: informationVerticalStackView.leadingAnchor, constant: 0.0),
-            closestStationStackView.leadingAnchor.constraint(equalTo: destinationStationStackView.leadingAnchor, constant: 0.0),
-            closestStationStackView.trailingAnchor.constraint(equalTo: destinationStationStackView.trailingAnchor, constant: 0.0)
+//            closestStationStackView.leadingAnchor.constraint(equalTo: destinationStationStackView.leadingAnchor, constant: 0.0),
+//            destinationStationVerticalStackView.trailingAnchor.constraint(equalTo: destinationStationLabel.trailingAnchor, constant: -Constants.spacing)
+//            closestStationStackView.trailingAnchor.constraint(equalTo: destinationStationStackView.trailingAnchor, constant: 0.0)
+            destinationStationLabel.trailingAnchor.constraint(equalTo: destinationStationVerticalStackView.trailingAnchor, constant: -Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
-            alternativeStationNameLabel.leadingAnchor.constraint(equalTo: alternativeStationIcon.trailingAnchor, constant: 16.0),
-            alternativeStationNameLabel.trailingAnchor.constraint(equalTo: destinationStationStackView.trailingAnchor, constant: 0.0)
+            alternativeStationNameLabel.leadingAnchor.constraint(equalTo: alternativeStationIcon.trailingAnchor, constant: 0.0),
+            alternativeStationNameLabel.trailingAnchor.constraint(equalTo: closestStationWrapperStackView.trailingAnchor, constant: -Constants.spacing),
+//            closestStationWrapperStackView.trailingAnchor.constraint(equalTo: alternativeStationNameLabel.trailingAnchor, constant: -Constants.spacing)
+            closestStationInnerStackView.trailingAnchor.constraint(equalTo: closestStationWrapperStackView.trailingAnchor, constant: -Constants.spacing),
+
+            alternativeStationComments.leadingAnchor.constraint(equalTo: closestStationStackView.leadingAnchor, constant: 0.0)
         ])
     }
 

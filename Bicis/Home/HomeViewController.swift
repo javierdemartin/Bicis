@@ -9,10 +9,12 @@
 import UIKit
 import ReactiveCocoa
 import ReactiveSwift
+import Combine
 import MapKit
 
 protocol HomeViewControllerGraphViewDelegate: class {
     func setStationTitleFor(name: String)
+    func hideGraphView()
 }
 
 class HomeViewController: UIViewController {
@@ -62,21 +64,7 @@ class HomeViewController: UIViewController {
         return stackView
     }()
 
-    private var startRouteButton: UIButton = {
 
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = Constants.cornerRadius
-        button.accessibilityIdentifier = "START_ROUTE"
-        button.backgroundColor = UIColor.systemBlue
-        button.titleLabel?.font = Constants.buttonFont
-        button.setTitle("START_ROUTE".localize(file: "Home"), for: .normal)
-        button.setTitleColor(UIColor.systemGray4, for: .disabled)
-        button.clipsToBounds = true
-        button.isEnabled = false
-        button.isHidden = true
-        return button
-    }()
 
     private var graphView: PredictionGraphView = {
         let view = PredictionGraphView()
@@ -91,6 +79,18 @@ class HomeViewController: UIViewController {
         viewModel.coordinatorDelegate?.showSettingsViewController()
     }
 
+    @objc private func viewHoverChanged(_ gesture: UIHoverGestureRecognizer, _ sender: UIButton) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
+            switch gesture.state {
+            case .began, .changed:
+                sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1)
+            case .ended:
+                sender.layer.transform = CATransform3DIdentity
+            default: break
+            }
+        }, completion: nil)
+    }
+
     private var label: UILabel = {
 
         let label = UILabel()
@@ -101,24 +101,31 @@ class HomeViewController: UIViewController {
 
     // MARK: Renting
 
-    private var rentButton: UIButton = {
+    private var startRouteButton: UIButton = {
 
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = Constants.cornerRadius
-        button.accessibilityIdentifier = "RENT_BIKE"
+        button.accessibilityIdentifier = "START_ROUTE"
         button.backgroundColor = UIColor.systemBlue
-        button.setImage(UIImage(systemName: "bolt.fill"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.imageView?.tintColor = .systemFill
+        button.titleLabel?.font = Constants.buttonFont
+        button.setTitle("START_ROUTE".localize(file: "Home"), for: .normal)
+        button.setTitleColor(UIColor.systemGray4, for: .disabled)
         button.clipsToBounds = true
-//        button.imageEdgeInsets = UIEdgeInsets(top: 10.0,left: 10.0,bottom:10.0,right: 10.0)
-
-//        button.isEnabled = false
-//        button.contentVerticalAlignment = .fill
-//        button.contentHorizontalAlignment = .fill
-        button.imageEdgeInsets = UIEdgeInsets(top: 40, left: 0, bottom: 40, right: 0)
+        button.isEnabled = false
         button.isHidden = true
+        button.isEnabled = true
+        button.isUserInteractionEnabled = true
+
+        if #available(iOS 13.4, *) {
+            let interaction = UIPointerInteraction(delegate: nil)
+            button.addInteraction(interaction)
+        } else {
+            // Fallback on earlier versions
+        }
+
+        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+
         return button
     }()
 
@@ -128,10 +135,15 @@ class HomeViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = Constants.cornerRadius
         button.accessibilityIdentifier = "RENT_BIKE"
-        button.backgroundColor = UIColor.systemBlue //UIColor(named: "RedColor")
+        button.backgroundColor = UIColor.systemBlue
         button.setImage(UIImage(systemName: "gear"), for: .normal)
-//        button.imageView?.contentMode = .scaleAspectFit
         button.imageView?.tintColor = .white
+        if #available(iOS 13.4, *) {
+            let interaction = UIPointerInteraction(delegate: nil)
+            button.addInteraction(interaction)
+        } else {
+            // Fallback on earlier versions
+        }
 
         button.clipsToBounds = true
         button.isHidden = false
@@ -170,10 +182,10 @@ class HomeViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         graphView.addGestureRecognizer(tap)
 
-        NSLayoutConstraint.activate([
-
-            statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0)
-        ])
+//        NSLayoutConstraint.activate([
+//
+//            statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0)
+//        ])
 
         NSLayoutConstraint.activate([
             belowGraphHorizontalStackView.heightAnchor.constraint(equalToConstant: 50)
@@ -182,7 +194,6 @@ class HomeViewController: UIViewController {
         // MARK: Settings Button constraints
 
         // Bottom right
-        // TODO: Add setting to support left/right-hand users
         NSLayoutConstraint.activate([
             settingsButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -2 * Constants.spacing),
             settingsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -2 * Constants.spacing)
@@ -192,6 +203,7 @@ class HomeViewController: UIViewController {
             startRouteButton.widthAnchor.constraint(equalToConstant: startRouteButton.titleLabel!.text!.width(withConstrainedHeight: startRouteButton.titleLabel!.frame.height, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)) + 20.0)
         ])
 
+        // Pin the borders of the graph to the container UIStackView
         NSLayoutConstraint.activate([
             graphView.leadingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.leadingAnchor),
             graphView.trailingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.trailingAnchor),
@@ -199,12 +211,14 @@ class HomeViewController: UIViewController {
 
         ])
 
+        // If iPad reduce the width of the graph so it doesn't spans all the width of the screen
         if UIDevice.current.userInterfaceIdiom == .pad {
 
             NSLayoutConstraint.activate([
-                statisticsAndGraphViewStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 32),
-                statisticsAndGraphViewStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -32),
-                statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0)
+                // Center horizontally
+                statisticsAndGraphViewStackView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+                statisticsAndGraphViewStackView.widthAnchor.constraint(equalToConstant: 450),
+                statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: Constants.spacing)
 
             ])
 
@@ -273,6 +287,13 @@ class HomeViewController: UIViewController {
 
         guard let nearestStation = self.viewModel.stationsDict.value[nearest.stationName] else { return }
 
+        // Find the index of the current station
+
+        if let index = viewModel.stations.value.firstIndex(where: { $0.stationName == nearestStation.stationName }) {
+            print("INDEX OF \(index)")
+            self.viewModel.currentSelectedStationIndex = index
+        }
+
         self.centerMap(on: CLLocationCoordinate2D(latitude: CLLocationDegrees(nearestStation.latitude),
                                                   longitude: CLLocationDegrees(nearestStation.longitude)), coordinateSpan: Constants.narrowCoordinateSpan)
 
@@ -316,6 +337,138 @@ class HomeViewController: UIViewController {
         mapView.deselectAnnotation(didSelectAnnotation, animated: false)
     }
 
+    @objc func selectNextStation() {
+
+
+
+        self.viewModel.currentSelectedStationIndex += 1
+
+        if let annotationIndex = self.mapView.annotations.firstIndex(where: { $0.title ==  self.viewModel.stations.value[self.viewModel.currentSelectedStationIndex].stationName }) {
+
+            self.mapView.deselectAnnotation(self.mapView.annotations[annotationIndex], animated: true)
+
+            self.mapView.selectAnnotation(self.mapView.annotations[annotationIndex], animated: true)
+
+            // If for any reason the current city is not saved cancel the operation
+            guard viewModel.currentCity != nil else { return }
+
+            let annotationFromPin = viewModel.stations.value[self.viewModel.currentSelectedStationIndex]
+
+            //            guard let annotationFromPin = view.annotation as? MapPin else { return }
+
+            centerMap(on: annotationFromPin.location.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
+
+            //            viewModel.latestSelectedAnnotation
+            viewModel.latestSelectedBikeStation = annotationFromPin
+
+            var apiQueryStationValue: String?
+
+            apiQueryStationValue = annotationFromPin.id
+
+//            if viewModel.currentCity?.apiName != "bilbao" {
+//                apiQueryStationValue = annotationFromPin.id
+//            } else {
+//                apiQueryStationValue = annotationFromPin.stationName
+//            }
+
+            // Set the selected station name as the graph's title
+            graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationName)
+
+            guard apiQueryStationValue != nil else { return }
+
+            viewModel.getAllDataFromApi(city: viewModel.currentCity!.apiName, station: apiQueryStationValue!, completion: { res in
+
+                // As soon as new data is retrieved from the API show the graph
+                self.showStackView()
+
+                switch res {
+
+                case .success(let payload):
+
+                    self.viewModel.stationsDict.value[annotationFromPin.stationName]!.availabilityArray = payload["today"]
+                    self.viewModel.stationsDict.value[annotationFromPin.stationName]!.predictionArray = payload["prediction"]
+
+                    self.startRouteButton.isEnabled = true
+                    self.showRoutePlannerButton()
+
+                case .error:
+                    break
+                }
+            })
+        }
+    }
+
+    @objc func selectPreviousStation() {
+
+        if self.viewModel.currentSelectedStationIndex == 0 { return }
+
+        self.viewModel.currentSelectedStationIndex -= 1
+
+        if let annotationIndex = self.mapView.annotations.firstIndex(where: { $0.title ==  self.viewModel.stations.value[self.viewModel.currentSelectedStationIndex].stationName }) {
+
+            self.mapView.deselectAnnotation(self.mapView.annotations[annotationIndex], animated: true)
+            self.mapView.selectAnnotation(self.mapView.annotations[annotationIndex], animated: true)
+
+            // If for any reason the current city is not saved cancel the operation
+            guard viewModel.currentCity != nil else { return }
+
+            let annotationFromPin = viewModel.stations.value[self.viewModel.currentSelectedStationIndex]
+
+            //            guard let annotationFromPin = view.annotation as? MapPin else { return }
+
+            centerMap(on: annotationFromPin.location.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
+
+            //            viewModel.latestSelectedAnnotation
+            viewModel.latestSelectedBikeStation = annotationFromPin
+
+            var apiQueryStationValue: String?
+
+            apiQueryStationValue = annotationFromPin.id
+
+//            if viewModel.currentCity?.apiName != "bilbao" {
+//                apiQueryStationValue = annotationFromPin.id
+//            } else {
+//                apiQueryStationValue = annotationFromPin.stationName
+//            }
+
+            // Set the selected station name as the graph's title
+            graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationName)
+
+            guard apiQueryStationValue != nil else { return }
+
+            viewModel.getAllDataFromApi(city: viewModel.currentCity!.apiName, station: apiQueryStationValue!, completion: { res in
+
+                // As soon as new data is retrieved from the API show the graph
+                self.showStackView()
+
+                switch res {
+
+                case .success(let payload):
+
+                    self.viewModel.stationsDict.value[annotationFromPin.stationName]!.availabilityArray = payload["today"]
+                    self.viewModel.stationsDict.value[annotationFromPin.stationName]!.predictionArray = payload["prediction"]
+
+                    self.startRouteButton.isEnabled = true
+                    self.showRoutePlannerButton()
+
+                case .error:
+                    break
+                }
+            })
+        }
+
+    }
+
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: "s", modifierFlags: .command, action: #selector(showSettingsViewController), discoverabilityTitle: "OPEN_SETTINGS_KEYBOARD".localize(file: "Home")),
+            UIKeyCommand(input: "d", modifierFlags: .command, action: #selector(showInsightsViewController), discoverabilityTitle: "OPEN_INSIGHTS_KEYBOARD".localize(file: "Home")),
+            UIKeyCommand(input: UIKeyCommand.inputRightArrow, modifierFlags: .command, action: #selector(selectNextStation), discoverabilityTitle: "NEXT_STATION_KEYBOARD".localize(file: "Home")),
+            UIKeyCommand(input: UIKeyCommand.inputLeftArrow, modifierFlags: .command, action: #selector(selectPreviousStation), discoverabilityTitle: "PREVIOUS_STATION_KEYBOARD".localize(file: "Home"))
+
+        ]
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -325,6 +478,11 @@ class HomeViewController: UIViewController {
 
         mapView.delegate = self
         graphViewDelegate = graphView
+
+        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
+//        startRouteButton.addGestureRecognizer(gesture)
+//        settingsButton.addGestureRecognizer(gesture)
+//        view.addGestureRecognizer(gesture)
 
         setupBindings()
     }
@@ -344,19 +502,33 @@ class HomeViewController: UIViewController {
         compositeDisposable.dispose()
     }
 
+    @objc func showSettingsViewController() {
+        viewModel.coordinatorDelegate?.showSettingsViewController()
+    }
+
+    @objc func showInsightsViewController() {
+        guard let latestSelectedStation = self.viewModel.latestSelectedBikeStation else { return }
+
+        FeedbackGenerator.sharedInstance.generator.impactOccurred()
+        self.viewModel.selectedRoute(station: latestSelectedStation)
+    }
+
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
     fileprivate func setupBindings() {
 
         compositeDisposable += startRouteButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             guard let self = self else { fatalError() }
 
-            guard let latestSelectedStation = self.viewModel.latestSelectedBikeStation else { return }
-
-            FeedbackGenerator.sharedInstance.generator.impactOccurred()
-            self.viewModel.selectedRoute(station: latestSelectedStation)
+            self.showInsightsViewController()
         })
 
         compositeDisposable += settingsButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
-            self?.viewModel.coordinatorDelegate?.showSettingsViewController()
+//            self?.viewModel.coordinatorDelegate?.showSettingsViewController()
+            FeedbackGenerator.sharedInstance.generator.impactOccurred()
+            self?.showSettingsViewController()
         })
 
         viewModel.stations.bind { stations in
@@ -413,6 +585,8 @@ class HomeViewController: UIViewController {
 
         FeedbackGenerator.sharedInstance.generator.impactOccurred()
 
+        graphViewDelegate?.hideGraphView()
+
         graphView.fadeOut(0.2)
         hideRoutePlannerButton()
 
@@ -441,7 +615,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: HomeViewModelDelegate {
 
     func shouldShowRentBikeButton() {
-        rentButton.isEnabled = true
+//        rentButton.isEnabled = true
     }
 
     func presentAlertViewWithError(title: String, body: String) {
@@ -602,11 +776,13 @@ extension HomeViewController: MKMapViewDelegate {
 
         var apiQueryStationValue: String?
 
-        if viewModel.currentCity?.apiName != "bilbao" {
-            apiQueryStationValue = annotationFromPin.stationInformation.id
-        } else {
-            apiQueryStationValue = annotationFromPin.stationInformation.stationName
-        }
+        apiQueryStationValue = annotationFromPin.stationInformation.id
+
+//        if viewModel.currentCity?.apiName != "bilbao" {
+//            apiQueryStationValue = annotationFromPin.stationInformation.id
+//        } else {
+//            apiQueryStationValue = annotationFromPin.stationInformation.stationName
+//        }
 
         // Set the selected station name as the graph's title
         graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationInformation.stationName)

@@ -104,11 +104,13 @@ class RoutePlannerViewModel: NSObject {
 
                 var stationName = ""
 
-                if city.apiName != "bilbao" {
-                    stationName = self.destinationStation.value!.id
-                } else {
-                    stationName = self.destinationStation.value!.stationName
-                }
+                stationName = self.destinationStation.value!.id
+
+//                if city.apiName != "bilbao" {
+//                    stationName = self.destinationStation.value!.id
+//                } else {
+//                    stationName = self.destinationStation.value!.stationName
+//                }
 
                 self.dataManager.getAllDataFromApi(city: city.apiName, station: stationName, completion: { result in
 

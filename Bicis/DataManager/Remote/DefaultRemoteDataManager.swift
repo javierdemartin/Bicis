@@ -39,9 +39,9 @@ class DefaultRemoteDataManager: RemoteDataManager {
 
                         let decoder = JSONDecoder()
 
-                        dump(String(data: data, encoding: .utf8))
-
                         let decoded = try decoder.decode(MyAllAPIResponse.self, from: data)
+
+                        dump(decoded)
 
                         completion(.success(decoded))
 

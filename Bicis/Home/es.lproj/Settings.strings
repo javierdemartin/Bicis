@@ -25,5 +25,6 @@
 "HOW_TO_USE_SETTINGS_PAGE" = "Para volver a abrir la página de ajustes haz tap en el gráfico de cualquier estación";
 "FEEDBACK_BUTTON" = "  Enviar comentarios  ";
 
-"RESTORE_PURCHASES_BUTTON" = "  Restaurar compras ";
+"RESTORE_PURCHASES_BUTTON" = "  Restaurar compras  ";
 
+"CLOSE_SETTINGS_KEYBOARD" = "Cerrar ventana";

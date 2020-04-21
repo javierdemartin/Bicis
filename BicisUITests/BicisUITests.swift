@@ -29,7 +29,7 @@ class BicisUITests: XCTestCase {
         setupSnapshot(app)
         app.launch()
 
-        sleep(3) // Wait for the map to load
+        sleep(5) // Wait for the map to load
 
         snapshot("00-Home")
 

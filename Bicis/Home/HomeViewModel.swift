@@ -53,6 +53,8 @@ class HomeViewModel {
 
     var currentCity: City?
 
+    var currentSelectedStationIndex: Int = 0
+
     var latestSelectedAnnotation: MKAnnotation?
     var latestSelectedBikeStation: BikeStation?
 

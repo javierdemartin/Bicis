@@ -90,11 +90,13 @@ class BicisTests: XCTestCase {
 
                     var queryID = ""
 
-                    if city == "Bilbao" {
-                        queryID = randomStation.stationName
-                    } else {
-                        queryID = randomStation.id
-                    }
+                    queryID = randomStation.id
+
+//                    if city == "Bilbao" {
+//                        queryID = randomStation.stationName
+//                    } else {
+//                        queryID = randomStation.id
+//                    }
 
                     self.remoteDataManager.getAllDataFromApi(city: cityData.apiName, station: queryID, completion: { allApiResult in
                         switch allApiResult {

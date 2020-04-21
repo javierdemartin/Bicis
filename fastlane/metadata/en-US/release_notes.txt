@@ -1,2 +1,5 @@
-· Improved the interface of the insights panel
-· Fixed little issues in the behavior
+I have improved how the prediction graph is shown in big screens like iPads. Previously it was as wide as the screen. Now it's smaller and easier to read.
+
+If you use this app on an iPad there are keyboard shortcuts available. Keep the Command key pressed to check all the available shortcuts.
+
+Thank you to all of you that have unlocked all the features of the app <3

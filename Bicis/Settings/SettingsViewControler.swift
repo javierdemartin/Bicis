@@ -58,6 +58,16 @@ class SettingsViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray
         view.layer.cornerRadius = 2.5
+
+//        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
+//        view.addGestureRecognizer(gesture)
+        if #available(iOS 13.4, *) {
+            let interaction = UIPointerInteraction(delegate: nil)
+            view.addInteraction(interaction)
+        } else {
+            // Fallback on earlier versions
+        }
+
         return view
     }()
 
@@ -77,7 +87,7 @@ class SettingsViewController: UIViewController {
     lazy var verticalStackView: UIStackView = {
 
 //        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView, restorePurchasesButton])
-        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, restorePurchasesButton])
+        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView,restorePurchasesButton, cityPicker])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -157,6 +167,15 @@ class SettingsViewController: UIViewController {
         button.backgroundColor = UIColor.systemBlue
         button.sizeToFit()
 
+//        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
+//        button.addGestureRecognizer(gesture)
+//        if #available(iOS 13.4, *) {
+//            let interaction = UIPointerInteraction(delegate: nil)
+//            view.addInteraction(interaction)
+//        } else {
+//            // Fallback on earlier versions
+//        }
+
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -170,6 +189,15 @@ class SettingsViewController: UIViewController {
         button.titleLabel?.font = Constants.buttonFont
         button.backgroundColor = UIColor.systemBlue
         button.sizeToFit()
+
+//        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
+//        button.addGestureRecognizer(gesture)
+        if #available(iOS 13.4, *) {
+            let interaction = UIPointerInteraction(delegate: nil)
+            view.addInteraction(interaction)
+        } else {
+            // Fallback on earlier versions
+        }
 
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -199,6 +227,18 @@ class SettingsViewController: UIViewController {
 //
 //        return textView
 //    }()
+
+    @objc private func viewHoverChanged(_ gesture: UIHoverGestureRecognizer, _ sender: UIButton) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
+            switch gesture.state {
+            case .began, .changed:
+                sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1)
+            case .ended:
+                sender.layer.transform = CATransform3DIdentity
+            default: break
+            }
+        }, completion: nil)
+    }
 
     init(viewModel: SettingsViewModel, compositeDisposable: CompositeDisposable) {
 
@@ -244,11 +284,18 @@ class SettingsViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
+            verticalStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: Constants.spacing),
             verticalStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
             verticalStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
             verticalStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20.0)
         ])
+
+//        NSLayoutConstraint.activate([
+//            verticalStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
+//            verticalStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
+//            verticalStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
+//            verticalStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20.0)
+//        ])
 
         NSLayoutConstraint.activate([
             pullTabToDismissView.heightAnchor.constraint(equalToConstant: 5),
@@ -290,7 +337,22 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
+//        view.addGestureRecognizer(gesture)
+
         setupBindings()
+    }
+
+    override var keyCommands: [UIKeyCommand]? {
+        return [
+            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: .command, action: #selector(dismiss(animated:completion:)
+                ), discoverabilityTitle: "CLOSE_SETTINGS_KEYBOARD".localize(file: "Settings"))
+        ]
+    }
+
+
+    override var canBecomeFirstResponder: Bool {
+        return true
     }
 
     override func viewWillDisappear(_ animated: Bool) {

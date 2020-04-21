@@ -7,3 +7,11 @@
 */
 
 "START_ROUTE" = "Comenzar trayecto";
+
+"OPEN_SETTINGS_KEYBOARD" = "Abrir Ajustes";
+
+"OPEN_INSIGHTS_KEYBOARD" = "Abrir Analíticas";
+
+"NEXT_STATION_KEYBOARD" = "Seleccionar siguiente estación";
+
+"PREVIOUS_STATION_KEYBOARD" = "Seleccionar estación anterior";

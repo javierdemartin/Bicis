@@ -28,6 +28,11 @@ protocol BikeStation: Decodable {
     func distance(to location: CLLocation) -> CLLocationDistance
 }
 
+struct QueriedStations: Decodable {
+    let stationName: String
+    let numberOfQueries: Int
+}
+
 struct CitiBikesStation: BikeStation {
     var latitude: Double
     var longitude: Double

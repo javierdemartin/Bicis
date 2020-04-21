@@ -15,6 +15,10 @@ import QuartzCore
  */
 
 extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
+    func hideGraphView() {
+        actualAvailabilityLayer.removeFromSuperlayer()
+        drawingLayer.removeFromSuperlayer()
+    }
 
     func setStationTitleFor(name: String) {
 

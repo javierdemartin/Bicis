@@ -13,8 +13,7 @@ import SpriteKit
 
 extension RestorePurchasesViewController: IAPHelperDelegate {
     func previouslyPurchased(status: Bool) {
-
-//        restorePurchasesButton.isEnabled = status
+        restorePurchasesButton.isEnabled = status
     }
 
     func didFail(with error: String) {
@@ -58,6 +57,9 @@ class RestorePurchasesViewController: UIViewController {
 
     let compositeDisposable: CompositeDisposable
     let viewModel: RestorePurchasesViewModel
+
+//    @ObservedObject let cViewModel: RestorePurchasesViewModel
+    let cViewModel: RestorePurchasesViewModel
 
     let scrollView: UIScrollView = {
 
@@ -178,9 +180,12 @@ class RestorePurchasesViewController: UIViewController {
     let particles = GameScene()
 
     init(compositeDisposable: CompositeDisposable, viewModel: RestorePurchasesViewModel) {
+//    init(viewModel: RestorePurchasesViewModel) {
 
         self.compositeDisposable = compositeDisposable
         self.viewModel = viewModel
+
+        self.cViewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
 
@@ -210,18 +215,18 @@ class RestorePurchasesViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0),
-            scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
-            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: Constants.spacing),
+            scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: Constants.spacing),
+            scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -Constants.spacing),
+            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
-            verticalStackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: self.view.frame.width - 32.0)
+            verticalStackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: self.view.frame.width - (2 * Constants.spacing))
         ])
 
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16.0),
+            verticalStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: Constants.spacing),
             verticalStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
             verticalStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
             verticalStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20.0)
@@ -230,15 +235,17 @@ class RestorePurchasesViewController: UIViewController {
         NSLayoutConstraint.activate([
             pullTabToDismissView.heightAnchor.constraint(equalToConstant: 5),
             pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
-
             pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             pullTabToDismissView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0)
         ])
 
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: whyYouShouldGiveMeMoneyTextView.leadingAnchor, constant: 0),
-            purchaseStatusLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: 16.0),
-            purchaseStatusLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: -16.0)
+            titleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.spacing),
+            titleLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -Constants.spacing),
+            purchaseStatusLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.spacing),
+            purchaseStatusLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: Constants.spacing),
+            whyYouShouldGiveMeMoneyTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.spacing),
+            whyYouShouldGiveMeMoneyTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -Constants.spacing)
         ])
     }
 
