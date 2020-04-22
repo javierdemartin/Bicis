@@ -35,4 +35,6 @@ struct Constants {
     static let wideCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
 
     static let imageTintColor: UIColor = UIColor.systemGray
+
+    static let selectedStationsStatistics: String = "selectedStationsStatistics"
 }

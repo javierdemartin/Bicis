@@ -41,8 +41,6 @@ class DefaultRemoteDataManager: RemoteDataManager {
 
                         let decoded = try decoder.decode(MyAllAPIResponse.self, from: data)
 
-                        dump(decoded)
-
                         completion(.success(decoded))
 
                     } catch {

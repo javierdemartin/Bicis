@@ -21,6 +21,10 @@ class DataManager {
 
 // MARK: HomeViewModelDataManager
 extension DataManager: HomeViewModelDataManager {
+    func addStationStatistics(for id: String, city: String) {
+        localDataManager.addStationStatistics(for: id, city: city)
+    }
+
 
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
         localDataManager.hasUnlockedFeatures(completion: { hasUnlockedResult in
@@ -53,6 +57,9 @@ extension DataManager: HomeViewModelDataManager {
     }
 
     func getAllDataFromApi(city: String, station: String, completion: @escaping (Result<MyAllAPIResponse>) -> Void) {
+
+        localDataManager.addStationStatistics(for: station, city: city)
+
         remoteDataManager.getAllDataFromApi(city: city, station: station, completion: { res in
             completion(res)
         })
@@ -61,6 +68,10 @@ extension DataManager: HomeViewModelDataManager {
 
 // MARK: RoutePlannerViewModelDataManager
 extension DataManager: RoutePlannerViewModelDataManager {
+    func getStationStatistics(for city: String) -> [String : Int] {
+        return localDataManager.getStationStatistics(for: city)
+    }
+
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping (Result<MyAPIResponse>) -> Void) {
         remoteDataManager.getPredictionForStation(city: city, type: type, name: name, completion: { res in
             completion(res)

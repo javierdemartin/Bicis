@@ -14,4 +14,6 @@ protocol LocalDataManager {
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void)
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void)
+    func addStationStatistics(for id: String, city: String)
+    func getStationStatistics(for city: String) -> [String: Int]
 }

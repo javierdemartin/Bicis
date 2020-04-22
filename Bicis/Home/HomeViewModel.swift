@@ -15,7 +15,6 @@ protocol HomeViewModelCoordinatorDelegate: class {
     func showSettingsViewController()
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation])
     func presentRestorePurchasesViewControllerFromCoordinatorDelegate()
-
 }
 
 protocol HomeViewModelDataManager {
@@ -24,6 +23,7 @@ protocol HomeViewModelDataManager {
     func getStations(city: String, completion: @escaping (Result<[BikeStation]>) -> Void)
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void)
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
+    func addStationStatistics(for id: String, city: String)
 }
 
 protocol HomeViewModelDelegate: class {

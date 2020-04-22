@@ -1,6 +1,3 @@
+Las predicciones han mejorado, para ello no hace falta actualizar la aplicación. He reentrenado las redes neuronales de todas las ciudades y ahora los resultados son mejores.
 
-He mejorado cómo se ve el gráfico en pantallas grandes como las de los iPads. Antes se mostraba tan ancho como fuera la pantalla. Ahora se muestra un tamaño más reducido y agradable a la vista.
-
-Si usas esta app desde un iPad podrás manejarla únicamente desde el teclado. Mantén pulsada la tecla Comando para ver todos los atajos disponibles.
-
-Gracias a todos los que habéis desbloqueado todas las capacidades de la app <3
+Las estaciones que no tuvieran predicción no mostrarían ningún gráfico, ahora muestran el historial diario hasta que las predicciones estén disponibles.

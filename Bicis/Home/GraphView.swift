@@ -98,8 +98,6 @@ class PredictionGraphView: UIView {
         // Esto se deberia poder sustituir por el porcentaje del día que se tiene ya
         viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
 
-//        let maxValue = max(values.max()!, maxValue)
-
         if values.count > 0 {
 
             // create whatever path you want
@@ -109,7 +107,7 @@ class PredictionGraphView: UIView {
             var heightProportion = CGFloat(values[0]) / CGFloat(values.max()!)
 
             // Mover el punto inicial al origen de X y a la altura que corresponde al valor obtenido.
-            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.9)
+            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8)
 
             path.move(to: initialCoordinates)
 
@@ -118,7 +116,7 @@ class PredictionGraphView: UIView {
                 heightProportion = CGFloat(values[element]) / CGFloat(values.max()!)
 
                 let xPosition = CGFloat(element) * viewWidth / CGFloat(values.count)
-                let yPosition = viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height*0.9
+                let yPosition = viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8
 
                 nextPoint = CGPoint(x: xPosition, y: yPosition)
                 path.addLine(to: nextPoint)
@@ -126,13 +124,13 @@ class PredictionGraphView: UIView {
 
             actualAvailabilityLayer.fillColor = UIColor.clear.cgColor
             actualAvailabilityLayer.strokeColor =  UIColor(named: "TextAndGraphColor")?.cgColor
-            actualAvailabilityLayer.lineWidth = 3
+            actualAvailabilityLayer.lineWidth = 2.5
             actualAvailabilityLayer.strokeStart = 0.0
 
             if isPrediction {
 
                 drawingLayer.strokeColor = UIColor(named: "TextAndGraphColor")?.cgColor
-                drawingLayer.lineWidth = 3
+                drawingLayer.lineWidth = 2.5
                 drawingLayer.strokeStart = 0.0
                 drawingLayer.lineDashPattern = [4, 4]
 

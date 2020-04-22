@@ -21,11 +21,13 @@ protocol RoutePlannerViewModelDelegate: class {
     func gotDestinationRoute(station: BikeStation, route: MKRoute)
     func updateBikeStationOperations(nextRefill: String?, nextDischarge: String?)
     func fillClosestStationInformation(station: BikeStation)
+    func showMostUsedStations(stations: [String:Int])
 }
 
 protocol RoutePlannerViewModelDataManager: class {
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void)
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
+    func getStationStatistics(for city: String) -> [String: Int]
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
 }
 
@@ -41,6 +43,8 @@ class RoutePlannerViewModel: NSObject {
     var destinationStation = Binding<BikeStation?>(value: nil)
 
     let dataManager: RoutePlannerViewModelDataManager
+
+    let sortedMostUsedStations: [String] = []
 
     var closestAnnotations: [BikeStation]
 
@@ -84,6 +88,23 @@ class RoutePlannerViewModel: NSObject {
 
             }
         })
+
+        dataManager.getCurrentCity(completion: { cityResult in
+            switch cityResult {
+
+            case .success(let city):
+                let stationStatistics = self.dataManager.getStationStatistics(for: city.apiName)
+                dump(stationStatistics)
+
+                let sorted = Array(stationStatistics.sorted(by: { return $0 > $1 }))
+
+                print(sorted)
+                self.delegate?.showMostUsedStations(stations: stationStatistics)
+
+            case .error:
+                break
+            }
+        })
     }
 
     func calculateRmseForStationByQueryingPredictions(completion: @escaping(()) -> Void) {
@@ -105,12 +126,6 @@ class RoutePlannerViewModel: NSObject {
                 var stationName = ""
 
                 stationName = self.destinationStation.value!.id
-
-//                if city.apiName != "bilbao" {
-//                    stationName = self.destinationStation.value!.id
-//                } else {
-//                    stationName = self.destinationStation.value!.stationName
-//                }
 
                 self.dataManager.getAllDataFromApi(city: city.apiName, station: stationName, completion: { result in
 

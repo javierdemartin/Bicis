@@ -208,6 +208,7 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
         let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, closestAnnotations: closestAnnotations, destinationStation: stationsDict)
         routePlannerViewModel.coordinatorDelegate = self
         routePlannerViewController = RoutePlannerViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
+        routePlannerViewModel.delegate = routePlannerViewController!
 
         routePlannerViewController!.modalPresentationStyle = .formSheet
 

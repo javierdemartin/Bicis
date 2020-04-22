@@ -1,5 +1,3 @@
-I have improved how the prediction graph is shown in big screens like iPads. Previously it was as wide as the screen. Now it's smaller and easier to read.
+Predictions have improved, there's no need to update the app to receive those changes. I have retrained all the neural networks and the new predictions are much better.
 
-If you use this app on an iPad there are keyboard shortcuts available. Keep the Command key pressed to check all the available shortcuts.
-
-Thank you to all of you that have unlocked all the features of the app <3
+Stations that did not have a prediction as they were new they wouldn't show any graph. Now they show the daily history until the predictions are available.

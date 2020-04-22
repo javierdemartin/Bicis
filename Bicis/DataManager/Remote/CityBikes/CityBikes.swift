@@ -28,9 +28,19 @@ protocol BikeStation: Decodable {
     func distance(to location: CLLocation) -> CLLocationDistance
 }
 
-struct QueriedStations: Decodable {
-    let stationName: String
-    let numberOfQueries: Int
+struct StationStatistics: Codable {
+
+    var statistics: [StationStatisticsItem]
+}
+
+struct StationStatisticsItem: Codable {
+    var city: String
+    var stations: [StationStatisticsStation]
+}
+
+struct StationStatisticsStation: Codable {
+    var stationId: String
+    var count: Int
 }
 
 struct CitiBikesStation: BikeStation {
@@ -65,6 +75,7 @@ struct CitiBikesStation: BikeStation {
         guard let availability = availabilityArray else { return nil }
         guard let prediction = predictionArray else { return nil }
 
+        // TODO: ERROR
         let range = Double(max(availability.max()!, prediction.max()!))
 
         if range == 0 {

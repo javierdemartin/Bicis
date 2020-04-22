@@ -13,7 +13,30 @@ import UIKit
 import MapKit
 import CoreLocation
 
+extension RoutePlannerViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return mostUsedStations.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+        cell.textLabel?.text = "\(Array(mostUsedStations.keys)[indexPath.row]) \(Array(mostUsedStations.values)[indexPath.row])"
+
+        return cell
+    }
+}
+
+extension RoutePlannerViewController: UITableViewDelegate {
+
+}
+
 extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
+    func showMostUsedStations(stations: [String : Int]) {
+        dump(stations)
+
+        mostUsedStations = stations
+        mostUsedTableView.reloadData()
+    }
 
     func fillClosestStationInformation(station: BikeStation) {
         alternativeStationNameLabel.text = station.stationName
@@ -54,7 +77,7 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
 
     func gotDestinationRoute(station: BikeStation, route: MKRoute) {
 
-        self.informationVerticalStackView.fadeIn(0.5, onCompletion: { })
+        self.verticalStackView.fadeIn(0.5, onCompletion: { })
 
         let calendar = Calendar.current
         let date = calendar.date(byAdding: .minute, value: route.expectedTravelTime.minutes, to: Date())
@@ -133,7 +156,7 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
             return dateFormatter
         }()
 
-        self.informationVerticalStackView.fadeIn(0.5, onCompletion: nil)
+        self.verticalStackView.fadeIn(0.5, onCompletion: nil)
 
         guard let stationDestination = self.viewModel.destinationStation.value else { return }
 
@@ -194,6 +217,8 @@ class RoutePlannerViewController: UIViewController {
     let compositeDisposable: CompositeDisposable
     var filteredData: [String]
 
+    var mostUsedStations: [String:Int] = [:]
+
     let pullTabToDismissView: UIView = {
 
         let view = UIView()
@@ -242,21 +267,21 @@ class RoutePlannerViewController: UIViewController {
         return textView
     }()
 
+//    lazy var verticalStackView: UIStackView = {
+//
+//        let stackView = UIStackView(arrangedSubviews: [informationVerticalStackView])
+//        stackView.alignment = UIStackView.Alignment.top
+//        stackView.axis = NSLayoutConstraint.Axis.vertical
+//        stackView.distribution  = UIStackView.Distribution.equalSpacing
+//        stackView.spacing = 0.0
+//        stackView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        return stackView
+//    }()
+
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [informationVerticalStackView])
-        stackView.alignment = UIStackView.Alignment.top
-        stackView.axis = NSLayoutConstraint.Axis.vertical
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = 0.0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        return stackView
-    }()
-
-    lazy var informationVerticalStackView: UIStackView = {
-
-        let stackView = UIStackView(arrangedSubviews: [instructionsHeaderTextView, labelsDestinationStationVerticalStackView, docksAvailabilityAtDestinationStackView, statisticsAndLowDockStackView, dockOperationsStackView, closestStationStackView])
+        let stackView = UIStackView(arrangedSubviews: [instructionsHeaderTextView, mostUsedTableView, labelsDestinationStationVerticalStackView, docksAvailabilityAtDestinationStackView, statisticsAndLowDockStackView, dockOperationsStackView, closestStationStackView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -732,6 +757,20 @@ class RoutePlannerViewController: UIViewController {
         return label
     }()
 
+    // MARK: Most used stations
+
+    lazy var mostUsedTableView: UITableView = {
+
+        let tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.isHidden = true
+        tableView.showsVerticalScrollIndicator = false
+        tableView.showsHorizontalScrollIndicator = false
+
+        return tableView
+    }()
+
     init(viewModel: RoutePlannerViewModel, compositeDisposable: CompositeDisposable) {
 
         self.viewModel = viewModel
@@ -868,7 +907,7 @@ class RoutePlannerViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            dockOperationsStackView.leadingAnchor.constraint(equalTo: informationVerticalStackView.leadingAnchor, constant: 0.0),
+            dockOperationsStackView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: 0.0),
 //            closestStationStackView.leadingAnchor.constraint(equalTo: destinationStationStackView.leadingAnchor, constant: 0.0),
 //            destinationStationVerticalStackView.trailingAnchor.constraint(equalTo: destinationStationLabel.trailingAnchor, constant: -Constants.spacing)
 //            closestStationStackView.trailingAnchor.constraint(equalTo: destinationStationStackView.trailingAnchor, constant: 0.0)
@@ -882,6 +921,13 @@ class RoutePlannerViewController: UIViewController {
             closestStationInnerStackView.trailingAnchor.constraint(equalTo: closestStationWrapperStackView.trailingAnchor, constant: -Constants.spacing),
 
             alternativeStationComments.leadingAnchor.constraint(equalTo: closestStationStackView.leadingAnchor, constant: 0.0)
+        ])
+
+        // MARK: UITableView constraints
+        NSLayoutConstraint.activate([
+            mostUsedTableView.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: Constants.spacing),
+            mostUsedTableView.trailingAnchor.constraint(equalTo: verticalStackView.trailingAnchor, constant: -Constants.spacing),
+            mostUsedTableView.heightAnchor.constraint(equalToConstant: 80.0)
         ])
     }
 
