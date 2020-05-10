@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 import QuartzCore
 
+enum GraphViewLine {
+    case prediction([Int])
+    case availability([Int])
+}
+
 /**
  Handles the received prediction data from the server and draws the graph
  */
@@ -92,10 +97,39 @@ class PredictionGraphView: UIView {
         self.backgroundColor = UIColor.systemBlue
     }
 
+//    func drawLineInGraph(type: GraphViewLine) {
+//
+//        viewHeight = (self.frame.size.height - stationTitle.frame.size.height * 1.4)
+//
+//        // create whatever path you want
+//        let path = UIBezierPath()
+//        var nextPoint = CGPoint()
+//
+//        switch type {
+//        case .prediction(let values):
+//
+//            viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
+//
+//            var heightProportion = CGFloat(values[0]) / CGFloat(values.max()!)
+//
+//            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8)
+//
+//            path.move(to: initialCoordinates)
+//        case .availability(let values):
+//
+//            viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
+//
+//            var heightProportion = CGFloat(values[0]) / CGFloat(values.max()!)
+//
+//            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8)
+//
+//            path.move(to: initialCoordinates)
+//        }
+//    }
+
     func drawLine(values: [Int], isPrediction: Bool) {
 
         viewHeight = (self.frame.size.height - stationTitle.frame.size.height * 1.4)
-        // Esto se deberia poder sustituir por el porcentaje del día que se tiene ya
         viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
 
         if values.count > 0 {
@@ -124,7 +158,7 @@ class PredictionGraphView: UIView {
 
             actualAvailabilityLayer.fillColor = UIColor.clear.cgColor
             actualAvailabilityLayer.strokeColor =  UIColor(named: "TextAndGraphColor")?.cgColor
-            actualAvailabilityLayer.lineWidth = 2.5
+            actualAvailabilityLayer.lineWidth = 4.5
             actualAvailabilityLayer.strokeStart = 0.0
 
             if isPrediction {
@@ -140,13 +174,16 @@ class PredictionGraphView: UIView {
 
                 drawingLayer.path = path.cgPath
                 drawingLayer.fillColor = UIColor.clear.cgColor
+//                drawingLayer.fillColor = UIColor.systemRed.cgColor
 
                 self.layer.addSublayer(drawingLayer)
 
             } else {
 
+                path.lineJoinStyle = .round
                 path.apply(CGAffineTransform(translationX: 0, y: +10.0))
                 actualAvailabilityLayer.path = path.cgPath
+                path.stroke()
 
                 self.layer.addSublayer(actualAvailabilityLayer)
 

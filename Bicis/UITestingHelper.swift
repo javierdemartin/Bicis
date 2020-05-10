@@ -19,5 +19,4 @@ class UITestingHelper: NSObject {
     func isUITesting() -> Bool {
         return ProcessInfo.processInfo.arguments.contains("is_ui_testing")
     }
-
 }

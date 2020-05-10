@@ -68,7 +68,6 @@ class RestorePurchasesViewModel: NSObject {
     }
 
     func setUpBindings() {
-
         hasPurchased.value = StoreKitProducts.store.isProductPurchased(StoreKitProducts.DataInsights)
     }
 }

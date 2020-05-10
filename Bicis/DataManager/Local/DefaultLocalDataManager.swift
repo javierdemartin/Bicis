@@ -36,10 +36,14 @@ class DefaultLocalDataManager: LocalDataManager {
 
     func addStationStatistics(for id: String, city: String) {
 
+        let hour = Calendar.current.component(.hour, from: Date())
+
         if let data = defaults.value(forKey: Constants.selectedStationsStatistics) as? Data {
             var unwrapped = try? PropertyListDecoder().decode(StationStatistics.self, from: data)
 
-            guard unwrapped != nil else { return }
+            guard unwrapped != nil else {
+                return
+            }
 
             // If the station is present update the value
             if let cityIndex = unwrapped!.statistics.firstIndex(where: { $0.city == city }) {
@@ -48,17 +52,19 @@ class DefaultLocalDataManager: LocalDataManager {
                 if let stationIndex = unwrapped!.statistics[cityIndex].stations.firstIndex(where: { $0.stationId == id }) {
 
                     unwrapped!.statistics[cityIndex].stations[stationIndex].count += 1
+                    unwrapped!.statistics[cityIndex].stations[stationIndex].timeOfDay.append(hour)
+
                 }
 
                 // This station has not been previously registered
                 else {
-                    unwrapped!.statistics[cityIndex].stations.append(StationStatisticsStation(stationId: id, count: 1))
+                    unwrapped!.statistics[cityIndex].stations.append(StationStatisticsStation(stationId: id, count: 1, timeOfDay: [hour]))
                 }
             }
 
             // New city
             else {
-                unwrapped!.statistics.append(StationStatisticsItem(city: city, stations: [StationStatisticsStation(stationId: id, count: 1)]))
+                unwrapped!.statistics.append(StationStatisticsItem(city: city, stations: [StationStatisticsStation(stationId: id, count: 1, timeOfDay: [hour])]))
             }
 
             // Save the updated data into defaults
@@ -67,7 +73,7 @@ class DefaultLocalDataManager: LocalDataManager {
 
         } else {
             print("No data")
-            let stationStatistics = StationStatistics(statistics: [StationStatisticsItem(city: city, stations: [StationStatisticsStation(stationId: id, count: 1)])])
+            let stationStatistics = StationStatistics(statistics: [StationStatisticsItem(city: city, stations: [StationStatisticsStation(stationId: id, count: 1, timeOfDay: [hour])])])
             dump(stationStatistics)
 
             defaults.set(try? PropertyListEncoder().encode(stationStatistics), forKey: Constants.selectedStationsStatistics)

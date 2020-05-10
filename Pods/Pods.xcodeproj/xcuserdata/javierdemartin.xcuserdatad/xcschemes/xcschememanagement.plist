@@ -4,14 +4,14 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-Bicis-BicisUITests.xcscheme</key>
+		<key>Pods-NeuralBikes-NeuralBikesUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>Pods-Bicis.xcscheme</key>
+		<key>Pods-NeuralBikes.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

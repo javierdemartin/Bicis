@@ -12,8 +12,28 @@ import ReactiveSwift
 import UIKit
 import MapKit
 import CoreLocation
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
 
-extension RoutePlannerViewController: UITableViewDataSource {
+struct RoutePlannerViewControllerRepresentable: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        return UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()!.view
+    }
+    
+    func updateUIView(_ view: UIView, context: Context) {
+        
+    }
+}
+
+@available(iOS 13.0, *)
+struct RoutePlannerViewControllerPreview: PreviewProvider {
+    static var previews: some View {
+        RoutePlannerViewControllerRepresentable()
+    }
+}
+#endif
+
+extension InsightsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return mostUsedStations.count
     }
@@ -26,11 +46,11 @@ extension RoutePlannerViewController: UITableViewDataSource {
     }
 }
 
-extension RoutePlannerViewController: UITableViewDelegate {
+extension InsightsViewController: UITableViewDelegate {
 
 }
 
-extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
+extension InsightsViewController: RoutePlannerViewModelDelegate {
     func showMostUsedStations(stations: [String : Int]) {
         dump(stations)
 
@@ -211,7 +231,7 @@ extension RoutePlannerViewController: RoutePlannerViewModelDelegate {
     }
 }
 
-class RoutePlannerViewController: UIViewController {
+class InsightsViewController: UIViewController {
 
     let viewModel: RoutePlannerViewModel
     let compositeDisposable: CompositeDisposable
@@ -226,15 +246,6 @@ class RoutePlannerViewController: UIViewController {
         view.backgroundColor = .systemGray
         view.layer.cornerRadius = 2.5
         view.accessibilityIdentifier = "PULL_DOWN_TAB"
-
-        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
-        view.addGestureRecognizer(gesture)
-        if #available(iOS 13.4, *) {
-            let interaction = UIPointerInteraction(delegate: nil)
-            view.addInteraction(interaction)
-        } else {
-            // Fallback on earlier versions
-        }
 
         return view
     }()
@@ -792,11 +803,9 @@ class RoutePlannerViewController: UIViewController {
        }
 
     override var canBecomeFirstResponder: Bool {
-           return true
-       }
-
-
-
+        return true
+    }
+    
     @objc private func viewHoverChanged(_ gesture: UIHoverGestureRecognizer, _ sender: UIButton) {
         UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
             switch gesture.state {
@@ -808,7 +817,6 @@ class RoutePlannerViewController: UIViewController {
             }
         }, completion: nil)
     }
-
 
     override func loadView() {
 
@@ -824,12 +832,16 @@ class RoutePlannerViewController: UIViewController {
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: Constants.spacing),
             scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: Constants.spacing),
-            scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
-            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+            scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -Constants.spacing),
+            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
-            verticalStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
+            verticalStackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: self.view.frame.width - 2 * Constants.spacing)
+        ])
+
+        NSLayoutConstraint.activate([
+            verticalStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: Constants.spacing),
             verticalStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
             verticalStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
             verticalStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20.0)

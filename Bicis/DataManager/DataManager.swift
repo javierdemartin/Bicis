@@ -67,7 +67,7 @@ extension DataManager: HomeViewModelDataManager {
 }
 
 // MARK: RoutePlannerViewModelDataManager
-extension DataManager: RoutePlannerViewModelDataManager {
+extension DataManager: InsightsViewModelDataManager {
     func getStationStatistics(for city: String) -> [String : Int] {
         return localDataManager.getStationStatistics(for: city)
     }

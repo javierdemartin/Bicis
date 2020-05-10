@@ -12,6 +12,26 @@ import ReactiveSwift
 import CoreLocation
 import StoreKit
 
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+struct SettingsViewControllerRepresentable: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        return UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()!.view
+    }
+    
+    func updateUIView(_ view: UIView, context: Context) {
+        
+    }
+}
+
+@available(iOS 13.0, *)
+struct SettingsViewControllerPreview: PreviewProvider {
+    static var previews: some View {
+        SettingsViewControllerRepresentable()
+    }
+}
+#endif
+
 extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -27,7 +47,6 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        viewModel.changedCityInPickerView(city: citiesList[row])
         self.viewModel.city = availableCities[citiesList[row]]
     }
 
@@ -59,8 +78,6 @@ class SettingsViewController: UIViewController {
         view.backgroundColor = .systemGray
         view.layer.cornerRadius = 2.5
 
-//        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
-//        view.addGestureRecognizer(gesture)
         if #available(iOS 13.4, *) {
             let interaction = UIPointerInteraction(delegate: nil)
             view.addInteraction(interaction)
@@ -86,8 +103,7 @@ class SettingsViewController: UIViewController {
 
     lazy var verticalStackView: UIStackView = {
 
-//        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, cityPicker, locationServicesExplanationTextView, restorePurchasesButton])
-        let stackView = UIStackView(arrangedSubviews: [pullTabToDismissView, locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView,restorePurchasesButton, cityPicker])
+        let stackView = UIStackView(arrangedSubviews: [locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, restorePurchasesButton, cityPicker])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -99,7 +115,6 @@ class SettingsViewController: UIViewController {
     }()
 
     lazy var imageIcon: UIImageView = {
-
         let image = UIImage(named: "AppIcon60x60")
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x: 0, y: 0, width: 60, height: 60)
@@ -159,47 +174,19 @@ class SettingsViewController: UIViewController {
 
     lazy var requestFeedBackButton: UIButton = {
 
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
+        let button = NBButton()
+        button.applyProtocolUIAppearance()
         button.setTitle("FEEDBACK_BUTTON".localize(file: "Settings"), for: .normal)
-        button.layer.cornerRadius = 4
-        button.titleLabel?.font = Constants.buttonFont
-        button.backgroundColor = UIColor.systemBlue
         button.sizeToFit()
-
-//        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
-//        button.addGestureRecognizer(gesture)
-//        if #available(iOS 13.4, *) {
-//            let interaction = UIPointerInteraction(delegate: nil)
-//            view.addInteraction(interaction)
-//        } else {
-//            // Fallback on earlier versions
-//        }
-
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     lazy var restorePurchasesButton: UIButton = {
 
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
+        let button = NBButton()
+        button.applyProtocolUIAppearance()
         button.setTitle("RESTORE_PURCHASES_BUTTON".localize(file: "Settings"), for: .normal)
-        button.layer.cornerRadius = 4
-        button.titleLabel?.font = Constants.buttonFont
-        button.backgroundColor = UIColor.systemBlue
-        button.sizeToFit()
 
-//        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
-//        button.addGestureRecognizer(gesture)
-        if #available(iOS 13.4, *) {
-            let interaction = UIPointerInteraction(delegate: nil)
-            view.addInteraction(interaction)
-        } else {
-            // Fallback on earlier versions
-        }
-
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
@@ -213,32 +200,6 @@ class SettingsViewController: UIViewController {
         imageView.layer.masksToBounds = true
         return imageView
     }()
-
-//    lazy var locationServicesExplanationTextView: UITextView = {
-//
-//        let textView = UITextView(frame: .zero, textContainer: nil)
-//        textView.backgroundColor = .clear
-//        textView.isSelectable = false
-//        textView.isEditable = false
-//        textView.isScrollEnabled = false
-//        textView.isUserInteractionEnabled = true
-//        textView.font = Constants.paragraphFont
-//        textView.text = "LOCATION_SERVICES_PRIVACY".localize(file: "Settings")
-//
-//        return textView
-//    }()
-
-    @objc private func viewHoverChanged(_ gesture: UIHoverGestureRecognizer, _ sender: UIButton) {
-        UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
-            switch gesture.state {
-            case .began, .changed:
-                sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1)
-            case .ended:
-                sender.layer.transform = CATransform3DIdentity
-            default: break
-            }
-        }, completion: nil)
-    }
 
     init(viewModel: SettingsViewModel, compositeDisposable: CompositeDisposable) {
 
@@ -267,20 +228,21 @@ class SettingsViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         scrollView.addSubview(verticalStackView)
+        view.addSubview(pullTabToDismissView)
         view.addSubview(scrollView)
 
         let askForReviewTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(askForReview(_:)))
         imageIcon.addGestureRecognizer(askForReviewTapRecognizer)
 
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0),
-            scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
-            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+            scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: Constants.spacing),
+            scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: Constants.spacing),
+            scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -Constants.spacing),
+            scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
-            verticalStackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: self.view.frame.width - 32.0)
+            verticalStackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: self.view.frame.width - 2 * Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
@@ -290,17 +252,11 @@ class SettingsViewController: UIViewController {
             verticalStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20.0)
         ])
 
-//        NSLayoutConstraint.activate([
-//            verticalStackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0),
-//            verticalStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: 0),
-//            verticalStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 0),
-//            verticalStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20.0)
-//        ])
-
         NSLayoutConstraint.activate([
             pullTabToDismissView.heightAnchor.constraint(equalToConstant: 5),
             pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
-            pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+            pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            pullTabToDismissView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
@@ -336,9 +292,6 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
-//        view.addGestureRecognizer(gesture)
 
         setupBindings()
     }

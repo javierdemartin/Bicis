@@ -67,7 +67,7 @@ class AppCoordinator: Coordinator {
     var homeViewController: HomeViewController?
     var currentCity: City?
 
-    var routePlannerViewController: RoutePlannerViewController?
+    var routePlannerViewController: InsightsViewController?
 
     fileprivate func showHomeViewController() {
 
@@ -183,7 +183,7 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
     }
 }
 
-extension AppCoordinator: RoutePlannerViewModelCoordinatorDelegate {
+extension AppCoordinator: InsightsViewModelCoordinatorDelegate {
 
     /// Dismisses the UIViewController presented after starting the commute
     func dismissModalRoutePlannerViewController() {
@@ -205,9 +205,9 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation]) {
 
         let compositeDisposable = CompositeDisposable()
-        let routePlannerViewModel = RoutePlannerViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, closestAnnotations: closestAnnotations, destinationStation: stationsDict)
+        let routePlannerViewModel = InsightsViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, closestAnnotations: closestAnnotations, destinationStation: stationsDict)
         routePlannerViewModel.coordinatorDelegate = self
-        routePlannerViewController = RoutePlannerViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
+        routePlannerViewController = InsightsViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
         routePlannerViewModel.delegate = routePlannerViewController!
 
         routePlannerViewController!.modalPresentationStyle = .formSheet

@@ -41,6 +41,7 @@ struct StationStatisticsItem: Codable {
 struct StationStatisticsStation: Codable {
     var stationId: String
     var count: Int
+    var timeOfDay: [Int]
 }
 
 struct CitiBikesStation: BikeStation {

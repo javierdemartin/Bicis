@@ -81,7 +81,12 @@ class HomeViewModel {
 
         if let currentCity = self.currentCity {
             getMapPinsFrom(city: currentCity)
-
+        }
+    }
+    
+    func viewWillAppear() {
+        
+        if let currentCity = self.currentCity {
             if currentCity.allowsLogIn {
                 delegate?.shouldShowRentBikeButton()
             }
@@ -90,6 +95,8 @@ class HomeViewModel {
 
     func hasUnlockedFeatures(completion: @escaping(Bool) -> Void) {
 
+        completion(true)
+        
         if UITestingHelper.sharedInstance.isUITesting() {
             completion(true)
         }
@@ -118,7 +125,9 @@ class HomeViewModel {
             case .success(let hasUnlocked):
                 if hasUnlocked {
 
-                    let closestAnnotations = Array(self.stations.value.dropFirst().prefix(3))
+                    let closestAnnotations = Array(self.sortStationsNearTo(self.stations.value, location: station.location).dropFirst().prefix(3))
+                    
+                    dump(closestAnnotations)
 
                     self.coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station, closestAnnotations: closestAnnotations)
                 } else if !hasUnlocked {

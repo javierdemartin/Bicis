@@ -129,30 +129,17 @@ class RestorePurchasesViewController: UIViewController {
 
     lazy var unlockFeaturesLabel: UIButton = {
 
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.systemGray, for: .disabled)
-        button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = Constants.cornerRadius
-        button.titleLabel?.numberOfLines = 0
-        button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = Constants.buttonFont
+        let button = NBButton()
+        button.applyProtocolUIAppearance()
         button.setTitle("UNLOCK_FEATURE_PRE_LOAD".localize(file: "RestorePurchases"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     lazy var restorePurchasesButton: UIButton = {
 
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.setTitleColor(.systemGray, for: .disabled)
-        button.backgroundColor = UIColor.systemBlue
-        button.layer.cornerRadius = Constants.cornerRadius
-        button.isEnabled = true
-        button.titleLabel?.font = Constants.buttonFont
+        let button = NBButton()
+        button.applyProtocolUIAppearance()
         button.setTitle("RESTORE_PURCHASES".localize(file: "RestorePurchases"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 

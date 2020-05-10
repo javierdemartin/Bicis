@@ -10,45 +10,44 @@ import Foundation
 import ReactiveSwift
 import MapKit
 
-protocol RoutePlannerViewModelCoordinatorDelegate: class {
-//    func sendSelectedDestinationToHomeViewController(station: BikeStation)
+protocol InsightsViewModelCoordinatorDelegate: class {
     func dismissModalRoutePlannerViewController()
 }
 
-protocol RoutePlannerViewModelDelegate: class {
+protocol InsightsViewModelDelegate: class {
     func presentAlertViewWithError(title: String, body: String)
     func errorTooFarAway()
     func gotDestinationRoute(station: BikeStation, route: MKRoute)
     func updateBikeStationOperations(nextRefill: String?, nextDischarge: String?)
     func fillClosestStationInformation(station: BikeStation)
-    func showMostUsedStations(stations: [String:Int])
+    func showMostUsedStations(stations: [String: Int])
 }
 
-protocol RoutePlannerViewModelDataManager: class {
+protocol InsightsViewModelDataManager: class {
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void)
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
     func getStationStatistics(for city: String) -> [String: Int]
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
 }
 
-class RoutePlannerViewModel: NSObject {
+class InsightsViewModel: NSObject {
 
     let compositeDisposable: CompositeDisposable
     let stationsDict: [String: BikeStation]?
-    weak var coordinatorDelegate: RoutePlannerViewModelCoordinatorDelegate?
-    weak var delegate: RoutePlannerViewModelDelegate?
+    weak var coordinatorDelegate: InsightsViewModelCoordinatorDelegate?
+    weak var delegate: InsightsViewModelDelegate?
     let dateFormatter = DateFormatter()
 
     var destinationRoute = MKRoute()
     var destinationStation = Binding<BikeStation?>(value: nil)
 
-    let dataManager: RoutePlannerViewModelDataManager
+    let dataManager: InsightsViewModelDataManager
 
     let sortedMostUsedStations: [String] = []
 
     var closestAnnotations: [BikeStation]
 
-    init(compositeDisposable: CompositeDisposable, dataManager: RoutePlannerViewModelDataManager, stationsDict: [String: BikeStation]?, closestAnnotations: [BikeStation], destinationStation: BikeStation?) {
+    init(compositeDisposable: CompositeDisposable, dataManager: InsightsViewModelDataManager, stationsDict: [String: BikeStation]?, closestAnnotations: [BikeStation], destinationStation: BikeStation?) {
 
         self.compositeDisposable = compositeDisposable
         self.stationsDict = stationsDict
@@ -171,7 +170,7 @@ class RoutePlannerViewModel: NSObject {
     }
 }
 
-extension RoutePlannerViewModel: MKMapViewDelegate {
+extension InsightsViewModel: MKMapViewDelegate {
 
     func calculateRouteToDestination(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D, completion: @escaping(Result<MKRoute>) -> Void) {
 

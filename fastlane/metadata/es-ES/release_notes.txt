@@ -1,3 +1,7 @@
-Las predicciones han mejorado, para ello no hace falta actualizar la aplicación. He reentrenado las redes neuronales de todas las ciudades y ahora los resultados son mejores.
+I have added support for trackpad on the iPad for all of you that use this app on an iPad. I have also redesigned the Insights view to be more informative.
 
-Las estaciones que no tuvieran predicción no mostrarían ningún gráfico, ahora muestran el historial diario hasta que las predicciones estén disponibles.
+I am planning on releasing new features soon as soon I can start using the bike again, thank you for your reviews and purchases!
+
+Añadido soporte para trackpad en el iPad para todos aquellos que uséis esta app en un iPad. También he rediseñado la pestaña de Análisis de Datos para que sea más informativa.
+
+Estoy trabajando en nuevas características pero hasta que no pueda montarme en una bici de nuevo no podré avanzar mucho, ¡gracias por las reviews y compras!

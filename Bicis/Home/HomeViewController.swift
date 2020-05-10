@@ -11,6 +11,25 @@ import ReactiveCocoa
 import ReactiveSwift
 import Combine
 import MapKit
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+struct HomeViewControllerRepresentable: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        return UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()!.view
+    }
+    
+    func updateUIView(_ view: UIView, context: Context) {
+        
+    }
+}
+
+@available(iOS 13.0, *)
+struct HomeViewControllerPreview: PreviewProvider {
+    static var previews: some View {
+        HomeViewControllerRepresentable()
+    }
+}
+#endif
 
 protocol HomeViewControllerGraphViewDelegate: class {
     func setStationTitleFor(name: String)
@@ -64,8 +83,6 @@ class HomeViewController: UIViewController {
         return stackView
     }()
 
-
-
     private var graphView: PredictionGraphView = {
         let view = PredictionGraphView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -77,18 +94,6 @@ class HomeViewController: UIViewController {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         // handling code
         viewModel.coordinatorDelegate?.showSettingsViewController()
-    }
-
-    @objc private func viewHoverChanged(_ gesture: UIHoverGestureRecognizer, _ sender: UIButton) {
-        UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
-            switch gesture.state {
-            case .began, .changed:
-                sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1)
-            case .ended:
-                sender.layer.transform = CATransform3DIdentity
-            default: break
-            }
-        }, completion: nil)
     }
 
     private var label: UILabel = {
@@ -103,52 +108,33 @@ class HomeViewController: UIViewController {
 
     private var startRouteButton: UIButton = {
 
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = Constants.cornerRadius
+        let button = NBButton()
+        button.applyProtocolUIAppearance()
         button.accessibilityIdentifier = "START_ROUTE"
-        button.backgroundColor = UIColor.systemBlue
-        button.titleLabel?.font = Constants.buttonFont
         button.setTitle("START_ROUTE".localize(file: "Home"), for: .normal)
-        button.setTitleColor(UIColor.systemGray4, for: .disabled)
-        button.clipsToBounds = true
-        button.isEnabled = false
         button.isHidden = true
-        button.isEnabled = true
-        button.isUserInteractionEnabled = true
 
-        if #available(iOS 13.4, *) {
-            let interaction = UIPointerInteraction(delegate: nil)
-            button.addInteraction(interaction)
-        } else {
-            // Fallback on earlier versions
-        }
+        return button
+    }()
+    
+    private var rentButton: UIButton = {
 
-        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-
+        let button = NBButton()
+        button.applyProtocolUIAppearance()
+        button.accessibilityIdentifier = "RENT_BIKE"
+        button.isHidden = true
+        button.setImage(UIImage(systemName: "lock.fill"), for: .normal)
         return button
     }()
 
     private var settingsButton: UIButton = {
 
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = Constants.cornerRadius
+        let button = NBButton()
+        button.applyProtocolUIAppearance()
         button.accessibilityIdentifier = "RENT_BIKE"
-        button.backgroundColor = UIColor.systemBlue
         button.setImage(UIImage(systemName: "gear"), for: .normal)
         button.imageView?.tintColor = .white
-        if #available(iOS 13.4, *) {
-            let interaction = UIPointerInteraction(delegate: nil)
-            button.addInteraction(interaction)
-        } else {
-            // Fallback on earlier versions
-        }
-
-        button.clipsToBounds = true
-        button.isHidden = false
-        // Spacing between the UIImageView and the UIButton's edges
-        button.contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
         return button
     }()
 
@@ -178,14 +164,10 @@ class HomeViewController: UIViewController {
         view.addSubview(statisticsAndGraphViewStackView)
         view.bringSubviewToFront(statisticsAndGraphViewStackView)
         view.addSubview(settingsButton)
+        view.addSubview(rentButton)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         graphView.addGestureRecognizer(tap)
-
-//        NSLayoutConstraint.activate([
-//
-//            statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0)
-//        ])
 
         NSLayoutConstraint.activate([
             belowGraphHorizontalStackView.heightAnchor.constraint(equalToConstant: 50)
@@ -193,12 +175,18 @@ class HomeViewController: UIViewController {
 
         // MARK: Settings Button constraints
 
-        // Bottom right
+        // Align to the bottom right
         NSLayoutConstraint.activate([
             settingsButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -2 * Constants.spacing),
             settingsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -2 * Constants.spacing)
         ])
 
+        // MARK: Rent button
+        NSLayoutConstraint.activate([
+            rentButton.bottomAnchor.constraint(equalTo: settingsButton.topAnchor, constant: -2 * Constants.spacing),
+            rentButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -2 * Constants.spacing)
+        ])
+        
         NSLayoutConstraint.activate([
             startRouteButton.widthAnchor.constraint(equalToConstant: startRouteButton.titleLabel!.text!.width(withConstrainedHeight: startRouteButton.titleLabel!.frame.height, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)) + 20.0)
         ])
@@ -208,28 +196,7 @@ class HomeViewController: UIViewController {
             graphView.leadingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.leadingAnchor),
             graphView.trailingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.trailingAnchor),
             graphView.heightAnchor.constraint(equalToConstant: 110)
-
         ])
-
-        // If iPad reduce the width of the graph so it doesn't spans all the width of the screen
-        if UIDevice.current.userInterfaceIdiom == .pad {
-
-            NSLayoutConstraint.activate([
-                // Center horizontally
-                statisticsAndGraphViewStackView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
-                statisticsAndGraphViewStackView.widthAnchor.constraint(equalToConstant: 450),
-                statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: Constants.spacing)
-
-            ])
-
-        } else if UIDevice.current.userInterfaceIdiom == .phone {
-
-            NSLayoutConstraint.activate([
-                statisticsAndGraphViewStackView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16.0),
-                statisticsAndGraphViewStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -16.0),
-                statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 0)
-            ])
-        }
 
         NSLayoutConstraint.activate([
             mapView.topAnchor.constraint(equalTo: safeArea.topAnchor),
@@ -241,6 +208,7 @@ class HomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        viewModel.viewWillAppear()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -290,7 +258,6 @@ class HomeViewController: UIViewController {
         // Find the index of the current station
 
         if let index = viewModel.stations.value.firstIndex(where: { $0.stationName == nearestStation.stationName }) {
-            print("INDEX OF \(index)")
             self.viewModel.currentSelectedStationIndex = index
         }
 
@@ -479,18 +446,49 @@ class HomeViewController: UIViewController {
         mapView.delegate = self
         graphViewDelegate = graphView
 
-        let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
-//        startRouteButton.addGestureRecognizer(gesture)
-//        settingsButton.addGestureRecognizer(gesture)
-//        view.addGestureRecognizer(gesture)
-
         setupBindings()
     }
 
     override func viewDidLayoutSubviews() {
 
         super.viewDidLayoutSubviews()
+        
+        if UIDevice.current.userInterfaceIdiom == .phone || UIApplication.shared.isSplitOrSlideOver {
 
+            NSLayoutConstraint.deactivate([
+                // Center horizontally
+                statisticsAndGraphViewStackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+                statisticsAndGraphViewStackView.widthAnchor.constraint(equalToConstant: 450),
+                statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.spacing)
+
+            ])
+            
+            NSLayoutConstraint.activate([
+                statisticsAndGraphViewStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+                statisticsAndGraphViewStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
+                statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0)
+            ])
+        }
+        
+        // If iPad reduce the width of the graph so it doesn't spans all the width of the screen
+        else if UIDevice.current.userInterfaceIdiom == .pad && !UIApplication.shared.isSplitOrSlideOver {
+
+            NSLayoutConstraint.deactivate([
+                statisticsAndGraphViewStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+                statisticsAndGraphViewStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
+                statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0)
+            ])
+            
+            NSLayoutConstraint.activate([
+                // Center horizontally
+                statisticsAndGraphViewStackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+                statisticsAndGraphViewStackView.widthAnchor.constraint(equalToConstant: 450),
+                statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.spacing)
+
+            ])
+
+        }
+        
         mapView.frame = self.view.bounds
     }
 
@@ -509,7 +507,8 @@ class HomeViewController: UIViewController {
     @objc func showInsightsViewController() {
         guard let latestSelectedStation = self.viewModel.latestSelectedBikeStation else { return }
 
-        FeedbackGenerator.sharedInstance.generator.impactOccurred()
+//        FeedbackGenerator.sharedInstance.generator.impactOccurred()
+        
         self.viewModel.selectedRoute(station: latestSelectedStation)
     }
 
@@ -522,12 +521,15 @@ class HomeViewController: UIViewController {
         compositeDisposable += startRouteButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             guard let self = self else { fatalError() }
 
+            LogHelper.logTAppedDataInsightsButton()
+            FeedbackGenerator.sharedInstance.generator.impactOccurred()
+
             self.showInsightsViewController()
         })
 
         compositeDisposable += settingsButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
-//            self?.viewModel.coordinatorDelegate?.showSettingsViewController()
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
+            LogHelper.logTAppedSettingsButton()
             self?.showSettingsViewController()
         })
 
@@ -615,7 +617,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: HomeViewModelDelegate {
 
     func shouldShowRentBikeButton() {
-//        rentButton.isEnabled = true
+        rentButton.isEnabled = true
     }
 
     func presentAlertViewWithError(title: String, body: String) {

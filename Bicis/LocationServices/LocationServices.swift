@@ -63,7 +63,6 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
         if !(UITestingHelper.sharedInstance.isUITesting()) {
 
             self.locationManager?.stopUpdatingLocation()
-
         }
     }
 

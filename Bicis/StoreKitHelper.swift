@@ -25,7 +25,7 @@ struct StoreKitHelper {
 
         let numberOfTimesLaunched: Int = UserDefaults.standard.integer(forKey: StoreKitHelper.numberOfTimesLaunchedKey)
 
-        if numberOfTimesLaunched > 20 && currentVersion != lastVersionPromptedForReview {
+        if numberOfTimesLaunched > 8 && currentVersion != lastVersionPromptedForReview {
             SKStoreReviewController.requestReview()
             UserDefaults.standard.set(currentVersion, forKey: "lastVersion")
         }

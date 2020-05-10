@@ -25,9 +25,9 @@
 
 "ACCURACY_OF_MODEL" = "%percentage% de fiabilidad";
 
-"RECHARGE" = "Siguiente recarga";
+"RECHARGE" = "Recarga";
 
-"DISCHARGE" = "Siguiente vaciamiento";
+"DISCHARGE" = "Vaciamiento";
 
 "ACCURACY_OF_MODEL_ERROR" = "Error calculando precisión de las predicciones";
 
