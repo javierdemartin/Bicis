@@ -28,7 +28,7 @@ var availableCities: [String: City] = [
                    formalName: "Bilbao",
                    latitude: 43.263459,
                    longitude: -2.937053,
-                   apiUrl: "https://nextbike.net/maps/nextbike-official.json?city=532", allowsLogIn: false),
+                   apiUrl: "https://nextbike.net/maps/nextbike-official.json?city=532", allowsLogIn: true),
     "Madrid": City(apiName: "madrid",
                    formalName: "Madrid",
                    latitude: 40.416775,

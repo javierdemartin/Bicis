@@ -18,8 +18,14 @@ enum RemoteDataManagerError: Error {
     case errorParsingNeuralBikesApi
 }
 
+enum BikeSharingApiError: Error {
+    case noApiKey
+}
+
 protocol RemoteDataManager {
     func getStations(city: String, completion: @escaping (Result<[BikeStation]>) -> Void)
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void)
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
+    
+    // MARK: API Keys
 }

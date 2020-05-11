@@ -24,6 +24,7 @@ protocol HomeViewModelDataManager {
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void)
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
     func addStationStatistics(for id: String, city: String)
+    func isUserLoggedIn(completion: @escaping (Result<()>) -> Void)
 }
 
 protocol HomeViewModelDelegate: class {
@@ -222,6 +223,18 @@ class HomeViewModel {
 
             case .error:
                 break
+            }
+        })
+    }
+    
+    // MARK: RENT PROCESS
+    func startRentProcess() {
+        dataManager.isUserLoggedIn(completion: { result in
+            switch result {
+            case .success():
+                break
+            case .error(let error):
+                self.delegate?.receivedError(with: error.localizedDescription)
             }
         })
     }

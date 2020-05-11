@@ -21,18 +21,19 @@ platform :ios do
     build_app(workspace: "NeuralBikes.xcworkspace", scheme: "NeuralBikes")
     upload_to_testflight
 
-	deliver(
-  		automatic_release: true
-  	)
+	deliver(automatic_release: true)
 
     skip_waiting_for_build_processing
   end
 
   lane :shipit do
-  	# precheck
-  	build_app(workspace: "NeuralBikes.xcworkspace", scheme: "NeuralBikes")
-  	snapshot
-  	frameit
+get_certificates           # invokes cert
+  get_provisioning_profile   # invokes sigh
+  build_app
+#   	snapshot
+#   	frameit
+
+  	precheck
     deliver(
       force: true, # Skip HTMl report verification
       submit_for_review: true,
@@ -55,5 +56,6 @@ platform :ios do
         export_compliance_available_on_french_store: false
       }
     )
+    skip_waiting_for_build_processing
   end
 end

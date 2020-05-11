@@ -24,9 +24,13 @@ class AppCoordinator: Coordinator {
     lazy var remoteDataManager: RemoteDataManager = {
         return DefaultRemoteDataManager()
     }()
+    
+    lazy var bikeServicesDataManager: BikeServicesDataManager = {
+       return NextBikeBikeServicesDataManager()
+    }()
 
     lazy var dataManager: DataManager = {
-        return DataManager(localDataManager: self.localDataManager, remoteDataManager: self.remoteDataManager)
+        return DataManager(localDataManager: self.localDataManager, remoteDataManager: self.remoteDataManager, bikeServicesDataManager: bikeServicesDataManager)
     }()
 
     init(window: UIWindow) {

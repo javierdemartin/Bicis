@@ -12,19 +12,33 @@ class DataManager {
 
     let localDataManager: LocalDataManager
     let remoteDataManager: RemoteDataManager
+    let bikeServicesDataManager: BikeServicesDataManager
 
-    init(localDataManager: LocalDataManager, remoteDataManager: RemoteDataManager) {
+    init(localDataManager: LocalDataManager, remoteDataManager: RemoteDataManager, bikeServicesDataManager: BikeServicesDataManager) {
         self.localDataManager = localDataManager
         self.remoteDataManager = remoteDataManager
+        self.bikeServicesDataManager = bikeServicesDataManager
     }
 }
 
 // MARK: HomeViewModelDataManager
 extension DataManager: HomeViewModelDataManager {
+    func isUserLoggedIn(completion: @escaping (Result<()>) -> Void) {
+        
+        localDataManager.getUserData(completion: { userCredentialsResult in
+            
+            switch userCredentialsResult {
+            case .success(let userCredentials):
+                break
+            case .error(let error):
+                completion(.error(error))
+            }
+        })
+    }
+    
     func addStationStatistics(for id: String, city: String) {
         localDataManager.addStationStatistics(for: id, city: city)
     }
-
 
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
         localDataManager.hasUnlockedFeatures(completion: { hasUnlockedResult in

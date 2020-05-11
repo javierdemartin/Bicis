@@ -11,25 +11,25 @@ import ReactiveCocoa
 import ReactiveSwift
 import Combine
 import MapKit
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-struct HomeViewControllerRepresentable: UIViewRepresentable {
-    func makeUIView(context: Context) -> UIView {
-        return UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()!.view
-    }
-    
-    func updateUIView(_ view: UIView, context: Context) {
-        
-    }
-}
-
-@available(iOS 13.0, *)
-struct HomeViewControllerPreview: PreviewProvider {
-    static var previews: some View {
-        HomeViewControllerRepresentable()
-    }
-}
-#endif
+//#if canImport(SwiftUI) && DEBUG
+//import SwiftUI
+//struct HomeViewControllerRepresentable: UIViewRepresentable {
+//    func makeUIView(context: Context) -> UIView {
+//        return UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()!.view
+//    }
+//    
+//    func updateUIView(_ view: UIView, context: Context) {
+//        
+//    }
+//}
+//
+//@available(iOS 13.0, *)
+//struct HomeViewControllerPreview: PreviewProvider {
+//    static var previews: some View {
+//        HomeViewControllerRepresentable()
+//    }
+//}
+//#endif
 
 protocol HomeViewControllerGraphViewDelegate: class {
     func setStationTitleFor(name: String)
@@ -526,6 +526,11 @@ class HomeViewController: UIViewController {
 
             self.showInsightsViewController()
         })
+        
+        compositeDisposable += rentButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] _ in
+            
+            self?.viewModel.startRentProcess()
+        })
 
         compositeDisposable += settingsButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
@@ -617,7 +622,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController: HomeViewModelDelegate {
 
     func shouldShowRentBikeButton() {
-        rentButton.isEnabled = true
+        rentButton.isHidden = false
     }
 
     func presentAlertViewWithError(title: String, body: String) {
