@@ -13,7 +13,7 @@ protocol BikeServicesDataManager {
     var urlComponents: URLComponents { get set }
     
     func getApiKey(completion: @escaping (Result<Key>) -> Void)
-    func isUserLoggedIn(credentials: UserCredentials, completion: @escaping (Result<()>) -> Void)
+    func isUserLoggedIn(credentials: UserCredentials, completion: @escaping (Result<LogInResponse>) -> Void)
     func logIn(credentials: UserCredentials, completion: @escaping(Result<LogInResponse>) -> Void)
 }
 

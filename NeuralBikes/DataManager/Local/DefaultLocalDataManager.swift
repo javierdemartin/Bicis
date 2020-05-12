@@ -147,4 +147,31 @@ class DefaultLocalDataManager: LocalDataManager {
 
         completion(.success(decoded))
     }
+    
+    func saveLogIn(response: UserR) {
+        
+        do {
+            let encodedData = try PropertyListEncoder().encode(response)
+            defaults.set(encodedData, forKey: "\(type(of: response).self)")
+
+            
+
+        } catch {
+            print("Error \(error.localizedDescription)")
+        }
+        
+        
+    }
+    
+    func getLogIn() -> UserR? {
+        guard let data = defaults.value(forKey: "\(UserR.self)") as? Data else {
+           return nil
+        }
+
+        guard let decoded = try? PropertyListDecoder().decode(UserR.self, from: data) else {
+           return nil
+        }
+        
+        return decoded
+    }
 }

@@ -87,6 +87,7 @@ class AppCoordinator: Coordinator {
     }
 
     var settingsViewController: SettingsViewController?
+    var logInViewController: LogInViewController?
 
     fileprivate func presentModallySettingsViewController() {
 
@@ -203,7 +204,25 @@ extension AppCoordinator: InsightsViewModelCoordinatorDelegate {
     }
 }
 
+extension AppCoordinator: LogInVieWModelCoordinatorDelegate {
+    func dismissViewController() {
+        logInViewController?.dismiss(animated: true, completion: nil)
+    }
+    
+    
+}
+
 extension AppCoordinator: HomeViewModelCoordinatorDelegate {
+    func presentLogInViewController() {
+        let compositeDisposable = CompositeDisposable()
+        let logInViewModel = LogInViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager)
+        logInViewController = LogInViewController(compositeDisposable: compositeDisposable, viewModel: logInViewModel)
+        logInViewModel.delegate = logInViewController
+        logInViewModel.coordinatorDelegate = self
+        logInViewController!.modalPresentationStyle = .formSheet
+        self.window.rootViewController?.present(logInViewController!, animated: true, completion: nil)
+    }
+    
 
     /// Presents the UIViewController in charge of planning the route to the destination station
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation]) {

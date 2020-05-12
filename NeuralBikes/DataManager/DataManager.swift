@@ -21,15 +21,51 @@ class DataManager {
     }
 }
 
+// MARK: LogInViewModelDataManager
+
+extension DataManager: LogInViewModelDataManager {
+    func logIn(with userCredentials: UserCredentials, completion: @escaping(Result<LogInResponse>) -> Void) {
+        
+        bikeServicesDataManager.logIn(credentials: userCredentials, completion: { logInResult in
+            
+            switch logInResult {
+                
+                
+            case .success(let logInResponse):
+                
+                guard let userResponse = logInResponse.user else { return }
+                
+                self.localDataManager.saveUserData(validateInstallationResponse: userCredentials, completion: { _ in
+                    self.localDataManager.saveLogIn(response: userResponse)
+                })
+                
+            case .error(let error):
+                print(error)
+            }
+//            completion(logInResult)
+        })
+    }
+}
+
 // MARK: HomeViewModelDataManager
 extension DataManager: HomeViewModelDataManager {
-    func isUserLoggedIn(completion: @escaping (Result<()>) -> Void) {
-        
+    func isUserLoggedIn(completion: @escaping (Result<LogInResponse>) -> Void) {
+                
         localDataManager.getUserData(completion: { userCredentialsResult in
             
             switch userCredentialsResult {
             case .success(let userCredentials):
-                break
+                self.bikeServicesDataManager.isUserLoggedIn(credentials: userCredentials, completion: { result in
+                    
+                    switch result {
+                        
+                    case .success(let loginApiResponse):
+                        completion(.success(loginApiResponse))
+                    case .error(let error):
+                        completion(.error(error))
+                    }
+                    
+                })
             case .error(let error):
                 completion(.error(error))
             }

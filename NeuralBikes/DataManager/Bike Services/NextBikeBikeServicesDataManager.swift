@@ -10,13 +10,14 @@ import Foundation
 
 class NextBikeBikeServicesDataManager: BikeServicesDataManager {
     
-    func isUserLoggedIn(credentials: UserCredentials, completion: @escaping (Result<()>) -> Void) {
+    func isUserLoggedIn(credentials: UserCredentials, completion: @escaping (Result<LogInResponse>) -> Void) {
         self.logIn(credentials: credentials, completion: { logInResult in
             
             switch logInResult {
                 
             case .success(let logInApiResponse):
-                completion(.success(()))
+                
+                completion(.success(logInApiResponse))
             case .error(let error):
                 completion(.error(error))
             }
@@ -42,7 +43,9 @@ extension NextBikeBikeServicesDataManager {
 
     func getApiKey(completion: @escaping (Result<Key>) -> Void) {
         
-        urlComponents.path = "getAPIKey.json"
+        urlComponents.scheme = "https"
+        urlComponents.host = "webview.nextbike.net"
+        urlComponents.path = "/getAPIKey.json"
         
         guard let url = urlComponents.url else {
             preconditionFailure("Failed to construct URL")
@@ -77,6 +80,8 @@ extension NextBikeBikeServicesDataManager {
     
     func logIn(credentials: UserCredentials, completion: @escaping(Result<LogInResponse>) -> Void) {
         
+        urlComponents.scheme = "https"
+        urlComponents.host = "api.nextbike.net"
         urlComponents.path = "/api/login.json"
 
         guard let url = urlComponents.url else {
@@ -91,14 +96,23 @@ extension NextBikeBikeServicesDataManager {
                 var request = URLRequest(url: url)
                 request.httpMethod = "POST"
                 
-                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//                let logInFormData = LogInFormData(apikey: apiKey.apiKey, mobile: credentials.mobile, pin: credentials.mobile, show_errors: 1)
                 
-                let logInFormData = LogInFormData(apiKey: apiKey.apiKey, mobile: credentials.mobile, pin: credentials.mobile, show_errors: 1)
+                let parameters = ["apikey": apiKey.apiKey, "mobile": credentials.mobile, "pin": credentials.pin, "show_errors": "1"]
+
                 
                 do {
-                    let encodedData = try self.encoder.encode(logInFormData)
                     
-                    let task = URLSession.shared.uploadTask(with: request, from: encodedData) { data, response, error in
+                    let encodedData = try JSONSerialization.data(withJSONObject: parameters)
+                    
+                    request.httpBody = encodedData
+                    
+                    request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) // pass dictionary to data object and set it as request body
+
+
+//                    let encodedData = try self.encoder.encode(logInFormData)
+                    
+                    let task = URLSession.shared.dataTask(with: request) { data, response, error in
                         // Do something...
                         
                         if let data = data {

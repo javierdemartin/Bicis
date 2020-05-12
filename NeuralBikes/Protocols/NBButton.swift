@@ -35,28 +35,70 @@ class NBButton: UIButton, NBButtonable {
         titleLabel?.textAlignment = .center
         sizeToFit()
         contentEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-
+        
         if #available(iOS 13.4, *) {
-                    let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
-                    self.addGestureRecognizer(gesture)
-                    
-                    let interaction = UIPointerInteraction(delegate: nil)
-                    self.addInteraction(interaction)
-                } else {
-                    // Fallback on earlier versions
-                }
-            }
+            let gesture = UIHoverGestureRecognizer(target: self, action: #selector(viewHoverChanged))
+            self.addGestureRecognizer(gesture)
             
-            @objc private func viewHoverChanged(_ gesture: UIHoverGestureRecognizer) {
-                UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
-                    switch gesture.state {
-                    case .began, .changed:
-                        
-                        self.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1)
-                    case .ended:
-                        self.layer.transform = CATransform3DIdentity
-                    default: break
-                    }
-                }, completion: nil)
-            }
+            let interaction = UIPointerInteraction(delegate: nil)
+            self.addInteraction(interaction)
+        } else {
+            // Fallback on earlier versions
         }
+        
+        addTarget(self, action: #selector(tapped), for: .touchUpInside)
+
+    }
+    
+    @objc private func viewHoverChanged(_ gesture: UIHoverGestureRecognizer) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.allowUserInteraction], animations: {
+            switch gesture.state {
+            case .began, .changed:
+                
+                self.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1)
+            case .ended:
+                self.layer.transform = CATransform3DIdentity
+            default: break
+            }
+        }, completion: nil)
+    }
+    
+    @objc func tapped() {
+        
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.impactOccurred()
+//           i += 1
+//           print("Running \(i)")
+//
+//           switch i {
+//           case 1:
+//               let generator = UINotificationFeedbackGenerator()
+//               generator.notificationOccurred(.error)
+//
+//           case 2:
+//               let generator = UINotificationFeedbackGenerator()
+//               generator.notificationOccurred(.success)
+//
+//           case 3:
+//               let generator = UINotificationFeedbackGenerator()
+//               generator.notificationOccurred(.warning)
+//
+//           case 4:
+//               let generator = UIImpactFeedbackGenerator(style: .light)
+//               generator.impactOccurred()
+//
+//           case 5:
+//               let generator = UIImpactFeedbackGenerator(style: .medium)
+//               generator.impactOccurred()
+//
+//           case 6:
+//               let generator = UIImpactFeedbackGenerator(style: .heavy)
+//               generator.impactOccurred()
+//
+//           default:
+//               let generator = UISelectionFeedbackGenerator()
+//               generator.selectionChanged()
+//               i = 0
+//           }
+       }
+}

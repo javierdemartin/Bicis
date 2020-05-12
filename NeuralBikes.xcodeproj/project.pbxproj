@@ -45,6 +45,8 @@
 		80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */; };
 		80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */; };
 		803B6AF72469C3180022A586 /* LogInFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6AF62469C3180022A586 /* LogInFormData.swift */; };
+		803B6B00246AF3DD0022A586 /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6AFF246AF3DD0022A586 /* LogInViewModel.swift */; };
+		803B6B02246AF3E60022A586 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6B01246AF3E60022A586 /* LogInViewController.swift */; };
 		803B6D0A243A88010080E115 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6D09243A88010080E115 /* Double.swift */; };
 		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
 		805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B5A2223EE050C000F3CC5 /* Bundle.swift */; };
@@ -159,6 +161,8 @@
 		80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewController.swift; sourceTree = "<group>"; };
 		80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewModel.swift; sourceTree = "<group>"; };
 		803B6AF62469C3180022A586 /* LogInFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInFormData.swift; sourceTree = "<group>"; };
+		803B6AFF246AF3DD0022A586 /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
+		803B6B01246AF3E60022A586 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		803B6D09243A88010080E115 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		803FD8A023C71FAF008DDE91 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		805B5A2223EE050C000F3CC5 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -383,6 +387,15 @@
 			path = Confetti;
 			sourceTree = "<group>";
 		};
+		803B6AFE246AF3CD0022A586 /* Log In */ = {
+			isa = PBXGroup;
+			children = (
+				803B6AFF246AF3DD0022A586 /* LogInViewModel.swift */,
+				803B6B01246AF3E60022A586 /* LogInViewController.swift */,
+			);
+			path = "Log In";
+			sourceTree = "<group>";
+		};
 		805B5A2423EE0A95000F3CC5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -484,6 +497,7 @@
 		8085CC5B236E2CB500B45A7C /* NeuralBikes */ = {
 			isa = PBXGroup;
 			children = (
+				803B6AFE246AF3CD0022A586 /* Log In */,
 				80E7D8A7245602EB00D49894 /* Protocols */,
 				80299FDF243B94B20094EDB2 /* Confetti */,
 				80D288C7241E4952004EE583 /* RestorePurchases */,
@@ -829,6 +843,7 @@
 				80109145236E320300D3C45E /* AppCoordinator.swift in Sources */,
 				8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */,
 				80D288C1241D5200004EE583 /* UITestingHelper.swift in Sources */,
+				803B6B00246AF3DD0022A586 /* LogInViewModel.swift in Sources */,
 				80109137236E2DFA00D3C45E /* DataManager.swift in Sources */,
 				8074D34F2457382C006B3062 /* MyAllAPIResponse.swift in Sources */,
 				8074D347245737BE006B3062 /* GetActiveRentalsResponse.swift in Sources */,
@@ -865,6 +880,7 @@
 				80109141236E316E00D3C45E /* HomeViewController.swift in Sources */,
 				80299FE1243B94C40094EDB2 /* ConfettiKit.swift in Sources */,
 				80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */,
+				803B6B02246AF3E60022A586 /* LogInViewController.swift in Sources */,
 				80FFDE3F24689C5C00436BA6 /* SettingsViewModel.swift in Sources */,
 				8074D333245736C4006B3062 /* Key.swift in Sources */,
 				800DDD4C23ED510700FCE4E5 /* BiciMad.swift in Sources */,

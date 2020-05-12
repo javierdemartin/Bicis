@@ -15,10 +15,10 @@ class NBStackView: UIStackView, NBButtonable {
     
     func applyProtocolUIAppearance() {
         translatesAutoresizingMaskIntoConstraints = false
-        spacing = 5.0
+        spacing = 16.0
         layoutMargins = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         isLayoutMarginsRelativeArrangement = true
         alignment = .center
-        distribution  = .equalCentering
+        distribution  = .equalSpacing
     }
 }

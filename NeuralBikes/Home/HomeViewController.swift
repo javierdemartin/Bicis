@@ -59,7 +59,6 @@ class HomeViewController: UIViewController {
 
         let stackView = UIStackView(arrangedSubviews: [graphView, belowGraphHorizontalStackView])
         stackView.alignment = UIStackView.Alignment.center
-        stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalCentering
         stackView.spacing = 10.0

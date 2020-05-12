@@ -9,8 +9,11 @@
 import Foundation
 
 struct LogInFormData: Codable {
-    let apiKey: String
+    let apikey: String
     let mobile: String
     let pin: String
     let show_errors: Int
+    
+//    enum CodingKeys: String, CodingKey {
+//    case showCloseLockInfo = "show_close_lock_info"
 }

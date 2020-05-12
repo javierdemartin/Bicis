@@ -66,8 +66,6 @@ class DefaultRemoteDataManager: RemoteDataManager {
             preconditionFailure("Failed to construct URL")
         }
 
-//        print("> Querying \(url)")
-
         let task = URLSession.shared.dataTask(with: url) { data, _, _ in
 
             DispatchQueue.main.async {

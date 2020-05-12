@@ -15,6 +15,7 @@ protocol HomeViewModelCoordinatorDelegate: class {
     func showSettingsViewController()
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation])
     func presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+    func presentLogInViewController()
 }
 
 protocol HomeViewModelDataManager {
@@ -24,7 +25,7 @@ protocol HomeViewModelDataManager {
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void)
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
     func addStationStatistics(for id: String, city: String)
-    func isUserLoggedIn(completion: @escaping (Result<()>) -> Void)
+    func isUserLoggedIn(completion: @escaping (Result<LogInResponse>) -> Void)
 }
 
 protocol HomeViewModelDelegate: class {
@@ -231,10 +232,11 @@ class HomeViewModel {
     func startRentProcess() {
         dataManager.isUserLoggedIn(completion: { result in
             switch result {
-            case .success():
-                break
+            case .success(let logInResponse):
+                print(logInResponse)
             case .error(let error):
-                self.delegate?.receivedError(with: error.localizedDescription)
+//                self.delegate?.receivedError(with: error.localizedDescription)
+                self.coordinatorDelegate?.presentLogInViewController()
             }
         })
     }
