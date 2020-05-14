@@ -32,6 +32,8 @@ class AppCoordinator: Coordinator {
     lazy var dataManager: DataManager = {
         return DataManager(localDataManager: self.localDataManager, remoteDataManager: self.remoteDataManager, bikeServicesDataManager: bikeServicesDataManager)
     }()
+    
+    var scannerViewModel: ScannerViewModel?
 
     init(window: UIWindow) {
         self.window = window
@@ -72,7 +74,7 @@ class AppCoordinator: Coordinator {
     var currentCity: City?
 
     var routePlannerViewController: InsightsViewController?
-
+    
     fileprivate func showHomeViewController() {
 
         let compositeDisposable = CompositeDisposable()
@@ -118,6 +120,14 @@ class AppCoordinator: Coordinator {
             }
         })
     }
+}
+
+extension AppCoordinator: ScannerViewModelCoordinatorDelegate {
+    func scannedCodeWith(number: Int?) {
+        homeViewModel?.finishRentProcess(bike: number)
+    }
+    
+    
 }
 
 extension AppCoordinator: RestorePurchasesViewModelCoordinatorDelegate {
@@ -208,11 +218,20 @@ extension AppCoordinator: LogInVieWModelCoordinatorDelegate {
     func dismissViewController() {
         logInViewController?.dismiss(animated: true, completion: nil)
     }
-    
-    
 }
 
 extension AppCoordinator: HomeViewModelCoordinatorDelegate {
+    func presentScannerViewController() {
+        let compositeDisposable = CompositeDisposable()
+        scannerViewModel = ScannerViewModel(compositeDisposable: compositeDisposable)
+        let scannerViewController = ScannerViewController(compositeDisposable: compositeDisposable, viewModel: scannerViewModel!)
+        
+        scannerViewModel?.delegate = scannerViewController
+        scannerViewModel?.coordinatorDelegate = self
+        scannerViewController.modalPresentationStyle = .formSheet
+        self.window.rootViewController?.present(scannerViewController, animated: true, completion: nil)
+    }
+    
     func presentLogInViewController() {
         let compositeDisposable = CompositeDisposable()
         let logInViewModel = LogInViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager)
@@ -223,7 +242,6 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
         self.window.rootViewController?.present(logInViewController!, animated: true, completion: nil)
     }
     
-
     /// Presents the UIViewController in charge of planning the route to the destination station
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation]) {
 

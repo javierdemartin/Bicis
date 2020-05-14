@@ -89,6 +89,9 @@
 		80B1D016241A95F20072D1D9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D015241A95F20072D1D9 /* UIView.swift */; };
 		80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */; };
 		80B1D019241ABCCC0072D1D9 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE45236F3C10003CFAF7 /* String.swift */; };
+		80B55FDC246D998F00AA7008 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDB246D998F00AA7008 /* ScannerViewController.swift */; };
+		80B55FDE246D999500AA7008 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDD246D999500AA7008 /* ScannerViewModel.swift */; };
+		80B55FE0246DB76D00AA7008 /* BikeServicesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */; };
 		80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BC241BC52E004EE583 /* UIStackView.swift */; };
 		80D288BF241D5150004EE583 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BE241D5150004EE583 /* Binding.swift */; };
 		80D288C1241D5200004EE583 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
@@ -209,6 +212,9 @@
 		80ABE1EF243E148E004920D8 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		80B1D015241A95F20072D1D9 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerError.swift; sourceTree = "<group>"; };
+		80B55FDB246D998F00AA7008 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
+		80B55FDD246D999500AA7008 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
+		80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeServicesError.swift; sourceTree = "<group>"; };
 		80D288BC241BC52E004EE583 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		80D288BE241D5150004EE583 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		80D288C0241D5200004EE583 /* UITestingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingHelper.swift; sourceTree = "<group>"; };
@@ -440,6 +446,7 @@
 				8074D35224573E98006B3062 /* BikeServicesDataManager.swift */,
 				8074D35524573F8D006B3062 /* NextBikeBikeServicesDataManager.swift */,
 				803B6AF62469C3180022A586 /* LogInFormData.swift */,
+				80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */,
 			);
 			path = "Bike Services";
 			sourceTree = "<group>";
@@ -497,6 +504,7 @@
 		8085CC5B236E2CB500B45A7C /* NeuralBikes */ = {
 			isa = PBXGroup;
 			children = (
+				80B55FDA246D997D00AA7008 /* Scanner */,
 				803B6AFE246AF3CD0022A586 /* Log In */,
 				80E7D8A7245602EB00D49894 /* Protocols */,
 				80299FDF243B94B20094EDB2 /* Confetti */,
@@ -537,6 +545,15 @@
 				80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */,
 			);
 			path = "Route Planner";
+			sourceTree = "<group>";
+		};
+		80B55FDA246D997D00AA7008 /* Scanner */ = {
+			isa = PBXGroup;
+			children = (
+				80B55FDB246D998F00AA7008 /* ScannerViewController.swift */,
+				80B55FDD246D999500AA7008 /* ScannerViewModel.swift */,
+			);
+			path = Scanner;
 			sourceTree = "<group>";
 		};
 		80D288C7241E4952004EE583 /* RestorePurchases */ = {
@@ -856,6 +873,7 @@
 				807C88B323EB17EC003BA644 /* NextBike.swift in Sources */,
 				80299FDB243B80BC0094EDB2 /* IAPHelper.swift in Sources */,
 				8074D35624573F8D006B3062 /* NextBikeBikeServicesDataManager.swift in Sources */,
+				80B55FDC246D998F00AA7008 /* ScannerViewController.swift in Sources */,
 				807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */,
 				80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */,
 				8074D349245737F7006B3062 /* RentalCollection.swift in Sources */,
@@ -865,6 +883,7 @@
 				80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */,
 				8074D34D24573816006B3062 /* MyAllAPIResponseItem.swift in Sources */,
 				8074D35324573E98006B3062 /* BikeServicesDataManager.swift in Sources */,
+				80B55FE0246DB76D00AA7008 /* BikeServicesError.swift in Sources */,
 				800CE94423955A7F00674D1C /* LocalDataManagerError.swift in Sources */,
 				80ABE1F0243E148E004920D8 /* UIAlertController.swift in Sources */,
 				80109139236E2F9700D3C45E /* RemoteDataManager.swift in Sources */,
@@ -893,6 +912,7 @@
 				8074D3412457375E006B3062 /* RentResponse.swift in Sources */,
 				8062846A236EE22F00717472 /* DefaultLocalDataManager.swift in Sources */,
 				80FFDE3824689C4600436BA6 /* SettingsErrors.swift in Sources */,
+				80B55FDE246D999500AA7008 /* ScannerViewModel.swift in Sources */,
 				801ECE42236F3BD1003CFAF7 /* UIColor.swift in Sources */,
 				80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */,
 				8074D335245736E6006B3062 /* UserCredentials.swift in Sources */,

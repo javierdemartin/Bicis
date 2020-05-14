@@ -14,7 +14,6 @@ import ReactiveCocoa
 extension LogInViewController: LogInViewModelDelegate {
     func receivedError(with errorString: String) {
         
-        
         let alert = UIAlertController(title: "header", message: errorString, preferredStyle: UIAlertController.Style.alert)
 
         let alertAction = UIAlertAction(title: "ACCEPT_ALERT".localize(file: "Home"), style: UIAlertAction.Style.default, handler: nil)

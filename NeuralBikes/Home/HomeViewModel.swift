@@ -16,6 +16,7 @@ protocol HomeViewModelCoordinatorDelegate: class {
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation])
     func presentRestorePurchasesViewControllerFromCoordinatorDelegate()
     func presentLogInViewController()
+    func presentScannerViewController()
 }
 
 protocol HomeViewModelDataManager {
@@ -26,6 +27,7 @@ protocol HomeViewModelDataManager {
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
     func addStationStatistics(for id: String, city: String)
     func isUserLoggedIn(completion: @escaping (Result<LogInResponse>) -> Void)
+    func rent(bike number: Int, completion: @escaping(Result<Void>) -> Void)
 }
 
 protocol HomeViewModelDelegate: class {
@@ -234,9 +236,38 @@ class HomeViewModel {
             switch result {
             case .success(let logInResponse):
                 print(logInResponse)
+                DispatchQueue.main.async {
+                    self.coordinatorDelegate?.presentScannerViewController()
+                }
             case .error(let error):
 //                self.delegate?.receivedError(with: error.localizedDescription)
                 self.coordinatorDelegate?.presentLogInViewController()
+            }
+        })
+    }
+    
+    func finishRentProcess(bike number: Int?) {
+        
+        guard let number = number else {
+            self.delegate?.receivedError(with: "NO BIKE")
+            return
+        }
+        
+        dataManager.isUserLoggedIn(completion: { result in
+            switch result {
+            case .success(let logInResponse):
+                print(logInResponse)
+                self.dataManager.rent(bike: number, completion: { rentResult in
+                    switch rentResult {
+                        
+                    case .success():
+                        break
+                    case .error(let error):
+                        self.delegate?.receivedError(with: error.localizedDescription)
+                    }
+                })
+            case .error(let error):
+                self.delegate?.receivedError(with: "ERROR")
             }
         })
     }

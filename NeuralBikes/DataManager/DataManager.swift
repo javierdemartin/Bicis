@@ -29,8 +29,7 @@ extension DataManager: LogInViewModelDataManager {
         bikeServicesDataManager.logIn(credentials: userCredentials, completion: { logInResult in
             
             switch logInResult {
-                
-                
+                 
             case .success(let logInResponse):
                 
                 guard let userResponse = logInResponse.user else { return }
@@ -42,7 +41,6 @@ extension DataManager: LogInViewModelDataManager {
             case .error(let error):
                 print(error)
             }
-//            completion(logInResult)
         })
     }
 }
@@ -65,6 +63,28 @@ extension DataManager: HomeViewModelDataManager {
                         completion(.error(error))
                     }
                     
+                })
+            case .error(let error):
+                completion(.error(error))
+            }
+        })
+    }
+    
+    func rent(bike number: Int, completion: @escaping(Result<Void>) -> Void) {
+        
+        isUserLoggedIn(completion: { logInResponse in
+            switch logInResponse {
+                
+            case .success(let logIn):
+                self.bikeServicesDataManager.rent(loginKey: logIn.user!.loginkey, bike: number, completion: { rentResult in
+                    
+                    switch rentResult {
+                        
+                    case .success():
+                        completion(.success(()))
+                    case .error(let error):
+                        completion(.error(error))
+                    }
                 })
             case .error(let error):
                 completion(.error(error))

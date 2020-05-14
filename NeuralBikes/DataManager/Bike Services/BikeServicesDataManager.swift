@@ -15,6 +15,7 @@ protocol BikeServicesDataManager {
     func getApiKey(completion: @escaping (Result<Key>) -> Void)
     func isUserLoggedIn(credentials: UserCredentials, completion: @escaping (Result<LogInResponse>) -> Void)
     func logIn(credentials: UserCredentials, completion: @escaping(Result<LogInResponse>) -> Void)
+    func rent(loginKey: String, bike number: Int, completion: @escaping(Result<Void>) -> Void)
 }
 
 enum BikeServicesDataManagerError: Error {

@@ -8,6 +8,12 @@
 
 struct RentResponse: Codable {
 
-    let base: BaseResponse
-    let rental: Rent
+    let serverTime: Int
+    let error: LogInResponseError?
+    
+    enum CodingKeys: String, CodingKey {
+        case serverTime = "server_time"
+        case error = "error"
+    }
 }
+
