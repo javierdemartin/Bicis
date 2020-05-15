@@ -9,3 +9,4 @@
 "FEEDBACK_BUTTON" = "Enviar Comentarios";
 "HOW_TO_USE" = "Recibe predicciones detalladas de disponibilidad para cada estación y compara los valores frente a la disponibilidad real.";
 "RESTORE_PURCHASES_BUTTON" = "Restaurar Compras";
+"LOG_OUT_BUTTON" = "Cerrar Sesión";

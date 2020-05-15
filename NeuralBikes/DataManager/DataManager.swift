@@ -70,6 +70,41 @@ extension DataManager: HomeViewModelDataManager {
         })
     }
     
+    func getActiveRentals(completion: @escaping(Result<GetActiveRentalsResponse>) -> Void) {
+                
+        isUserLoggedIn(completion: { logInResponse in
+            switch logInResponse {
+                
+            case .success(let logIn):
+                
+                guard let logInKey = logIn.user?.loginkey else {
+                    completion(.error(BikeServicesDataManagerError.couldntGetLogInKey))
+                    return
+                }
+                
+                self.bikeServicesDataManager.getApiKey(completion: { apiKeyResult in
+                    switch apiKeyResult {
+                        
+                    case .success(let apiKey):
+                        self.bikeServicesDataManager.getActiveRentals(apiKey: apiKey.apiKey, logInKey: logInKey, completion: { rentalsResponse in
+                            switch rentalsResponse {
+                                
+                            case .success(let activeRentals):
+                                completion(.success(activeRentals))
+                            case .error(let error):
+                                completion(.error(error))
+                            }
+                        })
+                    case .error(let error):
+                        completion(.error(error))
+                    }
+                })
+            case .error(let error):
+                completion(.error(error))
+            }
+        })
+    }
+    
     func rent(bike number: Int, completion: @escaping(Result<Void>) -> Void) {
         
         isUserLoggedIn(completion: { logInResponse in
@@ -151,6 +186,9 @@ extension DataManager: InsightsViewModelDataManager {
 
 // MARK: SettingsViewModelDataManager
 extension DataManager: SettingsViewModelDataManager {
+    func logOut() {
+        localDataManager.logOut()
+    }
 
     func getCurrentCityFromDefaults(completion: @escaping (Result<City>) -> Void) {
         localDataManager.getCurrentCity(completion: { cityResult in

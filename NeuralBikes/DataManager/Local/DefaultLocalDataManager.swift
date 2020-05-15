@@ -148,6 +148,10 @@ class DefaultLocalDataManager: LocalDataManager {
         completion(.success(decoded))
     }
     
+    func logOut() {
+        defaults.set(nil, forKey: "UserCredentials")
+    }
+    
     func saveLogIn(response: UserR) {
         
         do {

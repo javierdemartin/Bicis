@@ -14,6 +14,7 @@ import StoreKit
 protocol SettingsViewModelDataManager {
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void)
     func getCurrentCityFromDefaults(completion: @escaping (Result<City>) -> Void)
+    func logOut()
 
 }
 
@@ -22,6 +23,7 @@ protocol SettingsViewModelDelegate: class {
     func errorSubmittingCode(with errorString: String)
     func updateCitiesPicker(sortedCities: [String])
     func presentAlertViewWithError(title: String, body: String)
+    func shouldShowLogOutButton()
 }
 
 protocol SettingsViewModelCoordinatorDelegate: class {
@@ -58,8 +60,18 @@ class SettingsViewModel {
     func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
         coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
     }
+    
+    func logOut() {
+        dataManager.logOut()
+    }
 
     func prepareViewForAppearance() {
+        
+        if let currentCity = self.city {
+            if currentCity.allowsLogIn {
+                delegate?.shouldShowLogOutButton()
+            }
+        }
 
         dataManager.getCurrentCityFromDefaults(completion: { cityResult in
             switch cityResult {

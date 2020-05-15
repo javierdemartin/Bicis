@@ -32,25 +32,42 @@ class LogInViewController: UIViewController {
     let viewModel: LogInViewModel
     
     lazy var stackView: UIStackView = {
-        let stackView = NBStackView(arrangedSubviews: [usernameTextField, passwordTextField, submitCredentialsButton])
+        let stackView = NBStackView(arrangedSubviews: [titleLabel, usernameTextField, passwordTextField, submitCredentialsButton, explanationTextView])
         stackView.applyProtocolUIAppearance()
         stackView.axis = NSLayoutConstraint.Axis.vertical
         return stackView
     }()
     
+    lazy var titleLabel: UILabel = {
+       
+        let label = NBLabel()
+        label.applyProtocolUIAppearance()
+        label.font = UIFont.systemFont(ofSize: 23, weight: .heavy)
+        label.text = "LOG_IN_TITLE_LABEL".localize(file: "LogIn")
+        return label
+    }()
+    
     lazy var usernameTextField: UITextField = {
         let textField = NBTextField()
         textField.applyProtocolUIAppearance()
-        textField.placeholder = "Username"
+        textField.placeholder = "USERNAME_PLACEHOLDER".localize(file: "LogIn")
         textField.text = ""
         textField.textContentType = .username
         return textField
     }()
     
+    lazy var explanationTextView: UITextView = {
+       
+        let textView = NBTextView(frame: .zero, textContainer: nil)
+        textView.applyProtocolUIAppearance()
+        textView.text = "LOG_IN_EXPLANATION".localize(file: "LogIn")
+        return textView
+    }()
+    
     lazy var passwordTextField: UITextField = {
         let textField = NBTextField()
         textField.applyProtocolUIAppearance()
-        textField.placeholder = "Password"
+        textField.placeholder = "PASSWORD_PLACEHOLDER".localize(file: "LogIn")
         textField.text = ""
         textField.textContentType = .password
         return textField
@@ -59,7 +76,7 @@ class LogInViewController: UIViewController {
     lazy var submitCredentialsButton: UIButton = {
         let button = NBButton()
         button.applyProtocolUIAppearance()
-        button.setTitle("Submit Credentials", for: .normal)
+        button.setTitle("SUBMIT_CREDENTIALS_BUTTON".localize(file: "LogIn"), for: .normal)
         return button
     }()
     

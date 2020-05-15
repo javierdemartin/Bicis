@@ -78,6 +78,56 @@ extension NextBikeBikeServicesDataManager {
         task.resume()
     }
     
+    func getActiveRentals(apiKey: String, logInKey: String, completion: @escaping(Result<GetActiveRentalsResponse>) -> Void) {
+        
+        urlComponents.scheme = "https"
+        urlComponents.host = "api.nextbike.net"
+        urlComponents.path = "/api/getOpenRentals.json"
+        
+        guard let url = urlComponents.url else {
+            preconditionFailure("Failed to construct URL")
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+                        
+        let parameters = ["apikey": apiKey, "loginkey": logInKey, "show_errors": "1"]
+        
+        do {
+            
+            let encodedData = try JSONSerialization.data(withJSONObject: parameters)
+            
+            request.httpBody = encodedData
+            
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) // pass dictionary to data object and set it as request body
+            
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                // Do something...
+                
+                if let data = data {
+
+                    do {
+
+                        let decoded = try JSONDecoder().decode(GetActiveRentalsResponse.self, from: data)
+                        
+                        completion(.success(decoded))
+
+                    } catch {
+                        print("[ERR] Error decoding API Key")
+                        print("The received JSON String is")
+                        print(String(data: data, encoding: .utf8) as Any)
+                        completion(.error(BikeServicesDataManagerError.errorDecodingApiKey))
+                    }
+                }
+            }
+
+            task.resume()
+            
+        } catch {
+            print(error)
+        }
+    }
+    
     func logIn(credentials: UserCredentials, completion: @escaping(Result<LogInResponse>) -> Void) {
         
         urlComponents.scheme = "https"
@@ -95,11 +145,8 @@ extension NextBikeBikeServicesDataManager {
                 
                 var request = URLRequest(url: url)
                 request.httpMethod = "POST"
-                
-//                let logInFormData = LogInFormData(apikey: apiKey.apiKey, mobile: credentials.mobile, pin: credentials.mobile, show_errors: 1)
-                
+                                
                 let parameters = ["apikey": apiKey.apiKey, "mobile": credentials.mobile, "pin": credentials.pin, "show_errors": "1"]
-
                 
                 do {
                     
@@ -192,7 +239,7 @@ extension NextBikeBikeServicesDataManager {
                                     completion(.error(BikeServicesError.bikeNotFound))
                                 } else {
                                     completion(.success(()))
-                                } 
+                                }
                             } catch {
                                 print("[ERR] Error decoding API Key")
                                 print("The received JSON String is")

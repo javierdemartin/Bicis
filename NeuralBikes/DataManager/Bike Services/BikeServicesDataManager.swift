@@ -16,9 +16,11 @@ protocol BikeServicesDataManager {
     func isUserLoggedIn(credentials: UserCredentials, completion: @escaping (Result<LogInResponse>) -> Void)
     func logIn(credentials: UserCredentials, completion: @escaping(Result<LogInResponse>) -> Void)
     func rent(loginKey: String, bike number: Int, completion: @escaping(Result<Void>) -> Void)
+    func getActiveRentals(apiKey: String, logInKey: String, completion: @escaping(Result<GetActiveRentalsResponse>) -> Void)
 }
 
 enum BikeServicesDataManagerError: Error {
     case errorDecodingApiKey
     case incorrectCredentials
+    case couldntGetLogInKey
 }

@@ -17,4 +17,5 @@ protocol LocalDataManager {
     func addStationStatistics(for id: String, city: String)
     func getStationStatistics(for city: String) -> [String: Int]
     func saveLogIn(response: UserR)
+    func logOut()
 }

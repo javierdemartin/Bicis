@@ -11,25 +11,6 @@ import ReactiveCocoa
 import ReactiveSwift
 import Combine
 import MapKit
-//#if canImport(SwiftUI) && DEBUG
-//import SwiftUI
-//struct HomeViewControllerRepresentable: UIViewRepresentable {
-//    func makeUIView(context: Context) -> UIView {
-//        return UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()!.view
-//    }
-//    
-//    func updateUIView(_ view: UIView, context: Context) {
-//        
-//    }
-//}
-//
-//@available(iOS 13.0, *)
-//struct HomeViewControllerPreview: PreviewProvider {
-//    static var previews: some View {
-//        HomeViewControllerRepresentable()
-//    }
-//}
-//#endif
 
 protocol HomeViewControllerGraphViewDelegate: class {
     func setStationTitleFor(name: String)
@@ -80,6 +61,41 @@ class HomeViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         return stackView
+    }()
+    
+    private lazy var activeRentalScrollView: UIScrollView = {
+        let scrollView = UIScrollView(frame: .zero)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .clear
+        scrollView.scrollsToTop = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.alwaysBounceVertical = true
+        scrollView.isDirectionalLockEnabled = true
+
+        return scrollView
+    }()
+    
+    private lazy var activeRentalStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [randomButton])
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.backgroundColor = .white
+        stackView.addBackground(color: .red)
+        stackView.axis = NSLayoutConstraint.Axis.horizontal
+        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.spacing = Constants.spacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
+    
+    private var randomButton: UIButton = {
+
+        let button = NBButton()
+        button.applyProtocolUIAppearance()
+        button.accessibilityIdentifier = "LOLOLO"
+        button.setTitle("LOLOLO", for: .normal)
+
+        return button
     }()
 
     private var graphView: PredictionGraphView = {
@@ -159,6 +175,9 @@ class HomeViewController: UIViewController {
         let safeArea = view.safeAreaLayoutGuide
 
         view.addSubview(mapView)
+        
+        activeRentalScrollView.addSubview(activeRentalStackView)
+        mapView.addSubview(activeRentalScrollView)
 
         view.addSubview(statisticsAndGraphViewStackView)
         view.bringSubviewToFront(statisticsAndGraphViewStackView)
@@ -179,6 +198,26 @@ class HomeViewController: UIViewController {
             settingsButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -2 * Constants.spacing),
             settingsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -2 * Constants.spacing)
         ])
+        
+        // MARK: Active Rentals
+        NSLayoutConstraint.activate([
+            activeRentalScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            activeRentalScrollView.trailingAnchor.constraint(equalTo: settingsButton.leadingAnchor, constant: -16.0),
+            activeRentalScrollView.heightAnchor.constraint(equalToConstant: 100.0),
+            activeRentalScrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 16.0)
+        ])
+        
+        NSLayoutConstraint.activate([
+//            activeRentalScrollView.heightAnchor.constraint(equalTo: self.view.heightAnchor, constant: self.activeRentalScrollView.frame.height - 16.0)
+        ])
+        
+        NSLayoutConstraint.activate([
+            activeRentalStackView.topAnchor.constraint(equalTo: activeRentalScrollView.topAnchor, constant: 0.0),
+            activeRentalStackView.trailingAnchor.constraint(equalTo: activeRentalScrollView.trailingAnchor, constant: 0),
+            activeRentalStackView.leadingAnchor.constraint(equalTo: activeRentalScrollView.leadingAnchor, constant: 0),
+            activeRentalStackView.bottomAnchor.constraint(equalTo: activeRentalScrollView.bottomAnchor, constant: 0)
+        ])
+        
 
         // MARK: Rent button
         NSLayoutConstraint.activate([

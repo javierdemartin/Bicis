@@ -92,6 +92,8 @@
 		80B55FDC246D998F00AA7008 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDB246D998F00AA7008 /* ScannerViewController.swift */; };
 		80B55FDE246D999500AA7008 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDD246D999500AA7008 /* ScannerViewModel.swift */; };
 		80B55FE0246DB76D00AA7008 /* BikeServicesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */; };
+		80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FE1246E899B00AA7008 /* NBTextView.swift */; };
+		80B55FE4246E89FB00AA7008 /* LogIn.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80B55FE3246E89FB00AA7008 /* LogIn.strings */; };
 		80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BC241BC52E004EE583 /* UIStackView.swift */; };
 		80D288BF241D5150004EE583 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BE241D5150004EE583 /* Binding.swift */; };
 		80D288C1241D5200004EE583 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
@@ -215,6 +217,8 @@
 		80B55FDB246D998F00AA7008 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		80B55FDD246D999500AA7008 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
 		80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeServicesError.swift; sourceTree = "<group>"; };
+		80B55FE1246E899B00AA7008 /* NBTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBTextView.swift; sourceTree = "<group>"; };
+		80B55FE3246E89FB00AA7008 /* LogIn.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = LogIn.strings; sourceTree = "<group>"; };
 		80D288BC241BC52E004EE583 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		80D288BE241D5150004EE583 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		80D288C0241D5200004EE583 /* UITestingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingHelper.swift; sourceTree = "<group>"; };
@@ -398,6 +402,7 @@
 			children = (
 				803B6AFF246AF3DD0022A586 /* LogInViewModel.swift */,
 				803B6B01246AF3E60022A586 /* LogInViewController.swift */,
+				80B55FE3246E89FB00AA7008 /* LogIn.strings */,
 			);
 			path = "Log In";
 			sourceTree = "<group>";
@@ -573,6 +578,7 @@
 				8074D35024573CFA006B3062 /* NBTextField.swift */,
 				80FFDE3124683D4A00436BA6 /* NBStackView.swift */,
 				80FFDE332468407500436BA6 /* NBLabel.swift */,
+				80B55FE1246E899B00AA7008 /* NBTextView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -721,6 +727,7 @@
 				8085CC66236E2CB800B45A7C /* Assets.xcassets in Resources */,
 				8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */,
 				807C88A323EAD638003BA644 /* Home.strings in Resources */,
+				80B55FE4246E89FB00AA7008 /* LogIn.strings in Resources */,
 				80299FE4243B9A5E0094EDB2 /* RestorePurchases.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -864,6 +871,7 @@
 				80109137236E2DFA00D3C45E /* DataManager.swift in Sources */,
 				8074D34F2457382C006B3062 /* MyAllAPIResponse.swift in Sources */,
 				8074D347245737BE006B3062 /* GetActiveRentalsResponse.swift in Sources */,
+				80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */,
 				8018E1572451889400CE7796 /* LogHelper.swift in Sources */,
 				803B6AF72469C3180022A586 /* LogInFormData.swift in Sources */,
 				8074D35124573CFA006B3062 /* NBTextField.swift in Sources */,

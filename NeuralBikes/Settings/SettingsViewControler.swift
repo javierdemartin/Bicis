@@ -103,7 +103,7 @@ class SettingsViewController: UIViewController {
 
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, restorePurchasesButton, cityPicker])
+        let stackView = UIStackView(arrangedSubviews: [locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, restorePurchasesButton, cityPicker, logOutButton])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -178,6 +178,16 @@ class SettingsViewController: UIViewController {
         button.applyProtocolUIAppearance()
         button.setTitle("FEEDBACK_BUTTON".localize(file: "Settings"), for: .normal)
         button.sizeToFit()
+        return button
+    }()
+    
+    lazy var logOutButton: UIButton = {
+
+        let button = NBButton()
+        button.applyProtocolUIAppearance()
+        button.setTitle("LOG_OUT_BUTTON".localize(file: "Settings"), for: .normal)
+        button.sizeToFit()
+        button.isHidden = true
         return button
     }()
     
@@ -320,6 +330,10 @@ class SettingsViewController: UIViewController {
         compositeDisposable += requestFeedBackButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             self?.viewModel.sendFeedBackEmail()
         })
+        
+        compositeDisposable += logOutButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+            self?.viewModel.logOut()
+        })
 
         viewModel.availableCitiesModel.bind { cities in
             self.citiesList = cities
@@ -347,6 +361,10 @@ extension SettingsViewController: LocationServicesDelegate {
 }
 
 extension SettingsViewController: SettingsViewModelDelegate {
+    func shouldShowLogOutButton() {
+        logOutButton.isHidden = false
+    }
+    
     func selectCityInPickerView(city: String) {
         guard let firstIndex = citiesList.firstIndex(of: city) else { return }
 

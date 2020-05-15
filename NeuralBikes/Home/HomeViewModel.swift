@@ -28,6 +28,7 @@ protocol HomeViewModelDataManager {
     func addStationStatistics(for id: String, city: String)
     func isUserLoggedIn(completion: @escaping (Result<LogInResponse>) -> Void)
     func rent(bike number: Int, completion: @escaping(Result<Void>) -> Void)
+    func getActiveRentals(completion: @escaping(Result<GetActiveRentalsResponse>) -> Void)
 }
 
 protocol HomeViewModelDelegate: class {
@@ -39,6 +40,7 @@ protocol HomeViewModelDelegate: class {
     func removePinsFromMap()
     func presentAlertViewWithError(title: String, body: String)
     func shouldShowRentBikeButton()
+    
 }
 
 extension HomeViewModel: LocationServicesDelegate {
@@ -93,8 +95,22 @@ class HomeViewModel {
         if let currentCity = self.currentCity {
             if currentCity.allowsLogIn {
                 delegate?.shouldShowRentBikeButton()
+                getActiveRentals()
             }
         }
+    }
+    
+    func getActiveRentals() {
+        
+        dataManager.getActiveRentals(completion: { rentalsResult in
+            switch rentalsResult {
+                
+            case .success(let activeRentals):
+                print(activeRentals)
+            case .error(let error):
+                self.delegate?.receivedError(with: error.localizedDescription)
+            }
+        })
     }
 
     func hasUnlockedFeatures(completion: @escaping(Bool) -> Void) {
@@ -261,7 +277,7 @@ class HomeViewModel {
                     switch rentResult {
                         
                     case .success():
-                        break
+                        self.getActiveRentals()
                     case .error(let error):
                         self.delegate?.receivedError(with: error.localizedDescription)
                     }
