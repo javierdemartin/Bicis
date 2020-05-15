@@ -92,7 +92,7 @@ class HomeViewController: UIViewController {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
-        button.accessibilityIdentifier = "LOLOLO"
+//        button.accessibilityIdentifier = "LOLOLO"
         button.setTitle("LOLOLO", for: .normal)
 
         return button

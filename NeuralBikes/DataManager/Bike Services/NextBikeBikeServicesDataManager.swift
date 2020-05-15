@@ -103,20 +103,22 @@ extension NextBikeBikeServicesDataManager {
             
             let task = URLSession.shared.dataTask(with: request) { data, response, error in
                 // Do something...
+                DispatchQueue.main.async {
                 
-                if let data = data {
+                    if let data = data {
 
-                    do {
+                        do {
 
-                        let decoded = try JSONDecoder().decode(GetActiveRentalsResponse.self, from: data)
-                        
-                        completion(.success(decoded))
+                            let decoded = try JSONDecoder().decode(GetActiveRentalsResponse.self, from: data)
+                            
+                            completion(.success(decoded))
 
-                    } catch {
-                        print("[ERR] Error decoding API Key")
-                        print("The received JSON String is")
-                        print(String(data: data, encoding: .utf8) as Any)
-                        completion(.error(BikeServicesDataManagerError.errorDecodingApiKey))
+                        } catch {
+                            print("[ERR] Error decoding API Key")
+                            print("The received JSON String is")
+                            print(String(data: data, encoding: .utf8) as Any)
+                            completion(.error(BikeServicesDataManagerError.errorDecodingApiKey))
+                        }
                     }
                 }
             }
@@ -227,24 +229,27 @@ extension NextBikeBikeServicesDataManager {
                     let task = URLSession.shared.dataTask(with: request) { data, response, error in
                         // Do something...
                         
-                        if let data = data {
+                        DispatchQueue.main.async {
                             
-                            do {
+                            if let data = data {
                                 
-                                let decoded = try JSONDecoder().decode(RentResponse.self, from: data)
-                                
-                                dump(decoded)
-                                
-                                if decoded.error != nil {
-                                    completion(.error(BikeServicesError.bikeNotFound))
-                                } else {
-                                    completion(.success(()))
+                                do {
+                                    
+                                    let decoded = try JSONDecoder().decode(RentResponse.self, from: data)
+                                    
+                                    dump(decoded)
+                                    
+                                    if decoded.error != nil {
+                                        completion(.error(BikeServicesError.bikeNotFound))
+                                    } else {
+                                        completion(.success(()))
+                                    }
+                                } catch {
+                                    print("[ERR] Error decoding API Key")
+                                    print("The received JSON String is")
+                                    print(String(data: data, encoding: .utf8) as Any)
+                                    completion(.error(BikeServicesDataManagerError.errorDecodingApiKey))
                                 }
-                            } catch {
-                                print("[ERR] Error decoding API Key")
-                                print("The received JSON String is")
-                                print(String(data: data, encoding: .utf8) as Any)
-                                completion(.error(BikeServicesDataManagerError.errorDecodingApiKey))
                             }
                         }
                     }
