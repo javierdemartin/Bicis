@@ -24,6 +24,19 @@ class DataManager {
 // MARK: LogInViewModelDataManager
 
 extension DataManager: LogInViewModelDataManager {
+    func forgotPassword(username: String, completion: @escaping (Result<Void>) -> Void) {
+        bikeServicesDataManager.forgotPassword(username: username, completion: { forgotResult in
+            
+            switch forgotResult {
+                
+            case .success():
+                print("Hola")
+            case .error(let error):
+                completion(.error(error))
+            }
+        })
+    }
+    
     func logIn(with userCredentials: UserCredentials, completion: @escaping(Result<LogInResponse>) -> Void) {
         
         bikeServicesDataManager.logIn(credentials: userCredentials, completion: { logInResult in

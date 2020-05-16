@@ -11,3 +11,4 @@
 "LOG_IN_TITLE_LABEL" = "Iniciar Sesión";
 "USERNAME_PLACEHOLDER" = "Usuario";
 "PASSWORD_PLACEHOLDER" = "Contraseña";
+"FORGOT_PASSWORD_BUTTON" = "¿Has olvidado tu contraseña?";

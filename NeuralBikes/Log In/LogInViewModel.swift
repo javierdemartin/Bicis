@@ -11,6 +11,7 @@ import ReactiveSwift
 
 protocol LogInViewModelDataManager: class {
     func logIn(with userCredentials: UserCredentials, completion: @escaping(Result<LogInResponse>) -> Void)
+    func forgotPassword(username: String, completion: @escaping(Result<Void>) -> Void)
 }
 
 protocol LogInViewModelDelegate: class {
@@ -45,6 +46,18 @@ class LogInViewModel {
                 self.coordinatorDelegate?.dismissViewController()
             case .error(let error):
                 print(error)
+                self.delegate?.receivedError(with: error.localizedDescription)
+            }
+        })
+    }
+    
+    func forgotPassword(username: String) {
+        dataManager.forgotPassword(username: username, completion: { forgotResult in
+            switch forgotResult {
+                
+            case .success():
+                print("HOLA")
+            case .error(let error):
                 self.delegate?.receivedError(with: error.localizedDescription)
             }
         })

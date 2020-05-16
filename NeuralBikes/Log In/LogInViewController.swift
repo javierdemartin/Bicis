@@ -32,7 +32,7 @@ class LogInViewController: UIViewController {
     let viewModel: LogInViewModel
     
     lazy var stackView: UIStackView = {
-        let stackView = NBStackView(arrangedSubviews: [titleLabel, usernameTextField, passwordTextField, submitCredentialsButton, explanationTextView])
+        let stackView = NBStackView(arrangedSubviews: [titleLabel, usernameTextField, passwordTextField, submitCredentialsButton, forgotPasswordButton, explanationTextView])
         stackView.applyProtocolUIAppearance()
         stackView.axis = NSLayoutConstraint.Axis.vertical
         return stackView
@@ -80,6 +80,17 @@ class LogInViewController: UIViewController {
         return button
     }()
     
+    lazy var forgotPasswordButton: UIButton = {
+       
+        let button = NBButton()
+//        button.applyProtocolUIAppearance()
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitle("FORGOT_PASSWORD_BUTTON".localize(file: "LogIn"), for: .normal)
+        
+        
+        return button
+    }()
+    
     init(compositeDisposable: CompositeDisposable, viewModel: LogInViewModel) {
         self.compositeDisposable = compositeDisposable
         self.viewModel = viewModel
@@ -105,6 +116,14 @@ class LogInViewController: UIViewController {
             let userCredentials = UserCredentials(mobile: userName, pin: password)
             
             self?.viewModel.logIn(with: userCredentials)
+        })
+        
+        compositeDisposable += forgotPasswordButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+            
+            guard let userName = self?.usernameTextField.text else { return }
+            
+            self?.viewModel.forgotPassword(username: userName)
+            
         })
     }
     
