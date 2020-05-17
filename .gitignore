@@ -1,6 +1,6 @@
 fastlane/screenshots/**/**.png
-Bicis.xcodeproj/project.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/UserInterfaceState.xcuserstate
-Bicis.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/UserInterfaceState.xcuserstate
-Bicis.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
-Bicis.app.dSYM.zip
-Bicis.ipa
+NeuralBikes.xcodeproj/project.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/UserInterfaceState.xcuserstate
+NeuralBikes.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/UserInterfaceState.xcuserstate
+NeuralBikes.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+*.app.dSYM.zip
+*.ipa
