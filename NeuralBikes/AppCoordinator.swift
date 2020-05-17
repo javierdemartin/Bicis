@@ -165,6 +165,12 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
     func changedCitySelectionInPickerView(city: City) {
 
         homeViewModel?.removeAnnotationsFromMap()
+        
+        if city.allowsLogIn {
+            homeViewModel?.delegate?.shouldShowRentBikeButton()
+        } else {
+            homeViewModel?.delegate?.shouldHideRentBikeButton()
+        }
 
         print("Selected from coordinator \(city.formalName)")
 

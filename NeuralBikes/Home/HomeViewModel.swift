@@ -34,13 +34,12 @@ protocol HomeViewModelDataManager {
 protocol HomeViewModelDelegate: class {
     func receivedError(with errorString: String)
     func drawPrediction(data: [Int], prediction: Bool)
-    func changedUserLocation(location: CLLocation)
     func centerMap(on point: CLLocationCoordinate2D, coordinateSpan: MKCoordinateSpan)
     func dismissGraphView()
     func removePinsFromMap()
     func presentAlertViewWithError(title: String, body: String)
     func shouldShowRentBikeButton()
-    
+    func shouldHideRentBikeButton()
 }
 
 extension HomeViewModel: LocationServicesDelegate {
@@ -87,6 +86,10 @@ class HomeViewModel {
 
         if let currentCity = self.currentCity {
             getMapPinsFrom(city: currentCity)
+            
+            if currentCity.allowsLogIn {
+                self.delegate?.shouldShowRentBikeButton()
+            }
         }
     }
     

@@ -93,7 +93,8 @@ class HomeViewController: UIViewController {
         let button = NBButton()
         button.applyProtocolUIAppearance()
 //        button.accessibilityIdentifier = "LOLOLO"
-        button.setTitle("LOLOLO", for: .normal)
+        button.setTitle("", for: .normal)
+        button.isHidden = true
 
         return button
     }()
@@ -271,6 +272,10 @@ class HomeViewController: UIViewController {
 
                     return coordinates
                 }()
+                
+                if city.allowsLogIn {
+                    self.shouldShowRentBikeButton()
+                }
 
                 self.centerMap(on: cityCoordinates, coordinateSpan: Constants.narrowCoordinateSpan)
 
@@ -662,6 +667,10 @@ extension HomeViewController: HomeViewModelDelegate {
     func shouldShowRentBikeButton() {
         rentButton.isHidden = false
     }
+    
+    func shouldHideRentBikeButton() {
+        rentButton.isHidden = true
+    }
 
     func presentAlertViewWithError(title: String, body: String) {
 
@@ -679,12 +688,6 @@ extension HomeViewController: HomeViewModelDelegate {
 
     func dismissGraphView() {
         self.hideStackView()
-    }
-
-    func changedUserLocation(location: CLLocation) {
-
-        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
-        mapView.setRegion(coordinateRegion, animated: true)
     }
 
     func drawPrediction(data: [Int], prediction: Bool) {
