@@ -30,6 +30,7 @@ protocol SettingsViewModelCoordinatorDelegate: class {
 
     func changedCitySelectionInPickerView(city: City)
     func presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+    func dismissSettingsViewController()
 }
 
 enum DonationDescriptions: String {
@@ -63,6 +64,7 @@ class SettingsViewModel {
     
     func logOut() {
         dataManager.logOut()
+        coordinatorDelegate?.dismissSettingsViewController()
     }
 
     func prepareViewForAppearance() {
