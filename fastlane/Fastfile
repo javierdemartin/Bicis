@@ -20,22 +20,15 @@ platform :ios do
   lane :beta do
     build_app(workspace: "NeuralBikes.xcworkspace", scheme: "NeuralBikes")
     upload_to_testflight
-
-	deliver(automatic_release: true)
-
-    skip_waiting_for_build_processing
   end
 
   lane :shipit do
-get_certificates           # invokes cert
-  get_provisioning_profile   # invokes sigh
-  build_app
-#   	snapshot
-#   	frameit
-
+	get_certificates           # invokes cert
+	get_provisioning_profile   # invokes sigh
+    build_app
   	precheck
     deliver(
-      force: true, # Skip HTMl report verification
+      force: true,
       submit_for_review: true,
       submission_information: {
         add_id_info_limits_tracking: true,
