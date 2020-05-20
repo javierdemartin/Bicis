@@ -40,6 +40,7 @@ protocol HomeViewModelDelegate: class {
     func presentAlertViewWithError(title: String, body: String)
     func shouldShowRentBikeButton()
     func shouldHideRentBikeButton()
+    func showActiveRentedBike(number: String)
 }
 
 extension HomeViewModel: LocationServicesDelegate {
@@ -110,6 +111,11 @@ class HomeViewModel {
                 
             case .success(let activeRentals):
                 print(activeRentals)
+                
+                if activeRentals.rentalCollection.count > 0 {
+                    self.delegate?.showActiveRentedBike(number: activeRentals.rentalCollection[0].bike)
+                }
+                
             case .error(let error):
                 self.delegate?.receivedError(with: error.localizedDescription)
             }
@@ -117,8 +123,6 @@ class HomeViewModel {
     }
 
     func hasUnlockedFeatures(completion: @escaping(Bool) -> Void) {
-
-        completion(true)
         
         if UITestingHelper.sharedInstance.isUITesting() {
             completion(true)
@@ -251,16 +255,24 @@ class HomeViewModel {
     
     // MARK: RENT PROCESS
     func startRentProcess() {
-        dataManager.isUserLoggedIn(completion: { result in
-            switch result {
-            case .success(let logInResponse):
-                print(logInResponse)
-                DispatchQueue.main.async {
-                    self.coordinatorDelegate?.presentScannerViewController()
-                }
-            case .error(let error):
-//                self.delegate?.receivedError(with: error.localizedDescription)
-                self.coordinatorDelegate?.presentLogInViewController()
+        
+        hasUnlockedFeatures(completion: { hasPaid in
+            
+            if hasPaid {
+                self.dataManager.isUserLoggedIn(completion: { result in
+                            switch result {
+                            case .success(let logInResponse):
+                                print(logInResponse)
+                                DispatchQueue.main.async {
+                                    self.coordinatorDelegate?.presentScannerViewController()
+                                }
+                            case .error(let error):
+                //                self.delegate?.receivedError(with: error.localizedDescription)
+                                self.coordinatorDelegate?.presentLogInViewController()
+                            }
+                        })
+            } else {
+                self.coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
             }
         })
     }
@@ -282,7 +294,7 @@ class HomeViewModel {
                     case .success():
                         self.getActiveRentals()
                     case .error(let error):
-                        self.delegate?.receivedError(with: error.localizedDescription)
+                        self.delegate?.receivedError(with: error.localizedDescription.replacingOccurrences(of: "%bike", with: "\(number)"))
                     }
                 })
             case .error(let error):

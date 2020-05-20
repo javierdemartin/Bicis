@@ -11,3 +11,12 @@ import Foundation
 enum BikeServicesError: Error {
     case bikeNotFound
 }
+
+extension BikeServicesError: LocalizedError {
+    public var errorDescription: String? {
+        switch self {
+        case .bikeNotFound:
+            return "BIKE_NOT_FOUND".localize(file: "DataManager")
+        }
+    }
+}

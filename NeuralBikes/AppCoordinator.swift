@@ -126,8 +126,6 @@ extension AppCoordinator: ScannerViewModelCoordinatorDelegate {
     func scannedCodeWith(number: Int?) {
         homeViewModel?.finishRentProcess(bike: number)
     }
-    
-    
 }
 
 extension AppCoordinator: RestorePurchasesViewModelCoordinatorDelegate {
@@ -147,6 +145,13 @@ extension AppCoordinator: RestorePurchasesViewModelCoordinatorDelegate {
 }
 
 extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
+    
+    func dismissSettingsViewController() {
+        DispatchQueue.main.async {
+            self.settingsViewController?.dismiss(animated: true, completion: nil)
+        }
+    }
+    
     func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
 
         self.settingsViewController?.dismiss(animated: true, completion: nil)
@@ -222,7 +227,9 @@ extension AppCoordinator: InsightsViewModelCoordinatorDelegate {
 
 extension AppCoordinator: LogInVieWModelCoordinatorDelegate {
     func dismissViewController() {
-        logInViewController?.dismiss(animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.logInViewController?.dismiss(animated: true, completion: nil)
+        }
     }
 }
 

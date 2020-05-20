@@ -15,3 +15,6 @@
 "NEXT_STATION_KEYBOARD" = "Seleccionar siguiente estación";
 
 "PREVIOUS_STATION_KEYBOARD" = "Seleccionar estación anterior";
+
+"ALERT_HEADER" = "Alerta";
+"CONFIRM_ALERT" = "Aceptar";

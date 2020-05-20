@@ -31,7 +31,6 @@ extension LocalDataManagerError: LocalizedError {
             return "ERROR_READING_DEFAULTS".localize(file: "DataManager")
         case .errorSavingToDefaults:
             return "ERROR_SAVING_TO_DEFAULTS".localize(file: "DataManager")
-
         case .hasntPaid:
             return "HASNT_PAID".localize(file: "DataManager")
         }

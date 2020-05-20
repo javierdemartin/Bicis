@@ -37,15 +37,15 @@ class LogInViewModel {
     
     func logIn(with credentials: UserCredentials) {
      
-        dataManager.logIn(with: credentials, completion: { loginResult in
+        dataManager.logIn(with: credentials, completion: { [weak self] loginResult in
+            
+            guard let self = self else { fatalError() }
+            
             switch loginResult {
                 
-            case .success(let data):
-                print(data)
-                
+            case .success:
                 self.coordinatorDelegate?.dismissViewController()
             case .error(let error):
-                print(error)
                 self.delegate?.receivedError(with: error.localizedDescription)
             }
         })
@@ -55,12 +55,16 @@ class LogInViewModel {
         dataManager.forgotPassword(username: username, completion: { forgotResult in
             switch forgotResult {
                 
-            case .success():
-                print("HOLA")
+            case .success:
+                self.delegate?.receivedError(with: "FINISH_FORGOT_PASSWORD".localize(file: "LogIn"))
             case .error(let error):
                 self.delegate?.receivedError(with: error.localizedDescription)
             }
         })
+    }
+    
+    deinit {
+        compositeDisposable.dispose()
     }
 
 }

@@ -15,3 +15,8 @@
 "NEXT_STATION_KEYBOARD" = "Select Next Station";
 
 "PREVIOUS_STATION_KEYBOARD" = "Select Next Station";
+
+// MARK: Rent process
+
+"ALERT_HEADER" = "Alert";
+"CONFIRM_ALERT" = "Okay";

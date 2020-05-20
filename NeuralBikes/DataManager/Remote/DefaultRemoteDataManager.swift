@@ -59,7 +59,6 @@ class DefaultRemoteDataManager: RemoteDataManager {
 
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void) {
 
-        // PERCENT ENCODED: SAN%20PEDRO
         myComponents.path = "/api/v1/\(type)/\(city)/\(name)"
 
         guard let url = myComponents.url else {

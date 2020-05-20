@@ -71,12 +71,13 @@ class HomeViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
         scrollView.isDirectionalLockEnabled = true
+        scrollView.isHidden = true
 
         return scrollView
     }()
     
     private lazy var activeRentalStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [randomButton])
+        let stackView = UIStackView(arrangedSubviews: [activeRentalBike])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.addBackground(color: .red)
@@ -88,13 +89,11 @@ class HomeViewController: UIViewController {
         return stackView
     }()
     
-    private var randomButton: UIButton = {
+    private var activeRentalBike: UIButton = {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
-//        button.accessibilityIdentifier = "LOLOLO"
         button.setTitle("", for: .normal)
-        button.isHidden = true
 
         return button
     }()
@@ -663,6 +662,13 @@ class HomeViewController: UIViewController {
 
 // MARK: HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
+    func showActiveRentedBike(number: String) {
+        activeRentalBike.setTitle(number, for: .normal)
+        activeRentalBike.accessibilityIdentifier = number
+        activeRentalBike.isHidden = false
+        activeRentalScrollView.isHidden = false
+    }
+    
 
     func shouldShowRentBikeButton() {
         rentButton.isHidden = false
@@ -695,8 +701,8 @@ extension HomeViewController: HomeViewModelDelegate {
     }
 
     func receivedError(with errorString: String) {
-        let alert = UIAlertController(title: "ALERT_HEADER", message: errorString, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "CONFIRM_ALERT", style: UIAlertAction.Style.default, handler: nil))
+        let alert = UIAlertController(title: "ALERT_HEADER".localize(file: "Home"), message: errorString, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "CONFIRM_ALERT".localize(file: "Home"), style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }

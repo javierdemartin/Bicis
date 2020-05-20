@@ -274,7 +274,7 @@ extension NextBikeBikeServicesDataManager {
                 var request = URLRequest(url: url)
                 request.httpMethod = "POST"
                                 
-                let parameters = ["apikey": apiKey.apiKey, "loginkey": loginKey, "bike": number, "show_errors": "1"] as [String : Any]
+                let parameters = ["apikey": apiKey.apiKey, "loginkey": loginKey, "bike": number, "show_errors": "1"] as [String: Any]
                 
                 do {
                     
@@ -284,7 +284,7 @@ extension NextBikeBikeServicesDataManager {
                     
                     request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) // pass dictionary to data object and set it as request body
                     
-                    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                    let task = URLSession.shared.dataTask(with: request) { data, _, error in
                         // Do something...
                         
                         DispatchQueue.main.async {

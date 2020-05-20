@@ -49,6 +49,7 @@ extension DataManager: LogInViewModelDataManager {
                 
                 self.localDataManager.saveUserData(validateInstallationResponse: userCredentials, completion: { _ in
                     self.localDataManager.saveLogIn(response: userResponse)
+                    completion(.success(logInResponse))
                 })
                 
             case .error(let error):
