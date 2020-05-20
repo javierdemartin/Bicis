@@ -1,2 +1,1 @@
-· Improved the interface of the insights panel
-· Fixed little issues in the behavior
+Improved interface, moved the data insights button closer to the bottom so it's easier to access.

@@ -2,11 +2,11 @@
 devices([
   "iPhone 11",
    "iPad Pro (12.9-inch) (2nd generation)",
-   "iPad Pro (12.9-inch) (4th generation)",
+   "iPad Pro (12.9-inch) (3rd generation)",
   "iPhone 11 Pro Max",
    "iPhone 8",
    "iPhone 8 Plus",
-   "iPhone SE"
+   "iPhone SE (1st generation)"
 ])
  
 # A list of supported languages
@@ -22,4 +22,4 @@ output_directory "./fastlane/screenshots"
 clear_previous_screenshots true
  
 # Latest version of iOS
-ios_version '13.4'
+ios_version '13.4.1'

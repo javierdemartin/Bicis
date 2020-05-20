@@ -1,2 +1,1 @@
-· Mejorada la interfaz de las analíticas de datos
-· Arreglados pequeños fallos en el comportamiento de la app
+Modificada ligeramente la interfaz principal para que sea más fácil de manejar con una única mano.

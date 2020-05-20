@@ -1,0 +1,12 @@
+/* 
+  Settings.strings
+  NeuralBikes
+
+  Created by Javier de Martín Gil on 10/05/2020.
+  Copyright © 2020 Javier de Martín Gil. All rights reserved.
+*/
+
+"FEEDBACK_BUTTON" = "Enviar Comentarios";
+"HOW_TO_USE" = "Recibe predicciones detalladas de disponibilidad para cada estación y compara los valores frente a la disponibilidad real.";
+"RESTORE_PURCHASES_BUTTON" = "Restaurar Compras";
+"LOG_OUT_BUTTON" = "Cerrar Sesión";

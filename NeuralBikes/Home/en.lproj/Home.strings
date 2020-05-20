@@ -1,0 +1,22 @@
+/* 
+  Home.strings
+  Bicis
+
+  Created by Javier de Martín Gil on 05/02/2020.
+  Copyright © 2020 Javier de Martín Gil. All rights reserved.
+*/
+
+"START_ROUTE" = "Start commute";
+
+"OPEN_SETTINGS_KEYBOARD" = "Open Settings";
+
+"OPEN_INSIGHTS_KEYBOARD" = "Open Insights";
+
+"NEXT_STATION_KEYBOARD" = "Select Next Station";
+
+"PREVIOUS_STATION_KEYBOARD" = "Select Next Station";
+
+// MARK: Rent process
+
+"ALERT_HEADER" = "Alert";
+"CONFIRM_ALERT" = "Okay";

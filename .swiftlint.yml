@@ -12,3 +12,4 @@ disabled_rules:
     - type_body_length
     - identifier_name
     - line_length
+    - trailing_whitespace
