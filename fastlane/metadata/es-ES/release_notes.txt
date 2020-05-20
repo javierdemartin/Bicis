@@ -1,7 +1,1 @@
-I have added support for trackpad on the iPad for all of you that use this app on an iPad. I have also redesigned the Insights view to be more informative.
-
-I am planning on releasing new features soon as soon I can start using the bike again, thank you for your reviews and purchases!
-
-Añadido soporte para trackpad en el iPad para todos aquellos que uséis esta app en un iPad. También he rediseñado la pestaña de Análisis de Datos para que sea más informativa.
-
-Estoy trabajando en nuevas características pero hasta que no pueda montarme en una bici de nuevo no podré avanzar mucho, ¡gracias por las reviews y compras!
+Modificada ligeramente la interfaz principal para que sea más fácil de manejar con una única mano.

@@ -1,3 +1,1 @@
-I have added support for trackpad on the iPad for all of you that use this app on an iPad. I have also redesigned the Insights view to be more informative.
-
-I am planning on releasing new features soon as soon I can start using the bike again, thank you for your reviews and purchases.
+Improved interface, moved the data insights button closer to the bottom so it's easier to access.

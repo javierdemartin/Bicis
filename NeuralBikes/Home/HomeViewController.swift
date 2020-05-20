@@ -120,13 +120,24 @@ class HomeViewController: UIViewController {
     }()
 
     // MARK: Renting
-
+    
+    private lazy var bottomButtonsStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [rentButton, startRouteButton, settingsButton])
+        stackView.alignment = UIStackView.Alignment.center
+        stackView.axis = NSLayoutConstraint.Axis.vertical
+        stackView.distribution  = UIStackView.Distribution.equalSpacing
+        stackView.spacing = Constants.spacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stackView
+    }()
+    
     private var startRouteButton: UIButton = {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
         button.accessibilityIdentifier = "START_ROUTE"
-        button.setTitle("START_ROUTE".localize(file: "Home"), for: .normal)
+        button.setImage(UIImage(systemName: "info.circle.fill"), for: .normal)
         button.isHidden = true
 
         return button
@@ -181,8 +192,7 @@ class HomeViewController: UIViewController {
 
         view.addSubview(statisticsAndGraphViewStackView)
         view.bringSubviewToFront(statisticsAndGraphViewStackView)
-        view.addSubview(settingsButton)
-        view.addSubview(rentButton)
+        view.addSubview(bottomButtonsStackView)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         graphView.addGestureRecognizer(tap)
@@ -195,14 +205,14 @@ class HomeViewController: UIViewController {
 
         // Align to the bottom right
         NSLayoutConstraint.activate([
-            settingsButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -2 * Constants.spacing),
-            settingsButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -2 * Constants.spacing)
+            bottomButtonsStackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -2 * Constants.spacing),
+            bottomButtonsStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -2 * Constants.spacing)
         ])
         
         // MARK: Active Rentals
         NSLayoutConstraint.activate([
             activeRentalScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-            activeRentalScrollView.trailingAnchor.constraint(equalTo: settingsButton.leadingAnchor, constant: -16.0),
+            activeRentalScrollView.trailingAnchor.constraint(equalTo: bottomButtonsStackView.leadingAnchor, constant: -16.0),
             activeRentalScrollView.heightAnchor.constraint(equalToConstant: 100.0),
             activeRentalScrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 16.0)
         ])
@@ -218,17 +228,6 @@ class HomeViewController: UIViewController {
             activeRentalStackView.bottomAnchor.constraint(equalTo: activeRentalScrollView.bottomAnchor, constant: 0)
         ])
         
-
-        // MARK: Rent button
-        NSLayoutConstraint.activate([
-            rentButton.bottomAnchor.constraint(equalTo: settingsButton.topAnchor, constant: -2 * Constants.spacing),
-            rentButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -2 * Constants.spacing)
-        ])
-        
-        NSLayoutConstraint.activate([
-            startRouteButton.widthAnchor.constraint(equalToConstant: startRouteButton.titleLabel!.text!.width(withConstrainedHeight: startRouteButton.titleLabel!.frame.height, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)) + 20.0)
-        ])
-
         // Pin the borders of the graph to the container UIStackView
         NSLayoutConstraint.activate([
             graphView.leadingAnchor.constraint(equalTo: statisticsAndGraphViewStackView.leadingAnchor),

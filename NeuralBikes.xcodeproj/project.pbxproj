@@ -636,6 +636,7 @@
 				8000476923EF425300492DFB /* Frameworks */,
 				8000476A23EF425300492DFB /* Resources */,
 				4546E4020216D1F27A9367FE /* [CP] Embed Pods Frameworks */,
+				808845432475A23400367D5C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -794,6 +795,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		808845432475A23400367D5C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nxcrun simctl boot ${TARGET_DEVICE_IDENTIFIER}\nxcrun simctl uninstall ${TARGET_DEVICE_IDENTIFIER} com.javierdemartin.bici\n";
 		};
 		CEADEC9560DB1ADAA18663BF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1247,7 +1265,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NeuralBikes/NeuralBikes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1271,7 +1289,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NeuralBikes/NeuralBikes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 42;
+				CURRENT_PROJECT_VERSION = 43;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

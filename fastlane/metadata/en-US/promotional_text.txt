@@ -1,1 +1,1 @@
-Compare the daily usage of every station with the predicted availability.
+Bike sharing demand prediction

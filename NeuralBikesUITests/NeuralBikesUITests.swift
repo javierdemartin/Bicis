@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Foundation
 
 class BicisUITests: XCTestCase {
 
@@ -19,6 +20,7 @@ class BicisUITests: XCTestCase {
 
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
     }
 
     func testExample() {
@@ -29,7 +31,7 @@ class BicisUITests: XCTestCase {
         setupSnapshot(app)
         app.launch()
 
-        sleep(8) // Wait for the map to load
+        sleep(4) // Wait for the map to load
 
         snapshot("00-Home")
 
