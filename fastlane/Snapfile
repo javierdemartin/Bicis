@@ -22,4 +22,4 @@ output_directory "./fastlane/screenshots"
 clear_previous_screenshots true
  
 # Latest version of iOS
-ios_version '13.4.1'
+ios_version '13.5'

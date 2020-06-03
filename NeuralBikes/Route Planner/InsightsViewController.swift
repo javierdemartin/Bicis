@@ -12,26 +12,6 @@ import ReactiveSwift
 import UIKit
 import MapKit
 import CoreLocation
-#if canImport(SwiftUI) && DEBUG
-import SwiftUI
-
-struct InsightsViewControllerRepresentable: UIViewRepresentable {
-    func makeUIView(context: Context) -> UIView {
-        return UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()!.view
-    }
-    
-    func updateUIView(_ view: UIView, context: Context) {
-        
-    }
-}
-
-@available(iOS 13.0, *)
-struct InsightsViewControllerPreview: PreviewProvider {
-    static var previews: some View {
-        InsightsViewControllerRepresentable()
-    }
-}
-#endif
 
 extension InsightsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -51,7 +31,7 @@ extension InsightsViewController: UITableViewDelegate {
 }
 
 extension InsightsViewController: InsightsViewModelDelegate {
-    func showMostUsedStations(stations: [String : Int]) {
+    func showMostUsedStations(stations: [String: Int]) {
         dump(stations)
 
         mostUsedStations = stations
@@ -83,15 +63,20 @@ extension InsightsViewController: InsightsViewModelDelegate {
 
             refillGrouperStackView.isHidden = false
             refillLabel.text = refillText
+            refillGrouperStackView.accessibilityLabel = NSLocalizedString("NEXT_REFILL_ACCESIBILITY_LABEL", comment: "").replacingOccurrences(of: "%time", with: refillText)
+            dockOperationsStackView.isHidden = false
         } else {
             refillGrouperStackView.isHidden = true
+            dockOperationsStackView.isHidden = true
         }
 
         if let dischargeText = nextDischarge {
             dischargeGrouperStackView.isHidden = false
+            dockOperationsStackView.isHidden = false
             dischargeLabel.text = dischargeText
         } else {
             dischargeGrouperStackView.isHidden = true
+            dockOperationsStackView.isHidden = true
         }
     }
 
@@ -138,10 +123,7 @@ extension InsightsViewController: InsightsViewModelDelegate {
 
             if let destinationStation = self.viewModel.destinationStation.value {
 
-                guard let availabilityArray = destinationStation.availabilityArray else { return }
                 guard let predictionArray = destinationStation.predictionArray else { return }
-
-                let remainderPredictionOfTheDay = predictionArray[(availabilityArray.count)...]
 
                 // Current time
                 let dateFormatter = DateFormatter()
@@ -205,9 +187,15 @@ extension InsightsViewController: InsightsViewModelDelegate {
 
                 guard let availabilityArray = destinationStation.availabilityArray else { return }
                 guard let predictionArray = destinationStation.predictionArray else { return }
+                
+                if predictionArray.count > 0 {
+                    let remainderPredictionOfTheDay = predictionArray[(availabilityArray.count)...]
+                    print(remainderPredictionOfTheDay.count)
+                } else {
+                    return
+                }
 
-                let remainderPredictionOfTheDay = predictionArray[(availabilityArray.count)...]
-                print(remainderPredictionOfTheDay.count)
+                
 
                 self.lowDockAvailabilityStackView.isHidden = false
                 self.lowDockAvailabilityLabel.text = "TOO_FAR_AWAY_WARNING".localize(file: "RoutePlanner")
@@ -237,7 +225,7 @@ class InsightsViewController: UIViewController {
     let compositeDisposable: CompositeDisposable
     var filteredData: [String]
 
-    var mostUsedStations: [String:Int] = [:]
+    var mostUsedStations: [String: Int] = [:]
     
     // MARK: Pull tab to dismiss
     
@@ -267,11 +255,22 @@ class InsightsViewController: UIViewController {
         return scrollView
     }()
     
+    lazy var viewControllerLabel: UILabel = {
+       
+        let label = NBLabel()
+        label.applyProtocolUIAppearance()
+        label.text = "INSIGHTS_LABEL".localize(file: "RoutePlanner")
+        label.font = UIFont.preferredFont(for: .title1, weight: .heavy)
+        label.textAlignment = .left
+        
+        return label
+    }()
+    
     // MARK: Vertical Stack View
     
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = NBStackView(arrangedSubviews: [mostUsedTableView, labelsDestinationStationVerticalStackView, selectedStationGrouperGrouperStackView, closestStationStackView])
+        let stackView = NBStackView(arrangedSubviews: [viewControllerLabel, mostUsedTableView, labelsDestinationStationVerticalStackView, selectedStationGrouperGrouperStackView, closestStationStackView])
         stackView.applyProtocolUIAppearance()
         stackView.alignment = .center
         
@@ -286,41 +285,14 @@ class InsightsViewController: UIViewController {
 
     let instructionsHeaderTextView: UITextView = {
 
-        let textView = UITextView(frame: .zero, textContainer: nil)
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = .clear
-        textView.isSelectable = false
-        textView.font = Constants.paragraphFont
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        textView.sizeToFit()
-        textView.isUserInteractionEnabled = true
+        let textView = NBTextView(frame: .zero, textContainer: nil)
+        textView.applyProtocolUIAppearance()
+        
         textView.text = "ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD".localize(file: "RoutePlanner")
         return textView
     }()
     
     // MARK: Free docks at destination
-    
-    lazy var dockAtDestinationGrouperStackView: UIStackView = {
-        let stackView = NBStackView(arrangedSubviews: [freeDocksExplanationView, statisticsAndLowDockStackView])
-        stackView.applyProtocolUIAppearance()
-        
-        stackView.axis = .vertical
-        stackView.isHidden = false
-        
-        return stackView
-    }()
-
-    lazy var freeDocksExplanationView: UILabel = {
-
-        let label = NBLabel()
-        label.applyProtocolUIAppearance()
-        
-        label.tintColor = .systemGray
-        
-        label.text = "FREE_DOCKS_AT_DESTINATION_LABEL".localize(file: "RoutePlanner")
-        return label
-    }()
 
     lazy var statisticsAndLowDockStackView: UIStackView = {
 
@@ -341,6 +313,7 @@ class InsightsViewController: UIViewController {
         
         stackView.axis = NSLayoutConstraint.Axis.horizontal
         stackView.isHidden = false
+        stackView.addBackground(color: UIColor.systemFill)
 
         return stackView
     }()
@@ -382,7 +355,6 @@ class InsightsViewController: UIViewController {
         let label = NBLabel()
         label.applyProtocolUIAppearance()
         label.text = "LOW_DOCK_AVAILABILITY_WARNING".localize(file: "RoutePlanner")
-        label.font = Constants.secondaryFont
         label.textAlignment = .left
 
         return label
@@ -402,8 +374,8 @@ class InsightsViewController: UIViewController {
         let label = NBLabel()
         label.applyProtocolUIAppearance()
         label.text = "..."
-        label.font = Constants.labelFont
-        label.textAlignment = .center
+        label.adjustsFontForContentSizeCategory = true
+//        label.textAlignment = .center
         return label
     }()
 
@@ -414,7 +386,8 @@ class InsightsViewController: UIViewController {
         label.text = "START_TIME_COMMUTE".localize(file: "RoutePlanner")
         label.tintColor = .systemGray
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
+        label.font = UIFont.preferredFont(for: .body, weight: .bold)
+//        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
 
         return label
     }()
@@ -424,7 +397,7 @@ class InsightsViewController: UIViewController {
         let label = NBLabel()
         label.applyProtocolUIAppearance()
         label.text = "LOADING_PREDICTIONS".localize(file: "RoutePlanner")
-        label.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .regular)
+//        label.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize, weight: .regular)
         
         return label
     }()
@@ -432,7 +405,7 @@ class InsightsViewController: UIViewController {
     // MARK: Selected station
     lazy var selectedStationGrouperGrouperStackView: UIStackView = {
 
-        let stackView = NBStackView(arrangedSubviews: [selectedStationGrouperStackView, dockOperationsStackView, dockAtDestinationGrouperStackView])
+        let stackView = NBStackView(arrangedSubviews: [selectedStationGrouperStackView, dockOperationsStackView, statisticsAndLowDockStackView])
         stackView.applyProtocolUIAppearance()
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.addBackground(color: .systemGroupedBackground)
@@ -468,7 +441,8 @@ class InsightsViewController: UIViewController {
         stackView.applyProtocolUIAppearance()
         stackView.alignment = UIStackView.Alignment.leading
         stackView.axis = NSLayoutConstraint.Axis.horizontal
-        stackView.addBackground(color: .secondarySystemFill)
+        stackView.isHidden = true
+        stackView.addBackground(color: UIColor.secondarySystemFill)
 
         return stackView
     }()
@@ -498,7 +472,7 @@ class InsightsViewController: UIViewController {
         label.applyProtocolUIAppearance()
         label.text = "Next refill time"
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .black)
+
 
         return label
     }()
@@ -528,8 +502,7 @@ class InsightsViewController: UIViewController {
         let label = NBLabel()
         label.applyProtocolUIAppearance()
         label.text = "DISCHARGE".localize(file: "RoutePlanner")
-        label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .black)
+        label.textAlignment = .natural
 
         return label
     }()
@@ -554,13 +527,14 @@ class InsightsViewController: UIViewController {
 
     }()
 
-    let destinationStationLabel: UILabel = {
+    private lazy var destinationStationLabel: UILabel = {
 
         let label = NBLabel()
         label.applyProtocolUIAppearance()
         label.text = "Station Name"
+        label.font = UIFont.preferredFont(for: .body, weight: .heavy)
         label.textAlignment = .left
-        label.font = Constants.labelFont
+//        label.font = UIFont.preferredFont(forTextStyle: .title1)
 
         return label
     }()
@@ -581,6 +555,7 @@ class InsightsViewController: UIViewController {
         label.font = Constants.labelFont
         label.accessibilityIdentifier = "DESTINATION_BIKES"
         label.textAlignment = .center
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.text = "..."
 
         return label
@@ -593,7 +568,7 @@ class InsightsViewController: UIViewController {
         label.textAlignment = .center
         label.text = "END_TIME_COMMUTE".localize(file: "RoutePlanner")
         label.tintColor = .systemGray
-        label.font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
+        label.font = UIFont.preferredFont(for: .body, weight: .bold)
         
         return label
     }()
@@ -633,7 +608,6 @@ class InsightsViewController: UIViewController {
         label.text = "Station Name"
         label.tintColor = .systemGray
         label.textAlignment = .left
-        label.font = Constants.labelFont
 
         return label
     }()
@@ -652,7 +626,6 @@ class InsightsViewController: UIViewController {
         let label = NBLabel()
         label.applyProtocolUIAppearance()
         label.tintColor = .systemGray
-        label.font = Constants.tertiaryFont
         label.text = "CLOSEST_ANNOTATION_HEADER".localize(file: "RoutePlanner")
         return label
     }()
@@ -662,7 +635,6 @@ class InsightsViewController: UIViewController {
         let label = NBLabel()
         label.applyProtocolUIAppearance()
         label.textAlignment = .left
-        label.font = Constants.tertiaryFont
         label.tintColor = .systemGray
         return label
     }()
@@ -736,6 +708,10 @@ class InsightsViewController: UIViewController {
 
         NSLayoutConstraint.activate([
             verticalStackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: self.view.frame.width - 2 * Constants.spacing)
+        ])
+        
+        NSLayoutConstraint.activate([
+            viewControllerLabel.leadingAnchor.constraint(equalTo: verticalStackView.leadingAnchor, constant: 2 * Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([

@@ -42,8 +42,8 @@ class AppCoordinator: Coordinator {
     override func start() {
 
         if UITestingHelper.sharedInstance.isUITesting() {
-            currentCity = availableCities["New York"]
-            localDataManager.saveCurrentCity(apiCityName: availableCities["New York"]!, completion: { _ in })
+            currentCity = availableCities["Bilbao"]
+            localDataManager.saveCurrentCity(apiCityName: availableCities["Bilbao"]!, completion: { _ in })
             showHomeViewController()
 
         } else {

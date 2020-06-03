@@ -13,7 +13,6 @@ import Combine
 import MapKit
 
 protocol HomeViewControllerGraphViewDelegate: class {
-    func setStationTitleFor(name: String)
     func hideGraphView()
 }
 
@@ -25,7 +24,7 @@ class HomeViewController: UIViewController {
 
     private let viewModel: HomeViewModel
 
-    private var mapView: MKMapView = {
+    private lazy var mapView: MKMapView = {
 
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +37,7 @@ class HomeViewController: UIViewController {
 
     private lazy var statisticsAndGraphViewStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [graphView, belowGraphHorizontalStackView])
+        let stackView = UIStackView(arrangedSubviews: [graphView])
         stackView.alignment = UIStackView.Alignment.center
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalCentering
@@ -50,19 +49,6 @@ class HomeViewController: UIViewController {
         return stackView
 
     }()
-
-    private lazy var belowGraphHorizontalStackView: UIStackView = {
-
-        let stackView = UIStackView(arrangedSubviews: [startRouteButton])
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.axis = NSLayoutConstraint.Axis.horizontal
-        stackView.distribution  = UIStackView.Distribution.equalCentering
-        stackView.spacing = 10.0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        return stackView
-    }()
-    
     private lazy var activeRentalScrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: .zero)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -106,11 +92,6 @@ class HomeViewController: UIViewController {
         return view
     }()
 
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        // handling code
-        viewModel.coordinatorDelegate?.showSettingsViewController()
-    }
-
     private var label: UILabel = {
 
         let label = UILabel()
@@ -136,7 +117,9 @@ class HomeViewController: UIViewController {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
+        button.accessibilityLabel = NSLocalizedString("DATA_INSIGHTS_ACCESIBILITY_LABEL", comment: "")
         button.accessibilityIdentifier = "START_ROUTE"
+        button.accessibilityLabel = NSLocalizedString("DATA_INSIGHTS_ACCESIBILITY_BUTTON", comment: "")
         button.setImage(UIImage(systemName: "info.circle.fill"), for: .normal)
         button.isHidden = true
 
@@ -148,6 +131,7 @@ class HomeViewController: UIViewController {
         let button = NBButton()
         button.applyProtocolUIAppearance()
         button.accessibilityIdentifier = "RENT_BIKE"
+        button.accessibilityLabel = NSLocalizedString("RENT_BIKE_ACCESIBILITY_LABEL", comment: "")
         button.isHidden = true
         button.setImage(UIImage(systemName: "lock.fill"), for: .normal)
         return button
@@ -157,7 +141,8 @@ class HomeViewController: UIViewController {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
-        button.accessibilityIdentifier = "RENT_BIKE"
+        button.accessibilityIdentifier = "SETTINGS"
+        button.accessibilityLabel = NSLocalizedString("SETTINGS_ACCESIBILITY_BUTTON", comment: "")
         button.setImage(UIImage(systemName: "gear"), for: .normal)
         button.imageView?.tintColor = .white
         
@@ -193,13 +178,6 @@ class HomeViewController: UIViewController {
         view.addSubview(statisticsAndGraphViewStackView)
         view.bringSubviewToFront(statisticsAndGraphViewStackView)
         view.addSubview(bottomButtonsStackView)
-
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        graphView.addGestureRecognizer(tap)
-
-        NSLayoutConstraint.activate([
-            belowGraphHorizontalStackView.heightAnchor.constraint(equalToConstant: 50)
-        ])
 
         // MARK: Settings Button constraints
 
@@ -347,8 +325,6 @@ class HomeViewController: UIViewController {
 
     @objc func selectNextStation() {
 
-
-
         self.viewModel.currentSelectedStationIndex += 1
 
         if let annotationIndex = self.mapView.annotations.firstIndex(where: { $0.title ==  self.viewModel.stations.value[self.viewModel.currentSelectedStationIndex].stationName }) {
@@ -362,25 +338,13 @@ class HomeViewController: UIViewController {
 
             let annotationFromPin = viewModel.stations.value[self.viewModel.currentSelectedStationIndex]
 
-            //            guard let annotationFromPin = view.annotation as? MapPin else { return }
-
             centerMap(on: annotationFromPin.location.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
 
-            //            viewModel.latestSelectedAnnotation
             viewModel.latestSelectedBikeStation = annotationFromPin
 
             var apiQueryStationValue: String?
 
             apiQueryStationValue = annotationFromPin.id
-
-//            if viewModel.currentCity?.apiName != "bilbao" {
-//                apiQueryStationValue = annotationFromPin.id
-//            } else {
-//                apiQueryStationValue = annotationFromPin.stationName
-//            }
-
-            // Set the selected station name as the graph's title
-            graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationName)
 
             guard apiQueryStationValue != nil else { return }
 
@@ -432,15 +396,6 @@ class HomeViewController: UIViewController {
             var apiQueryStationValue: String?
 
             apiQueryStationValue = annotationFromPin.id
-
-//            if viewModel.currentCity?.apiName != "bilbao" {
-//                apiQueryStationValue = annotationFromPin.id
-//            } else {
-//                apiQueryStationValue = annotationFromPin.stationName
-//            }
-
-            // Set the selected station name as the graph's title
-            graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationName)
 
             guard apiQueryStationValue != nil else { return }
 
@@ -547,8 +502,6 @@ class HomeViewController: UIViewController {
 
     @objc func showInsightsViewController() {
         guard let latestSelectedStation = self.viewModel.latestSelectedBikeStation else { return }
-
-//        FeedbackGenerator.sharedInstance.generator.impactOccurred()
         
         self.viewModel.selectedRoute(station: latestSelectedStation)
     }
@@ -602,20 +555,19 @@ class HomeViewController: UIViewController {
                 guard let unwrappedCity = self.viewModel.currentCity else { return }
 
                 currentLocationFromDevice = CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude), longitude: CLLocationDegrees(unwrappedCity.longitude))
+                
+                self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
             case false:
                 guard let locationFromDevice = LocationServices.sharedInstance.currentLocation else { return }
+                guard let unwrappedCity = self.viewModel.currentCity else { return }
 
                 currentLocationFromDevice = locationFromDevice
-            }
-
-            if !UITestingHelper.sharedInstance.isUITesting() {
-                self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
-            } else {
                 self.selectClosestAnnotationGraph(stations: stations,
-                                                  currentLocation: CLLocation(latitude: CLLocationDegrees(self.viewModel.currentCity!.latitude),
-                                                                              longitude: CLLocationDegrees(self.viewModel.currentCity!.longitude)))
+                currentLocation: CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude),
+                                            longitude: CLLocationDegrees(unwrappedCity.longitude)))
             }
         }
+        
     }
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -736,9 +688,7 @@ extension HomeViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
         // Don't show a custom image if the annotation is the user's location.
-        guard !(annotation is MKUserLocation) else {
-            return nil
-        }
+        guard !(annotation is MKUserLocation) else { return nil }
 
         if let cluster = annotation as? MKClusterAnnotation {
 
@@ -749,16 +699,13 @@ extension HomeViewController: MKMapViewDelegate {
             return markerAnnotationView
         }
 
-        // Better to make this class property
-        let annotationIdentifier = MKMapViewDefaultAnnotationViewReuseIdentifier
-
         var annotationView: MKAnnotationView?
 
-        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotationIdentifier) as? CustomAnnotationView {
+        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier) as? CustomAnnotationView {
             annotationView = dequeuedAnnotationView
             annotationView?.annotation = annotation
         } else {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: annotationIdentifier)
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
             annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
 
@@ -773,7 +720,6 @@ extension HomeViewController: MKMapViewDelegate {
             let markerAnnotationView: MKMarkerAnnotationView = {
                 let marker = MKMarkerAnnotationView()
                 marker.glyphText = "\(stationsDictFromViewModel.freeBikes)"
-
                 return marker
             }()
 
@@ -831,15 +777,6 @@ extension HomeViewController: MKMapViewDelegate {
 
         apiQueryStationValue = annotationFromPin.stationInformation.id
 
-//        if viewModel.currentCity?.apiName != "bilbao" {
-//            apiQueryStationValue = annotationFromPin.stationInformation.id
-//        } else {
-//            apiQueryStationValue = annotationFromPin.stationInformation.stationName
-//        }
-
-        // Set the selected station name as the graph's title
-        graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationInformation.stationName)
-
         guard apiQueryStationValue != nil else { return }
 
         viewModel.getAllDataFromApi(city: viewModel.currentCity!.apiName, station: apiQueryStationValue!, completion: { res in
@@ -856,6 +793,7 @@ extension HomeViewController: MKMapViewDelegate {
 
                 self.startRouteButton.isEnabled = true
                 self.showRoutePlannerButton()
+                self.graphView.accessibilityLabel = NSLocalizedString("SELECTED_STATION_GRAPH_ACCESIBILITY_LABEL", comment: "").replacingOccurrences(of: "%name", with: annotationFromPin.stationInformation.stationName)
 
             case .error:
                 break

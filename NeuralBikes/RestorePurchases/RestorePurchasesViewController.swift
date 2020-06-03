@@ -57,8 +57,6 @@ class RestorePurchasesViewController: UIViewController {
 
     let compositeDisposable: CompositeDisposable
     let viewModel: RestorePurchasesViewModel
-
-//    @ObservedObject let cViewModel: RestorePurchasesViewModel
     let cViewModel: RestorePurchasesViewModel
 
     let scrollView: UIScrollView = {
@@ -76,13 +74,8 @@ class RestorePurchasesViewController: UIViewController {
 
     lazy var whyYouShouldGiveMeMoneyTextView: UITextView = {
 
-        let textView = UITextView(frame: .zero, textContainer: nil)
-        textView.backgroundColor = .clear
-        textView.isSelectable = false
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        textView.isUserInteractionEnabled = true
-        textView.font = Constants.paragraphFont
+        let textView = NBTextView(frame: .zero, textContainer: nil)
+        textView.applyProtocolUIAppearance()
         textView.text = "GIVE_ME_YOUR_MONEY".localize(file: "RestorePurchases")
 
         return textView
@@ -117,12 +110,11 @@ class RestorePurchasesViewController: UIViewController {
 
     lazy var titleLabel: UILabel = {
 
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = Constants.vcTitleFont
-        label.numberOfLines = 0
+        let label = NBLabel()
+        label.applyProtocolUIAppearance()
         label.text = "RESTORE_PURCHASES_TITLE".localize(file: "RestorePurchases")
         label.textAlignment = .left
+        label.font = UIFont.preferredFont(for: .title1, weight: .heavy)
 
         return label
     }()
@@ -167,7 +159,6 @@ class RestorePurchasesViewController: UIViewController {
     let particles = GameScene()
 
     init(compositeDisposable: CompositeDisposable, viewModel: RestorePurchasesViewModel) {
-//    init(viewModel: RestorePurchasesViewModel) {
 
         self.compositeDisposable = compositeDisposable
         self.viewModel = viewModel

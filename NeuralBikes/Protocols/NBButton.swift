@@ -25,12 +25,14 @@ class NBButton: UIButton, NBButtonable {
         isUserInteractionEnabled = true
         isEnabled = true
         clipsToBounds = true
+        titleLabel?.adjustsFontForContentSizeCategory = true
+        titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         setTitleColor(UIColor.systemGray4, for: .disabled)
         setTitleColor(.darkGray, for: .highlighted)
         setTitleShadowColor(.darkGray, for: .highlighted)
         setTitleColor(.white, for: .normal)
         translatesAutoresizingMaskIntoConstraints = false
-        titleLabel?.numberOfLines = 0
+//        titleLabel?.numberOfLines = 0
         imageView?.tintColor = .white
         titleLabel?.textAlignment = .center
         sizeToFit()
@@ -67,38 +69,5 @@ class NBButton: UIButton, NBButtonable {
         
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
-//           i += 1
-//           print("Running \(i)")
-//
-//           switch i {
-//           case 1:
-//               let generator = UINotificationFeedbackGenerator()
-//               generator.notificationOccurred(.error)
-//
-//           case 2:
-//               let generator = UINotificationFeedbackGenerator()
-//               generator.notificationOccurred(.success)
-//
-//           case 3:
-//               let generator = UINotificationFeedbackGenerator()
-//               generator.notificationOccurred(.warning)
-//
-//           case 4:
-//               let generator = UIImpactFeedbackGenerator(style: .light)
-//               generator.impactOccurred()
-//
-//           case 5:
-//               let generator = UIImpactFeedbackGenerator(style: .medium)
-//               generator.impactOccurred()
-//
-//           case 6:
-//               let generator = UIImpactFeedbackGenerator(style: .heavy)
-//               generator.impactOccurred()
-//
-//           default:
-//               let generator = UISelectionFeedbackGenerator()
-//               generator.selectionChanged()
-//               i = 0
-//           }
        }
 }

@@ -26,12 +26,12 @@ class NBTextView: UITextView, NBButtonable {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .clear
         isSelectable = false
+        adjustsFontForContentSizeCategory = true
         isEditable = false
         isUserInteractionEnabled = true
         isScrollEnabled = false
         showsVerticalScrollIndicator = false
         showsHorizontalScrollIndicator = false
-//        textColor = UIColor(hex: downloadedTheme?.fontColor ?? "") ?? UIColor.white
-        font = UIFont.systemFont(ofSize: UIFont.systemFontSize, weight: .regular)
+        font = UIFont.preferredFont(forTextStyle: .body)
     }
 }

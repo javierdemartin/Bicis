@@ -22,7 +22,10 @@ enum BikeSharingApiError: Error {
     case noApiKey
 }
 
+import RxSwift
+
 protocol RemoteDataManager {
+    var publishSubject: PublishSubject<[BikeStation]> { get set }
     func getStations(city: String, completion: @escaping (Result<[BikeStation]>) -> Void)
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void)
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)

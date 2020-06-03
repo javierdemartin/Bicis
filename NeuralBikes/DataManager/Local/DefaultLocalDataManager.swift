@@ -88,6 +88,8 @@ class DefaultLocalDataManager: LocalDataManager {
         if UITestingHelper.sharedInstance.isUITesting() {
             completion(.success(true))
         }
+        
+//        completion(.success(true))
 
         let hasPaidBefore = defaults.bool(forKey: StoreKitProducts.DataInsights)
 

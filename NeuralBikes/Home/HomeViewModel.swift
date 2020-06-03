@@ -153,8 +153,6 @@ class HomeViewModel {
                 if hasUnlocked {
 
                     let closestAnnotations = Array(self.sortStationsNearTo(self.stations.value, location: station.location).dropFirst().prefix(3))
-                    
-                    dump(closestAnnotations)
 
                     self.coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station, closestAnnotations: closestAnnotations)
                 } else if !hasUnlocked {
@@ -185,7 +183,7 @@ class HomeViewModel {
         delegate?.removePinsFromMap()
     }
 
-    func getMapPinsFrom(city: City) {
+    func getMapPinsFrom(city: City) { 
 
         dataManager.getStations(city: city.formalName, completion: { resultStations in
 
@@ -266,8 +264,7 @@ class HomeViewModel {
                                 DispatchQueue.main.async {
                                     self.coordinatorDelegate?.presentScannerViewController()
                                 }
-                            case .error(let error):
-                //                self.delegate?.receivedError(with: error.localizedDescription)
+                            case .error:
                                 self.coordinatorDelegate?.presentLogInViewController()
                             }
                         })
@@ -291,14 +288,14 @@ class HomeViewModel {
                 self.dataManager.rent(bike: number, completion: { rentResult in
                     switch rentResult {
                         
-                    case .success():
+                    case .success:
                         self.getActiveRentals()
                     case .error(let error):
                         self.delegate?.receivedError(with: error.localizedDescription.replacingOccurrences(of: "%bike", with: "\(number)"))
                     }
                 })
             case .error(let error):
-                self.delegate?.receivedError(with: "ERROR")
+                self.delegate?.receivedError(with: error.localizedDescription)
             }
         })
     }

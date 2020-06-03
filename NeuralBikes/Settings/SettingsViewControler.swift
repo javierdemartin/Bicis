@@ -31,15 +31,26 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        var pickerLabel: UILabel? = (view as? UILabel)
-        if pickerLabel == nil {
-            pickerLabel = UILabel()
-            pickerLabel?.font = UIFont.systemFont(ofSize: 17.0, weight: .bold)
-            pickerLabel?.textAlignment = .center
+//        var pickerLabel: NBLabel? = (view as? NBLabel)
+//        if pickerLabel == nil {
+//            pickerLabel = NBLabel()
+//            pickerLabel?.applyProtocolUIAppearance()
+//        }
+//        pickerLabel?.font = UIFont.preferredFont(for: .body, weight: .regular)
+//
+//        pickerLabel?.text = citiesList[row]
+        
+        var label = view as? UILabel
+        
+        if label == nil {
+            label = UILabel()
         }
-        pickerLabel?.text = citiesList[row]
+        
+        label!.font = UIFont.preferredFont(for: .body, weight: .regular)
+        label!.textAlignment = .center
+        label!.text = citiesList[row]
 
-        return pickerLabel!
+        return label!
     }
 }
 
@@ -108,7 +119,10 @@ class SettingsViewController: UIViewController {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = Constants.labelFont
+//        label.font = Constants.labelFont
+        label.adjustsFontForContentSizeCategory = true
+        label.font = UIFont.preferredFont(for: .body, weight: .bold)
+
         label.numberOfLines = 0
 
         return label
@@ -116,13 +130,9 @@ class SettingsViewController: UIViewController {
 
     lazy var logInPrivacyTextView: UITextView = {
 
-        let textView = UITextView(frame: .zero, textContainer: nil)
-        textView.backgroundColor = .clear
-        textView.isSelectable = false
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        textView.isUserInteractionEnabled = true
-        textView.font = Constants.paragraphFont
+        let textView = NBTextView(frame: .zero, textContainer: nil)
+        textView.applyProtocolUIAppearance()
+        textView.accessibilityLabel = NSLocalizedString("HOW_TO_USE_ACCESIBILITY_LABEL", comment: "")
         textView.text = "HOW_TO_USE".localize(file: "Settings")
 
         return textView
@@ -156,6 +166,7 @@ class SettingsViewController: UIViewController {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
+        button.accessibilityLabel = NSLocalizedString("REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL", comment: "")
         button.setTitle("FEEDBACK_BUTTON".localize(file: "Settings"), for: .normal)
         button.sizeToFit()
         return button
@@ -165,7 +176,9 @@ class SettingsViewController: UIViewController {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
+        button.accessibilityLabel = NSLocalizedString("LOG_OUT_BUTTON_ACCESIBILITY_LABEL", comment: "")
         button.setTitle("LOG_OUT_BUTTON".localize(file: "Settings"), for: .normal)
+        button.accessibilityLabel = NSLocalizedString("LOG_OUT_ACCESIBILITY_LABEL", comment: "")
         button.sizeToFit()
         button.isHidden = true
         return button
@@ -176,6 +189,7 @@ class SettingsViewController: UIViewController {
         let button = NBButton()
         button.applyProtocolUIAppearance()
         button.setTitle("RESTORE_PURCHASES_BUTTON".localize(file: "Settings"), for: .normal)
+        button.accessibilityLabel = NSLocalizedString("RESTORE_PURCHASES_ACCESIBILITY_LABEL", comment: "")
 
         return button
     }()
@@ -259,6 +273,7 @@ class SettingsViewController: UIViewController {
         guard let bundleString = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else { return }
 
         stringVersion.text = "\(versionString)" + " (" + "\(bundleString)" + ")"
+        stringVersion.accessibilityLabel = NSLocalizedString("VERSION_ACCESIBILITY_LABEL", comment: "").replacingOccurrences(of: "%number", with: versionString)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -270,8 +285,10 @@ class SettingsViewController: UIViewController {
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined, .restricted, .denied:
                 locationServicesStatusImage.image = UIImage(systemName: "location.slash.fill")
+                locationServicesStatusImage.accessibilityLabel = NSLocalizedString("NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
             case .authorizedAlways, .authorizedWhenInUse:
                 locationServicesStatusImage.image = UIImage(systemName: "location.fill")
+                locationServicesStatusImage.accessibilityLabel = NSLocalizedString("GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
             @unknown default:
                 break
             }
@@ -292,7 +309,6 @@ class SettingsViewController: UIViewController {
                 ), discoverabilityTitle: "CLOSE_SETTINGS_KEYBOARD".localize(file: "Settings"))
         ]
     }
-
 
     override var canBecomeFirstResponder: Bool {
         return true
