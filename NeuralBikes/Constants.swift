@@ -22,12 +22,12 @@ struct Constants {
 
     static let labelFont: UIFont = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .heavy)
     static let headerFont: UIFont = UIFont.systemFont(ofSize: UIFont.labelFontSize, weight: .black)
-    static let vcTitleFont: UIFont = UIFont.systemFont(ofSize: 34.0, weight: .bold)
+    static let vcTitleFont: UIFont = UIFont.preferredFont(forTextStyle: .largeTitle)
 
     static let paragraphFont: UIFont = UIFont.systemFont(ofSize: 17.0, weight: .regular)
     static let secondaryFont: UIFont = UIFont.systemFont(ofSize: 15.0, weight: .medium)
-    static let tertiaryFont: UIFont = UIFont.systemFont(ofSize: 13.0, weight: .light)
-    static let buttonFont: UIFont = UIFont.systemFont(ofSize: 17.0, weight: .medium)
+    static let tertiaryFont: UIFont = UIFont.preferredFont(forTextStyle: .caption1)
+    static let buttonFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
 
     static let spacing: CGFloat = 16.0
 

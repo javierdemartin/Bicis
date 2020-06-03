@@ -24,34 +24,11 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
         actualAvailabilityLayer.removeFromSuperlayer()
         drawingLayer.removeFromSuperlayer()
     }
-
-    func setStationTitleFor(name: String) {
-
-        stationTitle.removeFromSuperview()
-
-        stationTitle = {
-
-            let label = UILabel(frame: CGRect(x: 5, y: 5, width: self.frame.width, height: 40.0))
-            label.text = name
-            label.textColor = UIColor(named: "TextAndGraphColor")
-            label.frame.size.width = name.width(withConstrainedHeight: 19.0, font: Constants.headerFont)
-            label.font = Constants.headerFont
-            label.layer.masksToBounds = false
-
-            label.sizeToFit()
-
-            return label
-        }()
-
-        addSubview(stationTitle)
-    }
 }
 
 class PredictionGraphView: UIView {
 
     // MARK: Instance Properties
-    var stationTitle = UILabel()
-    var stationTitleText: String?
 
     var viewHeight: CGFloat = -1.0
     var viewWidth: CGFloat = -1.0
@@ -97,39 +74,9 @@ class PredictionGraphView: UIView {
         self.backgroundColor = UIColor.systemBlue
     }
 
-//    func drawLineInGraph(type: GraphViewLine) {
-//
-//        viewHeight = (self.frame.size.height - stationTitle.frame.size.height * 1.4)
-//
-//        // create whatever path you want
-//        let path = UIBezierPath()
-//        var nextPoint = CGPoint()
-//
-//        switch type {
-//        case .prediction(let values):
-//
-//            viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
-//
-//            var heightProportion = CGFloat(values[0]) / CGFloat(values.max()!)
-//
-//            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8)
-//
-//            path.move(to: initialCoordinates)
-//        case .availability(let values):
-//
-//            viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
-//
-//            var heightProportion = CGFloat(values[0]) / CGFloat(values.max()!)
-//
-//            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8)
-//
-//            path.move(to: initialCoordinates)
-//        }
-//    }
-
     func drawLine(values: [Int], isPrediction: Bool) {
 
-        viewHeight = (self.frame.size.height - stationTitle.frame.size.height * 1.4)
+        viewHeight = (self.frame.size.height) - 20.0 // - stationTitle.frame.size.height * 1.4)
         viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
 
         if values.count > 0 {
@@ -139,9 +86,10 @@ class PredictionGraphView: UIView {
             var nextPoint = CGPoint()
 
             var heightProportion = CGFloat(values[0]) / CGFloat(values.max()!)
+            heightProportion = 0.0
 
             // Mover el punto inicial al origen de X y a la altura que corresponde al valor obtenido.
-            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8)
+            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion)
 
             path.move(to: initialCoordinates)
 
@@ -150,7 +98,7 @@ class PredictionGraphView: UIView {
                 heightProportion = CGFloat(values[element]) / CGFloat(values.max()!)
 
                 let xPosition = CGFloat(element) * viewWidth / CGFloat(values.count)
-                let yPosition = viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8
+                let yPosition = viewHeight - viewHeight * heightProportion
 
                 nextPoint = CGPoint(x: xPosition, y: yPosition)
                 path.addLine(to: nextPoint)
@@ -174,7 +122,6 @@ class PredictionGraphView: UIView {
 
                 drawingLayer.path = path.cgPath
                 drawingLayer.fillColor = UIColor.clear.cgColor
-//                drawingLayer.fillColor = UIColor.systemRed.cgColor
 
                 self.layer.addSublayer(drawingLayer)
 
@@ -210,6 +157,5 @@ class PredictionGraphView: UIView {
 
         actualAvailabilityLayer.removeFromSuperlayer()
         drawingLayer.removeFromSuperlayer()
-        stationTitle.text = ""
     }
 }

@@ -76,8 +76,8 @@ struct CitiBikesStation: BikeStation {
         guard let availability = availabilityArray else { return nil }
         guard let prediction = predictionArray else { return nil }
 
-        // TODO: ERROR
-        let range = Double(max(availability.max()!, prediction.max()!))
+        guard let maxAvailability = availability.max(), let maxPrediction = prediction.max() else { return nil }
+        let range = Double(max(maxAvailability, maxPrediction))
 
         if range == 0 {
             return nil

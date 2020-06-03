@@ -1,0 +1,33 @@
+/*
+  Localizable.strings
+  NeuralBikes
+
+  Created by Javier de Martín Gil on 22/05/2020.
+  Copyright © 2020 Javier de Martín Gil. All rights reserved.
+*/
+
+
+// MARK: Accesibility
+
+// MARK: - Home
+
+"DATA_INSIGHTS_ACCESIBILITY_BUTTON" = "Data insights";
+"SETTINGS_ACCESIBILITY_BUTTON" = "Settings";
+"RENT_BIKE_ACCESIBILITY_LABEL" = "Rent bike";
+"SELECTED_STATION_GRAPH_ACCESIBILITY_LABEL" = "Selected station %name";
+
+// MARK: - Settings
+
+"DATA_INSIGHTS_ACCESIBILITY_LABEL" = "Get more data for this station";
+"REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL" = "Send feedback";
+"LOG_OUT_BUTTON_ACCESIBILITY_LABEL" = "Log out";
+"VERSION_ACCESIBILITY_LABEL" = "Version %number";
+"HOW_TO_USE_ACCESIBILITY_LABEL" = "App description";
+"RESTORE_PURCHASES_ACCESIBILITY_LABEL" = "Restore purchases";
+"LOG_OUT_ACCESIBILITY_LABEL" = "Log out";
+"GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Granted location services";
+"NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Not granted location services";
+
+// MARK: - Insights
+
+"NEXT_REFILL_ACCESIBILITY_LABEL" = "Next bike refill at %time";

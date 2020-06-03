@@ -88,11 +88,11 @@ class LocationServices: NSObject, CLLocationManagerDelegate {
 
         switch UITestingHelper.sharedInstance.isUITesting() {
         case true:
-            return CLLocationCoordinate2D(latitude: CLLocationDegrees(availableCities["New York"]!.latitude), longitude: CLLocationDegrees(availableCities["New York"]!.longitude))
+            return CLLocationCoordinate2D(latitude: CLLocationDegrees(availableCities["Bilbao"]!.latitude), longitude: CLLocationDegrees(availableCities["Bilbao"]!.longitude))
         case false:
 
             #if targetEnvironment(simulator)
-                return CLLocationCoordinate2D(latitude: CLLocationDegrees(availableCities["New York"]!.latitude), longitude: CLLocationDegrees(availableCities["New York"]!.longitude))
+                return CLLocationCoordinate2D(latitude: CLLocationDegrees(availableCities["Bilbao"]!.latitude), longitude: CLLocationDegrees(availableCities["Bilbao"]!.longitude))
             #endif
 
             return locationManager?.location?.coordinate

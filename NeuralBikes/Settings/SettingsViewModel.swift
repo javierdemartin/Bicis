@@ -53,8 +53,8 @@ class SettingsViewModel {
     let dataManager: SettingsViewModelDataManager
 
     func sendFeedBackEmail() {
-        guard let url = URL(string: "mailto:javierdemartin@gmail.com") else { return }
-        UIApplication.shared.openURL(url)
+        guard let url = URL(string: "mailto:javierdemartin@me.com") else { return }
+        UIApplication.shared.open(url, options: [:])
     }
 
     /// Presents RestorePurchasesViewController and dismisses SettingsViewController that is currently presented as a modal

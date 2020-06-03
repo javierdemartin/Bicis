@@ -158,7 +158,7 @@ extension NextBikeBikeServicesDataManager {
                     
                     request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) // pass dictionary to data object and set it as request body
                     
-                    let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                    let task = URLSession.shared.dataTask(with: request) { data, _, error in
                         // Do something...
                         
                         if let data = data {
@@ -230,16 +230,8 @@ extension NextBikeBikeServicesDataManager {
                         
                         DispatchQueue.main.async {
                             
-                            if let data = data {
-                                
-                                do {
-                                    completion(.success(()))
-                                } catch {
-                                    print("[ERR] Error decoding API Key")
-                                    print("The received JSON String is")
-                                    print(String(data: data, encoding: .utf8) as Any)
-                                    completion(.error(BikeServicesDataManagerError.errorDecodingApiKey))
-                                }
+                            if data != nil {
+                                completion(.success(()))
                             }
                         }
                     }

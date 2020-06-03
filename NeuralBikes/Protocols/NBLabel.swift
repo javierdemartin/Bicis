@@ -24,6 +24,7 @@ class NBLabel: UILabel, NBButtonable {
     func applyProtocolUIAppearance() {
         translatesAutoresizingMaskIntoConstraints = false
         numberOfLines = 0
-        font = Constants.tertiaryFont
+        adjustsFontForContentSizeCategory = true
+        font = UIFont.preferredFont(for: .body, weight: .regular)
     }
 }

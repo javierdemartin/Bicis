@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import RxSwift
 
 class DefaultRemoteDataManager: RemoteDataManager {
-
+    var publishSubject: PublishSubject<[BikeStation]>
+    
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
 
@@ -19,6 +21,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
 
         myComponents.scheme = "https"
         myComponents.host = "javierdemart.in"
+        publishSubject = PublishSubject<[BikeStation]>()
     }
 
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void) {
@@ -96,8 +99,6 @@ class DefaultRemoteDataManager: RemoteDataManager {
         guard let selectedCity = availableCities[city]  else { return }
 
         guard let apiUrl = URL(string: selectedCity.apiUrl) else { return }
-
-        print("> Parsing \(city) with URL \(apiUrl)")
 
         var apiRequest = URLRequest(url: apiUrl)
 

@@ -21,5 +21,7 @@ class NBTextField: UITextField, NBButtonable {
         text = ""
         layer.borderColor = UIColor.systemGray.cgColor
         translatesAutoresizingMaskIntoConstraints = false
+        adjustsFontForContentSizeCategory = true
+        font = UIFont.preferredFont(forTextStyle: .body)
     }
 }

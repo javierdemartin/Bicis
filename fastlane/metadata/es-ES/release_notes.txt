@@ -1,1 +1,3 @@
-Modificada ligeramente la interfaz principal para que sea más fácil de manejar con una única mano.
+¡Nuevo icono! (otra vez), ahora con bordes más redondos, creo que es más bonito ahora
+
+He mejorado algo más la accesibilidad en los tamaños del texto, espero que si usas tamaños de texto más grandes (o pequeños) te sientas como en casa, si aun así tienes algún problema o quieres alguna mejora pídelo.
