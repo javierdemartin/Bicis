@@ -137,12 +137,12 @@ class RestorePurchasesViewController: UIViewController {
 
     lazy var purchaseStatusLabel: UILabel = {
 
-        let label = UILabel()
-        label.font = Constants.labelFont
+        let label = NBLabel()
+        label.applyProtocolUIAppearance()
+        label.font = UIFont.preferredFont(for: .body, weight: .bold)
         label.text = "HAS_NOT_PURCHASED".localize(file: "RestorePurchases")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.textAlignment = .left
 
         return label
     }()
@@ -188,8 +188,10 @@ class RestorePurchasesViewController: UIViewController {
         view.addSubview(scrollView)
 
         NSLayoutConstraint.activate([
-            unlockFeaturesLabel.widthAnchor.constraint(equalToConstant: (unlockFeaturesLabel.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0),
-            restorePurchasesButton.widthAnchor.constraint(equalToConstant: (restorePurchasesButton.titleLabel?.text?.width(withConstrainedHeight: 19.0, font: UIFont.systemFont(ofSize: UIFont.buttonFontSize, weight: .bold)))! + 20.0)
+            unlockFeaturesLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.spacing),
+            unlockFeaturesLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -Constants.spacing),
+            restorePurchasesButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.spacing),
+            restorePurchasesButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -Constants.spacing)
         ])
 
         NSLayoutConstraint.activate([
@@ -218,8 +220,6 @@ class RestorePurchasesViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.spacing),
-            titleLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -Constants.spacing),
             purchaseStatusLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.spacing),
             purchaseStatusLabel.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: Constants.spacing),
             whyYouShouldGiveMeMoneyTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: Constants.spacing),

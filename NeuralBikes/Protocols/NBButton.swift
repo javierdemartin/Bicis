@@ -21,12 +21,12 @@ class NBButton: UIButton, NBButtonable {
     func applyProtocolUIAppearance() {
         backgroundColor = .systemBlue
         layer.cornerRadius = Constants.cornerRadius
-        titleLabel?.font = Constants.buttonFont
         isUserInteractionEnabled = true
         isEnabled = true
         clipsToBounds = true
         titleLabel?.adjustsFontForContentSizeCategory = true
-        titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+        titleLabel?.font = UIFont.preferredFont(for: .body, weight: .bold)
+        
         setTitleColor(UIColor.systemGray4, for: .disabled)
         setTitleColor(.darkGray, for: .highlighted)
         setTitleShadowColor(.darkGray, for: .highlighted)

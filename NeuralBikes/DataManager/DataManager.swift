@@ -193,6 +193,9 @@ extension DataManager: InsightsViewModelDataManager {
     }
 
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping (Result<MyAPIResponse>) -> Void) {
+        
+        localDataManager.addStationStatistics(for: name, city: city)
+        
         remoteDataManager.getPredictionForStation(city: city, type: type, name: name, completion: { res in
             completion(res)
         })

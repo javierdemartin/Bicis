@@ -14,6 +14,7 @@ import MapKit
 
 protocol HomeViewControllerGraphViewDelegate: class {
     func hideGraphView()
+    func setStationTitleFor(name: String)
 }
 
 class HomeViewController: UIViewController {
@@ -345,6 +346,7 @@ class HomeViewController: UIViewController {
             var apiQueryStationValue: String?
 
             apiQueryStationValue = annotationFromPin.id
+            graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationName)
 
             guard apiQueryStationValue != nil else { return }
 
@@ -396,6 +398,8 @@ class HomeViewController: UIViewController {
             var apiQueryStationValue: String?
 
             apiQueryStationValue = annotationFromPin.id
+            
+            graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationName)
 
             guard apiQueryStationValue != nil else { return }
 
@@ -476,13 +480,10 @@ class HomeViewController: UIViewController {
             ])
             
             NSLayoutConstraint.activate([
-                // Center horizontally
                 statisticsAndGraphViewStackView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
                 statisticsAndGraphViewStackView.widthAnchor.constraint(equalToConstant: 450),
                 statisticsAndGraphViewStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.spacing)
-
             ])
-
         }
         
         mapView.frame = self.view.bounds
@@ -776,6 +777,8 @@ extension HomeViewController: MKMapViewDelegate {
         var apiQueryStationValue: String?
 
         apiQueryStationValue = annotationFromPin.stationInformation.id
+        
+        graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationInformation.stationName)
 
         guard apiQueryStationValue != nil else { return }
 

@@ -31,8 +31,8 @@ var availableCities: [String: City] = [
                    apiUrl: "https://nextbike.net/maps/nextbike-official.json?city=532", allowsLogIn: false),
     "Madrid": City(apiName: "madrid",
                    formalName: "Madrid",
-                   latitude: 40.416775,
-                   longitude: -3.703790,
+                   latitude: 40.419953,
+                   longitude: -3.688479,
                    apiUrl: "https://openapi.emtmadrid.es/v1/transport/bicimad/stations/", allowsLogIn: false)
 ]
 

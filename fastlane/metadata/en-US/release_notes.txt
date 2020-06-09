@@ -1,3 +1,3 @@
-New icon (again), with more rounded corners, I think it looks even better!
+Daily historic is now unlocked via the In App Purchase to support the development, thank you if you decide to do so.
 
-I have improved the accessibility text size so I hope if you use bigger (or smaller) text sizes on your device you feel like at home, tell me if you are having any problem or would like to improve accessibility within this app!
+Improved interface.

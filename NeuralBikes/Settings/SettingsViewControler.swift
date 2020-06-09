@@ -46,7 +46,7 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
             label = UILabel()
         }
         
-        label!.font = UIFont.preferredFont(for: .body, weight: .regular)
+        label!.font = UIFont.preferredFont(for: .body, weight: .bold)
         label!.textAlignment = .center
         label!.text = citiesList[row]
 

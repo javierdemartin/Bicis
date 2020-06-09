@@ -24,11 +24,40 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
         actualAvailabilityLayer.removeFromSuperlayer()
         drawingLayer.removeFromSuperlayer()
     }
+    func setStationTitleFor(name: String) {
+
+        stationTitle.removeFromSuperview()
+
+        stationTitle = {
+
+            let label = NBLabel(frame: CGRect(x: 10, y: 5, width: self.frame.width, height: 40.0))
+            label.applyProtocolUIAppearance()
+            label.text = "  " + name
+            label.textColor = UIColor(named: "TextAndGraphColor")
+//            label.frame.size.width = name.width(withConstrainedHeight: UIFont.preferredFont(for: .body, weight: .bold).lineHeight, font: UIFont.preferredFont(for: .body, weight: .bold))
+            label.layer.masksToBounds = false
+            label.font = UIFont.preferredFont(for: .title2, weight: .bold)
+
+            label.sizeToFit()
+
+            return label
+        }()
+
+        addSubview(stationTitle)
+    }
 }
 
 class PredictionGraphView: UIView {
 
     // MARK: Instance Properties
+    var stationTitle: UILabel = {
+        let label = NBLabel()
+        label.applyProtocolUIAppearance()
+        label.font = UIFont.preferredFont(for: .title3, weight: .bold)
+        
+        return label
+    }()
+    var stationTitleText: String?
 
     var viewHeight: CGFloat = -1.0
     var viewWidth: CGFloat = -1.0
@@ -41,6 +70,7 @@ class PredictionGraphView: UIView {
 
     func getPercentageOfDay() -> (CGFloat, Int) {
 
+        
         let date = Date()
         let calendar = Calendar.current
         let minute = Int(calendar.component(.minute, from: date) / 10)
@@ -76,7 +106,7 @@ class PredictionGraphView: UIView {
 
     func drawLine(values: [Int], isPrediction: Bool) {
 
-        viewHeight = (self.frame.size.height) - 20.0 // - stationTitle.frame.size.height * 1.4)
+        viewHeight = (self.frame.size.height - stationTitle.frame.size.height * 1.4)
         viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
 
         if values.count > 0 {
@@ -89,7 +119,8 @@ class PredictionGraphView: UIView {
             heightProportion = 0.0
 
             // Mover el punto inicial al origen de X y a la altura que corresponde al valor obtenido.
-            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion)
+            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8)
+
 
             path.move(to: initialCoordinates)
 
@@ -98,7 +129,7 @@ class PredictionGraphView: UIView {
                 heightProportion = CGFloat(values[element]) / CGFloat(values.max()!)
 
                 let xPosition = CGFloat(element) * viewWidth / CGFloat(values.count)
-                let yPosition = viewHeight - viewHeight * heightProportion
+                let yPosition = viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8
 
                 nextPoint = CGPoint(x: xPosition, y: yPosition)
                 path.addLine(to: nextPoint)
@@ -157,5 +188,6 @@ class PredictionGraphView: UIView {
 
         actualAvailabilityLayer.removeFromSuperlayer()
         drawingLayer.removeFromSuperlayer()
+        stationTitle.text = ""
     }
 }

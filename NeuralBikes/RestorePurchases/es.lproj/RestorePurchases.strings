@@ -6,7 +6,7 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
-"GIVE_ME_YOUR_MONEY" = "Esta app ha sido desarrollada por una única persona. No sólo realizando una compra puedes desbloquear nuevas características sino que ayudas al mantenimiento futuro.\n\nEsta compra desbloquea más estadísticas y análisis utilizando las predicciones generadas por la red neuronal. También permite iniciar sesión y alquilar bicicletas en los servicios disponibles.";
+"GIVE_ME_YOUR_MONEY" = "Esta app ha sido desarrollada por una única persona. No sólo realizando una compra puedes desbloquear nuevas características sino que ayudas al mantenimiento futuro.\n\nEsta compra desbloquea más estadísticas, historial de disponibilidad diario y análisis utilizando las predicciones generadas por la red neuronal. Con esto podrás comparar la disponibilidad junto a la predicción para ver si el comportamiento de la estación es el esperado.";
 
 "RESTORE_PURCHASES" = "Restaurar compras";
 "UNLOCK_FEATURE_PRE_LOAD" = " Desbloquear características";
