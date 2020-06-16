@@ -41,19 +41,19 @@ extension InsightsViewController: InsightsViewModelDelegate {
     func fillClosestStationInformation(station: BikeStation) {
         alternativeStationNameLabel.text = station.stationName
 
-        guard let location = LocationServices.sharedInstance.locationManager?.location else {
-            closestAnnotationCommentsLabel.text = "CLOSEST_ANNOTATION_DESCRIPTION_WO_LOCATION".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(Int(station.freeRacks))")
-            return
-        }
+//        guard let location = LocationServices.sharedInstance.locationManager?.location else {
+//            closestAnnotationCommentsLabel.text = "CLOSEST_ANNOTATION_DESCRIPTION_WO_LOCATION".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(Int(station.freeRacks))")
+//            return
+//        }
 
-        let distance = station.distance(to: location) / 1000
-
-        if distance > 10 {
-            closestAnnotationCommentsLabel.text = "CLOSEST_ANNOTATION_DESCRIPTION_WO_LOCATION".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(Int(station.freeRacks))")
-            return
-        }
-
-        closestAnnotationCommentsLabel.text = "CLOSEST_ANNOTATION_DESCRIPTION".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(Int(station.freeRacks))").replacingOccurrences(of: "%distance", with: "\(distance.rounded(toPlaces: 2))")
+//        let distance = station.distance(to: location) / 1000
+//
+//        if distance > 10 {
+//            closestAnnotationCommentsLabel.text = "CLOSEST_ANNOTATION_DESCRIPTION_WO_LOCATION".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(Int(station.freeRacks))")
+//            return
+//        }
+//
+//        closestAnnotationCommentsLabel.text = "CLOSEST_ANNOTATION_DESCRIPTION".localize(file: "RoutePlanner").replacingOccurrences(of: "%number", with: "\(Int(station.freeRacks))").replacingOccurrences(of: "%distance", with: "\(distance.rounded(toPlaces: 2))")
 
     }
 
@@ -206,7 +206,7 @@ extension InsightsViewController: InsightsViewModelDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        viewModel.drawDataWhateverImTired()
+//        viewModel.drawDataWhateverImTired()
     }
 
     func presentAlertViewWithError(title: String, body: String) {

@@ -160,13 +160,10 @@ class DefaultLocalDataManager: LocalDataManager {
             let encodedData = try PropertyListEncoder().encode(response)
             defaults.set(encodedData, forKey: "\(type(of: response).self)")
 
-            
-
         } catch {
             print("Error \(error.localizedDescription)")
         }
-        
-        
+            
     }
     
     func getLogIn() -> UserR? {

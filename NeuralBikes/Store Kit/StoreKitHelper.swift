@@ -30,6 +30,13 @@ struct StoreKitHelper {
             UserDefaults.standard.set(currentVersion, forKey: "lastVersion")
         }
     }
+    
+    static func getNumberOfTimesLaunched() -> Int? {
+        
+        let timesLaunched = UserDefaults.standard.integer(forKey: StoreKitHelper.numberOfTimesLaunchedKey)
+        
+        return timesLaunched
+    }
 
     static func incrementNumberOfTimesLaunched() {
 

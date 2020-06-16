@@ -15,6 +15,29 @@ enum GraphViewLine {
     case availability([Int])
 }
 
+import SwiftUI
+
+struct PredictionGraphViewRepresentable: UIViewRepresentable {
+    
+    var prediction: [Int]
+    var availability: [Int]
+    
+    func makeUIView(context: Context) -> UIView {
+        return PredictionGraphView(frame: .zero)
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {
+//        uiView.text = text
+        
+        guard let predictionGraph = uiView as? PredictionGraphView else { return }
+        
+        predictionGraph.prediction = prediction
+        
+        predictionGraph.drawLine(values: prediction, isPrediction: true)
+        predictionGraph.drawLine(values: availability, isPrediction: false)
+    }
+}
+
 /**
  Handles the received prediction data from the server and draws the graph
  */
@@ -34,7 +57,6 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
             label.applyProtocolUIAppearance()
             label.text = "  " + name
             label.textColor = UIColor(named: "TextAndGraphColor")
-//            label.frame.size.width = name.width(withConstrainedHeight: UIFont.preferredFont(for: .body, weight: .bold).lineHeight, font: UIFont.preferredFont(for: .body, weight: .bold))
             label.layer.masksToBounds = false
             label.font = UIFont.preferredFont(for: .title2, weight: .bold)
 
@@ -65,12 +87,13 @@ class PredictionGraphView: UIView {
     let shapeLayer = CAShapeLayer()
     let actualAvailabilityLayer = CAShapeLayer()
     let drawingLayer = CAShapeLayer()
+    
+    var prediction: [Int] = []
 
     private var shadowLayer: CAShapeLayer!
 
     func getPercentageOfDay() -> (CGFloat, Int) {
-
-        
+   
         let date = Date()
         let calendar = Calendar.current
         let minute = Int(calendar.component(.minute, from: date) / 10)
@@ -81,6 +104,10 @@ class PredictionGraphView: UIView {
         let consumedDayPercentage: CGFloat = CGFloat((step / Constants.lengthOfTheDay))
 
         return (consumedDayPercentage, Int(step))
+    }
+    
+    init(frame: CGRect, prediction: [Int], availability: [Int]) {
+        super.init(frame: frame)
     }
 
     override init(frame: CGRect) {
@@ -99,9 +126,9 @@ class PredictionGraphView: UIView {
         super.layoutSubviews()
 
         self.accessibilityIdentifier = "PredictionGraph"
-        self.clipsToBounds = true
-        self.layer.cornerRadius = Constants.cornerRadius
-        self.backgroundColor = UIColor.systemBlue
+//        self.clipsToBounds = true
+//        self.layer.cornerRadius = Constants.cornerRadius
+        self.backgroundColor = UIColor.systemBackground
     }
 
     func drawLine(values: [Int], isPrediction: Bool) {
@@ -120,7 +147,6 @@ class PredictionGraphView: UIView {
 
             // Mover el punto inicial al origen de X y a la altura que corresponde al valor obtenido.
             let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8)
-
 
             path.move(to: initialCoordinates)
 

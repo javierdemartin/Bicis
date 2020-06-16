@@ -229,6 +229,10 @@ class HomeViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        graphView.clipsToBounds = true
+        graphView.layer.cornerRadius = Constants.cornerRadius
+        graphView.backgroundColor = .systemBlue
 
         self.hideStackView()
 
@@ -239,22 +243,12 @@ class HomeViewController: UIViewController {
             switch cityResult {
 
             case .success(let city):
-
-                let cityCoordinates: CLLocationCoordinate2D = {
-
-                    let latitude = CLLocationDegrees(city.latitude)
-                    let longitude = CLLocationDegrees(city.longitude)
-
-                    let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-
-                    return coordinates
-                }()
                 
                 if city.allowsLogIn {
                     self.shouldShowRentBikeButton()
                 }
 
-                self.centerMap(on: cityCoordinates, coordinateSpan: Constants.narrowCoordinateSpan)
+//                self.centerMap(on: cityCoordinates, coordinateSpan: Constants.narrowCoordinateSpan)
 
             case .error:
                 break
@@ -262,43 +256,8 @@ class HomeViewController: UIViewController {
         })
     }
 
-    func selectClosestAnnotationGraph(stations: [BikeStation], currentLocation: CLLocation) {
-
-        let nearestPin: BikeStation? = stations.reduce((CLLocationDistanceMax, nil)) { (nearest, pin) in
-            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.latitude), longitude: CLLocationDegrees(pin.longitude))
-            let loc = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
-            let distance = currentLocation.distance(from: loc)
-            return distance < nearest.0 ? (distance, pin) : nearest
-        }.1
-
-        guard let nearest = nearestPin else { return }
-
-        guard let nearestStation = self.viewModel.stationsDict.value[nearest.stationName] else { return }
-
-        // Find the index of the current station
-
-        if let index = viewModel.stations.value.firstIndex(where: { $0.stationName == nearestStation.stationName }) {
-            self.viewModel.currentSelectedStationIndex = index
-        }
-
-        self.centerMap(on: CLLocationCoordinate2D(latitude: CLLocationDegrees(nearestStation.latitude),
-                                                  longitude: CLLocationDegrees(nearestStation.longitude)), coordinateSpan: Constants.narrowCoordinateSpan)
-
-        if self.mapView.annotations.contains(where: {$0.title == nearestStation.stationName}) {
-
-            if let foo = self.mapView.annotations.first(where: {$0.title == nearestStation.stationName}) {
-                self.mapView.selectAnnotation(foo, animated: true)
-            }
-        }
-    }
-
     @objc func appMovedToForeground() {
-        print("App moved to ForeGround!")
-
-        if let currentUserLcoation = LocationServices.sharedInstance.currentLocation {
-            centerMap(on: CLLocationCoordinate2D(latitude: currentUserLcoation.coordinate.latitude, longitude: currentUserLcoation.coordinate.longitude), coordinateSpan: Constants.narrowCoordinateSpan)
-        }
-
+    
         viewModel.getCurrentCity(completion: { currentCityResult in
             switch currentCityResult {
 
@@ -559,13 +518,15 @@ class HomeViewController: UIViewController {
                 
                 self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
             case false:
-                guard let locationFromDevice = LocationServices.sharedInstance.currentLocation else { return }
-                guard let unwrappedCity = self.viewModel.currentCity else { return }
-
-                currentLocationFromDevice = locationFromDevice
-                self.selectClosestAnnotationGraph(stations: stations,
-                currentLocation: CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude),
-                                            longitude: CLLocationDegrees(unwrappedCity.longitude)))
+//                guard let locationFromDevice = LocationServices.sharedInstance.currentLocation else { return }
+//                guard let unwrappedCity = self.viewModel.currentCity else { return }
+//
+//                currentLocationFromDevice = locationFromDevice
+//                self.selectClosestAnnotationGraph(stations: stations,
+//                currentLocation: CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude),
+//                                            longitude: CLLocationDegrees(unwrappedCity.longitude)))
+                
+                break
             }
         }
         
@@ -573,13 +534,6 @@ class HomeViewController: UIViewController {
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         dismissGraphView()
-    }
-
-    func centerMap(on point: CLLocationCoordinate2D, coordinateSpan: MKCoordinateSpan) {
-
-        let region = MKCoordinateRegion(center: point, span: coordinateSpan)
-
-        self.mapView.setRegion(region, animated: true)
     }
 
     func hideStackView() {
@@ -614,6 +568,37 @@ class HomeViewController: UIViewController {
 
 // MARK: HomeViewModelDelegate
 extension HomeViewController: HomeViewModelDelegate {
+    
+    func selectClosestAnnotationGraph(stations: [BikeStation], currentLocation: CLLocation) {
+
+        let nearestPin: BikeStation? = stations.reduce((CLLocationDistanceMax, nil)) { (nearest, pin) in
+            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.latitude), longitude: CLLocationDegrees(pin.longitude))
+            let loc = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+            let distance = currentLocation.distance(from: loc)
+            return distance < nearest.0 ? (distance, pin) : nearest
+        }.1
+
+        guard let nearest = nearestPin else { return }
+
+        guard let nearestStation = self.viewModel.stationsDict.value[nearest.stationName] else { return }
+
+        // Find the index of the current station
+
+        if let index = viewModel.stations.value.firstIndex(where: { $0.stationName == nearestStation.stationName }) {
+            self.viewModel.currentSelectedStationIndex = index
+        }
+
+        self.centerMap(on: CLLocationCoordinate2D(latitude: CLLocationDegrees(nearestStation.latitude),
+                                                  longitude: CLLocationDegrees(nearestStation.longitude)), coordinateSpan: Constants.narrowCoordinateSpan)
+
+        if self.mapView.annotations.contains(where: {$0.title == nearestStation.stationName}) {
+
+            if let foo = self.mapView.annotations.first(where: {$0.title == nearestStation.stationName}) {
+                self.mapView.selectAnnotation(foo, animated: true)
+            }
+        }
+    }
+    
     func showActiveRentedBike(number: String) {
         activeRentalBike.setTitle(number, for: .normal)
         activeRentalBike.accessibilityIdentifier = number
@@ -621,7 +606,13 @@ extension HomeViewController: HomeViewModelDelegate {
         activeRentalScrollView.isHidden = false
     }
     
+    func centerMap(on point: CLLocationCoordinate2D, coordinateSpan: MKCoordinateSpan) {
 
+        let region = MKCoordinateRegion(center: point, span: coordinateSpan)
+
+        self.mapView.setRegion(region, animated: false)
+    }
+    
     func shouldShowRentBikeButton() {
         rentButton.isHidden = false
     }

@@ -139,12 +139,12 @@ class SettingsViewModel {
     }
 }
 
-extension SettingsViewModel: LocationServicesDelegate {
-    func tracingLocation(_ currentLocation: CLLocation) {
-        print(currentLocation)
-    }
-
-    func tracingLocationDidFailWithError(_ error: NSError) {
-        fatalError()
-    }
-}
+//extension SettingsViewModel: LocationServicesDelegate {
+//    func tracingLocation(_ currentLocation: CLLocation) {
+//        print(currentLocation)
+//    }
+//
+//    func tracingLocationDidFailWithError(_ error: NSError) {
+//        fatalError()
+//    }
+//}

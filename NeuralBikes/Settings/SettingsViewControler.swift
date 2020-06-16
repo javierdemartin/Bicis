@@ -212,8 +212,8 @@ class SettingsViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        LocationServices.sharedInstance.delegate = self
-        LocationServices.sharedInstance.startUpdatingLocation()
+//        LocationServices.sharedInstance.delegate = self
+//        LocationServices.sharedInstance.startUpdatingLocation()
     }
 
     @objc func askForReview(_ sender: UITapGestureRecognizer) {
@@ -345,16 +345,16 @@ class SettingsViewController: UIViewController {
     }
 }
 
-extension SettingsViewController: LocationServicesDelegate {
-
-    func tracingLocation(_ currentLocation: CLLocation) {
-        locationServicesStatusImage.image = UIImage(systemName: "location.fill")
-    }
-
-    func tracingLocationDidFailWithError(_ error: NSError) {
-        print(error)
-    }
-}
+//extension SettingsViewController: LocationServicesDelegate {
+//
+//    func tracingLocation(_ currentLocation: CLLocation) {
+//        locationServicesStatusImage.image = UIImage(systemName: "location.fill")
+//    }
+//
+//    func tracingLocationDidFailWithError(_ error: NSError) {
+//        print(error)
+//    }
+//}
 
 extension SettingsViewController: SettingsViewModelDelegate {
     func shouldShowLogOutButton() {

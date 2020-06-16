@@ -9,6 +9,7 @@
 import Foundation
 import ReactiveSwift
 import MapKit
+import Combine
 
 protocol InsightsViewModelCoordinatorDelegate: class {
     func dismissModalRoutePlannerViewController()
@@ -17,7 +18,6 @@ protocol InsightsViewModelCoordinatorDelegate: class {
 protocol InsightsViewModelDelegate: class {
     func presentAlertViewWithError(title: String, body: String)
     func errorTooFarAway()
-    func gotDestinationRoute(station: BikeStation, route: MKRoute)
     func updateBikeStationOperations(nextRefill: String?, nextDischarge: String?)
     func fillClosestStationInformation(station: BikeStation)
     func showMostUsedStations(stations: [String: Int])
@@ -30,75 +30,212 @@ protocol InsightsViewModelDataManager: class {
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
 }
 
-class InsightsViewModel: NSObject {
+class InsightsViewModel: NSObject, ObservableObject, Identifiable {
+    
+    @Published var destinationStationString: String = ""
+    @Published var nextRefillTime: String?
+    @Published var nextDischargeTime: String?
+    @Published var predictionPrecission: String = NSLocalizedString("CALCULATING_PRECISSION", comment: "")
+    @Published var expectedArrivalTime: String = "-:--"
+    @Published var expectedDocksAtArrivalTime: String = "-"
+    @Published var actualDocksAtDestination: String = "-"
+    
+    @Published var predictionArray: [Int] = []
+    @Published var availabilityArray: [Int] = []
+    
+    @Published var numberOfTimesLaunched: String = ""
 
     let compositeDisposable: CompositeDisposable
-    let stationsDict: [String: BikeStation]?
+    let stationsDict: [String: BikeStation]? = [:]
     weak var coordinatorDelegate: InsightsViewModelCoordinatorDelegate?
     weak var delegate: InsightsViewModelDelegate?
     let dateFormatter = DateFormatter()
+    let locationService: LocationServiceable
+    var predictionJson: [String: Int] = [:]
 
-    var destinationRoute = MKRoute()
     var destinationStation = Binding<BikeStation?>(value: nil)
 
     let dataManager: InsightsViewModelDataManager
 
-    let sortedMostUsedStations: [String] = []
-
-    var closestAnnotations: [BikeStation]
-
-    init(compositeDisposable: CompositeDisposable, dataManager: InsightsViewModelDataManager, stationsDict: [String: BikeStation]?, closestAnnotations: [BikeStation], destinationStation: BikeStation?) {
+    init(compositeDisposable: CompositeDisposable, locationService: LocationServiceable, dataManager: InsightsViewModelDataManager, destinationStation: BikeStation) {
 
         self.compositeDisposable = compositeDisposable
-        self.stationsDict = stationsDict
 
         self.dataManager = dataManager
-
-        self.closestAnnotations = closestAnnotations
-
-        super.init()
-
+        
+        self.locationService = locationService
+        
         self.destinationStation.value = destinationStation
+        
+        destinationStationString = destinationStation.stationName
+        
+        if let precission = destinationStation.rmse {
+            predictionPrecission = NSLocalizedString("ACCURACY_OF_MODEL", comment: "").replacingOccurrences(of: "%percentage%", with: "\(Int(precission))%")
+        } else {
+            predictionPrecission = NSLocalizedString("ERROR_CALCULATING_PRECISSION", comment: "")
+        }
+        
+        super.init()
+        
+        setUpLocation()
+        
+        drawGraph()
+        
+        guard let numberOfTimesLaunchedUnwrapped = StoreKitHelper.getNumberOfTimesLaunched() else {
+            return
+        }
+        
+        guard let app_name = Bundle.main.infoDictionary!["CFBundleName"] as? String else { return }
+        
+        numberOfTimesLaunched = NSLocalizedString("NUMBER_TIMES_LAUNCHED", comment: "").replacingOccurrences(of: "%app_name%", with: app_name).replacingOccurrences(of: "%times%", with: "\(numberOfTimesLaunchedUnwrapped)")
+        
+        print(numberOfTimesLaunched)
     }
-
-    func drawDataWhateverImTired() {
-
-        // Get the closest annotation from the filtered array with the most number of free bikes
-        closestAnnotations.sort(by: { $0.freeRacks > $1.freeRacks })
-
-        // Sorting is a mutable operation, the first station will be the one from the closer ones that has the most number of free docks available
-        delegate?.fillClosestStationInformation(station: closestAnnotations.first!)
-
-        guard let station = destinationStation.value else { return }
-
-        guard let location = LocationServices.sharedInstance.getLatestLocationCoordinates() else { return }
-
-        let destinationCoordinates = CLLocationCoordinate2D(latitude: CLLocationDegrees(station.latitude), longitude: CLLocationDegrees(station.longitude))
-
-        self.calculateRouteToDestination(pickupCoordinate: location, destinationCoordinate: destinationCoordinates, completion: { resultRoute in
-
-            switch resultRoute {
-
-            case .success(let route):
-                self.delegate?.gotDestinationRoute(station: station, route: route)
-            case .error(let err):
-                dump(err)
-                self.delegate?.errorTooFarAway()
-
+    
+    func setUpLocation() {
+            switch locationService.getPermissionStatus() {
+            case .granted:
+                locationService.startMonitoring()
+                
+                guard let latestLocation = locationService.currentLocation else { return }
+                
+                guard let destinationStation = destinationStation.value else { return }
+                
+                self.calculateRouteToDestination(pickupCoordinate: latestLocation.coordinate, destinationCoordinate: destinationStation.location.coordinate, completion: { result in
+                    
+                    switch result {
+                        
+                    case .success(let arrivalTime):
+                        dump(arrivalTime)
+                        self.expectedArrivalTime = arrivalTime
+                        
+                        guard let expectedDocks = self.getPredictedDocksForArrivalTime(time: arrivalTime) else { return }
+                        
+                        self.expectedDocksAtArrivalTime = "\(expectedDocks)"
+                        
+                    case .error(let error):
+                        dump(error)
+                    }
+                })
+                
+            case .denied:
+                break
+            case .notDetermined:
+                locationService.requestPermissions()
             }
-        })
+        }
+    
+    func getPredictedDocksForArrivalTime(time: String) -> Int? {
+        
+        if let actualDocks = self.destinationStation.value?.freeRacks {
+            self.actualDocksAtDestination = "\(actualDocks)"
+        }
+        
+        guard self.destinationStation.value != nil else { return nil }
+        
+        var docksAtArrival: Int?
+        
+        var time = time
+        time.removeLast()
+        time += "0"
 
-        dataManager.getCurrentCity(completion: { cityResult in
-            switch cityResult {
+        dataManager.getCurrentCity(completion: { currentCityResult in
+
+            switch currentCityResult {
 
             case .success(let city):
-                let stationStatistics = self.dataManager.getStationStatistics(for: city.apiName)
-                dump(stationStatistics)
 
-                let sorted = Array(stationStatistics.sorted(by: { return $0 > $1 }))
+                var stationName = ""
 
-                print(sorted)
-                self.delegate?.showMostUsedStations(stations: stationStatistics)
+                stationName = self.destinationStation.value!.id
+                
+                self.dataManager.getPredictionForStation(city: city.apiName, type: "prediction", name: stationName, completion: { predictionResult in
+                    
+                    switch predictionResult {
+                        
+                    case .success(let data):
+                        guard let expectedDocksAtArrival = data.values[time] else { break }
+                        
+                        docksAtArrival = expectedDocksAtArrival
+                        
+                        self.expectedDocksAtArrivalTime = "\(expectedDocksAtArrival)"
+                        
+                    case .error:
+                        break
+                    }
+                })
+                
+            case .error:
+                break
+            }
+        })
+        
+        return docksAtArrival
+    }
+        
+    deinit {
+        compositeDisposable.dispose()
+    }
+    
+    func drawGraph() {
+        
+        // Date retrieved from the API uses 24 hour formand intependently of the user's locale
+        dateFormatter.dateFormat = "HH:mm"
+        
+        
+        let date = Date()
+        let calendar = Calendar.current
+        
+        dataManager.getCurrentCity(completion: { currentCityResult in
+
+            switch currentCityResult {
+
+            case .success(let city):
+
+                var stationName = ""
+
+                stationName = self.destinationStation.value!.id
+
+                self.dataManager.getAllDataFromApi(city: city.apiName, station: stationName, completion: { result in
+
+                    switch result {
+
+                    case .success(let datos):
+                        
+                        self.predictionJson = datos.values.prediction
+
+                        let sortedNowKeysAndValues = Array(datos.values.today).sorted(by: { $0.0 < $1.0 })
+                        let sortedPredictionKeysAndValues = Array(datos.values.prediction).sorted(by: { $0.0 < $1.0 })
+
+                        var sortedNow: [Int] = []
+                        var sortedPrediction: [Int] = []
+
+                        sortedNowKeysAndValues.forEach({ sortedNow.append($0.value )})
+                        sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})
+
+                        self.destinationStation.value!.availabilityArray = sortedNow
+                        self.destinationStation.value!.predictionArray = sortedPrediction
+                        
+                        self.predictionArray = sortedPrediction
+                        self.availabilityArray = sortedNow
+                        
+                        // Get local time
+                        let closestNextRefillTime = datos.refill.reversed().first(where: {
+                            calendar.component(.hour, from: date) < calendar.component(.hour, from: self.dateFormatter.date(from: $0)!)
+                        }) as? String
+
+                        let closestNextDischargeTime = datos.discharges.reversed().first(where: {
+                            calendar.component(.hour, from: self.dateFormatter.date(from: $0)!) < calendar.component(.hour, from: date)
+                        }) as? String
+
+                        // Fill refill/discharge times for the station
+                        self.nextRefillTime = closestNextRefillTime
+                        self.nextDischargeTime = closestNextDischargeTime
+                        
+                    case .error:
+                        break
+                    }
+                })
 
             case .error:
                 break
@@ -131,6 +268,8 @@ class InsightsViewModel: NSObject {
                     switch result {
 
                     case .success(let datos):
+                        
+                        self.predictionJson = datos.values.prediction
 
                         let sortedNowKeysAndValues = Array(datos.values.today).sorted(by: { $0.0 < $1.0 })
                         let sortedPredictionKeysAndValues = Array(datos.values.prediction).sorted(by: { $0.0 < $1.0 })
@@ -143,17 +282,22 @@ class InsightsViewModel: NSObject {
 
                         self.destinationStation.value!.availabilityArray = sortedNow
                         self.destinationStation.value!.predictionArray = sortedPrediction
+                        
+                        self.predictionArray = sortedPrediction
+                        self.availabilityArray = sortedNow
 
                         // Get local time
                         let closestNextRefillTime = datos.refill.reversed().first(where: {
                             calendar.component(.hour, from: date) < calendar.component(.hour, from: self.dateFormatter.date(from: $0)!)
-                        })
+                        }) as? String
 
                         let closestNextDischargeTime = datos.discharges.reversed().first(where: {
                             calendar.component(.hour, from: self.dateFormatter.date(from: $0)!) < calendar.component(.hour, from: date)
-                        })
+                        }) as? String
 
                         // Fill refill/discharge times for the station
+                        self.nextRefillTime = closestNextRefillTime
+                        self.nextDischargeTime = closestNextDischargeTime
                         self.delegate?.updateBikeStationOperations(nextRefill: closestNextRefillTime, nextDischarge: closestNextDischargeTime)
 
                         completion(())
@@ -166,13 +310,9 @@ class InsightsViewModel: NSObject {
                 break
             }
         })
-
     }
-}
-
-extension InsightsViewModel: MKMapViewDelegate {
-
-    func calculateRouteToDestination(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D, completion: @escaping(Result<MKRoute>) -> Void) {
+    
+    func calculateRouteToDestination(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D, completion: @escaping(Result<String>) -> Void) {
 
         let sourcePlacemark = MKPlacemark(coordinate: pickupCoordinate, addressDictionary: nil)
         let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate, addressDictionary: nil)
@@ -204,18 +344,29 @@ extension InsightsViewModel: MKMapViewDelegate {
 
             guard let response = response else {
                 if let error = error {
-                    dump(error)
-
                     return completion(.error(error))
                 }
 
                 return
             }
 
-            self.destinationRoute = response.routes[0]
+            let destinationRoute = response.routes[0]
+                        
+            let calendar = Calendar.current
+            let date = calendar.date(byAdding: .second, value: Int(destinationRoute.expectedTravelTime), to: Date())
 
-            completion(.success(self.destinationRoute))
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm"
+            let roundedArrivalTime = dateFormatter.string(from: date!)
+
+            let formatter = MeasurementFormatter()
+            formatter.unitOptions = .naturalScale
+            formatter.unitStyle = .short
+            formatter.locale = Locale(identifier: Locale.current.languageCode!)
+
+            completion(.success(roundedArrivalTime))
 
         }
     }
+
 }

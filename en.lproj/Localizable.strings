@@ -30,4 +30,16 @@
 
 // MARK: - Insights
 
-"NEXT_REFILL_ACCESIBILITY_LABEL" = "Next bike refill at %time";
+
+"NEXT_REFILL_ACCESIBILITY_LABEL" = "Next refill will be at %time";
+
+"DESTINATION_STATION" = "Destination station";
+"CALCULATING_PRECISSION" = "Calculating accuracy...";
+"FREE_DOCKS_DESTINATION_PLACEHOLDER" = "Free racks at destination";
+"EXPLANATION_INSIGHTS" = "Destination station statistics";
+"ERROR_CALCULATING_PRECISSION" = "Prediction accuracy couldn't be calculated";
+"ACCURACY_OF_MODEL" = "%percentage% prediction accuracy";
+"NUMBER_TIMES_LAUNCHED" = "You have opened this version of %app_name% %times% times";
+"DISCHARGE" = "Discharge";
+"REFILL" = "Refill";
+

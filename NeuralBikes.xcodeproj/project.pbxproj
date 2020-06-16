@@ -14,7 +14,7 @@
 		8000476F23EF425300492DFB /* NeuralBikesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000476E23EF425300492DFB /* NeuralBikesUITests.swift */; };
 		8000477723EF426000492DFB /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000477623EF426000492DFB /* SnapshotHelper.swift */; };
 		8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000477A23F06C1100492DFB /* StoreKitHelper.swift */; };
-		8002ED7C2397FC5E008ABB6B /* LocationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8002ED7B2397FC5E008ABB6B /* LocationServices.swift */; };
+		8008A67D249828A600D7F5C7 /* HomeViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8008A67C249828A600D7F5C7 /* HomeViewControllerSwiftUI.swift */; };
 		800CE942239559F700674D1C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800CE941239559F700674D1C /* Constants.swift */; };
 		800CE94423955A7F00674D1C /* LocalDataManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800CE94323955A7F00674D1C /* LocalDataManagerError.swift */; };
 		800DDD4C23ED510700FCE4E5 /* BiciMad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800DDD4B23ED510700FCE4E5 /* BiciMad.swift */; };
@@ -42,7 +42,7 @@
 		80299FE1243B94C40094EDB2 /* ConfettiKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE0243B94C40094EDB2 /* ConfettiKit.swift */; };
 		80299FE4243B9A5E0094EDB2 /* RestorePurchases.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80299FE6243B9A5E0094EDB2 /* RestorePurchases.strings */; };
 		80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */; };
-		8029AEA324780F240072117B /* SettingsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029AEA224780F240072117B /* SettingsSwiftUIView.swift */; };
+		8029AEA324780F240072117B /* InsightsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029AEA224780F240072117B /* InsightsSwiftUIView.swift */; };
 		8036399D24829FA900FA096F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036399C24829FA900FA096F /* UIFont.swift */; };
 		80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */; };
 		80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */; };
@@ -105,6 +105,9 @@
 		80D288C1241D5200004EE583 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
 		80D288C3241E3063004EE583 /* RoutePlannerStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */; };
 		80E7D8A92456033E00D49894 /* NBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E7D8A82456033E00D49894 /* NBButton.swift */; };
+		80F882032490E2D800AB322A /* LocationServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F882022490E2D800AB322A /* LocationServiceable.swift */; };
+		80F882052490E30C00AB322A /* PermissionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F882042490E30C00AB322A /* PermissionStatus.swift */; };
+		80F882072490E3B100AB322A /* LocationServicesCoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F882062490E3B100AB322A /* LocationServicesCoreLocation.swift */; };
 		80FFDE3224683D4A00436BA6 /* NBStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FFDE3124683D4A00436BA6 /* NBStackView.swift */; };
 		80FFDE342468407500436BA6 /* NBLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FFDE332468407500436BA6 /* NBLabel.swift */; };
 		80FFDE362468614000436BA6 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FFDE352468614000436BA6 /* UIApplication.swift */; };
@@ -146,7 +149,7 @@
 		8000477023EF425300492DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8000477623EF426000492DFB /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		8000477A23F06C1100492DFB /* StoreKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
-		8002ED7B2397FC5E008ABB6B /* LocationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServices.swift; sourceTree = "<group>"; };
+		8008A67C249828A600D7F5C7 /* HomeViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerSwiftUI.swift; sourceTree = "<group>"; };
 		800CE941239559F700674D1C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		800CE94323955A7F00674D1C /* LocalDataManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManagerError.swift; sourceTree = "<group>"; };
 		800CE94523955BD400674D1C /* NeuralBikes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NeuralBikes.entitlements; sourceTree = "<group>"; };
@@ -169,7 +172,7 @@
 		80299FE5243B9A5E0094EDB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RestorePurchases.strings; sourceTree = "<group>"; };
 		80299FE7243B9A600094EDB2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RestorePurchases.strings; sourceTree = "<group>"; };
 		80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackGenerator.swift; sourceTree = "<group>"; };
-		8029AEA224780F240072117B /* SettingsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsSwiftUIView.swift; path = NeuralBikes/Settings/SettingsSwiftUIView.swift; sourceTree = SOURCE_ROOT; };
+		8029AEA224780F240072117B /* InsightsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsSwiftUIView.swift; sourceTree = "<group>"; };
 		8036399C24829FA900FA096F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewController.swift; sourceTree = "<group>"; };
 		80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewModel.swift; sourceTree = "<group>"; };
@@ -239,6 +242,9 @@
 		80D288C0241D5200004EE583 /* UITestingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingHelper.swift; sourceTree = "<group>"; };
 		80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerStationModel.swift; sourceTree = "<group>"; };
 		80E7D8A82456033E00D49894 /* NBButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBButton.swift; sourceTree = "<group>"; };
+		80F882022490E2D800AB322A /* LocationServiceable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceable.swift; sourceTree = "<group>"; };
+		80F882042490E30C00AB322A /* PermissionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatus.swift; sourceTree = "<group>"; };
+		80F882062490E3B100AB322A /* LocationServicesCoreLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServicesCoreLocation.swift; sourceTree = "<group>"; };
 		80FFDE3124683D4A00436BA6 /* NBStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBStackView.swift; sourceTree = "<group>"; };
 		80FFDE332468407500436BA6 /* NBLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBLabel.swift; sourceTree = "<group>"; };
 		80FFDE352468614000436BA6 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
@@ -317,7 +323,9 @@
 		8002ED7D2397FCAB008ABB6B /* LocationServices */ = {
 			isa = PBXGroup;
 			children = (
-				8002ED7B2397FC5E008ABB6B /* LocationServices.swift */,
+				80F882022490E2D800AB322A /* LocationServiceable.swift */,
+				80F882042490E30C00AB322A /* PermissionStatus.swift */,
+				80F882062490E3B100AB322A /* LocationServicesCoreLocation.swift */,
 			);
 			path = LocationServices;
 			sourceTree = "<group>";
@@ -329,7 +337,6 @@
 				80FFDE3B24689C5C00436BA6 /* SettingsViewModel.swift */,
 				80FFDE3724689C4600436BA6 /* SettingsErrors.swift */,
 				80FFDE4524689DEF00436BA6 /* Settings.strings */,
-				8029AEA224780F240072117B /* SettingsSwiftUIView.swift */,
 			);
 			name = Settings;
 			path = "ç+`´p++++++";
@@ -377,6 +384,7 @@
 				801ECE3C236F3B90003CFAF7 /* CustomAnnotationView.swift */,
 				803FD8A023C71FAF008DDE91 /* GraphView.swift */,
 				807C88A523EAD638003BA644 /* Home.strings */,
+				8008A67C249828A600D7F5C7 /* HomeViewControllerSwiftUI.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -564,6 +572,7 @@
 		809953F32416C50100B44DC9 /* Route Planner */ = {
 			isa = PBXGroup;
 			children = (
+				8029AEA224780F240072117B /* InsightsSwiftUIView.swift */,
 				809953F42416C76F00B44DC9 /* InsightsViewController.swift */,
 				809953F62416C77700B44DC9 /* InsightsViewModel.swift */,
 				8099541624193F5600B44DC9 /* RoutePlanner.strings */,
@@ -904,7 +913,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8029AEA324780F240072117B /* SettingsSwiftUIView.swift in Sources */,
+				8029AEA324780F240072117B /* InsightsSwiftUIView.swift in Sources */,
 				8074D33924573712006B3062 /* LogInResponse.swift in Sources */,
 				80109145236E320300D3C45E /* AppCoordinator.swift in Sources */,
 				8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */,
@@ -913,9 +922,11 @@
 				80109137236E2DFA00D3C45E /* DataManager.swift in Sources */,
 				8074D34F2457382C006B3062 /* MyAllAPIResponse.swift in Sources */,
 				8074D347245737BE006B3062 /* GetActiveRentalsResponse.swift in Sources */,
+				8008A67D249828A600D7F5C7 /* HomeViewControllerSwiftUI.swift in Sources */,
 				80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */,
 				8018E1572451889400CE7796 /* LogHelper.swift in Sources */,
 				804F162224796D9900B90FC2 /* DataObserverProducer.swift in Sources */,
+				80F882072490E3B100AB322A /* LocationServicesCoreLocation.swift in Sources */,
 				803B6AF72469C3180022A586 /* LogInFormData.swift in Sources */,
 				8074D35124573CFA006B3062 /* NBTextField.swift in Sources */,
 				80FFDE362468614000436BA6 /* UIApplication.swift in Sources */,
@@ -932,6 +943,7 @@
 				8074D33B24573720006B3062 /* LogInResponseError.swift in Sources */,
 				80109143236E317700D3C45E /* HomeViewModel.swift in Sources */,
 				80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */,
+				80F882032490E2D800AB322A /* LocationServiceable.swift in Sources */,
 				8074D34D24573816006B3062 /* MyAllAPIResponseItem.swift in Sources */,
 				8074D35324573E98006B3062 /* BikeServicesDataManager.swift in Sources */,
 				80B55FE0246DB76D00AA7008 /* BikeServicesError.swift in Sources */,
@@ -969,6 +981,7 @@
 				8074D335245736E6006B3062 /* UserCredentials.swift in Sources */,
 				80628461236E34C500717472 /* Coordinator.swift in Sources */,
 				80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */,
+				80F882052490E30C00AB322A /* PermissionStatus.swift in Sources */,
 				8074D33F24573748006B3062 /* Rent.swift in Sources */,
 				80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */,
 				80FFDE3D24689C5C00436BA6 /* SettingsViewControler.swift in Sources */,
@@ -984,7 +997,6 @@
 				809953F52416C76F00B44DC9 /* InsightsViewController.swift in Sources */,
 				8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */,
 				800CE942239559F700674D1C /* Constants.swift in Sources */,
-				8002ED7C2397FC5E008ABB6B /* LocationServices.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

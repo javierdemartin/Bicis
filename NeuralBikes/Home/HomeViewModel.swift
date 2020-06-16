@@ -36,22 +36,13 @@ protocol HomeViewModelDelegate: class {
     func receivedError(with errorString: String)
     func drawPrediction(data: [Int], prediction: Bool)
     func centerMap(on point: CLLocationCoordinate2D, coordinateSpan: MKCoordinateSpan)
+    func selectClosestAnnotationGraph(stations: [BikeStation], currentLocation: CLLocation)
     func dismissGraphView()
     func removePinsFromMap()
     func presentAlertViewWithError(title: String, body: String)
     func shouldShowRentBikeButton()
     func shouldHideRentBikeButton()
     func showActiveRentedBike(number: String)
-}
-
-extension HomeViewModel: LocationServicesDelegate {
-    func tracingLocation(_ currentLocation: CLLocation) {
-        print(currentLocation)
-    }
-
-    func tracingLocationDidFailWithError(_ error: NSError) {
-
-    }
 }
 
 class HomeViewModel {
@@ -61,6 +52,9 @@ class HomeViewModel {
     var currentCity: City?
 
     var currentSelectedStationIndex: Int = 0
+    
+    let locationService: LocationServiceable
+
 
     var latestSelectedAnnotation: MKAnnotation?
     var latestSelectedBikeStation: BikeStation?
@@ -76,15 +70,17 @@ class HomeViewModel {
 
     let stationsDict = Binding<[String: BikeStation]>(value: [:])
 
-    init(city: City?, compositeDisposable: CompositeDisposable, dataManager: HomeViewModelDataManager) {
+    init(city: City?, compositeDisposable: CompositeDisposable, dataManager: HomeViewModelDataManager, locationService: LocationServiceable) {
 
         self.currentCity = city
         self.compositeDisposable = compositeDisposable
         self.dataManager = dataManager
-
-        LocationServices.sharedInstance.delegate = self
-        LocationServices.sharedInstance.locationManager?.requestWhenInUseAuthorization()
-        LocationServices.sharedInstance.locationManager?.startUpdatingLocation()
+        
+        self.locationService = locationService
+        
+        setUpLocation()
+        
+        setUpBindings()
 
         if let currentCity = self.currentCity {
             getMapPinsFrom(city: currentCity)
@@ -93,6 +89,17 @@ class HomeViewModel {
                 self.delegate?.shouldShowRentBikeButton()
             }
         }
+    }
+    
+    func setUpBindings() {
+        
+        compositeDisposable += locationService.signalForDidUpdateLocations.observe({ event in
+            guard let location = event.value else {
+                return
+            }
+            
+            self.delegate?.centerMap(on: location.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
+        })
     }
     
     func viewWillAppear() {
@@ -200,9 +207,9 @@ class HomeViewModel {
 
                 self.stations.value = res
 
-                if let locationFromDevice = LocationServices.sharedInstance.currentLocation {
-
+                if let locationFromDevice = self.locationService.currentLocation {
                     self.stations.value = self.sortStationsNearTo(res, location: locationFromDevice)
+                    self.delegate?.selectClosestAnnotationGraph(stations: self.stations.value, currentLocation: locationFromDevice)
                 }
 
             case .error:
@@ -210,13 +217,22 @@ class HomeViewModel {
             }
         })
     }
+    
+    func setUpLocation() {
+        switch locationService.getPermissionStatus() {
+        case .granted:
+            locationService.startMonitoring()
+        case .denied:
+            break
+        case .notDetermined:
+            locationService.requestPermissions()
+        }
+    }
 
     func sortStationsNearTo(_ values: [BikeStation], location: CLLocation) -> [BikeStation] {
 
-        /// Mutating operation
         stations.value.sort(by: { $0.distance(to: location) < $1.distance(to: $0.location) })
 
-//        return Array(stations.value.dropFirst().prefix(3))
         return Array(stations.value)
     }
 
@@ -246,6 +262,9 @@ class HomeViewModel {
                             // Get the remainder values for the prediction
 
                             let payload = ["prediction": sortedPrediction, "today": sortedNow]
+                            
+                            self.latestSelectedBikeStation?.availabilityArray = sortedNow
+                            self.latestSelectedBikeStation?.predictionArray = sortedPrediction
 
                             self.delegate?.drawPrediction(data: sortedPrediction, prediction: true)
                             self.delegate?.drawPrediction(data: sortedNow, prediction: false)

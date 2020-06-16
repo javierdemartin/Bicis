@@ -97,4 +97,13 @@ struct NextBikeStation: BikeStation {
         latitude = try values.decode(Double.self, forKey: .latitude)
         longitude = try values.decode(Double.self, forKey: .longitude)
     }
+    
+    init(id: String, freeBikes: Int, freeDocks: Int, stationName: String, latitude: Double, longitude: Double) {
+        self.id = id
+        self.freeBikes = freeBikes
+        self.freeRacks = freeDocks
+        self.stationName = stationName
+        self.latitude = latitude
+        self.longitude = longitude
+    }
 }

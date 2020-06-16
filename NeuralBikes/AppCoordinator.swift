@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import ReactiveSwift
+import SwiftUI
 import CoreLocation
 
 class AppCoordinator: Coordinator {
@@ -31,6 +32,10 @@ class AppCoordinator: Coordinator {
 
     lazy var dataManager: DataManager = {
         return DataManager(localDataManager: self.localDataManager, remoteDataManager: self.remoteDataManager, bikeServicesDataManager: bikeServicesDataManager)
+    }()
+    
+    lazy var locationService: LocationServiceable = {
+       return LocationServiceCoreLocation()
     }()
     
     var scannerViewModel: ScannerViewModel?
@@ -78,7 +83,7 @@ class AppCoordinator: Coordinator {
     fileprivate func showHomeViewController() {
 
         let compositeDisposable = CompositeDisposable()
-        homeViewModel = HomeViewModel(city: currentCity ?? nil, compositeDisposable: compositeDisposable, dataManager: dataManager)
+        homeViewModel = HomeViewModel(city: currentCity ?? nil, compositeDisposable: compositeDisposable, dataManager: dataManager, locationService: locationService)
         homeViewController = HomeViewController(viewModel: homeViewModel!, compositeDisposable: compositeDisposable)
         self.window.rootViewController = homeViewController
 
@@ -188,9 +193,6 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
         homeViewModel.stations.value = []
         homeViewModel.stationsDict.value = [:]
 
-        // Dismiss the graphview
-        homeViewModel.delegate?.dismissGraphView()
-
         homeViewModel.dataManager.getStations(city: city.formalName, completion: { resultStations in
 
             switch resultStations {
@@ -259,14 +261,24 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation]) {
 
         let compositeDisposable = CompositeDisposable()
-        let routePlannerViewModel = InsightsViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, closestAnnotations: closestAnnotations, destinationStation: stationsDict)
-        routePlannerViewModel.coordinatorDelegate = self
-        routePlannerViewController = InsightsViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
-        routePlannerViewModel.delegate = routePlannerViewController!
+        
+        let routePlannerViewModel = InsightsViewModel(compositeDisposable: compositeDisposable, locationService: locationService, dataManager: dataManager, destinationStation: stationsDict)
+   
+        let swiftUIView = InsightsSwiftUIView(viewModel: routePlannerViewModel)
+        let viewCtrl = UIHostingController(rootView: swiftUIView)
 
-        routePlannerViewController!.modalPresentationStyle = .formSheet
 
-        self.window.rootViewController?.present(routePlannerViewController!, animated: true, completion: nil)
+//        let routePlannerViewModel = InsightsViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, closestAnnotations: closestAnnotations, destinationStation: stationsDict)
+//        routePlannerViewModel.coordinatorDelegate = self
+//        routePlannerViewController = InsightsViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
+//        routePlannerViewModel.delegate = routePlannerViewController!
+//
+//        routePlannerViewController!.modalPresentationStyle = .formSheet
+        
+        viewCtrl.modalPresentationStyle = .formSheet
+
+//        self.window.rootViewController?.present(routePlannerViewController!, animated: true, completion: nil)
+        self.window.rootViewController?.present(viewCtrl, animated: true, completion: nil)
     }
 
     func showSettingsViewController() {
