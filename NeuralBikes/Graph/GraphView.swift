@@ -23,7 +23,7 @@ struct PredictionGraphViewRepresentable: UIViewRepresentable {
     var availability: [Int]
     
     func makeUIView(context: Context) -> UIView {
-        return PredictionGraphView(frame: .zero)
+        return PredictionGraphView(frame: .zero, false)
     }
 
     func updateUIView(_ uiView: UIView, context: Context) {
@@ -56,7 +56,13 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
             let label = NBLabel(frame: CGRect(x: 10, y: 5, width: self.frame.width, height: 40.0))
             label.applyProtocolUIAppearance()
             label.text = "  " + name
-            label.textColor = UIColor(named: "TextAndGraphColor")
+            
+            if shouldShowBorder {
+                label.textColor = .white
+            } else {
+                label.textColor = UIColor(named: "TextAndGraphColor")
+            }
+            
             label.layer.masksToBounds = false
             label.font = UIFont.preferredFont(for: .title2, weight: .bold)
 
@@ -71,7 +77,7 @@ extension PredictionGraphView: HomeViewControllerGraphViewDelegate {
 
 public extension UIBezierPath {
     
-    public convenience init?(quadCurve points: [CGPoint]) {
+    convenience init?(quadCurve points: [CGPoint]) {
         guard points.count > 1 else { return nil }
         
         self.init()
@@ -150,9 +156,27 @@ class PredictionGraphView: UIView {
     init(frame: CGRect, prediction: [Int], availability: [Int]) {
         super.init(frame: frame)
     }
+    
+    lazy var gradientLayer: CAGradientLayer = {
+        
+        let gradientLayer = CAGradient(layer: self.layer)
+        gradientLayer.applyProtocolUIAppearance()
+        gradientLayer.frame = self.bounds
+        
+        return gradientLayer
+    }()
+    
+    var shouldShowBorder: Bool = true
 
-    override init(frame: CGRect) {
+    init(frame: CGRect, _ shouldShowBorder: Bool = true) {
         super.init(frame: frame)
+        
+        self.shouldShowBorder = shouldShowBorder
+        
+        if shouldShowBorder {
+            self.backgroundColor = .systemBlue
+            self.layer.insertSublayer(gradientLayer, at: 0)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -167,16 +191,31 @@ class PredictionGraphView: UIView {
         super.layoutSubviews()
 
         self.accessibilityIdentifier = "PredictionGraph"
-//        self.clipsToBounds = true
-//        self.layer.cornerRadius = Constants.cornerRadius
         self.backgroundColor = UIColor.systemBackground
+        
+        gradientLayer.frame = self.bounds
+        
+        if self.shouldShowBorder {
+            self.backgroundColor = .systemBlue
+            addGradient()
+        }
+    }
+    
+    func addGradient() {
+
+        // Add Border
+        let layer: CALayer? = self.layer
+        layer?.cornerRadius = Constants.cornerRadius
+        layer?.masksToBounds = true
+        layer?.borderWidth = 2.0
+        layer?.borderColor = UIColor(white: 0.25, alpha: 0.4).cgColor
     }
 
     func drawLine(values: [Int], isPrediction: Bool) {
 
         viewHeight = (self.frame.size.height - stationTitle.frame.size.height * 1.4)
         viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
-
+    
         if values.count > 0 {
 
             // create whatever path you want
@@ -207,21 +246,28 @@ class PredictionGraphView: UIView {
                 }()
                 
                 arrayOfPoints.append(point)
-
-//                path.addLine(to: point)
             }
             
             path = UIBezierPath(quadCurve: arrayOfPoints)!
             
 
             actualAvailabilityLayer.fillColor = UIColor.clear.cgColor
-            actualAvailabilityLayer.strokeColor =  UIColor(named: "TextAndGraphColor")?.cgColor
+            if shouldShowBorder {
+                actualAvailabilityLayer.strokeColor =  UIColor.white.cgColor
+            } else {
+                actualAvailabilityLayer.strokeColor =  UIColor(named: "TextAndGraphColor")?.cgColor
+            }
             actualAvailabilityLayer.lineWidth = 4.5
             actualAvailabilityLayer.strokeStart = 0.0
 
             if isPrediction {
 
-                drawingLayer.strokeColor = UIColor(named: "TextAndGraphColor")?.cgColor
+                
+                if shouldShowBorder {
+                    drawingLayer.strokeColor = UIColor.white.cgColor
+                } else {
+                    drawingLayer.strokeColor = UIColor(named: "TextAndGraphColor")?.cgColor
+                }
                 drawingLayer.lineWidth = 2.5
                 drawingLayer.strokeStart = 0.0
                 drawingLayer.lineDashPattern = [4, 4]

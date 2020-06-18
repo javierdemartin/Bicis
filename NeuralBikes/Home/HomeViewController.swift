@@ -86,7 +86,7 @@ class HomeViewController: UIViewController {
     }()
 
     private var graphView: PredictionGraphView = {
-        let view = PredictionGraphView()
+        let view = PredictionGraphView(frame: .zero, true)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
 
@@ -232,7 +232,7 @@ class HomeViewController: UIViewController {
         
         graphView.clipsToBounds = true
         graphView.layer.cornerRadius = Constants.cornerRadius
-        graphView.backgroundColor = .systemBlue
+//        graphView.backgroundColor = .systemBlue
 
         self.hideStackView()
 

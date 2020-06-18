@@ -55,7 +55,6 @@ class HomeViewModel {
     
     let locationService: LocationServiceable
 
-
     var latestSelectedAnnotation: MKAnnotation?
     var latestSelectedBikeStation: BikeStation?
 
@@ -219,6 +218,9 @@ class HomeViewModel {
     }
     
     func setUpLocation() {
+        
+        if UITestingHelper.sharedInstance.isUITesting() { return }
+        
         switch locationService.getPermissionStatus() {
         case .granted:
             locationService.startMonitoring()

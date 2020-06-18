@@ -1,7 +1,7 @@
 PODS:
-  - ReactiveCocoa (10.2.0):
+  - ReactiveCocoa (11.0.0):
     - ReactiveSwift (~> 6.2)
-  - ReactiveSwift (6.2.1)
+  - ReactiveSwift (6.3.0)
   - RxSwift (5.1.1)
   - SwiftLint (0.39.2)
 
@@ -19,8 +19,8 @@ SPEC REPOS:
     - SwiftLint
 
 SPEC CHECKSUMS:
-  ReactiveCocoa: a123c42f449c552460a4ee217dd49c76a17c8204
-  ReactiveSwift: 07ddf579f4eb3ee3bd656214f0461aaf2c0fd639
+  ReactiveCocoa: 189fcea9c5af7e394dd8a4cfc1c6f77af9ff3598
+  ReactiveSwift: 7937f26ec18d555e2a99352bd0a8b2817d1f042d
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
 

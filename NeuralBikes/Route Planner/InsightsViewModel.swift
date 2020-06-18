@@ -158,7 +158,11 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
                         
                         docksAtArrival = expectedDocksAtArrival
                         
-                        self.expectedDocksAtArrivalTime = "\(expectedDocksAtArrival)"
+                        guard let maxAvailability = self.destinationStation.value!.availabilityArray!.max(), let maxPrediction = self.destinationStation.value!.availabilityArray!.max() else { break }
+                        
+                        let maxDocks = max(maxAvailability, maxPrediction)
+                        
+                        self.expectedDocksAtArrivalTime = "\(maxDocks - expectedDocksAtArrival)"
                         
                     case .error:
                         break
@@ -229,8 +233,8 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
                         }) as? String
 
                         // Fill refill/discharge times for the station
-                        self.nextRefillTime = closestNextRefillTime
-                        self.nextDischargeTime = closestNextDischargeTime
+                        self.nextRefillTime = closestNextRefillTime ?? NSLocalizedString("NOT_FOUND", comment: "")
+                        self.nextDischargeTime = closestNextDischargeTime ?? NSLocalizedString("NOT_FOUND", comment: "")
                         
                     case .error:
                         break

@@ -24,17 +24,17 @@ fileprivate enum ConstantsMajid {
 struct BottomSheetView<Content: View>: View {
     
     @State var isOpen: Bool = false
-
+    
     let maxHeight: CGFloat
     let minHeight: CGFloat
     let content: Content
-
+    
     @GestureState private var translation: CGFloat = 0
-
+    
     private var offset: CGFloat {
         isOpen ? 0 : maxHeight - minHeight
     }
-
+    
     private var indicator: some View {
         RoundedRectangle(cornerRadius: ConstantsMajid.radius)
             .fill(Color.secondary)
@@ -45,14 +45,14 @@ struct BottomSheetView<Content: View>: View {
             self.isOpen.toggle()
         }
     }
-
+    
     init(isOpen: Bool, maxHeight: CGFloat, @ViewBuilder content: () -> Content) {
         self.minHeight = maxHeight * ConstantsMajid.minHeightRatio
         self.maxHeight = maxHeight
         self.content = content()
         self.isOpen = isOpen
     }
-
+    
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -91,15 +91,18 @@ struct InsightsSwiftUIView: View {
     @State var freeDocksAtDestination: LocalizedStringKey = "FREE_DOCKS_DESTINATION_PLACEHOLDER"
     @State var explanationStringKey: LocalizedStringKey = "EXPLANATION_INSIGHTS"
     
-    @State var dischargeStringKey: LocalizedStringKey = "DISCHARGE";
-    @State var refillStringKey: LocalizedStringKey = "REFILL";
+    @State var dischargeStringKey: LocalizedStringKey = "DISCHARGE"
+    @State var refillStringKey: LocalizedStringKey = "REFILL"
     
+    @State var operationNotFoundKey: LocalizedStringKey = "NOT_FOUND"
+    
+    @State var operationsDescriptionKey: LocalizedStringKey = "OPERATIONS_DESCRIPTION"
     
     @State var nextRefillTime: String?
     @State var nextDischargeTime: String?
     
     init(viewModel: InsightsViewModel) {
-      self.viewModel = viewModel
+        self.viewModel = viewModel
         
         destinationStationName = viewModel.destinationStationString
         nextRefillTime = viewModel.nextRefillTime
@@ -109,200 +112,211 @@ struct InsightsSwiftUIView: View {
     @ViewBuilder
     var body: some View {
         
-        VStack(alignment: .leading) {
-            
-            HStack(spacing: Constants.cornerRadius) {
-                Spacer()
-                RoundedRectangle(cornerRadius: Constants.cornerRadius)
-                    .fill(Color(.systemFill))
-                    .frame(
-                        width: 60,
-                        height: 6
-                )
-                
-                Spacer()
-            }
-            .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
-                        
+        ScrollView {
             VStack(alignment: .leading) {
-                // MARK: Destination Station
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(viewModel.destinationStationString)
-                            .font(.system(.title, design: .rounded))
-                            .fontWeight(.heavy)
-                            .padding(EdgeInsets(
-                                top: Constants.cornerRadius,
-                                leading: Constants.cornerRadius,
-                                bottom: Constants.cornerRadius,
-                                trailing: Constants.cornerRadius))
-                        
-                        PredictionGraphViewRepresentable(prediction: viewModel.predictionArray, availability: viewModel.availabilityArray)
-                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 100)
-                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
-                        
-                        Divider()
-                        Text(viewModel.predictionPrecission)
-                            .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-
-                    }
+                
+                HStack(spacing: Constants.cornerRadius) {
+                    Spacer()
+                    RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                        .fill(Color(.systemFill))
+                        .frame(
+                            width: 60,
+                            height: 6
+                    )
+                    
+                    Spacer()
                 }
-                .background(Color(UIColor.systemBackground))
-                .cornerRadius(Constants.cornerRadius)
-                .padding(EdgeInsets(
-                    top: 0,
-                    leading: 3 * Constants.cornerRadius,
-                    bottom: 3 * Constants.cornerRadius,
-                    trailing: Constants.cornerRadius * 3))
+                .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
                 
-                Divider()
-                
-                // MARK: Refill/Emptying
-                  
-                .padding(EdgeInsets(
-                    top: 0,
-                    leading: 3 * Constants.cornerRadius,
-                    bottom: 0,
-                    trailing: 3 * Constants.cornerRadius))
-                
-                VStack {
-                    
-                    Text("Predicción de operaciones de recarga y vaciamiento en la estación.")
-                    
+                VStack(alignment: .leading) {
+                    // MARK: Destination Station
                     HStack {
-                        
-                        Spacer()
-                        
-                        // - Refill
-                        VStack {
-                            HStack {
-                                Image(systemName: "chevron.up")
-                                .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 0))
-                                Text(refillStringKey)
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                            }
-                            
-                            Divider()
-                            
-                            Text(viewModel.nextRefillTime ?? "?")
-                                .fontWeight(.heavy)
-                                .font(.system(.body, design: .rounded))
-                                .padding(EdgeInsets(
-                                    top: Constants.cornerRadius,
-                                    leading: Constants.cornerRadius,
-                                    bottom: Constants.cornerRadius,
-                                    trailing: Constants.cornerRadius))
-                        }
-                        .background(Color(UIColor.systemBackground))
-                        .cornerRadius(Constants.cornerRadius)
-                        
-                        Spacer(minLength: 30)
-                        
-                        VStack {
-                            HStack {
-                            Image(systemName: "chevron.down")
-                                .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 0))
-                                Text(dischargeStringKey)
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                            }
-                            
-                            Divider()
-                            Text(viewModel.nextDischargeTime ?? "?")
-                                .font(.system(.body, design: .rounded))
+                        VStack(alignment: .leading) {
+                            Text(viewModel.destinationStationString)
+                                .font(.system(.title, design: .rounded))
                                 .fontWeight(.heavy)
                                 .padding(EdgeInsets(
                                     top: Constants.cornerRadius,
                                     leading: Constants.cornerRadius,
                                     bottom: Constants.cornerRadius,
                                     trailing: Constants.cornerRadius))
-                                
-                        }
-                        .background(Color(UIColor.systemBackground))
-                        .cornerRadius(Constants.cornerRadius)
-                        
-                        Spacer()
-                    }
-                }
-                .padding(EdgeInsets(
-                top: Constants.cornerRadius,
-                leading: 3 * Constants.cornerRadius,
-                bottom: Constants.cornerRadius,
-                trailing: 3 * Constants.cornerRadius))
-                
-                VStack {
-                    Text(freeDocksAtDestination)
-                    
-                    HStack {
-                        Spacer()
-                        // - Now
-                        VStack(alignment: .center) {
-                            Text("Now")
-                                .font(.system(.body, design: .rounded))
+                            
+                            PredictionGraphViewRepresentable(prediction: viewModel.predictionArray, availability: viewModel.availabilityArray)
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 100)
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
+                            
                             Divider()
-                            Text(viewModel.actualDocksAtDestination)
-                                .fontWeight(.heavy)
-                                .font(.system(.body, design: .rounded))
+                            Text(viewModel.predictionPrecission)
+                                .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+                            
                         }
+                        .overlay(
+                            RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                                .stroke(Color(UIColor(named: "TextAndGraphColor")!), lineWidth: Constants.cornerRadius / 6)
+                        )
+                    }
+                    .background(Color(UIColor.systemBackground))
+                    .padding(EdgeInsets(
+                        top: 0,
+                        leading: 3 * Constants.cornerRadius,
+                        bottom: 3 * Constants.cornerRadius,
+                        trailing: Constants.cornerRadius * 3))
+                    
+                    Divider()
                         .padding(EdgeInsets(
-                            top: 10,
-                            leading: 2 * Constants.cornerRadius,
-                            bottom: 10,
-                            trailing: 2 * Constants.cornerRadius))
-                        .background(Color(UIColor.systemBackground))
-                        .cornerRadius(Constants.cornerRadius)
+                            top: 0,
+                            leading: 3 * Constants.cornerRadius,
+                            bottom: 0,
+                            trailing: 3 * Constants.cornerRadius))
+                    
+                    VStack {
                         
-                        Image(systemName: "arrow.right")
+                        Text(operationsDescriptionKey)
+                        
+                        HStack {
+                            
+                            Spacer()
+                            
+                            // - Refill
+                            VStack {
+                                HStack {
+                                    Image(systemName: "chevron.up")
+                                        .padding(EdgeInsets(top: Constants.cornerRadius, leading: 10, bottom: 0, trailing: 0))
+                                    Text(refillStringKey)
+                                        .padding(EdgeInsets(top: Constants.cornerRadius, leading: 0, bottom: 0, trailing: 10))
+                                }
+                                
+                                Divider()
+                                
+                                Text(viewModel.nextRefillTime ?? "?")
+                                    .fontWeight(.heavy)
+                                    .font(.system(.body, design: .rounded))
+                                    .padding(EdgeInsets(
+                                        top: Constants.cornerRadius,
+                                        leading: Constants.cornerRadius,
+                                        bottom: Constants.cornerRadius,
+                                        trailing: Constants.cornerRadius))
+                            }
+                            .background(Color(UIColor.systemBackground))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                                    .stroke(Color(UIColor(named: "TextAndGraphColor")!), lineWidth: Constants.cornerRadius / 6)
+                            )
+                            
+                            
+                            Spacer(minLength: 30)
+                            
+                            VStack {
+                                HStack {
+                                    Image(systemName: "chevron.down")
+                                        .padding(EdgeInsets(top: Constants.cornerRadius, leading: 10, bottom: 0, trailing: 0))
+                                    Text(dischargeStringKey)
+                                        .padding(EdgeInsets(top: Constants.cornerRadius, leading: 0, bottom: 0, trailing: 10))
+                                }
+                                
+                                Divider()
+                                Text(viewModel.nextDischargeTime ?? "?")
+                                    .font(.system(.body, design: .rounded))
+                                    .fontWeight(.heavy)
+                                    .padding(EdgeInsets(
+                                        top: Constants.cornerRadius,
+                                        leading: Constants.cornerRadius,
+                                        bottom: Constants.cornerRadius,
+                                        trailing: Constants.cornerRadius))
+                                
+                            }
+                            .background(Color(UIColor.systemBackground))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                                    .stroke(Color(UIColor(named: "TextAndGraphColor")!), lineWidth: Constants.cornerRadius / 6)
+                            )
+                            
+                            Spacer()
+                        }
+                    }
+                    .padding(EdgeInsets(
+                        top: Constants.cornerRadius,
+                        leading: 3 * Constants.cornerRadius,
+                        bottom: Constants.cornerRadius,
+                        trailing: 3 * Constants.cornerRadius))
+                    
+                    VStack(alignment: .leading) {
+                        Text(freeDocksAtDestination)
+                        
+                        HStack {
+                            Spacer()
+                            // - Now
+                            VStack(alignment: .center) {
+                                Text("Now")
+                                    .font(.system(.body, design: .rounded))
+                                Divider()
+                                Text(viewModel.actualDocksAtDestination)
+                                    .fontWeight(.heavy)
+                                    .font(.system(.body, design: .rounded))
+                            }
                             .padding(EdgeInsets(
                                 top: 10,
                                 leading: 2 * Constants.cornerRadius,
                                 bottom: 10,
                                 trailing: 2 * Constants.cornerRadius))
-                        
-                        // - Time of arrival
-                        VStack(alignment: .center) {
-                            Text(viewModel.expectedArrivalTime)
-                                .font(.system(.body, design: .rounded))
-                            Divider()
-                            Text(viewModel.expectedDocksAtArrivalTime)
-                                .fontWeight(.heavy)
-                                .font(.system(.body, design: .rounded))
+                                .background(Color(UIColor.systemBackground))
+                                .cornerRadius(Constants.cornerRadius)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                                    .stroke(Color(UIColor(named: "TextAndGraphColor")!), lineWidth: Constants.cornerRadius / 6)
+                            )
+                            
+                            Image(systemName: "arrow.right")
+                                .padding(EdgeInsets(
+                                    top: 10,
+                                    leading: 2 * Constants.cornerRadius,
+                                    bottom: 10,
+                                    trailing: 2 * Constants.cornerRadius))
+                            
+                            // - Time of arrival
+                            VStack(alignment: .center) {
+                                Text(viewModel.expectedArrivalTime)
+                                    .font(.system(.body, design: .rounded))
+                                Divider()
+                                Text(viewModel.expectedDocksAtArrivalTime)
+                                    .fontWeight(.heavy)
+                                    .font(.system(.body, design: .rounded))
+                            }
+                            .padding(EdgeInsets(
+                                top: Constants.cornerRadius,
+                                leading: 2 * Constants.cornerRadius,
+                                bottom: Constants.cornerRadius,
+                                trailing: 2 * Constants.cornerRadius))
+                                .background(Color(UIColor.systemBackground))
+                                .cornerRadius(Constants.cornerRadius)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                                    .stroke(Color(UIColor(named: "TextAndGraphColor")!), lineWidth: Constants.cornerRadius / 6)
+                            )
+                            
+                            Spacer()
                         }
-                        .padding(EdgeInsets(
-                            top: Constants.cornerRadius,
-                            leading: 2 * Constants.cornerRadius,
-                            bottom: Constants.cornerRadius,
-                            trailing: 2 * Constants.cornerRadius))
-                            .background(Color(UIColor.systemBackground))
-                        .cornerRadius(Constants.cornerRadius)
-                        
-                        Spacer()
                     }
+                    .padding(EdgeInsets(
+                        top: Constants.cornerRadius,
+                        leading: 3 * Constants.cornerRadius,
+                        bottom: Constants.cornerRadius,
+                        trailing: 3 * Constants.cornerRadius))
                 }
-                .padding(EdgeInsets(
-                    top: Constants.cornerRadius,
-                    leading: 3 * Constants.cornerRadius,
-                    bottom: Constants.cornerRadius,
-                    trailing: 3 * Constants.cornerRadius))
                 
+                Text(viewModel.numberOfTimesLaunched)
+                    .padding(EdgeInsets(
+                        top: 0,
+                        leading: 3 * Constants.cornerRadius,
+                        bottom: 0,
+                        trailing: 3 * Constants.cornerRadius))
                 
-                
-                
+                Spacer()
             }
-            
-            Text(viewModel.numberOfTimesLaunched)
-                .padding(EdgeInsets(
-                    top: 0,
-                    leading: 3 * Constants.cornerRadius,
-                    bottom: 0,
-                    trailing: 3 * Constants.cornerRadius))
-            
-            Spacer()
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
+            .edgesIgnoringSafeArea(.bottom)
         }
-        .background(Color(UIColor.systemFill))
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
-        .edgesIgnoringSafeArea(.bottom)
     }
-    
 }
 
 //struct SettingsSwiftUIView_Previews: PreviewProvider {

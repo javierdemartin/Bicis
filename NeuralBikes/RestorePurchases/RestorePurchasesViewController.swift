@@ -213,8 +213,8 @@ class RestorePurchasesViewController: UIViewController {
         ])
 
         NSLayoutConstraint.activate([
-            pullTabToDismissView.heightAnchor.constraint(equalToConstant: 5),
-            pullTabToDismissView.widthAnchor.constraint(equalToConstant: 40),
+            pullTabToDismissView.heightAnchor.constraint(equalToConstant: 6),
+            pullTabToDismissView.widthAnchor.constraint(equalToConstant: 60),
             pullTabToDismissView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             pullTabToDismissView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0)
         ])

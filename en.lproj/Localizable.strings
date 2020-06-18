@@ -38,8 +38,9 @@
 "FREE_DOCKS_DESTINATION_PLACEHOLDER" = "Free racks at destination";
 "EXPLANATION_INSIGHTS" = "Destination station statistics";
 "ERROR_CALCULATING_PRECISSION" = "Prediction accuracy couldn't be calculated";
-"ACCURACY_OF_MODEL" = "%percentage% prediction accuracy";
+"ACCURACY_OF_MODEL" = "%percentage% error rate";
 "NUMBER_TIMES_LAUNCHED" = "You have opened this version of %app_name% %times% times";
 "DISCHARGE" = "Discharge";
 "REFILL" = "Refill";
-
+"NOT_FOUND" = "None";
+"OPERATIONS_DESCRIPTION" = "Possible prediction of manual charge and discharge operations at the station done by service workers.";

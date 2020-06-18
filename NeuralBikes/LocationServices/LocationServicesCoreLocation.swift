@@ -36,6 +36,10 @@ class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, Location
         self.locationManager?.pausesLocationUpdatesAutomatically = false
         self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager?.distanceFilter = kCLLocationAccuracyHundredMeters
+        
+        if UITestingHelper().isUITesting() {
+            currentLocation = CLLocation(latitude: availableCities["Madrid"]!.latitude, longitude: availableCities["Madrid"]!.longitude)
+        }
     }
         
     func getPermissionStatus() -> PermissionStatus {
@@ -51,6 +55,9 @@ class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, Location
     }
     
     func requestPermissions() {
+    
+        if UITestingHelper().isUITesting() { return }
+        
         locationManager?.requestWhenInUseAuthorization()
     }
     
@@ -78,4 +85,3 @@ class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, Location
         locationManager?.startUpdatingLocation()
     }
 }
-

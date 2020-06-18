@@ -30,13 +30,14 @@
 // MARK: - Insights
 
 "NEXT_REFILL_ACCESIBILITY_LABEL" = "Siguiente recarga a las %time";
-
 "DESTINATION_STATION" = "Estación de destino";
 "CALCULATING_PRECISSION" = "Calculando precisión...";
 "FREE_DOCKS_DESTINATION_PLACEHOLDER" = "Estaciones libres en destino";
 "EXPLANATION_INSIGHTS" = "Estadísticas de la estación de destino";
 "ERROR_CALCULATING_PRECISSION" = "No se ha podido calcular la precisión de las predicciones";
-"ACCURACY_OF_MODEL" = "%percentage% de precisión";
+"ACCURACY_OF_MODEL" = "%percentage% tasa de error";
 "NUMBER_TIMES_LAUNCHED" = "Has abierto esta versión de %app_name% %times% veces";
 "DISCHARGE" = "Vaciamiento";
 "REFILL" = "Recarga";
+"NOT_FOUND" = "Nada";
+"OPERATIONS_DESCRIPTION" = "Predicción de posibles operaciones de recarga y descarga hechas por los operarios.";
