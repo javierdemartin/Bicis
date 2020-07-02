@@ -10,4 +10,3 @@ struct UserCredentials: Codable {
     let mobile: String
     let pin: String
 }
-

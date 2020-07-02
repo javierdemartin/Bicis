@@ -58,84 +58,6 @@ open class IAPHelper: NSObject {
         super.init()
         
         SKPaymentQueue.default().add(self)
-        
-        if let receiptUrl = Bundle.main.appStoreReceiptURL {
-            
-            let receiptData = try! Data(contentsOf: receiptUrl, options: .alwaysMapped)
-        
-            verifyIfPurchasedBeforeFreemium(productionStoreURL!, receiptData)
-        }
-            
-        
-        
-    }
-    
-    private let productionStoreURL = URL(string: "https://buy.itunes.apple.com/verifyReceipt")
-    private let sandboxStoreURL = URL(string: "https://sandbox.itunes.apple.com/verifyReceipt")
-
-    private func verifyIfPurchasedBeforeFreemium(_ storeURL: URL, _ receipt: Data) {
-        do {
-            let requestContents:Dictionary = ["receipt-data": receipt.base64EncodedString()]
-            let requestData = try JSONSerialization.data(withJSONObject: requestContents, options: [])
-
-            var storeRequest = URLRequest(url: storeURL)
-            storeRequest.httpMethod = "POST"
-            storeRequest.httpBody = requestData
-
-            URLSession.shared.dataTask(with: storeRequest) { (data, response, error) in
-                DispatchQueue.main.async {
-                    if data != nil {
-                        do {
-                            let jsonResponse = try JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any?]
-
-                            if let statusCode = jsonResponse["status"] as? Int {
-                                if statusCode == 21007 {
-                                    print("Switching to test against sandbox")
-                                    self.verifyIfPurchasedBeforeFreemium(self.sandboxStoreURL!, receipt)
-                                }
-                            }
-
-                            if let receiptResponse = jsonResponse["receipt"] as? [String: Any?], let originalVersion = receiptResponse["original_application_version"] as? String {
-                                if self.isPaidVersionNumber(originalVersion) {
-                                    // Update to full paid version of app
-                                    print("HEHE")
-//                                    UserDefaults.standard.set(true, forKey: upgradeKeys.isUpgraded)
-//                                    NotificationCenter.default.post(name: .UpgradedVersionNotification, object: nil)
-                                }
-                            }
-                        } catch {
-                            print("Error: " + error.localizedDescription)
-                        }
-                    }
-                }
-                }.resume()
-        } catch {
-            print("Error: " + error.localizedDescription)
-        }
-    }
-
-    private func isPaidVersionNumber(_ originalVersion: String) -> Bool {
-        let pattern:String = "^\\d+\\.\\d+"
-        do {
-            let regex = try NSRegularExpression(pattern: pattern, options: [])
-            let results = regex.matches(in: originalVersion, options: [], range: NSMakeRange(0, originalVersion.count))
-
-            let original = results.map {
-                Double(originalVersion[Range($0.range, in: originalVersion)!])
-            }
-            
-            print("HEHE")
-            
-            return true
-
-//            if original.count > 0, original[0]! < firstFreemiumVersion {
-//                print("App purchased prior to Freemium model")
-//                return true
-//            }
-        } catch {
-            print("Paid Version RegEx Error.")
-        }
-        return false
     }
 }
 
@@ -147,7 +69,6 @@ extension IAPHelper: SKRequestDelegate {
 }
 
 // MARK: - StoreKit API
-
 extension IAPHelper {
     
     public func requestProducts(_ completionHandler: @escaping ProductsRequestCompletionHandler) {
@@ -226,31 +147,11 @@ extension IAPHelper: SKPaymentTransactionObserver {
                 break
             case .purchasing:
                 break
+            @unknown default:
+                fatalError()
             }
         }
     }
-    
-//    func validateReceipt() {
-//
-//        guard let receiptUrl = Bundle.main.appStoreReceiptURL else {
-//            return
-//        }
-//
-//
-//        do {
-//
-//            let receiptURL = Bundle.main.appStoreReceiptURL!
-//
-//            // We are running in sandbox when receipt URL ends with 'sandboxReceipt'
-//            let isSandbox = receiptURL.absoluteString.hasSuffix("sandboxReceipt")
-//            let receiptData = try Data(contentsOf: receiptURL)
-//
-//
-//
-//        } catch {
-//            print("errorrrr \(error)")
-//        }
-//    }
     
     private func complete(transaction: SKPaymentTransaction) {
         print("complete...")
@@ -274,10 +175,10 @@ extension IAPHelper: SKPaymentTransactionObserver {
                 // Read receiptData
                 print(receiptString)
                 
+            } catch {
+                print("Couldn't read receipt data with error: " + error.localizedDescription)
             }
-            catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
         }
-        
         
         print("restore... \(productIdentifier)")
         deliverPurchaseNotificationFor(identifier: productIdentifier)

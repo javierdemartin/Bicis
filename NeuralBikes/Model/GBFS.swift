@@ -31,8 +31,6 @@ struct GbfsStationStatusInformation: Codable {
         case longitude = "lon"
         case stationName = "name"
     }
-    
-    
 }
 
 // Station staus

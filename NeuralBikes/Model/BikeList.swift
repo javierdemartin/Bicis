@@ -10,4 +10,3 @@ struct BikeList: Codable {
 
     let number: String
 }
-

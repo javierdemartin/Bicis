@@ -7,8 +7,6 @@
 //
 
 import Foundation
-
-import Foundation
 import CoreLocation
 import ReactiveSwift
 

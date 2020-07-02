@@ -9,12 +9,6 @@
 import Foundation
 import UIKit
 import QuartzCore
-
-enum GraphViewLine {
-    case prediction([Int])
-    case availability([Int])
-}
-
 import SwiftUI
 
 struct PredictionGraphViewRepresentable: UIViewRepresentable {
@@ -31,7 +25,7 @@ struct PredictionGraphViewRepresentable: UIViewRepresentable {
         
         guard let predictionGraph = uiView as? PredictionGraphView else { return }
         
-        predictionGraph.prediction = prediction
+//        predictionGraph.prediction = prediction
         
         predictionGraph.drawLine(values: prediction, isPrediction: true)
         predictionGraph.drawLine(values: availability, isPrediction: false)
@@ -130,44 +124,45 @@ class PredictionGraphView: UIView {
 
     var viewHeight: CGFloat = -1.0
     var viewWidth: CGFloat = -1.0
+    
+    lazy var animation: CABasicAnimation = {
+        // Animate the drawing of the actual availability
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.fromValue = 0
+        animation.toValue = 1
+        animation.duration = 0.5
+        animation.autoreverses = false
+        return animation
+    }()
 
     let shapeLayer = CAShapeLayer()
-    let actualAvailabilityLayer = CAShapeLayer()
-    let drawingLayer = CAShapeLayer()
+    let actualAvailabilityLayer: CAShapeLayer = {
     
-    var prediction: [Int] = []
+        let layer = CAShapeLayer()
+        layer.fillColor = UIColor.clear.cgColor
+        layer.lineWidth = 4.5
+        layer.strokeStart = 0.0
+        return layer
+    }()
+    
+    let drawingLayer: CAShapeLayer = {
+        
+        let layer = CAShapeLayer()
+        layer.fillColor = UIColor.clear.cgColor
+        layer.lineWidth = 2.5
+        layer.strokeStart = 0.0
+        layer.lineDashPattern = [4, 4]
+        return layer
+    }()
+    
+    var shouldShowBorder: Bool = true
 
     private var shadowLayer: CAShapeLayer!
-
-    func getPercentageOfDay() -> (CGFloat, Int) {
-   
-        let date = Date()
-        let calendar = Calendar.current
-        let minute = Int(calendar.component(.minute, from: date) / 10)
-        let hour = calendar.component(.hour, from: date)
-
-        let step: Double = Double(hour * 6 + minute)
-
-        let consumedDayPercentage: CGFloat = CGFloat((step / Constants.lengthOfTheDay))
-
-        return (consumedDayPercentage, Int(step))
-    }
     
     init(frame: CGRect, prediction: [Int], availability: [Int]) {
         super.init(frame: frame)
     }
     
-    lazy var gradientLayer: CAGradientLayer = {
-        
-        let gradientLayer = CAGradient(layer: self.layer)
-        gradientLayer.applyProtocolUIAppearance()
-        gradientLayer.frame = self.bounds
-        
-        return gradientLayer
-    }()
-    
-    var shouldShowBorder: Bool = true
-
     init(frame: CGRect, _ shouldShowBorder: Bool = true) {
         super.init(frame: frame)
         
@@ -175,7 +170,6 @@ class PredictionGraphView: UIView {
         
         if shouldShowBorder {
             self.backgroundColor = .systemBlue
-            self.layer.insertSublayer(gradientLayer, at: 0)
         }
     }
 
@@ -193,12 +187,24 @@ class PredictionGraphView: UIView {
         self.accessibilityIdentifier = "PredictionGraph"
         self.backgroundColor = UIColor.systemBackground
         
-        gradientLayer.frame = self.bounds
-        
         if self.shouldShowBorder {
             self.backgroundColor = .systemBlue
             addGradient()
         }
+    }
+    
+    func getPercentageOfDay() -> (CGFloat, Int) {
+   
+        let date = Date()
+        let calendar = Calendar.current
+        let minute = Int(calendar.component(.minute, from: date) / 10)
+        let hour = calendar.component(.hour, from: date)
+
+        let step: Double = Double(hour * 6 + minute)
+
+        let consumedDayPercentage: CGFloat = CGFloat((step / Constants.lengthOfTheDay))
+
+        return (consumedDayPercentage, Int(step))
     }
     
     func addGradient() {
@@ -215,92 +221,64 @@ class PredictionGraphView: UIView {
 
         viewHeight = (self.frame.size.height - stationTitle.frame.size.height * 1.4)
         viewWidth = self.frame.width * CGFloat(values.count) / CGFloat(Constants.lengthOfTheDay)
+        
+        guard values.count > 0 else { return }
     
-        if values.count > 0 {
+        var path = UIBezierPath()
 
-            // create whatever path you want
-            var path = UIBezierPath()
-            var nextPoint = CGPoint()
+        var heightProportion: CGFloat = 0.0 // CGFloat(values[0]) / CGFloat(values.max()!)
 
-            var heightProportion = CGFloat(values[0]) / CGFloat(values.max()!)
-            heightProportion = 0.0
+        // Mover el punto inicial al origen de X y a la altura que corresponde al valor obtenido.
+        let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8)
 
-            // Mover el punto inicial al origen de X y a la altura que corresponde al valor obtenido.
-            let initialCoordinates = CGPoint(x: 0.0, y: viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8)
-
-            path.move(to: initialCoordinates)
+        path.move(to: initialCoordinates)
+        
+        let arrayOfPoints: [CGPoint] = values.enumerated().map({ (index, element) in
             
-            var arrayOfPoints: [CGPoint] = []
-
-            for element in 0..<values.count {
-
-                heightProportion = CGFloat(values[element]) / CGFloat(values.max()!)
-
-                
-                
-                let point: CGPoint = {
-                    let xPosition = CGFloat(element) * viewWidth / CGFloat(values.count)
-                    let yPosition = viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8
-                    
-                    return CGPoint(x: xPosition, y: yPosition)
-                }()
-                
-                arrayOfPoints.append(point)
-            }
+            heightProportion = CGFloat(element) / CGFloat(values.max()!)
             
-            path = UIBezierPath(quadCurve: arrayOfPoints)!
+            let point: CGPoint = {
+                let xPosition = CGFloat(index) * viewWidth / CGFloat(values.count)
+                let yPosition = viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8
+                
+                return CGPoint(x: xPosition, y: yPosition)
+            }()
             
+            return point
+        })
+        
+        path = UIBezierPath(quadCurve: arrayOfPoints)!
+        
+        if shouldShowBorder {
+            actualAvailabilityLayer.strokeColor =  UIColor.white.cgColor
+        } else {
+            actualAvailabilityLayer.strokeColor =  UIColor(named: "TextAndGraphColor")?.cgColor
+        }
 
-            actualAvailabilityLayer.fillColor = UIColor.clear.cgColor
+        if isPrediction {
+
             if shouldShowBorder {
-                actualAvailabilityLayer.strokeColor =  UIColor.white.cgColor
+                drawingLayer.strokeColor = UIColor.white.cgColor
             } else {
-                actualAvailabilityLayer.strokeColor =  UIColor(named: "TextAndGraphColor")?.cgColor
-            }
-            actualAvailabilityLayer.lineWidth = 4.5
-            actualAvailabilityLayer.strokeStart = 0.0
-
-            if isPrediction {
-
-                
-                if shouldShowBorder {
-                    drawingLayer.strokeColor = UIColor.white.cgColor
-                } else {
-                    drawingLayer.strokeColor = UIColor(named: "TextAndGraphColor")?.cgColor
-                }
-                drawingLayer.lineWidth = 2.5
-                drawingLayer.strokeStart = 0.0
-                drawingLayer.lineDashPattern = [4, 4]
-
-                nextPoint = CGPoint(x: CGFloat(values.count - 1) * viewWidth / CGFloat(values.count), y: 300.0)
-
-                path.apply(CGAffineTransform(translationX: 0, y: +10.0))
-
-                drawingLayer.path = path.cgPath
-                drawingLayer.fillColor = UIColor.clear.cgColor
-
-                self.layer.addSublayer(drawingLayer)
-
-            } else {
-
-                path.lineJoinStyle = .round
-                path.apply(CGAffineTransform(translationX: 0, y: +10.0))
-                actualAvailabilityLayer.path = path.cgPath
-                path.stroke()
-
-                self.layer.addSublayer(actualAvailabilityLayer)
-
-                // Animate the drawing of the actual availability
-                let animation = CABasicAnimation(keyPath: "strokeEnd")
-                animation.fromValue = 0
-                animation.toValue = 1
-                animation.duration = 0.5
-                animation.autoreverses = false
-
-                actualAvailabilityLayer.add(animation, forKey: "line")
+                drawingLayer.strokeColor = UIColor(named: "TextAndGraphColor")?.cgColor
             }
 
-            self.updateConstraints()
+            path.apply(CGAffineTransform(translationX: 0, y: +10.0))
+
+            drawingLayer.path = path.cgPath
+
+            self.layer.addSublayer(drawingLayer)
+
+        } else {
+
+            path.lineJoinStyle = .round
+            path.apply(CGAffineTransform(translationX: 0, y: +10.0))
+            actualAvailabilityLayer.path = path.cgPath
+            path.stroke()
+
+            self.layer.addSublayer(actualAvailabilityLayer)
+
+            actualAvailabilityLayer.add(animation, forKey: "line")
         }
     }
 

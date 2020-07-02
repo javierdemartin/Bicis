@@ -141,7 +141,7 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
             case .success(let numberOfDocks):
                 numberOfDocksAtTime = numberOfDocks
                 self.expectedDocksAtArrivalTime = "\(numberOfDocks)"
-            case .error(let error):
+            case .error:
                 break
             }
         })

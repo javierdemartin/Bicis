@@ -98,7 +98,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
 
         guard let selectedCity = availableCities[city]  else { return }
         
-        if let hasGbfs = availableCities[selectedCity.formalName]?.gbfs {
+        if (availableCities[selectedCity.formalName]?.gbfs) != nil {
             getGbfsData(city: selectedCity, completion: { gbfsCity in
                 
                 guard let gbfsCity = gbfsCity else {
@@ -109,7 +109,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
                 
                 completion(.success(gbfsCity))
             })
-        } else if let hasLogIn = availableCities[selectedCity.formalName]?.logInCredentials {
+        } else if (availableCities[selectedCity.formalName]?.logInCredentials) != nil {
          
             guard let apiUrl = URL(string: selectedCity.apiUrl) else { return }
             
@@ -135,21 +135,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
                                 
                                 let result = try JSONDecoder().decode(BiciMadRoot.self, from: data)
                                 completion(.success(result.data))
-                                
-//                                switch selectedCity.formalName {
-//                                case "New York":
-//                                    let result = try JSONDecoder().decode(CitiBikesRoot.self, from: data)
-//                                    completion(.success([]))
-//                                case "Bilbao":
-//                                    let result = try JSONDecoder().decode(NextBikeRoot.self, from: data)
-//                                    completion(.success(result.countries[0].cities[0].places))
-//                                case "Madrid":
-//                                    let result = try JSONDecoder().decode(BiciMadRoot.self, from: data)
-//                                    completion(.success(result.data))
-//                                default:
-//                                    completion(.error(RemoteDataManagerError.couldntParseFeed))
-//                                }
-                                
+                                   
                             } catch {
                                 
                                 print("Error parsing \(city)")
@@ -204,7 +190,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
     
     func getGbfsData(city: City, completion: @escaping ([BikeStation]?) -> Void) {
         
-        guard let gbfs = availableCities[city.formalName] else {
+        guard availableCities[city.formalName] != nil else {
             completion(nil)
             return
         }
@@ -214,7 +200,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
         
         guard let stationStatusUrl = URL(string: availableCities[city.formalName]?.gbfs?.stationStatus ?? "") else { return }
         
-        var apiRequest = URLRequest(url: stationStatusUrl)
+        let apiRequest = URLRequest(url: stationStatusUrl)
 
         let group = DispatchGroup()
         
@@ -249,8 +235,6 @@ class DefaultRemoteDataManager: RemoteDataManager {
         
         task.resume()
         
-        // -------------------------------------------------------------
-        
         guard let stationInformation = URL(string: availableCities[city.formalName]?.gbfs?.stationInformation ?? "") else { return }
         
         let apiRequest2 = URLRequest(url: stationInformation)
@@ -284,9 +268,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
         })
         
         task2.resume()
-        
-        // -------------------------------------------------------------
-        
+                
         group.notify(queue: .main) {
             
             print(gbfsStationInformation)
@@ -297,13 +279,11 @@ class DefaultRemoteDataManager: RemoteDataManager {
             
             for stInfo in gbfsStationInformation {
                 
-                gbfsStationStatus.map({
+                _ = gbfsStationStatus.map({
                     
                     if $0.stationId == stInfo.stationId {
-                     
-                        var station = CitiBikesStation(latitude: stInfo.latitude, longitude: stInfo.longitude, stationName: stInfo.stationName, id: stInfo.stationId, freeBikes: $0.numberOfBikesAvailable, freeRacks: $0.numberOfDocksAvailable)
                         
-                        stations.append(station)
+                        stations.append(CitiBikesStation(latitude: stInfo.latitude, longitude: stInfo.longitude, stationName: stInfo.stationName, id: stInfo.stationId, freeBikes: $0.numberOfBikesAvailable, freeRacks: $0.numberOfDocksAvailable))
                     }
                 })
             }
@@ -355,7 +335,5 @@ class DefaultRemoteDataManager: RemoteDataManager {
         })
 
         task.resume()
-        
-        
     }
 }

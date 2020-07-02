@@ -109,8 +109,6 @@ struct CitiBikesStation: BikeStation {
 
         return 100 - rmse!
     }
-    
-    
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)

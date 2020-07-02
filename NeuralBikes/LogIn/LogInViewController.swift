@@ -83,10 +83,8 @@ class LogInViewController: UIViewController {
     lazy var forgotPasswordButton: UIButton = {
        
         let button = NBButton()
-//        button.applyProtocolUIAppearance()
         button.setTitleColor(.systemBlue, for: .normal)
         button.setTitle("FORGOT_PASSWORD_BUTTON".localize(file: "LogIn"), for: .normal)
-        
         
         return button
     }()
@@ -137,8 +135,7 @@ class LogInViewController: UIViewController {
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 16.0),
             stackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
-            stackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
-//            stackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+            stackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0)
         ])
         
         NSLayoutConstraint.activate([

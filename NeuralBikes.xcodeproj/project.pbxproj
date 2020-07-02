@@ -87,11 +87,9 @@
 		808CEAC62477A28F006B17F2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 808CEAC82477A28F006B17F2 /* Localizable.strings */; };
 		809953F72416C77700B44DC9 /* InsightsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809953F62416C77700B44DC9 /* InsightsViewModel.swift */; };
 		8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099540924181C5B00B44DC9 /* TimeInterval.swift */; };
-		8099541324193E2200B44DC9 /* RoutePlannerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099541224193E2200B44DC9 /* RoutePlannerTableViewCell.swift */; };
 		8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8099541624193F5600B44DC9 /* RoutePlanner.strings */; };
 		80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */; };
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
-		80A969DD249BAB65003211FC /* NBGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A969DC249BAB65003211FC /* NBGradient.swift */; };
 		80ABE1F0243E148E004920D8 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ABE1EF243E148E004920D8 /* UIAlertController.swift */; };
 		80AD2AAB2471A238007E9BAB /* LogIn.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80AD2AAD2471A238007E9BAB /* LogIn.strings */; };
 		80B1D016241A95F20072D1D9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D015241A95F20072D1D9 /* UIView.swift */; };
@@ -224,12 +222,10 @@
 		808CEAC92477A290006B17F2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		809953F62416C77700B44DC9 /* InsightsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewModel.swift; sourceTree = "<group>"; };
 		8099540924181C5B00B44DC9 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
-		8099541224193E2200B44DC9 /* RoutePlannerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerTableViewCell.swift; sourceTree = "<group>"; };
 		8099541524193F5600B44DC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RoutePlanner.strings; sourceTree = "<group>"; };
 		809954172419400A00B44DC9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RoutePlanner.strings; sourceTree = "<group>"; };
 		80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserInterfaceIdiom.swift; sourceTree = "<group>"; };
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
-		80A969DC249BAB65003211FC /* NBGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBGradient.swift; sourceTree = "<group>"; };
 		80ABE1EF243E148E004920D8 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		80AD2AAC2471A238007E9BAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LogIn.strings; sourceTree = "<group>"; };
 		80AD2AAE2471A244007E9BAB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LogIn.strings; sourceTree = "<group>"; };
@@ -586,7 +582,6 @@
 				8029AEA224780F240072117B /* InsightsSwiftUIView.swift */,
 				809953F62416C77700B44DC9 /* InsightsViewModel.swift */,
 				8099541624193F5600B44DC9 /* RoutePlanner.strings */,
-				8099541224193E2200B44DC9 /* RoutePlannerTableViewCell.swift */,
 				80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */,
 			);
 			path = Insights;
@@ -619,7 +614,6 @@
 				80FFDE3124683D4A00436BA6 /* NBStackView.swift */,
 				80FFDE332468407500436BA6 /* NBLabel.swift */,
 				80B55FE1246E899B00AA7008 /* NBTextView.swift */,
-				80A969DC249BAB65003211FC /* NBGradient.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -708,7 +702,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Javier de Martín Gil";
 				TargetAttributes = {
 					8000291D243FB92F00862C75 = {
@@ -966,7 +960,6 @@
 				80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */,
 				8074D33D2457372B006B3062 /* BaseResponse.swift in Sources */,
 				803395F1249D5D78003E3ADC /* GBFS.swift in Sources */,
-				80A969DD249BAB65003211FC /* NBGradient.swift in Sources */,
 				801ECE3B236F3B7D003CFAF7 /* MapPin.swift in Sources */,
 				8074D34B24573806006B3062 /* MyAPIResponse.swift in Sources */,
 				80E7D8A92456033E00D49894 /* NBButton.swift in Sources */,
@@ -1005,7 +998,6 @@
 				803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */,
 				8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */,
 				80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */,
-				8099541324193E2200B44DC9 /* RoutePlannerTableViewCell.swift in Sources */,
 				80628463236ED79300717472 /* Result.swift in Sources */,
 				8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */,
 				800CE942239559F700674D1C /* Constants.swift in Sources */,
@@ -1215,6 +1207,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1278,6 +1271,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

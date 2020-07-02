@@ -16,8 +16,6 @@ extension ScannerViewController: ScannerViewModelDelegate {
     func scannedCodeWith(number: Int) {
         
     }
-    
-    
 }
 
 class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {

@@ -16,4 +16,3 @@ struct RentResponse: Codable {
         case error = "error"
     }
 }
-

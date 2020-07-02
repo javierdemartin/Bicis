@@ -17,7 +17,7 @@ extension UIAlertController {
 
     func addActivityIndicator() {
         let vc = UIViewController()
-        vc.preferredContentSize = CGSize(width: 40,height: 40)
+        vc.preferredContentSize = CGSize(width: 40, height: 40)
         ActivityIndicatorData.activityIndicator.color = UIColor.blue
         ActivityIndicatorData.activityIndicator.startAnimating()
         vc.view.addSubview(ActivityIndicatorData.activityIndicator)

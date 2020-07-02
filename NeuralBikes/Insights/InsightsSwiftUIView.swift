@@ -10,78 +10,6 @@ import SwiftUI
 //import Foundation
 import ReactiveSwift
 
-
-import SwiftUI
-
-fileprivate enum ConstantsMajid {
-    static let radius: CGFloat = 16
-    static let indicatorHeight: CGFloat = 6
-    static let indicatorWidth: CGFloat = 60
-    static let snapRatio: CGFloat = 0.25
-    static let minHeightRatio: CGFloat = 0.3
-}
-
-struct BottomSheetView<Content: View>: View {
-    
-    @State var isOpen: Bool = false
-    
-    let maxHeight: CGFloat
-    let minHeight: CGFloat
-    let content: Content
-    
-    @GestureState private var translation: CGFloat = 0
-    
-    private var offset: CGFloat {
-        isOpen ? 0 : maxHeight - minHeight
-    }
-    
-    private var indicator: some View {
-        RoundedRectangle(cornerRadius: ConstantsMajid.radius)
-            .fill(Color.secondary)
-            .frame(
-                width: ConstantsMajid.indicatorWidth,
-                height: ConstantsMajid.indicatorHeight
-        ).onTapGesture {
-            self.isOpen.toggle()
-        }
-    }
-    
-    init(isOpen: Bool, maxHeight: CGFloat, @ViewBuilder content: () -> Content) {
-        self.minHeight = maxHeight * ConstantsMajid.minHeightRatio
-        self.maxHeight = maxHeight
-        self.content = content()
-        self.isOpen = isOpen
-    }
-    
-    var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                self.indicator.padding()
-                self.content
-            }
-            .frame(width: geometry.size.width, height: self.maxHeight, alignment: .top)
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(ConstantsMajid.radius)
-            .frame(height: geometry.size.height, alignment: .bottom)
-            .offset(y: max(self.offset + self.translation, 0))
-            .animation(.interactiveSpring())
-            .gesture(
-                DragGesture().updating(self.$translation) { value, state, _ in
-                    state = value.translation.height
-                }.onEnded { value in
-                    let snapDistance = self.maxHeight * ConstantsMajid.snapRatio
-                    guard abs(value.translation.height) > snapDistance else {
-                        return
-                    }
-                    self.isOpen = value.translation.height < 0
-                }
-            )
-        }
-    }
-}
-
-// MARK: HEHE
-
 struct InsightsSwiftUIView: View {
     
     @ObservedObject var viewModel: InsightsViewModel
@@ -90,14 +18,10 @@ struct InsightsSwiftUIView: View {
     @State var accuracyString: LocalizedStringKey = "CALCULATING_PRECISSION"
     @State var freeDocksAtDestination: LocalizedStringKey = "FREE_DOCKS_DESTINATION_PLACEHOLDER"
     @State var explanationStringKey: LocalizedStringKey = "EXPLANATION_INSIGHTS"
-    
     @State var dischargeStringKey: LocalizedStringKey = "DISCHARGE"
     @State var refillStringKey: LocalizedStringKey = "REFILL"
-    
     @State var operationNotFoundKey: LocalizedStringKey = "NOT_FOUND"
-    
-    @State var operationsDescriptionKey: LocalizedStringKey = "OPERATIONS_DESCRIPTION"
-    
+    @State var operationsDescriptionKey: LocalizedStringKey = "OPERATIONS_DESCRIPTION"   
     @State var nextRefillTime: String?
     @State var nextDischargeTime: String?
     
@@ -202,8 +126,7 @@ struct InsightsSwiftUIView: View {
                                 RoundedRectangle(cornerRadius: Constants.cornerRadius)
                                     .stroke(Color(UIColor(named: "TextAndGraphColor")!), lineWidth: Constants.cornerRadius / 6)
                             )
-                            
-                            
+                                          
                             Spacer(minLength: 30)
                             
                             VStack {

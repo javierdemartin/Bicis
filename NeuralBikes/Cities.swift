@@ -69,5 +69,3 @@ enum AvailableCities: String {
     case bilbao = "Bilbao"
     case madrid = "Madrid"
 }
-
-
