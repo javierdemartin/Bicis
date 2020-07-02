@@ -11,10 +11,6 @@ import ReactiveSwift
 import MapKit
 import Combine
 
-protocol InsightsViewModelCoordinatorDelegate: class {
-    func dismissModalRoutePlannerViewController()
-}
-
 protocol InsightsViewModelDelegate: class {
     func presentAlertViewWithError(title: String, body: String)
     func errorTooFarAway()
@@ -28,6 +24,7 @@ protocol InsightsViewModelDataManager: class {
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
     func getStationStatistics(for city: String) -> [String: Int]
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
+    func getPredictedNumberOfDocksAt(time: String, for station: BikeStation, completion: @escaping(Result<Int>) -> Void)
 }
 
 class InsightsViewModel: NSObject, ObservableObject, Identifiable {
@@ -47,7 +44,6 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
 
     let compositeDisposable: CompositeDisposable
     let stationsDict: [String: BikeStation]? = [:]
-    weak var coordinatorDelegate: InsightsViewModelCoordinatorDelegate?
     weak var delegate: InsightsViewModelDelegate?
     let dateFormatter = DateFormatter()
     let locationService: LocationServiceable
@@ -133,48 +129,24 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
         
         guard self.destinationStation.value != nil else { return nil }
         
-        var docksAtArrival: Int?
-        
         var time = time
         time.removeLast()
         time += "0"
-
-        dataManager.getCurrentCity(completion: { currentCityResult in
-
-            switch currentCityResult {
-
-            case .success(let city):
-
-                var stationName = ""
-
-                stationName = self.destinationStation.value!.id
-                
-                self.dataManager.getPredictionForStation(city: city.apiName, type: "prediction", name: stationName, completion: { predictionResult in
-                    
-                    switch predictionResult {
-                        
-                    case .success(let data):
-                        guard let expectedDocksAtArrival = data.values[time] else { break }
-                        
-                        docksAtArrival = expectedDocksAtArrival
-                        
-                        guard let maxAvailability = self.destinationStation.value!.availabilityArray!.max(), let maxPrediction = self.destinationStation.value!.availabilityArray!.max() else { break }
-                        
-                        let maxDocks = max(maxAvailability, maxPrediction)
-                        
-                        self.expectedDocksAtArrivalTime = "\(maxDocks - expectedDocksAtArrival)"
-                        
-                    case .error:
-                        break
-                    }
-                })
-                
-            case .error:
+        
+        var numberOfDocksAtTime: Int?
+        
+        dataManager.getPredictedNumberOfDocksAt(time: time, for: destinationStation.value!, completion: { result in
+            
+            switch result {
+            case .success(let numberOfDocks):
+                numberOfDocksAtTime = numberOfDocks
+                self.expectedDocksAtArrivalTime = "\(numberOfDocks)"
+            case .error(let error):
                 break
             }
         })
         
-        return docksAtArrival
+        return numberOfDocksAtTime
     }
         
     deinit {
@@ -185,7 +157,6 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
         
         // Date retrieved from the API uses 24 hour formand intependently of the user's locale
         dateFormatter.dateFormat = "HH:mm"
-        
         
         let date = Date()
         let calendar = Calendar.current
@@ -226,11 +197,11 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
                         // Get local time
                         let closestNextRefillTime = datos.refill.reversed().first(where: {
                             calendar.component(.hour, from: date) < calendar.component(.hour, from: self.dateFormatter.date(from: $0)!)
-                        }) as? String
+                        })
 
                         let closestNextDischargeTime = datos.discharges.reversed().first(where: {
                             calendar.component(.hour, from: self.dateFormatter.date(from: $0)!) < calendar.component(.hour, from: date)
-                        }) as? String
+                        })
 
                         // Fill refill/discharge times for the station
                         self.nextRefillTime = closestNextRefillTime ?? NSLocalizedString("NOT_FOUND", comment: "")
@@ -293,11 +264,11 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
                         // Get local time
                         let closestNextRefillTime = datos.refill.reversed().first(where: {
                             calendar.component(.hour, from: date) < calendar.component(.hour, from: self.dateFormatter.date(from: $0)!)
-                        }) as? String
+                        })
 
                         let closestNextDischargeTime = datos.discharges.reversed().first(where: {
                             calendar.component(.hour, from: self.dateFormatter.date(from: $0)!) < calendar.component(.hour, from: date)
-                        }) as? String
+                        })
 
                         // Fill refill/discharge times for the station
                         self.nextRefillTime = closestNextRefillTime

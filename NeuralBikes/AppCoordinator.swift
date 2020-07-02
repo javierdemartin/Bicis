@@ -77,8 +77,6 @@ class AppCoordinator: Coordinator {
     var homeViewModel: HomeViewModel?
     var homeViewController: HomeViewController?
     var currentCity: City?
-
-    var routePlannerViewController: InsightsViewController?
     
     fileprivate func showHomeViewController() {
 
@@ -211,22 +209,6 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
     }
 }
 
-extension AppCoordinator: InsightsViewModelCoordinatorDelegate {
-
-    /// Dismisses the UIViewController presented after starting the commute
-    func dismissModalRoutePlannerViewController() {
-
-        DispatchQueue.main.async {
-            self.routePlannerViewController?.dismiss(animated: true, completion: nil)
-        }
-    }
-
-    /// Send the route between the user's current location to the destination station to be drawn on the map
-    func sendSelectedDestinationToHomeViewController(station: BikeStation) {
-        homeViewModel?.destinationStation.value = station
-    }
-}
-
 extension AppCoordinator: LogInVieWModelCoordinatorDelegate {
     func dismissViewController() {
         DispatchQueue.main.async {
@@ -266,18 +248,9 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
    
         let swiftUIView = InsightsSwiftUIView(viewModel: routePlannerViewModel)
         let viewCtrl = UIHostingController(rootView: swiftUIView)
-
-
-//        let routePlannerViewModel = InsightsViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, closestAnnotations: closestAnnotations, destinationStation: stationsDict)
-//        routePlannerViewModel.coordinatorDelegate = self
-//        routePlannerViewController = InsightsViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
-//        routePlannerViewModel.delegate = routePlannerViewController!
-//
-//        routePlannerViewController!.modalPresentationStyle = .formSheet
         
         viewCtrl.modalPresentationStyle = .formSheet
 
-//        self.window.rootViewController?.present(routePlannerViewController!, animated: true, completion: nil)
         self.window.rootViewController?.present(viewCtrl, animated: true, completion: nil)
     }
 

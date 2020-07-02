@@ -88,21 +88,12 @@ class BicisTests: XCTestCase {
                         return XCTFail("Couldn't get a random station")
                     }
 
-                    var queryID = ""
-
-                    queryID = randomStation.id
-
-//                    if city == "Bilbao" {
-//                        queryID = randomStation.stationName
-//                    } else {
-//                        queryID = randomStation.id
-//                    }
+                    var queryID = randomStation.id
 
                     self.remoteDataManager.getAllDataFromApi(city: cityData.apiName, station: queryID, completion: { allApiResult in
                         switch allApiResult {
 
                         case .success(let allData):
-//                            XCTAssertTrue(allData.values.prediction.count == Int(Constants.lengthOfTheDay))
                             XCTAssertTrue(allData.values.today.count >= 0)
 
                             dump(allData.values.prediction)

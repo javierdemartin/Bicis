@@ -30,8 +30,8 @@ extension DataManager: LogInViewModelDataManager {
             
             switch forgotResult {
                 
-            case .success():
-                print("Hola")
+            case .success:
+                break
             case .error(let error):
                 completion(.error(error))
             }
@@ -130,7 +130,7 @@ extension DataManager: HomeViewModelDataManager {
                     
                     switch rentResult {
                         
-                    case .success():
+                    case .success:
                         completion(.success(()))
                     case .error(let error):
                         completion(.error(error))
@@ -188,7 +188,43 @@ extension DataManager: HomeViewModelDataManager {
 
 // MARK: RoutePlannerViewModelDataManager
 extension DataManager: InsightsViewModelDataManager {
-    func getStationStatistics(for city: String) -> [String : Int] {
+    
+    func getPredictedNumberOfDocksAt(time: String, for station: BikeStation, completion: @escaping(Result<Int>) -> Void) {
+        
+        localDataManager.getCurrentCity(completion: { cityResult in
+            
+            switch cityResult {
+                
+            case .success(let city):
+                self.remoteDataManager.getAllDataFromApi(city: city.apiUrl, station: station.id, completion: { allDataResult in
+                    
+                    switch allDataResult {
+                        
+                    case .success(let data):
+                        
+                        guard let expectedBikesAtArrival = data.values.prediction[time] else { break }
+                        
+                        guard let maxAvailability = data.values.today.values.max(), let maxPrediction = data.values.prediction.values.max() else {
+                            
+                            completion(.success(-1))
+                            return
+                        }
+                        
+                        let maxDocks = max(maxAvailability, maxPrediction)
+                        
+                        completion(.success(maxDocks - expectedBikesAtArrival))
+
+                    case .error(let error):
+                        completion(.error(error))
+                    }
+                })
+            case .error(let error):
+                completion(.error(error))
+            }
+        })
+    }
+    
+    func getStationStatistics(for city: String) -> [String: Int] {
         return localDataManager.getStationStatistics(for: city)
     }
 

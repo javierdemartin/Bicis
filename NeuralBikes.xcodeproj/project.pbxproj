@@ -43,6 +43,7 @@
 		80299FE4243B9A5E0094EDB2 /* RestorePurchases.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80299FE6243B9A5E0094EDB2 /* RestorePurchases.strings */; };
 		80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */; };
 		8029AEA324780F240072117B /* InsightsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029AEA224780F240072117B /* InsightsSwiftUIView.swift */; };
+		803395F1249D5D78003E3ADC /* GBFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803395F0249D5D78003E3ADC /* GBFS.swift */; };
 		8036399D24829FA900FA096F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036399C24829FA900FA096F /* UIFont.swift */; };
 		80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */; };
 		80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */; };
@@ -84,13 +85,13 @@
 		8085CC69236E2CB800B45A7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8085CC67236E2CB800B45A7C /* LaunchScreen.storyboard */; };
 		8088453E2475947300367D5C /* DataManager.strings in Resources */ = {isa = PBXBuildFile; fileRef = 808845402475947300367D5C /* DataManager.strings */; };
 		808CEAC62477A28F006B17F2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 808CEAC82477A28F006B17F2 /* Localizable.strings */; };
-		809953F52416C76F00B44DC9 /* InsightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809953F42416C76F00B44DC9 /* InsightsViewController.swift */; };
 		809953F72416C77700B44DC9 /* InsightsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809953F62416C77700B44DC9 /* InsightsViewModel.swift */; };
 		8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099540924181C5B00B44DC9 /* TimeInterval.swift */; };
 		8099541324193E2200B44DC9 /* RoutePlannerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099541224193E2200B44DC9 /* RoutePlannerTableViewCell.swift */; };
 		8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8099541624193F5600B44DC9 /* RoutePlanner.strings */; };
 		80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */; };
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
+		80A969DD249BAB65003211FC /* NBGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A969DC249BAB65003211FC /* NBGradient.swift */; };
 		80ABE1F0243E148E004920D8 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ABE1EF243E148E004920D8 /* UIAlertController.swift */; };
 		80AD2AAB2471A238007E9BAB /* LogIn.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80AD2AAD2471A238007E9BAB /* LogIn.strings */; };
 		80B1D016241A95F20072D1D9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D015241A95F20072D1D9 /* UIView.swift */; };
@@ -173,6 +174,7 @@
 		80299FE7243B9A600094EDB2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RestorePurchases.strings; sourceTree = "<group>"; };
 		80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackGenerator.swift; sourceTree = "<group>"; };
 		8029AEA224780F240072117B /* InsightsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsSwiftUIView.swift; sourceTree = "<group>"; };
+		803395F0249D5D78003E3ADC /* GBFS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFS.swift; sourceTree = "<group>"; };
 		8036399C24829FA900FA096F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewController.swift; sourceTree = "<group>"; };
 		80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewModel.swift; sourceTree = "<group>"; };
@@ -220,7 +222,6 @@
 		808845412475947500367D5C /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/DataManager.strings; sourceTree = "<group>"; };
 		808CEAC72477A28F006B17F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		808CEAC92477A290006B17F2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		809953F42416C76F00B44DC9 /* InsightsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewController.swift; sourceTree = "<group>"; };
 		809953F62416C77700B44DC9 /* InsightsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewModel.swift; sourceTree = "<group>"; };
 		8099540924181C5B00B44DC9 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		8099541224193E2200B44DC9 /* RoutePlannerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerTableViewCell.swift; sourceTree = "<group>"; };
@@ -228,6 +229,7 @@
 		809954172419400A00B44DC9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RoutePlanner.strings; sourceTree = "<group>"; };
 		80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserInterfaceIdiom.swift; sourceTree = "<group>"; };
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		80A969DC249BAB65003211FC /* NBGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBGradient.swift; sourceTree = "<group>"; };
 		80ABE1EF243E148E004920D8 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		80AD2AAC2471A238007E9BAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LogIn.strings; sourceTree = "<group>"; };
 		80AD2AAE2471A244007E9BAB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LogIn.strings; sourceTree = "<group>"; };
@@ -382,7 +384,6 @@
 				80109142236E317700D3C45E /* HomeViewModel.swift */,
 				801ECE3A236F3B7D003CFAF7 /* MapPin.swift */,
 				801ECE3C236F3B90003CFAF7 /* CustomAnnotationView.swift */,
-				803FD8A023C71FAF008DDE91 /* GraphView.swift */,
 				807C88A523EAD638003BA644 /* Home.strings */,
 				8008A67C249828A600D7F5C7 /* HomeViewControllerSwiftUI.swift */,
 			);
@@ -434,6 +435,14 @@
 			path = LogIn;
 			sourceTree = "<group>";
 		};
+		805101B0249BA4C9008FBD21 /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				803FD8A023C71FAF008DDE91 /* GraphView.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
 		805B5A2423EE0A95000F3CC5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +478,7 @@
 				8074D34C24573816006B3062 /* MyAllAPIResponseItem.swift */,
 				8074D34E2457382C006B3062 /* MyAllAPIResponse.swift */,
 				8055B897246FF65100BCC141 /* RecoverPinResponse.swift */,
+				803395F0249D5D78003E3ADC /* GBFS.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -543,11 +553,12 @@
 				80E7D8A7245602EB00D49894 /* Protocols */,
 				80299FDF243B94B20094EDB2 /* Confetti */,
 				80D288C7241E4952004EE583 /* RestorePurchases */,
-				809953F32416C50100B44DC9 /* Route Planner */,
+				809953F32416C50100B44DC9 /* Insights */,
 				800CE94523955BD400674D1C /* NeuralBikes.entitlements */,
 				801ECE40236F3BC3003CFAF7 /* Extensions */,
 				80628466236EDA3600717472 /* Model */,
 				8062845F236E34B900717472 /* Coordinator */,
+				805101B0249BA4C9008FBD21 /* Graph */,
 				8010913F236E316000D3C45E /* Home */,
 				80109133236E2D9B00D3C45E /* DataManager */,
 				8085CC5C236E2CB500B45A7C /* AppDelegate.swift */,
@@ -569,17 +580,16 @@
 			path = NeuralBikes;
 			sourceTree = "<group>";
 		};
-		809953F32416C50100B44DC9 /* Route Planner */ = {
+		809953F32416C50100B44DC9 /* Insights */ = {
 			isa = PBXGroup;
 			children = (
 				8029AEA224780F240072117B /* InsightsSwiftUIView.swift */,
-				809953F42416C76F00B44DC9 /* InsightsViewController.swift */,
 				809953F62416C77700B44DC9 /* InsightsViewModel.swift */,
 				8099541624193F5600B44DC9 /* RoutePlanner.strings */,
 				8099541224193E2200B44DC9 /* RoutePlannerTableViewCell.swift */,
 				80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */,
 			);
-			path = "Route Planner";
+			path = Insights;
 			sourceTree = "<group>";
 		};
 		80B55FDA246D997D00AA7008 /* Scanner */ = {
@@ -609,6 +619,7 @@
 				80FFDE3124683D4A00436BA6 /* NBStackView.swift */,
 				80FFDE332468407500436BA6 /* NBLabel.swift */,
 				80B55FE1246E899B00AA7008 /* NBTextView.swift */,
+				80A969DC249BAB65003211FC /* NBGradient.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -954,6 +965,8 @@
 				801ECE3D236F3B90003CFAF7 /* CustomAnnotationView.swift in Sources */,
 				80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */,
 				8074D33D2457372B006B3062 /* BaseResponse.swift in Sources */,
+				803395F1249D5D78003E3ADC /* GBFS.swift in Sources */,
+				80A969DD249BAB65003211FC /* NBGradient.swift in Sources */,
 				801ECE3B236F3B7D003CFAF7 /* MapPin.swift in Sources */,
 				8074D34B24573806006B3062 /* MyAPIResponse.swift in Sources */,
 				80E7D8A92456033E00D49894 /* NBButton.swift in Sources */,
@@ -994,7 +1007,6 @@
 				80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */,
 				8099541324193E2200B44DC9 /* RoutePlannerTableViewCell.swift in Sources */,
 				80628463236ED79300717472 /* Result.swift in Sources */,
-				809953F52416C76F00B44DC9 /* InsightsViewController.swift in Sources */,
 				8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */,
 				800CE942239559F700674D1C /* Constants.swift in Sources */,
 			);
@@ -1303,7 +1315,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NeuralBikes/NeuralBikes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1311,7 +1323,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.6.2;
+				MARKETING_VERSION = 2020.6.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "Neural Bikes";
 				SUPPORTS_MACCATALYST = NO;
@@ -1327,7 +1339,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NeuralBikes/NeuralBikes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1335,7 +1347,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.6.2;
+				MARKETING_VERSION = 2020.6.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "Neural Bikes";
 				SUPPORTS_MACCATALYST = NO;
