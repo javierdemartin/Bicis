@@ -96,8 +96,10 @@ class DefaultRemoteDataManager: RemoteDataManager {
 
     func getStations(city: String, completion: @escaping (Result<[BikeStation]>) -> Void) {
 
+        // Early return if the city is not available
         guard let selectedCity = availableCities[city]  else { return }
         
+        // Cities that support GBFS
         if (availableCities[selectedCity.formalName]?.gbfs) != nil {
             getGbfsData(city: selectedCity, completion: { gbfsCity in
                 
@@ -109,7 +111,9 @@ class DefaultRemoteDataManager: RemoteDataManager {
                 
                 completion(.success(gbfsCity))
             })
-        } else if (availableCities[selectedCity.formalName]?.logInCredentials) != nil {
+        }
+        // Cities that need login support
+        else if (availableCities[selectedCity.formalName]?.logInCredentials) != nil {
          
             guard let apiUrl = URL(string: selectedCity.apiUrl) else { return }
             
@@ -219,7 +223,6 @@ class DefaultRemoteDataManager: RemoteDataManager {
                     do {
                         
                         let result = try JSONDecoder().decode(GbfsStationStatus.self, from: data)
-                        
                         gbfsStationStatus = result.data.stations
                     } catch {
                         
@@ -270,10 +273,6 @@ class DefaultRemoteDataManager: RemoteDataManager {
         task2.resume()
                 
         group.notify(queue: .main) {
-            
-            print(gbfsStationInformation)
-            print(gbfsStationStatus)
-            print("Finished")
             
             var stations: [BikeStation] = []
             

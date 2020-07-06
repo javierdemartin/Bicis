@@ -62,9 +62,8 @@ class AppCoordinator: Coordinator {
                     self.showHomeViewController()
                 case .error(let err):
                     print(err.localizedDescription)
-
-                    self.showHomeViewController()
-                    self.presentModallySettingsViewController()
+                    
+                    self.presenTutorialViewController()
                 }
             }
         }
@@ -97,7 +96,7 @@ class AppCoordinator: Coordinator {
     fileprivate func presentModallySettingsViewController() {
 
         let compositeDisposable = CompositeDisposable()
-        let settingsViewModel = SettingsViewModel(currentCity: currentCity ?? nil, compositeDisposable: compositeDisposable, dataManager: dataManager)
+        let settingsViewModel = SettingsViewModel(currentCity: currentCity ?? nil, locationService: locationService, compositeDisposable: compositeDisposable, dataManager: dataManager)
 
         settingsViewController = SettingsViewController(viewModel: settingsViewModel, compositeDisposable: compositeDisposable)
 
@@ -217,6 +216,12 @@ extension AppCoordinator: LogInVieWModelCoordinatorDelegate {
     }
 }
 
+extension AppCoordinator: TutorialViewModelCoordinatorDelegate {
+    func didTapFinishTutorial() {
+        showHomeViewController()
+    }
+}
+
 extension AppCoordinator: HomeViewModelCoordinatorDelegate {
     func presentScannerViewController() {
         let compositeDisposable = CompositeDisposable()
@@ -239,6 +244,26 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
         self.window.rootViewController?.present(logInViewController!, animated: true, completion: nil)
     }
     
+    func presenTutorialViewController() {
+        
+        let compositeDisposable = CompositeDisposable()
+        
+        let tutorialViewModel = TutorialViewModel(dataManager: dataManager)
+        tutorialViewModel.coordinatorDelegate = self
+        
+        let swiftUIView = TutorialViewController(viewModel: tutorialViewModel)
+        let viewCtrl = UIHostingController(rootView: swiftUIView)
+        
+//        viewCtrl.modalPresentationStyle = .formSheet
+        
+        self.window.rootViewController = viewCtrl
+
+        UIView.transition(with: window, duration: 0.3, options: [UIView.AnimationOptions.transitionCrossDissolve], animations: {}, completion: nil)
+        window.makeKeyAndVisible()
+
+//a        self.window.rootViewController?.present(viewCtrl, animated: true, completion: nil)
+    }
+    
     /// Presents the UIViewController in charge of planning the route to the destination station
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation]) {
 
@@ -246,7 +271,7 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
         
         let routePlannerViewModel = InsightsViewModel(compositeDisposable: compositeDisposable, locationService: locationService, dataManager: dataManager, destinationStation: stationsDict)
    
-        let swiftUIView = InsightsSwiftUIView(viewModel: routePlannerViewModel)
+        let swiftUIView = InsightsViewController(viewModel: routePlannerViewModel)
         let viewCtrl = UIHostingController(rootView: swiftUIView)
         
         viewCtrl.modalPresentationStyle = .formSheet

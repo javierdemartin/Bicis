@@ -22,6 +22,14 @@ class DataManager {
     }
 }
 
+extension DataManager: TutorialViewModelDataManager {
+    
+    func didReadTutorial() {
+        localDataManager.set(value: true, for: "DID_READ_TUTORIAL")
+    }
+}
+
+
 // MARK: LogInViewModelDataManager
 
 extension DataManager: LogInViewModelDataManager {

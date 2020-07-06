@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 import ReactiveSwift
+import Combine
 
 class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, LocationServiceable {
     var signalForDidUpdateLocations: Signal<CLLocation, Never> {
@@ -20,6 +21,7 @@ class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, Location
     }
     var didUpdateLocationsHandler: ((CLLocation) -> Void)?
     var currentLocation: CLLocation?
+    var locationAuthorizationStatus: PassthroughSubject<PermissionStatus, Never>
     
     static let sharedInstance: LocationServiceable = {
         let instance = LocationServiceCoreLocation()
@@ -29,6 +31,9 @@ class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, Location
     var locationManager: CLLocationManager?
     
     override init() {
+        
+        locationAuthorizationStatus = PassthroughSubject<PermissionStatus, Never>()
+        
         super.init()
         
         self.locationManager = CLLocationManager()
@@ -62,10 +67,13 @@ class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, Location
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
+            locationAuthorizationStatus.send(.granted)
             startMonitoring()
         default:
+            locationAuthorizationStatus.send(.notDetermined)
             break
         }
     }

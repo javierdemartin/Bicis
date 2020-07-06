@@ -42,7 +42,7 @@
 		80299FE1243B94C40094EDB2 /* ConfettiKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE0243B94C40094EDB2 /* ConfettiKit.swift */; };
 		80299FE4243B9A5E0094EDB2 /* RestorePurchases.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80299FE6243B9A5E0094EDB2 /* RestorePurchases.strings */; };
 		80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */; };
-		8029AEA324780F240072117B /* InsightsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029AEA224780F240072117B /* InsightsSwiftUIView.swift */; };
+		8029AEA324780F240072117B /* InsightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029AEA224780F240072117B /* InsightsViewController.swift */; };
 		803395F1249D5D78003E3ADC /* GBFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803395F0249D5D78003E3ADC /* GBFS.swift */; };
 		8036399D24829FA900FA096F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036399C24829FA900FA096F /* UIFont.swift */; };
 		80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */; };
@@ -90,6 +90,11 @@
 		8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8099541624193F5600B44DC9 /* RoutePlanner.strings */; };
 		80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */; };
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
+		80AB8B7024B23A2F004F3905 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */; };
+		80AB8B7224B23A36004F3905 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */; };
+		80AB8B7424B23E8B004F3905 /* TutorialCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B7324B23E8B004F3905 /* TutorialCardView.swift */; };
+		80AB8B7624B24627004F3905 /* Tutorial.json in Resources */ = {isa = PBXBuildFile; fileRef = 80AB8B7524B24627004F3905 /* Tutorial.json */; };
+		80AB8B7824B24669004F3905 /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B7724B24669004F3905 /* Tutorial.swift */; };
 		80ABE1F0243E148E004920D8 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ABE1EF243E148E004920D8 /* UIAlertController.swift */; };
 		80AD2AAB2471A238007E9BAB /* LogIn.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80AD2AAD2471A238007E9BAB /* LogIn.strings */; };
 		80B1D016241A95F20072D1D9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D015241A95F20072D1D9 /* UIView.swift */; };
@@ -99,6 +104,9 @@
 		80B55FDE246D999500AA7008 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDD246D999500AA7008 /* ScannerViewModel.swift */; };
 		80B55FE0246DB76D00AA7008 /* BikeServicesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */; };
 		80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FE1246E899B00AA7008 /* NBTextView.swift */; };
+		80CC83E024AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CC83DF24AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift */; };
+		80CC83E224AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CC83E124AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift */; };
+		80CC83E424AF746D0001E407 /* SettingsSwiftUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CC83E324AF746D0001E407 /* SettingsSwiftUIViewController.swift */; };
 		80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BC241BC52E004EE583 /* UIStackView.swift */; };
 		80D288BF241D5150004EE583 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BE241D5150004EE583 /* Binding.swift */; };
 		80D288C1241D5200004EE583 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
@@ -171,7 +179,7 @@
 		80299FE5243B9A5E0094EDB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RestorePurchases.strings; sourceTree = "<group>"; };
 		80299FE7243B9A600094EDB2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RestorePurchases.strings; sourceTree = "<group>"; };
 		80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackGenerator.swift; sourceTree = "<group>"; };
-		8029AEA224780F240072117B /* InsightsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsSwiftUIView.swift; sourceTree = "<group>"; };
+		8029AEA224780F240072117B /* InsightsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewController.swift; sourceTree = "<group>"; };
 		803395F0249D5D78003E3ADC /* GBFS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFS.swift; sourceTree = "<group>"; };
 		8036399C24829FA900FA096F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +234,11 @@
 		809954172419400A00B44DC9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RoutePlanner.strings; sourceTree = "<group>"; };
 		80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserInterfaceIdiom.swift; sourceTree = "<group>"; };
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
+		80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
+		80AB8B7324B23E8B004F3905 /* TutorialCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCardView.swift; sourceTree = "<group>"; };
+		80AB8B7524B24627004F3905 /* Tutorial.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tutorial.json; sourceTree = "<group>"; };
+		80AB8B7724B24669004F3905 /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		80ABE1EF243E148E004920D8 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		80AD2AAC2471A238007E9BAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LogIn.strings; sourceTree = "<group>"; };
 		80AD2AAE2471A244007E9BAB /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LogIn.strings; sourceTree = "<group>"; };
@@ -235,6 +248,9 @@
 		80B55FDD246D999500AA7008 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
 		80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeServicesError.swift; sourceTree = "<group>"; };
 		80B55FE1246E899B00AA7008 /* NBTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBTextView.swift; sourceTree = "<group>"; };
+		80CC83DF24AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+MKMapViewDelegate.swift"; sourceTree = "<group>"; };
+		80CC83E124AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+HomeViewModelDelegate.swift"; sourceTree = "<group>"; };
+		80CC83E324AF746D0001E407 /* SettingsSwiftUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsSwiftUIViewController.swift; path = NeuralBikes/Home/SettingsSwiftUIViewController.swift; sourceTree = SOURCE_ROOT; };
 		80D288BC241BC52E004EE583 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		80D288BE241D5150004EE583 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		80D288C0241D5200004EE583 /* UITestingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingHelper.swift; sourceTree = "<group>"; };
@@ -335,6 +351,7 @@
 				80FFDE3B24689C5C00436BA6 /* SettingsViewModel.swift */,
 				80FFDE3724689C4600436BA6 /* SettingsErrors.swift */,
 				80FFDE4524689DEF00436BA6 /* Settings.strings */,
+				80CC83E324AF746D0001E407 /* SettingsSwiftUIViewController.swift */,
 			);
 			name = Settings;
 			path = "ç+`´p++++++";
@@ -377,6 +394,8 @@
 			isa = PBXGroup;
 			children = (
 				80109140236E316E00D3C45E /* HomeViewController.swift */,
+				80CC83DF24AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift */,
+				80CC83E124AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift */,
 				80109142236E317700D3C45E /* HomeViewModel.swift */,
 				801ECE3A236F3B7D003CFAF7 /* MapPin.swift */,
 				801ECE3C236F3B90003CFAF7 /* CustomAnnotationView.swift */,
@@ -544,6 +563,7 @@
 		8085CC5B236E2CB500B45A7C /* NeuralBikes */ = {
 			isa = PBXGroup;
 			children = (
+				80AB8B6E24B23A10004F3905 /* Tutorial */,
 				80B55FDA246D997D00AA7008 /* Scanner */,
 				803B6AFE246AF3CD0022A586 /* LogIn */,
 				80E7D8A7245602EB00D49894 /* Protocols */,
@@ -579,12 +599,24 @@
 		809953F32416C50100B44DC9 /* Insights */ = {
 			isa = PBXGroup;
 			children = (
-				8029AEA224780F240072117B /* InsightsSwiftUIView.swift */,
+				8029AEA224780F240072117B /* InsightsViewController.swift */,
 				809953F62416C77700B44DC9 /* InsightsViewModel.swift */,
 				8099541624193F5600B44DC9 /* RoutePlanner.strings */,
 				80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */,
 			);
 			path = Insights;
+			sourceTree = "<group>";
+		};
+		80AB8B6E24B23A10004F3905 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */,
+				80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */,
+				80AB8B7324B23E8B004F3905 /* TutorialCardView.swift */,
+				80AB8B7524B24627004F3905 /* Tutorial.json */,
+				80AB8B7724B24669004F3905 /* Tutorial.swift */,
+			);
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 		80B55FDA246D997D00AA7008 /* Scanner */ = {
@@ -761,6 +793,7 @@
 				8088453E2475947300367D5C /* DataManager.strings in Resources */,
 				80FFDE4324689DEF00436BA6 /* Settings.strings in Resources */,
 				8085CC69236E2CB800B45A7C /* LaunchScreen.storyboard in Resources */,
+				80AB8B7624B24627004F3905 /* Tutorial.json in Resources */,
 				8085CC66236E2CB800B45A7C /* Assets.xcassets in Resources */,
 				808CEAC62477A28F006B17F2 /* Localizable.strings in Resources */,
 				8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */,
@@ -918,13 +951,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8029AEA324780F240072117B /* InsightsSwiftUIView.swift in Sources */,
+				8029AEA324780F240072117B /* InsightsViewController.swift in Sources */,
 				8074D33924573712006B3062 /* LogInResponse.swift in Sources */,
 				80109145236E320300D3C45E /* AppCoordinator.swift in Sources */,
 				8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */,
 				80D288C1241D5200004EE583 /* UITestingHelper.swift in Sources */,
 				803B6B00246AF3DD0022A586 /* LogInViewModel.swift in Sources */,
 				80109137236E2DFA00D3C45E /* DataManager.swift in Sources */,
+				80CC83E424AF746D0001E407 /* SettingsSwiftUIViewController.swift in Sources */,
 				8074D34F2457382C006B3062 /* MyAllAPIResponse.swift in Sources */,
 				8074D347245737BE006B3062 /* GetActiveRentalsResponse.swift in Sources */,
 				8008A67D249828A600D7F5C7 /* HomeViewControllerSwiftUI.swift in Sources */,
@@ -933,7 +967,10 @@
 				804F162224796D9900B90FC2 /* DataObserverProducer.swift in Sources */,
 				80F882072490E3B100AB322A /* LocationServicesCoreLocation.swift in Sources */,
 				803B6AF72469C3180022A586 /* LogInFormData.swift in Sources */,
+				80AB8B7024B23A2F004F3905 /* TutorialViewController.swift in Sources */,
 				8074D35124573CFA006B3062 /* NBTextField.swift in Sources */,
+				80CC83E024AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift in Sources */,
+				80AB8B7824B24669004F3905 /* Tutorial.swift in Sources */,
 				80FFDE362468614000436BA6 /* UIApplication.swift in Sources */,
 				801ECE46236F3C10003CFAF7 /* String.swift in Sources */,
 				80109135236E2DEC00D3C45E /* LocalDataManager.swift in Sources */,
@@ -948,6 +985,7 @@
 				8074D33B24573720006B3062 /* LogInResponseError.swift in Sources */,
 				80109143236E317700D3C45E /* HomeViewModel.swift in Sources */,
 				80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */,
+				80AB8B7424B23E8B004F3905 /* TutorialCardView.swift in Sources */,
 				80F882032490E2D800AB322A /* LocationServiceable.swift in Sources */,
 				8074D34D24573816006B3062 /* MyAllAPIResponseItem.swift in Sources */,
 				8074D35324573E98006B3062 /* BikeServicesDataManager.swift in Sources */,
@@ -981,11 +1019,13 @@
 				8074D3412457375E006B3062 /* RentResponse.swift in Sources */,
 				8062846A236EE22F00717472 /* DefaultLocalDataManager.swift in Sources */,
 				80FFDE3824689C4600436BA6 /* SettingsErrors.swift in Sources */,
+				80AB8B7224B23A36004F3905 /* TutorialViewModel.swift in Sources */,
 				80B55FDE246D999500AA7008 /* ScannerViewModel.swift in Sources */,
 				801ECE42236F3BD1003CFAF7 /* UIColor.swift in Sources */,
 				80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */,
 				8074D335245736E6006B3062 /* UserCredentials.swift in Sources */,
 				80628461236E34C500717472 /* Coordinator.swift in Sources */,
+				80CC83E224AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift in Sources */,
 				80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */,
 				80F882052490E30C00AB322A /* PermissionStatus.swift in Sources */,
 				8074D33F24573748006B3062 /* Rent.swift in Sources */,

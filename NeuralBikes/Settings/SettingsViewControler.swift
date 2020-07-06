@@ -11,6 +11,7 @@ import ReactiveCocoa
 import ReactiveSwift
 import CoreLocation
 import StoreKit
+import Combine
 
 extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
@@ -31,14 +32,7 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-//        var pickerLabel: NBLabel? = (view as? NBLabel)
-//        if pickerLabel == nil {
-//            pickerLabel = NBLabel()
-//            pickerLabel?.applyProtocolUIAppearance()
-//        }
-//        pickerLabel?.font = UIFont.preferredFont(for: .body, weight: .regular)
-//
-//        pickerLabel?.text = citiesList[row]
+
         
         var label = view as? UILabel
         
@@ -211,9 +205,6 @@ class SettingsViewController: UIViewController {
         self.compositeDisposable = compositeDisposable
 
         super.init(nibName: nil, bundle: nil)
-
-//        LocationServices.sharedInstance.delegate = self
-//        LocationServices.sharedInstance.startUpdatingLocation()
     }
 
     @objc func askForReview(_ sender: UITapGestureRecognizer) {
@@ -275,26 +266,41 @@ class SettingsViewController: UIViewController {
         stringVersion.text = "\(versionString)" + " (" + "\(bundleString)" + ")"
         stringVersion.accessibilityLabel = NSLocalizedString("VERSION_ACCESIBILITY_LABEL", comment: "").replacingOccurrences(of: "%number", with: versionString)
     }
+    
+    var suscription = Set<AnyCancellable>()
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         viewModel.prepareViewForAppearance()
-
-        if CLLocationManager.locationServicesEnabled() {
-            switch CLLocationManager.authorizationStatus() {
-            case .notDetermined, .restricted, .denied:
-                locationServicesStatusImage.image = UIImage(systemName: "location.slash.fill")
-                locationServicesStatusImage.accessibilityLabel = NSLocalizedString("NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
-            case .authorizedAlways, .authorizedWhenInUse:
-                locationServicesStatusImage.image = UIImage(systemName: "location.fill")
-                locationServicesStatusImage.accessibilityLabel = NSLocalizedString("GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
-            @unknown default:
-                break
+        
+        viewModel.locationService.locationAuthorizationStatus.sink(receiveValue: { status in
+            
+            print(status)
+            switch status {
+            case .granted:
+                self.locationServicesStatusImage.image = UIImage(systemName: "location.fill")
+                self.locationServicesStatusImage.accessibilityLabel = NSLocalizedString("GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
+            case .denied, .notDetermined:
+                self.locationServicesStatusImage.image = UIImage(systemName: "location.slash.fill")
+                self.locationServicesStatusImage.accessibilityLabel = NSLocalizedString("NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
             }
-        } else {
-            print("Location services are not enabled")
-        }
+        }).store(in: &suscription)
+
+//        if CLLocationManager.locationServicesEnabled() {
+//            switch CLLocationManager.authorizationStatus() {
+//            case .notDetermined, .restricted, .denied:
+//                locationServicesStatusImage.image = UIImage(systemName: "location.slash.fill")
+//                locationServicesStatusImage.accessibilityLabel = NSLocalizedString("NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
+//            case .authorizedAlways, .authorizedWhenInUse:
+//                locationServicesStatusImage.image = UIImage(systemName: "location.fill")
+//                locationServicesStatusImage.accessibilityLabel = NSLocalizedString("GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
+//            @unknown default:
+//                break
+//            }
+//        } else {
+//            print("Location services are not enabled")
+//        }
     }
 
     override func viewDidLoad() {
@@ -305,8 +311,7 @@ class SettingsViewController: UIViewController {
 
     override var keyCommands: [UIKeyCommand]? {
         return [
-            UIKeyCommand(input: UIKeyCommand.inputDownArrow, modifierFlags: .command, action: #selector(dismiss(animated:completion:)
-                ), discoverabilityTitle: "CLOSE_SETTINGS_KEYBOARD".localize(file: "Settings"))
+            UIKeyCommand(title: "CLOSE_SETTINGS_KEYBOARD".localize(file: "Settings"), action: #selector(dismiss(animated:completion:)), input: UIKeyCommand.inputDownArrow, modifierFlags: .command, alternates: [], discoverabilityTitle: "CLOSE_SETTINGS_KEYBOARD".localize(file: "Settings"), attributes: .destructive, state: .on)
         ]
     }
 

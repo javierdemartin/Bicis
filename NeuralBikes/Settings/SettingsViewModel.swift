@@ -10,6 +10,7 @@ import Foundation
 import ReactiveSwift
 import CoreLocation
 import StoreKit
+import Combine
 
 protocol SettingsViewModelDataManager {
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void)
@@ -39,7 +40,7 @@ enum DonationDescriptions: String {
     case secondTier = "com.javierdemartin.bici.level_two_donation"
 }
 
-class SettingsViewModel {
+class SettingsViewModel: ObservableObject {
 
     var availableCitiesModel = Binding<[String]>(value: Array(availableCities.keys))
 
@@ -127,11 +128,14 @@ class SettingsViewModel {
 
         compositeDisposable += logInButtonIsEnabled <~ usernameIsNotEmpty.and(passwordIsNotEmpty)
     }
+    
+    let locationService: LocationServiceable
 
-    init(currentCity: City?, compositeDisposable: CompositeDisposable, dataManager: SettingsViewModelDataManager) {
+    init(currentCity: City?, locationService: LocationServiceable, compositeDisposable: CompositeDisposable, dataManager: SettingsViewModelDataManager) {
 
         self.compositeDisposable = compositeDisposable
         self.dataManager = dataManager
+        self.locationService  = locationService
 
         setUpBindings()
 

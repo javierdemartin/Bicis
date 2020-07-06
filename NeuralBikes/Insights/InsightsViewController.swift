@@ -7,10 +7,9 @@
 //
 
 import SwiftUI
-//import Foundation
 import ReactiveSwift
 
-struct InsightsSwiftUIView: View {
+struct InsightsViewController: View {
     
     @ObservedObject var viewModel: InsightsViewModel
     
@@ -36,7 +35,7 @@ struct InsightsSwiftUIView: View {
     @ViewBuilder
     var body: some View {
         
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
                 
                 HStack(spacing: Constants.cornerRadius) {

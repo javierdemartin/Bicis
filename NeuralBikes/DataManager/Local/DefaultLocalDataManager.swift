@@ -79,6 +79,12 @@ class DefaultLocalDataManager: LocalDataManager {
             defaults.set(try? PropertyListEncoder().encode(stationStatistics), forKey: Constants.selectedStationsStatistics)
         }
     }
+    
+    func set<T>(value: T, for key: String) {
+     
+        defaults.setValue(value, forKey: key)
+    }
+
 
     /// Reads the UserDefault bool value
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
