@@ -104,6 +104,7 @@
 		80B55FE0246DB76D00AA7008 /* BikeServicesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */; };
 		80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FE1246E899B00AA7008 /* NBTextView.swift */; };
 		80B8727724BA2C0900098D6B /* BlurAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8727624BA2C0800098D6B /* BlurAlertView.swift */; };
+		80B8727A24BA55F700098D6B /* SantanderBikesLondon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */; };
 		80CC83E024AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CC83DF24AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift */; };
 		80CC83E224AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CC83E124AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift */; };
 		80CC83E424AF746D0001E407 /* SettingsSwiftUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CC83E324AF746D0001E407 /* SettingsSwiftUIViewController.swift */; };
@@ -248,6 +249,7 @@
 		80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeServicesError.swift; sourceTree = "<group>"; };
 		80B55FE1246E899B00AA7008 /* NBTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBTextView.swift; sourceTree = "<group>"; };
 		80B8727624BA2C0800098D6B /* BlurAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurAlertView.swift; sourceTree = "<group>"; };
+		80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SantanderBikesLondon.swift; sourceTree = "<group>"; };
 		80CC83DF24AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+MKMapViewDelegate.swift"; sourceTree = "<group>"; };
 		80CC83E124AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+HomeViewModelDelegate.swift"; sourceTree = "<group>"; };
 		80CC83E324AF746D0001E407 /* SettingsSwiftUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsSwiftUIViewController.swift; path = NeuralBikes/Home/SettingsSwiftUIViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -512,6 +514,7 @@
 		807C88AE23EB1711003BA644 /* Remote */ = {
 			isa = PBXGroup;
 			children = (
+				80B8727824BA55A100098D6B /* SantanderBikesLondon */,
 				807C88B423EB1802003BA644 /* NextBike */,
 				80109138236E2F9700D3C45E /* RemoteDataManager.swift */,
 				80628464236ED87900717472 /* DefaultRemoteDataManager.swift */,
@@ -634,6 +637,14 @@
 				80B8727624BA2C0800098D6B /* BlurAlertView.swift */,
 			);
 			path = "Blur Alert";
+			sourceTree = "<group>";
+		};
+		80B8727824BA55A100098D6B /* SantanderBikesLondon */ = {
+			isa = PBXGroup;
+			children = (
+				80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */,
+			);
+			path = SantanderBikesLondon;
 			sourceTree = "<group>";
 		};
 		80D288C7241E4952004EE583 /* RestorePurchases */ = {
@@ -1025,6 +1036,7 @@
 				80FFDE342468407500436BA6 /* NBLabel.swift in Sources */,
 				8074D3412457375E006B3062 /* RentResponse.swift in Sources */,
 				8062846A236EE22F00717472 /* DefaultLocalDataManager.swift in Sources */,
+				80B8727A24BA55F700098D6B /* SantanderBikesLondon.swift in Sources */,
 				80FFDE3824689C4600436BA6 /* SettingsErrors.swift in Sources */,
 				80AB8B7224B23A36004F3905 /* TutorialViewModel.swift in Sources */,
 				80B8727724BA2C0900098D6B /* BlurAlertView.swift in Sources */,

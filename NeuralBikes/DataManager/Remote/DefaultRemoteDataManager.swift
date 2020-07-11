@@ -27,6 +27,8 @@ class DefaultRemoteDataManager: RemoteDataManager {
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void) {
 
         myComponents.path = "/api/v1/all/\(city)/\(station)"
+        
+        print(myComponents.url)
 
         guard let url = myComponents.url else {
             preconditionFailure("Failed to construct URL")
@@ -166,13 +168,16 @@ class DefaultRemoteDataManager: RemoteDataManager {
                     }
                     
                     if let data = data {
-                        
+                                                
                         do {
                                                     
                             switch selectedCity.formalName {
                             case "Bilbao":
                                 let result = try JSONDecoder().decode(NextBikeRoot.self, from: data)
                                 completion(.success(result.countries[0].cities[0].places))
+                            case "London":
+                                let result = try JSONDecoder().decode([SantanderBikesStation].self, from: data)
+                                completion(.success(result))
                             default:
                                 completion(.error(RemoteDataManagerError.couldntParseFeed))
                             }
