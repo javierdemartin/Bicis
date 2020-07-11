@@ -45,3 +45,16 @@
 "REFILL" = "Refill";
 "NOT_FOUND" = "None";
 "OPERATIONS_DESCRIPTION" = "Possible prediction of manual charge and discharge operations at the station done by service workers.";
+
+// MARK: - Tutorial
+
+"ML_PREDICTIONS_TITLE" = "ML Bike sharing predictions";
+"ML_PREDICTIONS_BODY" = "Check on a graph current bike demand. Compare it against the prediction on the graph.";
+
+"INFORMATION_TITLE" = "Local Information";
+"INFORMATION_BODY" = "Never arrive to an empty station again. Get information on how the system is gonna behave.";
+
+"PRIVACY_TITLE" = "No trackers";
+"PRIVACY_BODY" = "Your information stays on device, no third parties involved.";
+
+"FINISH_ONBOARDING" = "Take me to the app";

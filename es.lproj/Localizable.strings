@@ -42,3 +42,16 @@
 "REFILL" = "Recarga";
 "NOT_FOUND" = "Nada";
 "OPERATIONS_DESCRIPTION" = "Predicción de posibles operaciones de recarga y descarga hechas por los operarios.";
+
+// MARK: - Tutorial
+
+"ML_PREDICTIONS_TITLE" = "Predicciones de disponibilidad con ML";
+"ML_PREDICTIONS_BODY" = "Comprueba en el gráfico la demanda actual. Compárala frente a la predicción para conocer más detalles";
+
+"INFORMATION_TITLE" = "Información actualizada";
+"INFORMATION_BODY" = "Nunca llegues a una estación vacía. Obtén información actualizada en directo";
+
+"PRIVACY_TITLE" = "Sin trackers";
+"PRIVACY_BODY" = "Tu información nunca abandona el dispositivo, no hay terceros que reciban tus datos";
+
+"FINISH_ONBOARDING" = "Llévame a la app";

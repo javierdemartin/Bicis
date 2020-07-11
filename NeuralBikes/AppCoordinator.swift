@@ -246,7 +246,6 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
     
     func presenTutorialViewController() {
         
-        let compositeDisposable = CompositeDisposable()
         
         let tutorialViewModel = TutorialViewModel(dataManager: dataManager)
         tutorialViewModel.coordinatorDelegate = self
