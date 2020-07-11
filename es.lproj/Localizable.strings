@@ -55,3 +55,8 @@
 "PRIVACY_BODY" = "Tu información nunca abandona el dispositivo, no hay terceros que reciban tus datos";
 
 "FINISH_ONBOARDING" = "Llévame a la app";
+
+// MARK: - Blur Alert View
+
+"BLUR_ALERT_TITLE" = "Anclajes/Bicicletas";
+"BLUR_ALERT_SUBTITLE" = "Changing the pins on the map";

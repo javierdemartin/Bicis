@@ -58,3 +58,9 @@
 "PRIVACY_BODY" = "Your information stays on device, no third parties involved.";
 
 "FINISH_ONBOARDING" = "Take me to the app";
+
+// MARK: - Blur Alert View
+
+"BLUR_ALERT_TITLE" = "Docks/Bikes";
+"BLUR_ALERT_SUBTITLE" = "Alternating between showing docks or bikes in the pins";
+

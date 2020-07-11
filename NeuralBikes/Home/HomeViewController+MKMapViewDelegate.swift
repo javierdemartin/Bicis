@@ -111,7 +111,7 @@ extension HomeViewController: MKMapViewDelegate {
     /// As the annotation is deselected hde the `GraphView` and disable the route planner button
     func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
         hideStackView()
-        startRouteButton.isEnabled = false
+        insightsButton.isEnabled = false
     }
 
     /// Annotation was selected
@@ -151,7 +151,7 @@ extension HomeViewController: MKMapViewDelegate {
                 self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.availabilityArray = payload["today"]
                 self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.predictionArray = payload["prediction"]
 
-                self.startRouteButton.isEnabled = true
+                self.insightsButton.isEnabled = true
                 self.showRoutePlannerButton()
                 self.graphView.accessibilityLabel = NSLocalizedString("SELECTED_STATION_GRAPH_ACCESIBILITY_LABEL", comment: "").replacingOccurrences(of: "%name", with: annotationFromPin.stationInformation.stationName)
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 import ReactiveCocoa
 import ReactiveSwift
 import Combine
@@ -85,6 +86,35 @@ class HomeViewController: UIViewController {
         return stackView
     }()
     
+    lazy var blurAlertView: UIView = {
+        let blur = UIBlurEffect(style: .regular)
+        let blurView = UIVisualEffectView(effect: blur)
+        let vibrancy = UIVibrancyEffect(blurEffect: blur)
+        let vibrantView = UIVisualEffectView(effect: blurView.effect)
+        vibrantView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.contentView.addSubview(vibrantView)
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurView.layer.cornerRadius = 20
+        blurView.layer.masksToBounds = true
+        let blendView = UIView()
+        blendView.backgroundColor = .white
+        blendView.alpha = 0.4
+        blendView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        blurView.contentView.addSubview(blendView)
+//        return blurView
+        
+        let childView = UIHostingController(rootView: BlurAlertView())
+        childView.view.translatesAutoresizingMaskIntoConstraints = false
+        childView.view.addSubview(blendView)
+        childView.view.layer.masksToBounds = true
+        childView.view.layer.cornerRadius = 20
+        
+        childView.view.isHidden = true
+                
+        return childView.view
+        
+    }()
+    
     var activeRentalBike: UIButton = {
 
         let button = NBButton()
@@ -113,7 +143,7 @@ class HomeViewController: UIViewController {
     // MARK: Renting
     
     private lazy var bottomButtonsStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [rentButton, alternateDocksBikesButton, startRouteButton, settingsButton])
+        let stackView = UIStackView(arrangedSubviews: [rentButton, insightsButton, alternateDocksBikesButton, settingsButton])
         stackView.alignment = UIStackView.Alignment.center
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalSpacing
@@ -123,7 +153,7 @@ class HomeViewController: UIViewController {
         return stackView
     }()
     
-    var startRouteButton: UIButton = {
+    var insightsButton: UIButton = {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
@@ -165,7 +195,7 @@ class HomeViewController: UIViewController {
         button.applyProtocolUIAppearance()
         button.accessibilityIdentifier = "SETTINGS"
         button.accessibilityLabel = NSLocalizedString("SETTINGS_ACCESIBILITY_BUTTON", comment: "")
-        button.setImage(UIImage(systemName: "chevron.up.square"), for: .normal)
+        button.setImage(UIImage(systemName: "circle"), for: .normal)
         button.imageView?.tintColor = .white
         
         return button
@@ -200,21 +230,24 @@ class HomeViewController: UIViewController {
         view.addSubview(statisticsAndGraphViewStackView)
         view.bringSubviewToFront(statisticsAndGraphViewStackView)
         view.addSubview(bottomButtonsStackView)
+        
+        view.addSubview(blurAlertView)
+        view.bringSubviewToFront(blurAlertView)
 
         // MARK: Settings Button constraints
 
         // Align to the bottom right
         NSLayoutConstraint.activate([
-            bottomButtonsStackView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -2 * Constants.spacing),
-            bottomButtonsStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -2 * Constants.spacing)
+            bottomButtonsStackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -2 * Constants.spacing),
+            bottomButtonsStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -2 * Constants.spacing)
         ])
         
         // MARK: Active Rentals
         NSLayoutConstraint.activate([
-            activeRentalScrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            activeRentalScrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16.0),
             activeRentalScrollView.trailingAnchor.constraint(equalTo: bottomButtonsStackView.leadingAnchor, constant: -16.0),
             activeRentalScrollView.heightAnchor.constraint(equalToConstant: 100.0),
-            activeRentalScrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 16.0)
+            activeRentalScrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 16.0)
         ])
         
         NSLayoutConstraint.activate([
@@ -241,6 +274,15 @@ class HomeViewController: UIViewController {
             mapView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             mapView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            blurAlertView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            blurAlertView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
+        
+//        blurAlertView.didMove(toParent: self)
+
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -253,7 +295,6 @@ class HomeViewController: UIViewController {
         
         graphView.clipsToBounds = true
         graphView.layer.cornerRadius = Constants.cornerRadius
-//        graphView.backgroundColor = .systemBlue
 
         self.hideStackView()
 
@@ -388,7 +429,7 @@ class HomeViewController: UIViewController {
 
     fileprivate func setupBindings() {
 
-        compositeDisposable += startRouteButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+        compositeDisposable += insightsButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             guard let self = self else { fatalError() }
 
             LogHelper.logTAppedDataInsightsButton()
@@ -412,12 +453,22 @@ class HomeViewController: UIViewController {
             
             guard let self = self else { fatalError() }
             
+//            self.blurAlertView.isHidden = false
+            self.blurAlertView.fadeIn(0.2, onCompletion: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+    //                self.blurAlertView.isHidden = true
+                    self.blurAlertView.fadeOut(0.2)
+                })
+            })
+            
+            FeedbackGenerator.sharedInstance.generator.impactOccurred()
+                        
             if self.whatsShown == .freeBikes {
                 self.whatsShown = .freeDocks
-                self.alternateDocksBikesButton.setImage(UIImage(systemName: "chevron.up.square"), for: .normal)
+                self.alternateDocksBikesButton.setImage(UIImage(systemName: "circle.fill"), for: .normal)
             } else {
                 self.whatsShown = .freeBikes
-                self.alternateDocksBikesButton.setImage(UIImage(systemName: "chevron.up.square.fill"), for: .normal)
+                self.alternateDocksBikesButton.setImage(UIImage(systemName: "circle"), for: .normal)
             }
             
             let stations = self.mapView.annotations
@@ -484,11 +535,11 @@ class HomeViewController: UIViewController {
     }
 
     func showRoutePlannerButton() {
-        startRouteButton.fadeIn(0.2)
+        insightsButton.fadeIn(0.2)
     }
 
     func hideRoutePlannerButton() {
-        startRouteButton.fadeOut(0.2)
+        insightsButton.fadeOut(0.2)
     }
 }
 
