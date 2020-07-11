@@ -92,7 +92,6 @@
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
 		80AB8B7024B23A2F004F3905 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */; };
 		80AB8B7224B23A36004F3905 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */; };
-		80AB8B7424B23E8B004F3905 /* TutorialCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B7324B23E8B004F3905 /* TutorialCardView.swift */; };
 		80AB8B7624B24627004F3905 /* Tutorial.json in Resources */ = {isa = PBXBuildFile; fileRef = 80AB8B7524B24627004F3905 /* Tutorial.json */; };
 		80AB8B7824B24669004F3905 /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B7724B24669004F3905 /* Tutorial.swift */; };
 		80ABE1F0243E148E004920D8 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ABE1EF243E148E004920D8 /* UIAlertController.swift */; };
@@ -236,7 +235,6 @@
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
 		80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
-		80AB8B7324B23E8B004F3905 /* TutorialCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialCardView.swift; sourceTree = "<group>"; };
 		80AB8B7524B24627004F3905 /* Tutorial.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tutorial.json; sourceTree = "<group>"; };
 		80AB8B7724B24669004F3905 /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		80ABE1EF243E148E004920D8 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
@@ -612,7 +610,6 @@
 			children = (
 				80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */,
 				80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */,
-				80AB8B7324B23E8B004F3905 /* TutorialCardView.swift */,
 				80AB8B7524B24627004F3905 /* Tutorial.json */,
 				80AB8B7724B24669004F3905 /* Tutorial.swift */,
 			);
@@ -985,7 +982,6 @@
 				8074D33B24573720006B3062 /* LogInResponseError.swift in Sources */,
 				80109143236E317700D3C45E /* HomeViewModel.swift in Sources */,
 				80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */,
-				80AB8B7424B23E8B004F3905 /* TutorialCardView.swift in Sources */,
 				80F882032490E2D800AB322A /* LocationServiceable.swift in Sources */,
 				8074D34D24573816006B3062 /* MyAllAPIResponseItem.swift in Sources */,
 				8074D35324573E98006B3062 /* BikeServicesDataManager.swift in Sources */,
@@ -1143,7 +1139,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = BicisTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1164,7 +1160,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = BicisTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1185,7 +1181,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikesUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1206,7 +1202,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikesUITests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
