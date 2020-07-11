@@ -252,6 +252,7 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
         tutorialViewModel.coordinatorDelegate = self
         
         let swiftUIView = TutorialViewController(viewModel: tutorialViewModel)
+//        let swiftUIView = TutorialViewController()
         let viewCtrl = UIHostingController(rootView: swiftUIView)
         
 //        viewCtrl.modalPresentationStyle = .formSheet

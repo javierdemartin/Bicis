@@ -27,6 +27,7 @@
 "LOG_OUT_ACCESIBILITY_LABEL" = "Log out";
 "GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Granted location services";
 "NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Not granted location services";
+"REPLAY_TUTORIAL_BUTTON" = "Replay tutorial";
 
 // MARK: - Insights
 

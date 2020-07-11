@@ -26,6 +26,7 @@
 "LOG_OUT_ACCESIBILITY_LABEL" = "Cerrar sesión";
 "GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Permisos de ubicación concedidos";
 "NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Permisos de ubicación no concedidos";
+"REPLAY_TUTORIAL_BUTTON" = "Repetir tutorial";
 
 // MARK: - Insights
 

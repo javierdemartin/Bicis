@@ -53,7 +53,6 @@ class DefaultLocalDataManager: LocalDataManager {
 
                     unwrapped!.statistics[cityIndex].stations[stationIndex].count += 1
                     unwrapped!.statistics[cityIndex].stations[stationIndex].timeOfDay.append(hour)
-
                 }
 
                 // This station has not been previously registered
@@ -69,10 +68,8 @@ class DefaultLocalDataManager: LocalDataManager {
 
             // Save the updated data into defaults
             defaults.set(try? PropertyListEncoder().encode(unwrapped!), forKey: Constants.selectedStationsStatistics)
-//            print("he")
 
         } else {
-            print("No data")
             let stationStatistics = StationStatistics(statistics: [StationStatisticsItem(city: city, stations: [StationStatisticsStation(stationId: id, count: 1, timeOfDay: [hour])])])
             dump(stationStatistics)
 
@@ -84,7 +81,6 @@ class DefaultLocalDataManager: LocalDataManager {
      
         defaults.setValue(value, forKey: key)
     }
-
 
     /// Reads the UserDefault bool value
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {

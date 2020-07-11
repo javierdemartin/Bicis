@@ -21,45 +21,126 @@ struct TutorialViewController: View {
     @ViewBuilder
     var body: some View {
         
-        GeometryReader { fullView in
-            Spacer()
-            VStack {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 0) {
-                        ForEach(self.viewModel.tutorial, id: \.self) { index in
-                            GeometryReader { geo in
-                                TutorialCard(title: index.title, description: index.body)
-                                    .frame(width: fullView.size.width * 0.7, height: fullView.size.height, alignment: .top)
-                                    .rotation3DEffect(.degrees(-Double(geo.frame(in: .global).midX - fullView.size.width / 2) / 10), axis: (x: 0, y: 1, z: 0))
-                            }
-                            .frame(width: 250)
-                        }
-                    }
-                    .padding(.horizontal, (fullView.size.width - 250) / 2)
-                }
-                
-                Button(action: {
-                    print("Button action")
-                    viewModel.didTapFinishTutorial()
-                }) {
-                    Text("Take me to the app")
-                        .foregroundColor(.white)
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.blue, lineWidth: 2)
-                        ) 
-                }
-                .background(Color.blue)
+        VStack(alignment: .center) {
+            
+            // Hackitty hack to fill the screen
+            HStack {
+                Spacer()
             }
             
+            VStack(alignment: .leading) {
+                
+                Text("Neural Bikes")
+                    .font(.system(.largeTitle, design: .rounded))
+                    .foregroundColor(Color.white)
+                    .fontWeight(.heavy)
+                    .padding()
+                
+                Text("Bike sharing, but better")
+                    .padding()
+                    .foregroundColor(Color.white)
+                
+                Text("It's time you enjoy bike sharing again. Gather insights of how the bike sharing system is behaving. Check daily availability predictions made with machine learning and compare it against with real values.")
+                    .padding()
+                    .foregroundColor(Color.white)
+                
+                VStack(alignment: .leading) {
+                    
+                    HStack {
+                        Image(systemName: "location.fill")
+                            .foregroundColor(.white)
+                        Text("Location not shared")
+                            .foregroundColor(Color.white)
+                            .font(.system(.body, design: .rounded))
+                    }
+                    .padding()
+                    
+                    HStack {
+                        Image(systemName: "person.2.fill")
+                            .foregroundColor(.white)
+                        Text("No trackers installed or information sent to third parties")
+                            .foregroundColor(Color.white)
+                            .font(.system(.body, design: .rounded))
+                    }
+                    .padding()
+                    
+                    HStack {
+                        Image(systemName: "waveform.path.ecg")
+                            .foregroundColor(.white)
+                        Text("Check predictions and history on the graph")
+                            .foregroundColor(Color.white)
+                            .font(.system(.body, design: .rounded))
+                    }
+                    .padding()
+                    
+                    PredictionGraphViewRepresentable(prediction: [1,2,2,2,2,2,2,3,3,3,3,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,3,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3], availability: [0,0,0,0,0,0,0,1,1,1,1,1,2,2,2,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3])
+                        .frame(minWidth: 0, maxWidth: 300, minHeight: 100, maxHeight: 100)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
+                    
+                    Spacer()
+                    VStack(alignment: .center) {
+                        HStack {
+                        
+                            Button(action: {
+                                UIApplication.shared.open(URL(string: "https://twitter.com/javierdemartin")!)
+                            }) {
+                                Text("@javierdemartin")
+                                    .foregroundColor(.white)
+                                    .fontWeight(.heavy)
+                                    .font(.system(.body, design: .rounded))
+                                    .padding()
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                                            .stroke(Color.white, lineWidth: 2)
+                                        
+                                    )
+                            }
+                            
+                            Button(action: {
+                                UIApplication.shared.open(URL(string: "https://twitter.com/neuralbikes")!)
+                            }) {
+                                Text("@neuralbikes")
+                                    .foregroundColor(.white)
+                                    .fontWeight(.heavy)
+                                    .font(.system(.body, design: .rounded))
+                                    .padding()
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                                            .stroke(Color.white, lineWidth: 2)
+                                    )
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        VStack(alignment: .center) {
+                            Button(action: {
+                                viewModel.didTapFinishTutorial()
+                            }) {
+                                Text("Take me to the app")
+                                    .foregroundColor(.white)
+                                    .fontWeight(.heavy)
+                                    .font(.system(.title3, design: .rounded))
+                                    .padding()
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                                            .stroke(Color.white, lineWidth: 2)           
+                                    )
+                            }
+                        }
+                    }
+                }
+                .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/, 10)
+            }
             
         }
+        .background(Color(.systemBlue).edgesIgnoringSafeArea(.all))
+        .frame(minWidth: 0, maxWidth: 500, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
     }
 }
 
 //struct TutorialViewController_Previews: PreviewProvider {
 //    static var previews: some View {
-//        TutorialViewController(viewModel: TutorialViewModel())
+//        TutorialViewController()
 //    }
 //}

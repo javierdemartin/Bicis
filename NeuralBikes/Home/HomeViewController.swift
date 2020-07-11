@@ -17,6 +17,12 @@ protocol HomeViewControllerGraphViewDelegate: class {
     func setStationTitleFor(name: String)
 }
 
+enum ShowsNumberInAnnotation {
+    
+    case freeBikes
+    case freeDocks
+}
+
 class HomeViewController: UIViewController {
 
     weak var graphViewDelegate: HomeViewControllerGraphViewDelegate?
@@ -25,6 +31,8 @@ class HomeViewController: UIViewController {
 
     let viewModel: HomeViewModel
 
+    var whatsShown: ShowsNumberInAnnotation = .freeBikes
+    
     lazy var mapView: MKMapView = {
 
         let map = MKMapView()
@@ -157,7 +165,7 @@ class HomeViewController: UIViewController {
         button.applyProtocolUIAppearance()
         button.accessibilityIdentifier = "SETTINGS"
         button.accessibilityLabel = NSLocalizedString("SETTINGS_ACCESIBILITY_BUTTON", comment: "")
-        button.setImage(UIImage(systemName: "gear"), for: .normal)
+        button.setImage(UIImage(systemName: "chevron.up.square"), for: .normal)
         button.imageView?.tintColor = .white
         
         return button
@@ -398,6 +406,25 @@ class HomeViewController: UIViewController {
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
             LogHelper.logTAppedSettingsButton()
             self?.showSettingsViewController()
+        })
+        
+        compositeDisposable += alternateDocksBikesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+            
+            guard let self = self else { fatalError() }
+            
+            if self.whatsShown == .freeBikes {
+                self.whatsShown = .freeDocks
+                self.alternateDocksBikesButton.setImage(UIImage(systemName: "chevron.up.square"), for: .normal)
+            } else {
+                self.whatsShown = .freeBikes
+                self.alternateDocksBikesButton.setImage(UIImage(systemName: "chevron.up.square.fill"), for: .normal)
+            }
+            
+            let stations = self.mapView.annotations
+            
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            
+            self.mapView.addAnnotations(stations)
         })
 
         viewModel.stations.bind { stations in

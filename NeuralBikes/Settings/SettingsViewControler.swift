@@ -88,7 +88,7 @@ class SettingsViewController: UIViewController {
 
     lazy var verticalStackView: UIStackView = {
 
-        let stackView = UIStackView(arrangedSubviews: [locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, restorePurchasesButton, cityPicker, logOutButton])
+        let stackView = UIStackView(arrangedSubviews: [locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, restorePurchasesButton, cityPicker, replayTutorialButton, logOutButton])
         stackView.alignment = UIStackView.Alignment.center
         stackView.backgroundColor = .white
         stackView.axis = NSLayoutConstraint.Axis.vertical
@@ -162,6 +162,16 @@ class SettingsViewController: UIViewController {
         button.applyProtocolUIAppearance()
         button.accessibilityLabel = NSLocalizedString("REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL", comment: "")
         button.setTitle("FEEDBACK_BUTTON".localize(file: "Settings"), for: .normal)
+        button.sizeToFit()
+        return button
+    }()
+    
+    lazy var replayTutorialButton: UIButton = {
+
+        let button = NBButton()
+        button.applyProtocolUIAppearance()
+        button.accessibilityLabel = NSLocalizedString("REPLAY_TUTORIAL_BUTTON", comment: "")
+        button.setTitle(NSLocalizedString("REPLAY_TUTORIAL_BUTTON", comment: ""), for: .normal)
         button.sizeToFit()
         return button
     }()
@@ -342,6 +352,10 @@ class SettingsViewController: UIViewController {
 
         compositeDisposable += restorePurchasesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             self?.viewModel.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+        })
+        
+        compositeDisposable += replayTutorialButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+            self?.viewModel.presentTutorialViewControllerFromCoordinatorDelegate()
         })
     }
 

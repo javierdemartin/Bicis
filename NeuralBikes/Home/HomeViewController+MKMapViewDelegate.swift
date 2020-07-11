@@ -66,12 +66,19 @@ extension HomeViewController: MKMapViewDelegate {
 
             guard let annotationTitle = annotation.title! else { return nil }
             guard let stationsDictFromViewModel = self.viewModel.stationsDict.value[annotationTitle] else { return nil }
-
+            
             let markerAnnotationView: MKMarkerAnnotationView = {
                 let marker = MKMarkerAnnotationView()
                 marker.glyphText = "\(stationsDictFromViewModel.freeBikes)"
                 return marker
             }()
+            
+            switch whatsShown {
+            case .freeBikes:
+                markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeBikes)"
+            case .freeDocks:
+                markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeRacks)"
+            }
 
             self.viewModel.hasUnlockedFeatures(completion: { hasPaid in
 
