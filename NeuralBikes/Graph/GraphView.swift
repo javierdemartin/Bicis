@@ -237,6 +237,10 @@ class PredictionGraphView: UIView {
             
             heightProportion = CGFloat(element) / CGFloat(values.max()!)
             
+            if heightProportion.isNaN {
+                heightProportion = 0.0
+            }
+            
             let point: CGPoint = {
                 let xPosition = CGFloat(index) * viewWidth / CGFloat(values.count)
                 let yPosition = viewHeight - viewHeight * heightProportion + stationTitle.frame.size.height * 0.8
@@ -257,6 +261,9 @@ class PredictionGraphView: UIView {
 
         if isPrediction {
 
+            dump(values)
+            dump(arrayOfPoints)
+            
             if shouldShowBorder {
                 drawingLayer.strokeColor = UIColor.white.cgColor
             } else {
