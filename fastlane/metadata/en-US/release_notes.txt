@@ -1,9 +1,1 @@
-Wow, this is a big update full of goodies.
-
-The neural networks that power this app and generate predictions have been updated. This is not done in the app but on a server but I wanted to let you know you are getting more and better predictions. I've used the most recent data so the quality should improve.
-
-I've improved how the graph looks, lines should be smoother and more pleasant now. Giving it a fresher look.
-
-The insights view has been completely redesigned from the ground up. Now it shows even more data including the graph so you can compare it against the data that it's shown in this screen.
-
-Enjoy!
+Hey! I'm back. Work's been busy this last few months and I needed some rest. I'm back on track and addressed some issues and plan to add more cities and features in the coming months. 

@@ -1,7 +1,9 @@
-fastlane/screenshots/*/**.png
 *.mobileprovision
+fastlane/SnapshotHelper.swift
 fastlane/report.xml
-NeuralBikes.xcodeproj/project.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/*
+fastlane/screenshots/
+NeuralBikes.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad/
+NeuralBikes.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad/UserInterfaceState.xcuserstate
 NeuralBikes.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/*
 NeuralBikes.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/**
 Pods/
@@ -14,3 +16,5 @@ report.junit
 *.cer
 Gemfile*
 *.mobileprovision
+
+NeuralBikes.xcodeproj/xcuserdata/*.xcuserdatad/xcdebugger/

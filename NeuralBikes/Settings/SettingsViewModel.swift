@@ -54,8 +54,7 @@ class SettingsViewModel: ObservableObject {
     let dataManager: SettingsViewModelDataManager
 
     func sendFeedBackEmail() {
-        guard let url = URL(string: "mailto:javierdemartin@me.com") else { return }
-        UIApplication.shared.open(url, options: [:])
+        NBActions.sendToMail()
     }
 
     /// Presents RestorePurchasesViewController and dismisses SettingsViewController that is currently presented as a modal
@@ -97,10 +96,6 @@ class SettingsViewModel: ObservableObject {
 
     func dismissingSettingsViewController() {
 
-//        guard let selectedCity = self.city else { return }
-
-//        self.changedCityInPickerView(city: selectedCity.formalName)
-
         guard let city = self.city else { return }
 
         // Get the correct `City` data structure
@@ -111,18 +106,6 @@ class SettingsViewModel: ObservableObject {
         dataManager.saveCurrentCity(apiCityName: selectedCity, completion: { _ in })
 
         coordinatorDelegate?.changedCitySelectionInPickerView(city: selectedCity)
-
-//        dataManager.getCurrentCityFromDefaults(completion: { cityResult in
-//            switch cityResult {
-//
-//            case .success(let cityFromDefaults):
-//                self.changedCityInPickerView(city: cityFromDefaults.formalName)
-//                self.city = cityFromDefaults
-//            case .error:
-//                break
-//            }
-//        })
-
     }
 
     func setUpBindings() {

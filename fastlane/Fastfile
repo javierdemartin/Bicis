@@ -25,7 +25,7 @@ platform :ios do
   lane :shipit do
 	get_certificates           # invokes cert
 	get_provisioning_profile   # invokes sigh
-    build_app
+build_app(workspace: "NeuralBikes.xcworkspace", scheme: "NeuralBikes")
 	snapshot
 	frameit
   	precheck

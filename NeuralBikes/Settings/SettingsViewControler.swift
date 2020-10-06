@@ -33,7 +33,6 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
 
-        
         var label = view as? UILabel
         
         if label == nil {
@@ -82,6 +81,7 @@ class SettingsViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.alwaysBounceVertical = true
         scrollView.isDirectionalLockEnabled = true
+        scrollView.backgroundColor = .clear
 
         return scrollView
     }()
@@ -90,7 +90,7 @@ class SettingsViewController: UIViewController {
 
         let stackView = UIStackView(arrangedSubviews: [locationServicesStackView, stringVersion, requestFeedBackButton, logInPrivacyTextView, restorePurchasesButton, cityPicker, replayTutorialButton, logOutButton])
         stackView.alignment = UIStackView.Alignment.center
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalSpacing
         stackView.spacing = Constants.spacing
@@ -136,7 +136,7 @@ class SettingsViewController: UIViewController {
 
         let stackView = UIStackView(arrangedSubviews: [self.imageIcon, locationServicesStatusImage])
         stackView.alignment = UIStackView.Alignment.center
-        stackView.backgroundColor = .white
+        stackView.backgroundColor = .clear
         stackView.axis = NSLayoutConstraint.Axis.horizontal
         stackView.distribution  = UIStackView.Distribution.equalCentering
         stackView.alignment = .bottom

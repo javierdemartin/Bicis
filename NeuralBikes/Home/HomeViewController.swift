@@ -52,7 +52,7 @@ class HomeViewController: UIViewController {
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalCentering
         stackView.spacing = 10.0
-        stackView.backgroundColor = .blue
+//        stackView.backgroundColor = .blue
         stackView.isHidden = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
 

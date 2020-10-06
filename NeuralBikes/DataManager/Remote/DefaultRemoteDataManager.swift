@@ -20,7 +20,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
     init() {
 
         myComponents.scheme = "https"
-        myComponents.host = "javierdemart.in"
+        myComponents.host = "neuralbike.app"
         publishSubject = PublishSubject<[BikeStation]>()
     }
 

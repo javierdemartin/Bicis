@@ -1,7 +1,1 @@
-Wow, actualización cargada de novedades.
-
-Las redes neuronales que realizan las predicciones han sido actualizadas. Esto no forma parte de la app sino del servidor pero quería informar de que ya se puede disfrutar de mejores predicciones. Todo esto sin necesidad de actualizar la app. He utilizado los datos más recientes para que las predicciones sean lo más acertadas posibles.
-
-El gráfico de las predicciones ahora es más bonito, las líneas son más suaves y el gráfico es más agradable de ver.
-
-He rediseñado la vista desbloqueable de detalles de una estación completamente, ahora muestra más detalles y el gráfico de predicciones así puedes comparar el comportamiento con los datos.
+¡Hola! He vuelto. El trabajo ha ocupado más tiempo del que esperaba y necesitaba descansar. He vuelto con las actualizaciones y arreglado unos pequeños fallos que he descubierto y tengo planes para lanzar nuevas ciudades y características en los próximos meses. 
