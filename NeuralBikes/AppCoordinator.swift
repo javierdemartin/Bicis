@@ -97,8 +97,6 @@ class AppCoordinator: Coordinator {
 
         settingsViewController = SettingsViewController(viewModel: settingsViewModel)
 
-//        settingsViewController?.reactive.trigger(for: #selector(settingsViewController?.viewDidDisappear(_:))).observe { _ in self.handleModalDismissed() }
-
         settingsViewModel.coordinatorDelegate = self
         settingsViewModel.delegate = settingsViewController
         settingsViewController?.modalPresentationStyle = .formSheet

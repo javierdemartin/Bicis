@@ -7,10 +7,8 @@
 //
 
 import Foundation
-import RxSwift
 
 class DefaultRemoteDataManager: RemoteDataManager {
-    var publishSubject: PublishSubject<[BikeStation]>
     
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
@@ -21,14 +19,11 @@ class DefaultRemoteDataManager: RemoteDataManager {
 
         myComponents.scheme = "https"
         myComponents.host = "neuralbike.app"
-        publishSubject = PublishSubject<[BikeStation]>()
     }
 
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void) {
 
         myComponents.path = "/api/v1/all/\(city)/\(station)"
-        
-        print(myComponents.url)
 
         guard let url = myComponents.url else {
             preconditionFailure("Failed to construct URL")

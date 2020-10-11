@@ -3,12 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4B8EC7877D37E981561FFBC8 /* Pods_NeuralBikes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6220DF872C197086F71CB20C /* Pods_NeuralBikes.framework */; };
-		77A458860DEDDFAAAFEDB0E9 /* Pods_NeuralBikes_NeuralBikesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BBDE4491502D8F02B574545 /* Pods_NeuralBikes_NeuralBikesUITests.framework */; };
 		80002921243FB92F00862C75 /* NeuralBikesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80002920243FB92F00862C75 /* NeuralBikesTests.swift */; };
 		8000292A243FBBB200862C75 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
 		8000476F23EF425300492DFB /* NeuralBikesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000476E23EF425300492DFB /* NeuralBikesUITests.swift */; };
@@ -52,7 +50,6 @@
 		803B6B02246AF3E60022A586 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6B01246AF3E60022A586 /* LogInViewController.swift */; };
 		803B6D0A243A88010080E115 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6D09243A88010080E115 /* Double.swift */; };
 		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
-		804F162224796D9900B90FC2 /* DataObserverProducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804F162124796D9900B90FC2 /* DataObserverProducer.swift */; };
 		8055B898246FF65100BCC141 /* RecoverPinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8055B897246FF65100BCC141 /* RecoverPinResponse.swift */; };
 		805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B5A2223EE050C000F3CC5 /* Bundle.swift */; };
 		80628461236E34C500717472 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628460236E34C500717472 /* Coordinator.swift */; };
@@ -144,12 +141,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1472B5D618BCE2E94598894E /* Pods_BicisTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BicisTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		46D06B14A5467C8188C20B1C /* Pods-NeuralBikes-NeuralBikesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuralBikes-NeuralBikesUITests.debug.xcconfig"; path = "Target Support Files/Pods-NeuralBikes-NeuralBikesUITests/Pods-NeuralBikes-NeuralBikesUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		5BBDE4491502D8F02B574545 /* Pods_NeuralBikes_NeuralBikesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NeuralBikes_NeuralBikesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6220DF872C197086F71CB20C /* Pods_NeuralBikes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NeuralBikes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		644E8E3F87CF67AFCCA7E9B0 /* Pods-Bicis-BicisUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis-BicisUITests.debug.xcconfig"; path = "Target Support Files/Pods-Bicis-BicisUITests/Pods-Bicis-BicisUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		79D733FBA41973B1311630B3 /* Pods-Bicis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis.release.xcconfig"; path = "Target Support Files/Pods-Bicis/Pods-Bicis.release.xcconfig"; sourceTree = "<group>"; };
 		8000291E243FB92F00862C75 /* NeuralBikesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NeuralBikesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		80002920243FB92F00862C75 /* NeuralBikesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuralBikesTests.swift; sourceTree = "<group>"; };
 		80002922243FB92F00862C75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -191,7 +182,6 @@
 		803B6B01246AF3E60022A586 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		803B6D09243A88010080E115 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		803FD8A023C71FAF008DDE91 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
-		804F162124796D9900B90FC2 /* DataObserverProducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataObserverProducer.swift; sourceTree = "<group>"; };
 		8055B897246FF65100BCC141 /* RecoverPinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPinResponse.swift; sourceTree = "<group>"; };
 		805B5A2223EE050C000F3CC5 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		80628460236E34C500717472 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -271,12 +261,6 @@
 		80FFDE3124683D4A00436BA6 /* NBStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBStackView.swift; sourceTree = "<group>"; };
 		80FFDE332468407500436BA6 /* NBLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBLabel.swift; sourceTree = "<group>"; };
 		80FFDE352468614000436BA6 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
-		94E354842F9EEF2FBAB3BE39 /* Pods-NeuralBikes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuralBikes.debug.xcconfig"; path = "Target Support Files/Pods-NeuralBikes/Pods-NeuralBikes.debug.xcconfig"; sourceTree = "<group>"; };
-		B3A858CABDDF9CD4FA0A1738 /* Pods-Bicis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis.debug.xcconfig"; path = "Target Support Files/Pods-Bicis/Pods-Bicis.debug.xcconfig"; sourceTree = "<group>"; };
-		E59531B5EA24EAA280BE3600 /* Pods_Bicis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bicis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E90227762C796EA6CA64D3D1 /* Pods-Bicis-BicisUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bicis-BicisUITests.release.xcconfig"; path = "Target Support Files/Pods-Bicis-BicisUITests/Pods-Bicis-BicisUITests.release.xcconfig"; sourceTree = "<group>"; };
-		EE8AA86F27CEBFA39CFC3D59 /* Pods-NeuralBikes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuralBikes.release.xcconfig"; path = "Target Support Files/Pods-NeuralBikes/Pods-NeuralBikes.release.xcconfig"; sourceTree = "<group>"; };
-		FA3FA1F29E5FC8E1A3C8FA21 /* Pods-NeuralBikes-NeuralBikesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuralBikes-NeuralBikesUITests.release.xcconfig"; path = "Target Support Files/Pods-NeuralBikes-NeuralBikesUITests/Pods-NeuralBikes-NeuralBikesUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,7 +275,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77A458860DEDDFAAAFEDB0E9 /* Pods_NeuralBikes_NeuralBikesUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,7 +283,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				80167168240F08F400957EA9 /* StoreKit.framework in Frameworks */,
-				4B8EC7877D37E981561FFBC8 /* Pods_NeuralBikes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,10 +293,6 @@
 			isa = PBXGroup;
 			children = (
 				80167167240F08F400957EA9 /* StoreKit.framework */,
-				E59531B5EA24EAA280BE3600 /* Pods_Bicis.framework */,
-				1472B5D618BCE2E94598894E /* Pods_BicisTests.framework */,
-				6220DF872C197086F71CB20C /* Pods_NeuralBikes.framework */,
-				5BBDE4491502D8F02B574545 /* Pods_NeuralBikes_NeuralBikesUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -376,7 +354,6 @@
 				80628462236ED79300717472 /* Result.swift */,
 				8074D35424573F32006B3062 /* Bike Services */,
 				808845402475947300367D5C /* DataManager.strings */,
-				804F162124796D9900B90FC2 /* DataObserverProducer.swift */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -537,7 +514,6 @@
 				8000476D23EF425300492DFB /* NeuralBikesUITests */,
 				8000291F243FB92F00862C75 /* NeuralBikesTests */,
 				8085CC5A236E2CB500B45A7C /* Products */,
-				A46C4047EA8A6CBF9DA58A66 /* Pods */,
 				5949BD66B4AC3B1C21CA4D42 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -671,21 +647,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		A46C4047EA8A6CBF9DA58A66 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				B3A858CABDDF9CD4FA0A1738 /* Pods-Bicis.debug.xcconfig */,
-				79D733FBA41973B1311630B3 /* Pods-Bicis.release.xcconfig */,
-				644E8E3F87CF67AFCCA7E9B0 /* Pods-Bicis-BicisUITests.debug.xcconfig */,
-				E90227762C796EA6CA64D3D1 /* Pods-Bicis-BicisUITests.release.xcconfig */,
-				94E354842F9EEF2FBAB3BE39 /* Pods-NeuralBikes.debug.xcconfig */,
-				EE8AA86F27CEBFA39CFC3D59 /* Pods-NeuralBikes.release.xcconfig */,
-				46D06B14A5467C8188C20B1C /* Pods-NeuralBikes-NeuralBikesUITests.debug.xcconfig */,
-				FA3FA1F29E5FC8E1A3C8FA21 /* Pods-NeuralBikes-NeuralBikesUITests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -711,11 +672,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8000477323EF425300492DFB /* Build configuration list for PBXNativeTarget "NeuralBikesUITests" */;
 			buildPhases = (
-				DCCAA81D9D3F36242B0C82D6 /* [CP] Check Pods Manifest.lock */,
 				8000476823EF425300492DFB /* Sources */,
 				8000476923EF425300492DFB /* Frameworks */,
 				8000476A23EF425300492DFB /* Resources */,
-				4546E4020216D1F27A9367FE /* [CP] Embed Pods Frameworks */,
 				808845432475A23400367D5C /* ShellScript */,
 			);
 			buildRules = (
@@ -732,11 +691,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8085CC83236E2CB800B45A7C /* Build configuration list for PBXNativeTarget "NeuralBikes" */;
 			buildPhases = (
-				CEADEC9560DB1ADAA18663BF /* [CP] Check Pods Manifest.lock */,
 				8085CC55236E2CB500B45A7C /* Sources */,
 				8085CC56236E2CB500B45A7C /* Frameworks */,
 				8085CC57236E2CB500B45A7C /* Resources */,
-				06294201CE501E64004456DE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -826,40 +783,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		06294201CE501E64004456DE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NeuralBikes/Pods-NeuralBikes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NeuralBikes/Pods-NeuralBikes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NeuralBikes/Pods-NeuralBikes-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4546E4020216D1F27A9367FE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NeuralBikes-NeuralBikesUITests/Pods-NeuralBikes-NeuralBikesUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NeuralBikes-NeuralBikesUITests/Pods-NeuralBikes-NeuralBikesUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NeuralBikes-NeuralBikesUITests/Pods-NeuralBikes-NeuralBikesUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		808845432475A23400367D5C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -876,50 +799,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nxcrun simctl boot ${TARGET_DEVICE_IDENTIFIER}\nxcrun simctl uninstall ${TARGET_DEVICE_IDENTIFIER} com.javierdemartin.bici\n";
-		};
-		CEADEC9560DB1ADAA18663BF /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NeuralBikes-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		DCCAA81D9D3F36242B0C82D6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NeuralBikes-NeuralBikesUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -967,7 +846,6 @@
 				80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */,
 				809FCFB625333924005E82EA /* NBDefaults.swift in Sources */,
 				8018E1572451889400CE7796 /* LogHelper.swift in Sources */,
-				804F162224796D9900B90FC2 /* DataObserverProducer.swift in Sources */,
 				80F882072490E3B100AB322A /* LocationServicesCoreLocation.swift in Sources */,
 				803B6AF72469C3180022A586 /* LogInFormData.swift in Sources */,
 				80AB8B7024B23A2F004F3905 /* TutorialViewController.swift in Sources */,
@@ -1184,7 +1062,6 @@
 		};
 		8000477423EF425300492DFB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 46D06B14A5467C8188C20B1C /* Pods-NeuralBikes-NeuralBikesUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
@@ -1205,7 +1082,6 @@
 		};
 		8000477523EF425300492DFB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA3FA1F29E5FC8E1A3C8FA21 /* Pods-NeuralBikes-NeuralBikesUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
@@ -1348,7 +1224,6 @@
 		};
 		8085CC84236E2CB800B45A7C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 94E354842F9EEF2FBAB3BE39 /* Pods-NeuralBikes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NeuralBikes/NeuralBikes.entitlements;
@@ -1372,7 +1247,6 @@
 		};
 		8085CC85236E2CB800B45A7C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE8AA86F27CEBFA39CFC3D59 /* Pods-NeuralBikes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NeuralBikes/NeuralBikes.entitlements;

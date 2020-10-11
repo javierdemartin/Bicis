@@ -8,17 +8,19 @@
 
 import Foundation
 import CoreLocation
-import ReactiveSwift
 import Combine
 
 class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, LocationServiceable {
-    var signalForDidUpdateLocations: Signal<CLLocation, Never> {
-        return Signal<CLLocation, Never> { [weak self] (observer, _) in
-            self?.didUpdateLocationsHandler = { location in
-                observer.send(value: location)
-            }
-        }
-    }
+    
+    var locationPublisher = PassthroughSubject<CLLocation, Never>()
+    
+//    var signalForDidUpdateLocations: Signal<CLLocation, Never> {
+//        return Signal<CLLocation, Never> { [weak self] (observer, _) in
+//            self?.didUpdateLocationsHandler = { location in
+//                observer.send(value: location)
+//            }
+//        }
+//    }
     var didUpdateLocationsHandler: ((CLLocation) -> Void)?
     var currentLocation: CLLocation?
     var locationAuthorizationStatus: PassthroughSubject<PermissionStatus, Never>
@@ -85,6 +87,8 @@ class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, Location
         }
         
         currentLocation = latestLocation
+        
+        locationPublisher.send(latestLocation)
         
         didUpdateLocationsHandler?(latestLocation)
     }

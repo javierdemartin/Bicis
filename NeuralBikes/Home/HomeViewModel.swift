@@ -89,15 +89,14 @@ class HomeViewModel: ObservableObject {
         }
     }
     
+    var cancellableBag = Set<AnyCancellable>()
+    
     func setUpBindings() {
         
-//        compositeDisposable += locationService.signalForDidUpdateLocations.observe({ event in
-//            guard let location = event.value else {
-//                return
-//            }
-//
-//            self.delegate?.centerMap(on: location.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
-//        })
+        locationService.locationPublisher.sink(receiveValue: { location in
+            
+            self.delegate?.centerMap(on: location.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
+        }).store(in: &cancellableBag)
     }
     
     func viewWillAppear() {
