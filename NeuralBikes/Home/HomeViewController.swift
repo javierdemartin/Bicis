@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftUI
-import ReactiveCocoa
 import ReactiveSwift
 import Combine
 import MapKit
@@ -52,7 +51,6 @@ class HomeViewController: UIViewController {
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalCentering
         stackView.spacing = 10.0
-//        stackView.backgroundColor = .blue
         stackView.isHidden = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -411,6 +409,7 @@ class HomeViewController: UIViewController {
 
     deinit {
         compositeDisposable.dispose()
+        cancellableBag.removeAll()
     }
 
     @objc func showSettingsViewController() {
@@ -426,37 +425,31 @@ class HomeViewController: UIViewController {
     override var canBecomeFirstResponder: Bool {
         return true
     }
+    
+    var cancellable: AnyCancellable?
+    var cancellableBag = Set<AnyCancellable>()
 
     fileprivate func setupBindings() {
-
-        compositeDisposable += insightsButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
-            guard let self = self else { fatalError() }
-
-            LogHelper.logTAppedDataInsightsButton()
-            FeedbackGenerator.sharedInstance.generator.impactOccurred()
-
-            self.showInsightsViewController()
-        })
         
-        compositeDisposable += rentButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] _ in
+        settingsButton.publisher(for: .touchUpInside).sink { button in
             
-            self?.viewModel.startRentProcess()
-        })
-
-        compositeDisposable += settingsButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
             LogHelper.logTAppedSettingsButton()
-            self?.showSettingsViewController()
-        })
+            self.showSettingsViewController()
+        }.store(in: &cancellableBag)
         
-        compositeDisposable += alternateDocksBikesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
-            
-            guard let self = self else { fatalError() }
-            
-//            self.blurAlertView.isHidden = false
+        insightsButton.publisher(for: .touchUpInside).sink { _ in
+            FeedbackGenerator.sharedInstance.generator.impactOccurred()
+            self.showInsightsViewController()
+        }.store(in: &cancellableBag)
+        
+        rentButton.publisher(for: .touchUpInside).sink { _ in
+            self.viewModel.startRentProcess()
+        }.store(in: &cancellableBag)
+        
+        alternateDocksBikesButton.publisher(for: .touchUpInside).sink { _ in
             self.blurAlertView.fadeIn(0.2, onCompletion: {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-    //                self.blurAlertView.isHidden = true
                     self.blurAlertView.fadeOut(0.2)
                 })
             })
@@ -476,7 +469,7 @@ class HomeViewController: UIViewController {
             self.mapView.removeAnnotations(self.mapView.annotations)
             
             self.mapView.addAnnotations(stations)
-        })
+        }.store(in: &cancellableBag)
 
         viewModel.stations.bind { stations in
 
@@ -543,3 +536,58 @@ class HomeViewController: UIViewController {
     }
 }
 
+
+/// https://www.avanderlee.com/swift/custom-combine-publisher/
+/// A custom subscription to capture UIControl target events.
+final class UIControlSubscription<SubscriberType: Subscriber, Control: UIControl>: Subscription where SubscriberType.Input == Control {
+    private var subscriber: SubscriberType?
+    private let control: Control
+
+    init(subscriber: SubscriberType, control: Control, event: UIControl.Event) {
+        self.subscriber = subscriber
+        self.control = control
+        control.addTarget(self, action: #selector(eventHandler), for: event)
+    }
+
+    func request(_ demand: Subscribers.Demand) {
+        // We do nothing here as we only want to send events when they occur.
+        // See, for more info: https://developer.apple.com/documentation/combine/subscribers/demand
+    }
+
+    func cancel() {
+        subscriber = nil
+    }
+
+    @objc private func eventHandler() {
+        _ = subscriber?.receive(control)
+    }
+}
+
+/// A custom `Publisher` to work with our custom `UIControlSubscription`.
+struct UIControlPublisher<Control: UIControl>: Publisher {
+
+    typealias Output = Control
+    typealias Failure = Never
+
+    let control: Control
+    let controlEvents: UIControl.Event
+
+    init(control: Control, events: UIControl.Event) {
+        self.control = control
+        self.controlEvents = events
+    }
+    
+    func receive<S>(subscriber: S) where S : Subscriber, S.Failure == UIControlPublisher.Failure, S.Input == UIControlPublisher.Output {
+        let subscription = UIControlSubscription(subscriber: subscriber, control: control, event: controlEvents)
+        subscriber.receive(subscription: subscription)
+    }
+}
+
+/// Extending the `UIControl` types to be able to produce a `UIControl.Event` publisher.
+protocol CombineCompatible { }
+extension UIControl: CombineCompatible { }
+extension CombineCompatible where Self: UIControl {
+    func publisher(for events: UIControl.Event) -> UIControlPublisher<UIControl> {
+        return UIControlPublisher(control: self, events: events)
+    }
+}

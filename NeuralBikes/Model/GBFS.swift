@@ -20,7 +20,6 @@ struct GbfsStationStatusDataInformation: Codable {
 }
 
 struct GbfsStationStatusInformation: Codable {
-//    var stationId: String
     var stationId: String
     var latitude: Double
     var longitude: Double
@@ -58,7 +57,6 @@ struct GbfsStationStatusData: Codable {
 }
 
 struct GbfsStationStatusStation: Codable {
-//    var stationId: String
     var stationId: String
     var numberOfBikesAvailable: Int
     var numberOfDocksAvailable: Int

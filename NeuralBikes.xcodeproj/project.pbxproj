@@ -88,6 +88,7 @@
 		809953F72416C77700B44DC9 /* InsightsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809953F62416C77700B44DC9 /* InsightsViewModel.swift */; };
 		8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099540924181C5B00B44DC9 /* TimeInterval.swift */; };
 		8099541424193F5600B44DC9 /* RoutePlanner.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8099541624193F5600B44DC9 /* RoutePlanner.strings */; };
+		809FCFB625333924005E82EA /* NBDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809FCFB525333924005E82EA /* NBDefaults.swift */; };
 		80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */; };
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
 		80AB8B7024B23A2F004F3905 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */; };
@@ -233,6 +234,7 @@
 		8099540924181C5B00B44DC9 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		8099541524193F5600B44DC9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/RoutePlanner.strings; sourceTree = "<group>"; };
 		809954172419400A00B44DC9 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/RoutePlanner.strings; sourceTree = "<group>"; };
+		809FCFB525333924005E82EA /* NBDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBDefaults.swift; sourceTree = "<group>"; };
 		80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserInterfaceIdiom.swift; sourceTree = "<group>"; };
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
 		80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 				80D288C0241D5200004EE583 /* UITestingHelper.swift */,
 				8018E1562451889400CE7796 /* LogHelper.swift */,
 				80BB4A49252D0FCF00FF93E8 /* NBActions.swift */,
+				809FCFB525333924005E82EA /* NBDefaults.swift */,
 			);
 			path = NeuralBikes;
 			sourceTree = "<group>";
@@ -734,7 +737,6 @@
 				8085CC56236E2CB500B45A7C /* Frameworks */,
 				8085CC57236E2CB500B45A7C /* Resources */,
 				06294201CE501E64004456DE /* [CP] Embed Pods Frameworks */,
-				807C88AD23EADCA2003BA644 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -858,23 +860,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NeuralBikes-NeuralBikesUITests/Pods-NeuralBikes-NeuralBikesUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		807C88AD23EADCA2003BA644 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
-		};
 		808845432475A23400367D5C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -980,6 +965,7 @@
 				8074D347245737BE006B3062 /* GetActiveRentalsResponse.swift in Sources */,
 				8008A67D249828A600D7F5C7 /* HomeViewControllerSwiftUI.swift in Sources */,
 				80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */,
+				809FCFB625333924005E82EA /* NBDefaults.swift in Sources */,
 				8018E1572451889400CE7796 /* LogHelper.swift in Sources */,
 				804F162224796D9900B90FC2 /* DataObserverProducer.swift in Sources */,
 				80F882072490E3B100AB322A /* LocationServicesCoreLocation.swift in Sources */,

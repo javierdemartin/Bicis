@@ -113,7 +113,6 @@ class SettingsViewController: UIViewController {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.font = Constants.labelFont
         label.adjustsFontForContentSizeCategory = true
         label.font = UIFont.preferredFont(for: .body, weight: .bold)
 
@@ -209,6 +208,8 @@ class SettingsViewController: UIViewController {
         return imageView
     }()
 
+    var suscription = Set<AnyCancellable>()
+    
     init(viewModel: SettingsViewModel, compositeDisposable: CompositeDisposable) {
 
         self.viewModel = viewModel
@@ -269,15 +270,9 @@ class SettingsViewController: UIViewController {
             cityPicker.trailingAnchor.constraint(equalTo: self.verticalStackView.trailingAnchor, constant: -16.0)
         ])
 
-        guard let versionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String else { return }
-
-        guard let bundleString = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else { return }
-
-        stringVersion.text = "\(versionString)" + " (" + "\(bundleString)" + ")"
-        stringVersion.accessibilityLabel = NSLocalizedString("VERSION_ACCESIBILITY_LABEL", comment: "").replacingOccurrences(of: "%number", with: versionString)
+        stringVersion.text = NBDefaults.longAppVersion ?? "App Version"
+        stringVersion.accessibilityLabel = NSLocalizedString("VERSION_ACCESIBILITY_LABEL", comment: "").replacingOccurrences(of: "%number", with: NBDefaults.longAppVersion ?? "App Version")
     }
-    
-    var suscription = Set<AnyCancellable>()
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -296,21 +291,6 @@ class SettingsViewController: UIViewController {
                 self.locationServicesStatusImage.accessibilityLabel = NSLocalizedString("NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
             }
         }).store(in: &suscription)
-
-//        if CLLocationManager.locationServicesEnabled() {
-//            switch CLLocationManager.authorizationStatus() {
-//            case .notDetermined, .restricted, .denied:
-//                locationServicesStatusImage.image = UIImage(systemName: "location.slash.fill")
-//                locationServicesStatusImage.accessibilityLabel = NSLocalizedString("NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
-//            case .authorizedAlways, .authorizedWhenInUse:
-//                locationServicesStatusImage.image = UIImage(systemName: "location.fill")
-//                locationServicesStatusImage.accessibilityLabel = NSLocalizedString("GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL", comment: "")
-//            @unknown default:
-//                break
-//            }
-//        } else {
-//            print("Location services are not enabled")
-//        }
     }
 
     override func viewDidLoad() {
@@ -335,45 +315,37 @@ class SettingsViewController: UIViewController {
         viewModel.dismissingSettingsViewController()
 
     }
+    
+    var cancellableBag = Set<AnyCancellable>()
 
     fileprivate func setupBindings() {
-
-        compositeDisposable += requestFeedBackButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
-            self?.viewModel.sendFeedBackEmail()
-        })
         
-        compositeDisposable += logOutButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
-            self?.viewModel.logOut()
-        })
+        requestFeedBackButton.publisher(for: .touchUpInside).sink { _ in
+            NBActions.sendToMail()
+        }.store(in: &cancellableBag)
+        
+        logOutButton.publisher(for: .touchUpInside).sink { _ in
+            self.viewModel.logOut()
+        }.store(in: &cancellableBag)
 
         viewModel.availableCitiesModel.bind { cities in
             self.citiesList = cities
         }
-
-        compositeDisposable += restorePurchasesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
-            self?.viewModel.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
-        })
         
-        compositeDisposable += replayTutorialButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
-            self?.viewModel.presentTutorialViewControllerFromCoordinatorDelegate()
-        })
+        restorePurchasesButton.publisher(for: .touchUpInside).sink { _ in
+            self.viewModel.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+        }.store(in: &cancellableBag)
+        
+        replayTutorialButton.publisher(for: .touchUpInside).sink { _ in
+            self.viewModel.presentTutorialViewControllerFromCoordinatorDelegate()
+        }.store(in: &cancellableBag)
     }
 
     deinit {
         compositeDisposable.dispose()
+        cancellableBag.removeAll()
     }
 }
-
-//extension SettingsViewController: LocationServicesDelegate {
-//
-//    func tracingLocation(_ currentLocation: CLLocation) {
-//        locationServicesStatusImage.image = UIImage(systemName: "location.fill")
-//    }
-//
-//    func tracingLocationDidFailWithError(_ error: NSError) {
-//        print(error)
-//    }
-//}
 
 extension SettingsViewController: SettingsViewModelDelegate {
     func shouldShowLogOutButton() {

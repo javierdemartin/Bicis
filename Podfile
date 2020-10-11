@@ -7,7 +7,6 @@ target 'NeuralBikes' do
   pod 'ReactiveSwift'
   pod 'RxSwift'
   pod 'ReactiveCocoa'
-  pod 'SwiftLint'
 
   # Pods for Bicis
   target 'NeuralBikesUITests' do

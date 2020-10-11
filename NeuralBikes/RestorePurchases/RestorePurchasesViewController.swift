@@ -6,6 +6,7 @@
 //  Copyright © 2020 Javier de Martín Gil. All rights reserved.
 //
 
+import Combine
 import Foundation
 import ReactiveSwift
 import ReactiveCocoa
@@ -55,9 +56,7 @@ extension RestorePurchasesViewController: RestorePurchasesViewModelDelegate {
 
 class RestorePurchasesViewController: UIViewController {
 
-    let compositeDisposable: CompositeDisposable
     let viewModel: RestorePurchasesViewModel
-    let cViewModel: RestorePurchasesViewModel
 
     let scrollView: UIScrollView = {
 
@@ -158,12 +157,9 @@ class RestorePurchasesViewController: UIViewController {
 
     let particles = GameScene()
 
-    init(compositeDisposable: CompositeDisposable, viewModel: RestorePurchasesViewModel) {
+    init(viewModel: RestorePurchasesViewModel) {
 
-        self.compositeDisposable = compositeDisposable
         self.viewModel = viewModel
-
-        self.cViewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
 
@@ -232,19 +228,20 @@ class RestorePurchasesViewController: UIViewController {
 
         setUpBindings()
     }
+    
+    var cancellableBag = Set<AnyCancellable>()
 
     func setUpBindings() {
-
-        compositeDisposable += unlockFeaturesLabel.reactive.controlEvents(.touchUpInside).observeValues({ [weak self] (_) in
+        
+        unlockFeaturesLabel.publisher(for: .touchUpInside).sink { _ in
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
-            self?.viewModel.unlockDataInsights()
-        })
-
-        compositeDisposable += restorePurchasesButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
-
+            self.viewModel.unlockDataInsights()
+        }.store(in: &cancellableBag)
+        
+        restorePurchasesButton.publisher(for: .touchUpInside).sink { _ in
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
-            self?.viewModel.restorePurchases()
-        })
+            self.viewModel.restorePurchases()
+        }.store(in: &cancellableBag)
 
         viewModel.hasPurchased.bind({ transaction in
 
@@ -254,10 +251,6 @@ class RestorePurchasesViewController: UIViewController {
                 self.unlockFeaturesLabel.isEnabled = false
             }
         })
-    }
-
-    deinit {
-        compositeDisposable.dispose()
     }
 
     let particleEmitter = CAEmitterLayer()

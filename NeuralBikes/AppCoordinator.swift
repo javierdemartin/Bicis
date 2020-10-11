@@ -161,7 +161,7 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
         let compositeDisposable = CompositeDisposable()
         let restorePurchasesViewModel = RestorePurchasesViewModel(compositeDisposable: compositeDisposable)
         restorePurchasesViewModel.coordinatorDelegate = self
-        let restorePurchasesViewController = RestorePurchasesViewController(compositeDisposable: compositeDisposable, viewModel: restorePurchasesViewModel)
+        let restorePurchasesViewController = RestorePurchasesViewController(viewModel: restorePurchasesViewModel)
 
         restorePurchasesViewController.modalPresentationStyle = .formSheet
 

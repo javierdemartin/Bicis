@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 import UIKit
 import ReactiveSwift
 import ReactiveCocoa
@@ -106,23 +107,25 @@ class LogInViewController: UIViewController {
         setUpBindings()
     }
     
+    
+    var cancellableBag = Set<AnyCancellable>()
+    
     func setUpBindings() {
-        compositeDisposable += submitCredentialsButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] _ in
-            
-            guard let userName = self?.usernameTextField.text, let password = self?.passwordTextField.text else { return }
+        
+        submitCredentialsButton.publisher(for: .touchUpInside).sink { _ in
+            guard let userName = self.usernameTextField.text, let password = self.passwordTextField.text else { return }
             
             let userCredentials = UserCredentials(mobile: userName, pin: password)
             
-            self?.viewModel.logIn(with: userCredentials)
-        })
+            self.viewModel.logIn(with: userCredentials)
+        }.store(in: &cancellableBag)
         
-        compositeDisposable += forgotPasswordButton.reactive.controlEvents(.touchUpInside).observe({ [weak self] (_) in
+        forgotPasswordButton.publisher(for: .touchUpInside).sink { _ in
             
-            guard let userName = self?.usernameTextField.text else { return }
+            guard let userName = self.usernameTextField.text else { return }
             
-            self?.viewModel.forgotPassword(username: userName)
-            
-        })
+            self.viewModel.forgotPassword(username: userName)
+        }.store(in: &cancellableBag)
     }
     
     override func loadView() {
