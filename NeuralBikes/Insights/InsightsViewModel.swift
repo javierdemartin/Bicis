@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ReactiveSwift
 import MapKit
 import Combine
 
@@ -42,7 +41,6 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
     
     @Published var numberOfTimesLaunched: String = ""
 
-    let compositeDisposable: CompositeDisposable
     let stationsDict: [String: BikeStation]? = [:]
     weak var delegate: InsightsViewModelDelegate?
     let dateFormatter = DateFormatter()
@@ -53,9 +51,7 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
 
     let dataManager: InsightsViewModelDataManager
 
-    init(compositeDisposable: CompositeDisposable, locationService: LocationServiceable, dataManager: InsightsViewModelDataManager, destinationStation: BikeStation) {
-
-        self.compositeDisposable = compositeDisposable
+    init(locationService: LocationServiceable, dataManager: InsightsViewModelDataManager, destinationStation: BikeStation) {
 
         self.dataManager = dataManager
         
@@ -150,7 +146,7 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
     }
         
     deinit {
-        compositeDisposable.dispose()
+        
     }
     
     func drawGraph() {

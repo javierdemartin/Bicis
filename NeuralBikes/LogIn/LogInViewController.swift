@@ -9,8 +9,6 @@
 import Foundation
 import Combine
 import UIKit
-import ReactiveSwift
-import ReactiveCocoa
 
 extension LogInViewController: LogInViewModelDelegate {
     func receivedError(with errorString: String) {
@@ -29,7 +27,6 @@ extension LogInViewController: LogInViewModelDelegate {
 
 class LogInViewController: UIViewController {
  
-    let compositeDisposable: CompositeDisposable
     let viewModel: LogInViewModel
     
     lazy var stackView: UIStackView = {
@@ -90,8 +87,7 @@ class LogInViewController: UIViewController {
         return button
     }()
     
-    init(compositeDisposable: CompositeDisposable, viewModel: LogInViewModel) {
-        self.compositeDisposable = compositeDisposable
+    init(viewModel: LogInViewModel) {
         self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)

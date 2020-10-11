@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ReactiveSwift
 import CoreLocation
 import StoreKit
 import Combine
@@ -47,10 +46,10 @@ class SettingsViewModel: ObservableObject {
     weak var delegate: SettingsViewModelDelegate?
     weak var coordinatorDelegate: SettingsViewModelCoordinatorDelegate?
     var city: City?
-    let usernameTextfieldContinuousTextValues = MutableProperty<String?>(nil)
-    let passwordTextfieldContinuousTextValues = MutableProperty<String?>(nil)
-    let logInButtonIsEnabled = MutableProperty(false)
-    let compositeDisposable: CompositeDisposable
+//    let usernameTextfieldContinuousTextValues = MutableProperty<String?>(nil)
+//    let passwordTextfieldContinuousTextValues = MutableProperty<String?>(nil)
+//    let logInButtonIsEnabled = MutableProperty(false)
+    
     let dataManager: SettingsViewModelDataManager
 
     func sendFeedBackEmail() {
@@ -110,17 +109,15 @@ class SettingsViewModel: ObservableObject {
 
     func setUpBindings() {
 
-        let usernameIsNotEmpty = usernameTextfieldContinuousTextValues.producer.map({ $0?.isEmpty ?? true }).negate()
-        let passwordIsNotEmpty = usernameTextfieldContinuousTextValues.producer.map({ $0?.isEmpty ?? true }).negate()
-
-        compositeDisposable += logInButtonIsEnabled <~ usernameIsNotEmpty.and(passwordIsNotEmpty)
+//        let usernameIsNotEmpty = usernameTextfieldContinuousTextValues.producer.map({ $0?.isEmpty ?? true }).negate()
+//        let passwordIsNotEmpty = usernameTextfieldContinuousTextValues.producer.map({ $0?.isEmpty ?? true }).negate()
+//        compositeDisposable += logInButtonIsEnabled <~ usernameIsNotEmpty.and(passwordIsNotEmpty)
     }
     
     let locationService: LocationServiceable
 
-    init(currentCity: City?, locationService: LocationServiceable, compositeDisposable: CompositeDisposable, dataManager: SettingsViewModelDataManager) {
+    init(currentCity: City?, locationService: LocationServiceable, dataManager: SettingsViewModelDataManager) {
 
-        self.compositeDisposable = compositeDisposable
         self.dataManager = dataManager
         self.locationService  = locationService
 

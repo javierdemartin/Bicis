@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import ReactiveSwift
 
 struct InsightsViewController: View {
     

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ReactiveSwift
 
 protocol RestorePurchasesViewModelDelegate: class {
     func celebratePurchase()
@@ -19,7 +18,6 @@ protocol RestorePurchasesViewModelCoordinatorDelegate: class {
 
 class RestorePurchasesViewModel: NSObject {
 
-    let compositeDisposable: CompositeDisposable
 
     weak var delegate: RestorePurchasesViewModelDelegate?
     weak var coordinatorDelegate: RestorePurchasesViewModelCoordinatorDelegate?
@@ -59,8 +57,7 @@ class RestorePurchasesViewModel: NSObject {
         StoreKitProducts.store.restorePurchases()
     }
 
-    init(compositeDisposable: CompositeDisposable) {
-        self.compositeDisposable = compositeDisposable
+    override init() {
 
         super.init()
 

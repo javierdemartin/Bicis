@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import ReactiveCocoa
-import ReactiveSwift
+
 import CoreLocation
 import StoreKit
 import Combine
@@ -50,8 +49,6 @@ extension SettingsViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 class SettingsViewController: UIViewController {
 
     var citiesList = Array(availableCities.keys)
-
-    let compositeDisposable: CompositeDisposable
 
     let viewModel: SettingsViewModel
 
@@ -210,10 +207,9 @@ class SettingsViewController: UIViewController {
 
     var suscription = Set<AnyCancellable>()
     
-    init(viewModel: SettingsViewModel, compositeDisposable: CompositeDisposable) {
+    init(viewModel: SettingsViewModel) {
 
         self.viewModel = viewModel
-        self.compositeDisposable = compositeDisposable
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -342,7 +338,6 @@ class SettingsViewController: UIViewController {
     }
 
     deinit {
-        compositeDisposable.dispose()
         cancellableBag.removeAll()
     }
 }

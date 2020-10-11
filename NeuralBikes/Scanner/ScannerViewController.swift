@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import ReactiveSwift
-import ReactiveCocoa
 import AVFoundation
 import UIKit
 
@@ -21,11 +19,9 @@ extension ScannerViewController: ScannerViewModelDelegate {
 class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     var captureSession: AVCaptureSession!
     var previewLayer: AVCaptureVideoPreviewLayer!
-    let compositeDisposable: CompositeDisposable
     let viewModel: ScannerViewModel
     
-    init(compositeDisposable: CompositeDisposable, viewModel: ScannerViewModel) {
-        self.compositeDisposable = compositeDisposable
+    init(viewModel: ScannerViewModel) {
         self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
@@ -114,7 +110,7 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
     
     deinit {
-        compositeDisposable.dispose()
+        
     }
 
     func found(code: String) {

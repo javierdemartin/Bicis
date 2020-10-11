@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ReactiveSwift
+
 
 protocol LogInViewModelDataManager: class {
     func logIn(with userCredentials: UserCredentials, completion: @escaping(Result<LogInResponse>) -> Void)
@@ -24,14 +24,12 @@ protocol LogInVieWModelCoordinatorDelegate: class {
 
 class LogInViewModel {
     
-    let compositeDisposable: CompositeDisposable
     let dataManager: LogInViewModelDataManager
     
     weak var delegate: LogInViewModelDelegate?
     weak var coordinatorDelegate: LogInVieWModelCoordinatorDelegate?
     
-    init(compositeDisposable: CompositeDisposable, dataManager: LogInViewModelDataManager) {
-        self.compositeDisposable = compositeDisposable
+    init(dataManager: LogInViewModelDataManager) {
         self.dataManager = dataManager
     }
     
@@ -64,7 +62,7 @@ class LogInViewModel {
     }
     
     deinit {
-        compositeDisposable.dispose()
+        
     }
 
 }

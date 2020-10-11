@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import ReactiveSwift
 import CoreLocation
 import MapKit
 import Combine
@@ -48,8 +47,6 @@ protocol HomeViewModelDelegate: class {
 
 class HomeViewModel: ObservableObject {
 
-    private let compositeDisposable: CompositeDisposable
-
     var currentCity: City?
 
     var currentSelectedStationIndex: Int = 0
@@ -72,10 +69,9 @@ class HomeViewModel: ObservableObject {
 
     let stationsDict = Binding<[String: BikeStation]>(value: [:])
 
-    init(city: City?, compositeDisposable: CompositeDisposable, dataManager: HomeViewModelDataManager, locationService: LocationServiceable) {
+    init(city: City?, dataManager: HomeViewModelDataManager, locationService: LocationServiceable) {
 
         self.currentCity = city
-        self.compositeDisposable = compositeDisposable
         self.dataManager = dataManager
         
         self.locationService = locationService
@@ -95,13 +91,13 @@ class HomeViewModel: ObservableObject {
     
     func setUpBindings() {
         
-        compositeDisposable += locationService.signalForDidUpdateLocations.observe({ event in
-            guard let location = event.value else {
-                return
-            }
-            
-            self.delegate?.centerMap(on: location.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
-        })
+//        compositeDisposable += locationService.signalForDidUpdateLocations.observe({ event in
+//            guard let location = event.value else {
+//                return
+//            }
+//
+//            self.delegate?.centerMap(on: location.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
+//        })
     }
     
     func viewWillAppear() {

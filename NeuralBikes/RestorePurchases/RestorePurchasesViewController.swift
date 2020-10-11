@@ -8,8 +8,6 @@
 
 import Combine
 import Foundation
-import ReactiveSwift
-import ReactiveCocoa
 import SpriteKit
 
 extension RestorePurchasesViewController: IAPHelperDelegate {

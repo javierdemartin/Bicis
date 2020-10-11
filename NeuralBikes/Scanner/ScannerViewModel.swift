@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import ReactiveSwift
+
 
 protocol ScannerViewModelCoordinatorDelegate: class {
     func scannedCodeWith(number: Int?)
@@ -19,13 +19,11 @@ protocol ScannerViewModelDelegate: class {
 
 class ScannerViewModel {
     
-    let compositeDisposable: CompositeDisposable
-    
     weak var delegate: ScannerViewModelDelegate?
     weak var coordinatorDelegate: ScannerViewModelCoordinatorDelegate?
     
-    init(compositeDisposable: CompositeDisposable) {
-        self.compositeDisposable = compositeDisposable
+    init() {
+        
     }
     
     func scannedCode(number: Int?) {
