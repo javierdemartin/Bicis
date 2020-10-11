@@ -1,4 +1,5 @@
 *.mobileprovision
+Podfile.lock
 fastlane/SnapshotHelper.swift
 fastlane/report.xml
 fastlane/screenshots/

@@ -20,6 +20,7 @@ struct GbfsStationStatusDataInformation: Codable {
 }
 
 struct GbfsStationStatusInformation: Codable {
+//    var stationId: String
     var stationId: String
     var latitude: Double
     var longitude: Double
@@ -30,6 +31,19 @@ struct GbfsStationStatusInformation: Codable {
         case latitude = "lat"
         case longitude = "lon"
         case stationName = "name"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        latitude = try container.decode(Double.self, forKey: .latitude)
+        longitude = try container.decode(Double.self, forKey: .longitude)
+        stationName = try container.decode(String.self, forKey: .stationName)
+        
+        do {
+            stationId = "\(try container.decode(Int.self, forKey: .stationId))"
+        } catch DecodingError.typeMismatch {
+            stationId = try container.decode(String.self, forKey: .stationId)
+        }
     }
 }
 
@@ -44,6 +58,7 @@ struct GbfsStationStatusData: Codable {
 }
 
 struct GbfsStationStatusStation: Codable {
+//    var stationId: String
     var stationId: String
     var numberOfBikesAvailable: Int
     var numberOfDocksAvailable: Int
@@ -52,5 +67,17 @@ struct GbfsStationStatusStation: Codable {
         case stationId = "station_id"
         case numberOfBikesAvailable = "num_bikes_available"
         case numberOfDocksAvailable = "num_docks_available"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        numberOfBikesAvailable = try container.decode(Int.self, forKey: .numberOfBikesAvailable)
+        numberOfDocksAvailable = try container.decode(Int.self, forKey: .numberOfDocksAvailable)
+        
+        do {
+            stationId = "\(try container.decode(Int.self, forKey: .stationId))"
+        } catch DecodingError.typeMismatch {
+            stationId = try container.decode(String.self, forKey: .stationId)
+        }
     }
 }
