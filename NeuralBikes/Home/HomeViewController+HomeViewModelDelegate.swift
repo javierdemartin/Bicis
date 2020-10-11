@@ -25,10 +25,12 @@ extension HomeViewController: HomeViewModelDelegate {
         guard let nearest = nearestPin else { return }
 
         guard let nearestStation = self.viewModel.stationsDict.value[nearest.stationName] else { return }
+//        guard let nearestStation = self.viewModel.stationsDict.value[nearest.stationName] else { return }
 
         // Find the index of the current station
-
-        if let index = viewModel.stations.value.firstIndex(where: { $0.stationName == nearestStation.stationName }) {
+//
+//        if let index = viewModel.stations.value.firstIndex(where: { $0.stationName == nearestStation.stationName }) {
+        if let index = viewModel.stations.firstIndex(where: { $0.stationName == nearestStation.stationName }) {
             self.viewModel.currentSelectedStationIndex = index
         }
 

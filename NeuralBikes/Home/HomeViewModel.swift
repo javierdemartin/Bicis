@@ -10,6 +10,7 @@ import Foundation
 import ReactiveSwift
 import CoreLocation
 import MapKit
+import Combine
 
 protocol HomeViewModelCoordinatorDelegate: class {
     func showSettingsViewController()
@@ -45,7 +46,7 @@ protocol HomeViewModelDelegate: class {
     func showActiveRentedBike(number: String)
 }
 
-class HomeViewModel {
+class HomeViewModel: ObservableObject {
 
     private let compositeDisposable: CompositeDisposable
 
@@ -65,7 +66,9 @@ class HomeViewModel {
 
     let dataManager: HomeViewModelDataManager
 
-    let stations = Binding<[BikeStation]>(value: [])
+//    let stations = Binding<[BikeStation]>(value: [])
+    @Published var stations: [BikeStation] = []
+    @Published var stationsDictCombine: [String: BikeStation] = [:]
 
     let stationsDict = Binding<[String: BikeStation]>(value: [:])
 
@@ -159,7 +162,7 @@ class HomeViewModel {
             case .success(let hasUnlocked):
                 if hasUnlocked {
 
-                    let closestAnnotations = Array(self.sortStationsNearTo(self.stations.value, location: station.location).dropFirst().prefix(3))
+                    let closestAnnotations = Array(self.sortStationsNearTo(self.stations, location: station.location).dropFirst().prefix(3))
 
                     self.coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station, closestAnnotations: closestAnnotations)
                 } else if !hasUnlocked {
@@ -204,11 +207,11 @@ class HomeViewModel {
                     self.stationsDict.value[individualStation.stationName] = individualStation
                 })
 
-                self.stations.value = res
+                self.stations = res
 
                 if let locationFromDevice = self.locationService.currentLocation {
-                    self.stations.value = self.sortStationsNearTo(res, location: locationFromDevice)
-                    self.delegate?.selectClosestAnnotationGraph(stations: self.stations.value, currentLocation: locationFromDevice)
+                    self.stations = self.sortStationsNearTo(res, location: locationFromDevice)
+                    self.delegate?.selectClosestAnnotationGraph(stations: self.stations, currentLocation: locationFromDevice)
                 }
 
             case .error:
@@ -233,9 +236,9 @@ class HomeViewModel {
 
     func sortStationsNearTo(_ values: [BikeStation], location: CLLocation) -> [BikeStation] {
 
-        stations.value.sort(by: { $0.distance(to: location) < $1.distance(to: $0.location) })
+        self.stations.sort(by: { $0.distance(to: location) < $1.distance(to: $0.location) })
 
-        return Array(stations.value)
+        return Array(stations)
     }
 
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<[String: [Int]]>) -> Void) {

@@ -8,7 +8,6 @@
 
 import UIKit
 import SwiftUI
-import ReactiveSwift
 import Combine
 import MapKit
 
@@ -26,10 +25,8 @@ enum ShowsNumberInAnnotation {
 class HomeViewController: UIViewController {
 
     weak var graphViewDelegate: HomeViewControllerGraphViewDelegate?
-
-    private let compositeDisposable: CompositeDisposable
-
-    let viewModel: HomeViewModel
+    
+    @ObservedObject var viewModel: HomeViewModel
 
     var whatsShown: ShowsNumberInAnnotation = .freeBikes
     
@@ -199,10 +196,9 @@ class HomeViewController: UIViewController {
         return button
     }()
 
-    init(viewModel: HomeViewModel, compositeDisposable: CompositeDisposable) {
+    init(viewModel: HomeViewModel) {
 
         self.viewModel = viewModel
-        self.compositeDisposable = compositeDisposable
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -285,6 +281,7 @@ class HomeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        viewModel.viewWillAppear()
         viewModel.viewWillAppear()
     }
 
@@ -295,7 +292,7 @@ class HomeViewController: UIViewController {
         graphView.layer.cornerRadius = Constants.cornerRadius
 
         self.hideStackView()
-
+//        viewModel.getCurrentCity(completion: { [weak self] cityResult in
         viewModel.getCurrentCity(completion: { [weak self] cityResult in
 
             guard let self = self else { fatalError() }
@@ -318,15 +315,19 @@ class HomeViewController: UIViewController {
 
     @objc func appMovedToForeground() {
     
+//        viewModel.getCurrentCity(completion: { currentCityResult in
         viewModel.getCurrentCity(completion: { currentCityResult in
             switch currentCityResult {
 
             case .success(let currentCity):
+//                self.viewModel.currentCity = currentCity
                 self.viewModel.currentCity = currentCity
 
+//                guard let unwrappedCity = self.viewModel.currentCity else { return }
                 guard let unwrappedCity = self.viewModel.currentCity else { return }
 
                 self.viewModel.getMapPinsFrom(city: unwrappedCity)
+//                self.viewModel.getMapPinsFrom(city: unwrappedCity)
 
             case .error(let err):
                 self.presentAlertViewWithError(title: "Error", body: err.localizedDescription)
@@ -338,6 +339,7 @@ class HomeViewController: UIViewController {
     @objc func appMovedToBackground() {
         print("App moved to Background!")
 
+//        guard let didSelectAnnotation = viewModel.latestSelectedAnnotation else { return }
         guard let didSelectAnnotation = viewModel.latestSelectedAnnotation else { return }
 
         mapView.deselectAnnotation(didSelectAnnotation, animated: false)
@@ -408,17 +410,19 @@ class HomeViewController: UIViewController {
     }
 
     deinit {
-        compositeDisposable.dispose()
         cancellableBag.removeAll()
     }
 
     @objc func showSettingsViewController() {
+//        viewModel.coordinatorDelegate?.showSettingsViewController()
         viewModel.coordinatorDelegate?.showSettingsViewController()
     }
 
     @objc func showInsightsViewController() {
+//        guard let latestSelectedStation = self.viewModel.latestSelectedBikeStation else { return }
         guard let latestSelectedStation = self.viewModel.latestSelectedBikeStation else { return }
         
+//        self.viewModel.selectedRoute(station: latestSelectedStation)
         self.viewModel.selectedRoute(station: latestSelectedStation)
     }
 
@@ -427,6 +431,7 @@ class HomeViewController: UIViewController {
     }
     
     var cancellable: AnyCancellable?
+    var otherCancellable: AnyCancellable?
     var cancellableBag = Set<AnyCancellable>()
 
     fileprivate func setupBindings() {
@@ -444,6 +449,7 @@ class HomeViewController: UIViewController {
         }.store(in: &cancellableBag)
         
         rentButton.publisher(for: .touchUpInside).sink { _ in
+//            self.viewModel.startRentProcess()
             self.viewModel.startRentProcess()
         }.store(in: &cancellableBag)
         
@@ -470,9 +476,9 @@ class HomeViewController: UIViewController {
             
             self.mapView.addAnnotations(stations)
         }.store(in: &cancellableBag)
-
-        viewModel.stations.bind { stations in
-
+        
+        
+        otherCancellable = viewModel.$stations.sink(receiveValue: { stations in
             stations.forEach({ pin in
 
                 let pinCoordinate: CLLocationCoordinate2D = {
@@ -491,6 +497,7 @@ class HomeViewController: UIViewController {
             switch UITestingHelper.sharedInstance.isUITesting() {
             case true:
 
+//                guard let unwrappedCity = self.viewModel.currentCity else { return }
                 guard let unwrappedCity = self.viewModel.currentCity else { return }
 
                 currentLocationFromDevice = CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude), longitude: CLLocationDegrees(unwrappedCity.longitude))
@@ -499,7 +506,37 @@ class HomeViewController: UIViewController {
             case false:
                 break
             }
-        }
+        })
+
+//        viewModel.stations.bind { stations in
+//
+//            stations.forEach({ pin in
+//
+//                let pinCoordinate: CLLocationCoordinate2D = {
+//                    let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.latitude),
+//                                                            longitude: CLLocationDegrees(pin.longitude))
+//                    return coordinate
+//                }()
+//
+//                self.mapView.addAnnotation(MapPin(title: pin.stationName,
+//                                                  coordinate: pinCoordinate,
+//                                                  stationInformation: pin))
+//            })
+//
+//            var currentLocationFromDevice = CLLocation()
+//
+//            switch UITestingHelper.sharedInstance.isUITesting() {
+//            case true:
+//
+//                guard let unwrappedCity = self.viewModel.currentCity else { return }
+//
+//                currentLocationFromDevice = CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude), longitude: CLLocationDegrees(unwrappedCity.longitude))
+//                
+//                self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
+//            case false:
+//                break
+//            }
+//        }
         
     }
 
@@ -516,6 +553,8 @@ class HomeViewController: UIViewController {
         hideRoutePlannerButton()
 
         if viewModel.latestSelectedAnnotation != nil {
+//            if viewModel.latestSelectedAnnotation != nil {
+//            mapView.deselectAnnotation(viewModel.latestSelectedAnnotation, animated: false)
             mapView.deselectAnnotation(viewModel.latestSelectedAnnotation, animated: false)
         }
     }

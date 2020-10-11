@@ -81,7 +81,7 @@ class AppCoordinator: Coordinator {
 
         let compositeDisposable = CompositeDisposable()
         homeViewModel = HomeViewModel(city: currentCity ?? nil, compositeDisposable: compositeDisposable, dataManager: dataManager, locationService: locationService)
-        homeViewController = HomeViewController(viewModel: homeViewModel!, compositeDisposable: compositeDisposable)
+        homeViewController = HomeViewController(viewModel: homeViewModel!)
         self.window.rootViewController = homeViewController
 
         homeViewModel!.coordinatorDelegate = self
@@ -187,8 +187,10 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
 
         homeViewModel.delegate?.centerMap(on: centerCoordinates, coordinateSpan: Constants.wideCoordinateSpan)
 
-        homeViewModel.stations.value = []
-        homeViewModel.stationsDict.value = [:]
+//        homeViewModel.stations.value = []
+        homeViewModel.stations = []
+        homeViewModel.stationsDictCombine = [:]
+//        homeViewModel.stationsDict.value = [:]
 
         homeViewModel.dataManager.getStations(city: city.formalName, completion: { resultStations in
 
@@ -200,7 +202,8 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
                     self.homeViewModel?.stationsDict.value[individualStation.stationName] = individualStation
                 })
 
-                self.homeViewModel?.stations.value = res
+                self.homeViewModel?.stations = res
+//                self.homeViewModel?.stations.value = res
             case .error:
                 break
             }
