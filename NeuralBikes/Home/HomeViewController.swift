@@ -347,8 +347,8 @@ class HomeViewController: UIViewController {
 
     override var keyCommands: [UIKeyCommand]? {
         return [
-            UIKeyCommand(title: "OPEN_SETTINGS_KEYBOARD".localize(file: "Home"), action: #selector(showSettingsViewController), input: "s", modifierFlags: .command, alternates: [], discoverabilityTitle: "OPEN_SETTINGS_KEYBOARD".localize(file: "Home"), attributes: .destructive, state: .on),
-            UIKeyCommand(title: "OPEN_INSIGHTS_KEYBOARD".localize(file: "Home"), action: #selector(showSettingsViewController), input: "d", modifierFlags: .command, alternates: [], discoverabilityTitle: "OPEN_INSIGHTS_KEYBOARD".localize(file: "Home"), attributes: .destructive, state: .on)
+            UIKeyCommand(title: NSLocalizedString("OPEN_SETTINGS_KEYBOARD", comment: ""), action: #selector(showSettingsViewController), input: "s", modifierFlags: .command, alternates: [], discoverabilityTitle: NSLocalizedString("OPEN_SETTINGS_KEYBOARD", comment: ""), attributes: .destructive, state: .on),
+            UIKeyCommand(title: NSLocalizedString("OPEN_INSIGHTS_KEYBOARD", comment: ""), action: #selector(showSettingsViewController), input: "d", modifierFlags: .command, alternates: [], discoverabilityTitle: NSLocalizedString("OPEN_INSIGHTS_KEYBOARD", comment: ""), attributes: .destructive, state: .on)
         ]
     }
 
@@ -506,38 +506,7 @@ class HomeViewController: UIViewController {
             case false:
                 break
             }
-        })
-
-//        viewModel.stations.bind { stations in
-//
-//            stations.forEach({ pin in
-//
-//                let pinCoordinate: CLLocationCoordinate2D = {
-//                    let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.latitude),
-//                                                            longitude: CLLocationDegrees(pin.longitude))
-//                    return coordinate
-//                }()
-//
-//                self.mapView.addAnnotation(MapPin(title: pin.stationName,
-//                                                  coordinate: pinCoordinate,
-//                                                  stationInformation: pin))
-//            })
-//
-//            var currentLocationFromDevice = CLLocation()
-//
-//            switch UITestingHelper.sharedInstance.isUITesting() {
-//            case true:
-//
-//                guard let unwrappedCity = self.viewModel.currentCity else { return }
-//
-//                currentLocationFromDevice = CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude), longitude: CLLocationDegrees(unwrappedCity.longitude))
-//                
-//                self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
-//            case false:
-//                break
-//            }
-//        }
-        
+        })        
     }
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -553,8 +522,6 @@ class HomeViewController: UIViewController {
         hideRoutePlannerButton()
 
         if viewModel.latestSelectedAnnotation != nil {
-//            if viewModel.latestSelectedAnnotation != nil {
-//            mapView.deselectAnnotation(viewModel.latestSelectedAnnotation, animated: false)
             mapView.deselectAnnotation(viewModel.latestSelectedAnnotation, animated: false)
         }
     }

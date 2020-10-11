@@ -1,9 +1,0 @@
-/* 
-  DataManager.strings
-  NeuralBikes
-
-  Created by Javier de Martín Gil on 20/05/2020.
-  Copyright © 2020 Javier de Martín Gil. All rights reserved.
-*/
-
-"BIKE_NOT_FOUND" = "Bike number %bike couldn't be found.";

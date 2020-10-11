@@ -24,8 +24,4 @@ extension String {
 
         return ceil(boundingBox.width)
     }
-
-    func localize(file: String) -> String {
-        return NSLocalizedString(self, tableName: file, bundle: Bundle.main, value: "", comment: "")
-    }
 }

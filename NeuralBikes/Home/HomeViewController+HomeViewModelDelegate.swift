@@ -90,8 +90,8 @@ extension HomeViewController: HomeViewModelDelegate {
     }
 
     func receivedError(with errorString: String) {
-        let alert = UIAlertController(title: "ALERT_HEADER".localize(file: "Home"), message: errorString, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "CONFIRM_ALERT".localize(file: "Home"), style: UIAlertAction.Style.default, handler: nil))
+        let alert = UIAlertController(title: NSLocalizedString("ALERT_HEADER", comment: ""), message: errorString, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("CONFIRM_ALERT", comment: ""), style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }

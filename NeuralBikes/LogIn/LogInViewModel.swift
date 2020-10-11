@@ -54,7 +54,7 @@ class LogInViewModel {
             switch forgotResult {
                 
             case .success:
-                self.delegate?.receivedError(with: "FINISH_FORGOT_PASSWORD".localize(file: "LogIn"))
+                self.delegate?.receivedError(with: NSLocalizedString("FINISH_FORGOT_PASSWORD", comment: ""))
             case .error(let error):
                 self.delegate?.receivedError(with: error.localizedDescription)
             }

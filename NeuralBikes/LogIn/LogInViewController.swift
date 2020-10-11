@@ -15,7 +15,7 @@ extension LogInViewController: LogInViewModelDelegate {
         
         let alert = UIAlertController(title: "header", message: errorString, preferredStyle: UIAlertController.Style.alert)
 
-        let alertAction = UIAlertAction(title: "ACCEPT_ALERT".localize(file: "Home"), style: UIAlertAction.Style.default, handler: nil)
+        let alertAction = UIAlertAction(title: NSLocalizedString("ALERT_HEADER", comment: ""), style: UIAlertAction.Style.default, handler: nil)
 
         alert.addAction(alertAction)
 
@@ -41,14 +41,14 @@ class LogInViewController: UIViewController {
         let label = NBLabel()
         label.applyProtocolUIAppearance()
         label.font = UIFont.systemFont(ofSize: 23, weight: .heavy)
-        label.text = "LOG_IN_TITLE_LABEL".localize(file: "LogIn")
+        label.text = NSLocalizedString("LOG_IN_TITLE_LABEL", comment: "")
         return label
     }()
     
     lazy var usernameTextField: UITextField = {
         let textField = NBTextField()
         textField.applyProtocolUIAppearance()
-        textField.placeholder = "USERNAME_PLACEHOLDER".localize(file: "LogIn")
+        textField.placeholder = NSLocalizedString("USERNAME_PLACEHOLDER", comment: "")
         textField.text = ""
         textField.textContentType = .username
         return textField
@@ -58,14 +58,14 @@ class LogInViewController: UIViewController {
        
         let textView = NBTextView(frame: .zero, textContainer: nil)
         textView.applyProtocolUIAppearance()
-        textView.text = "LOG_IN_EXPLANATION".localize(file: "LogIn")
+        textView.text = NSLocalizedString("LOG_IN_EXPLANATION", comment: "")
         return textView
     }()
     
     lazy var passwordTextField: UITextField = {
         let textField = NBTextField()
         textField.applyProtocolUIAppearance()
-        textField.placeholder = "PASSWORD_PLACEHOLDER".localize(file: "LogIn")
+        textField.placeholder = NSLocalizedString("PASSWORD_PLACEHOLDER", comment: "")
         textField.text = ""
         textField.textContentType = .password
         return textField
@@ -74,7 +74,7 @@ class LogInViewController: UIViewController {
     lazy var submitCredentialsButton: UIButton = {
         let button = NBButton()
         button.applyProtocolUIAppearance()
-        button.setTitle("SUBMIT_CREDENTIALS_BUTTON".localize(file: "LogIn"), for: .normal)
+        button.setTitle(NSLocalizedString("SUBMIT_CREDENTIALS_BUTTON", comment: ""), for: .normal)
         return button
     }()
     
@@ -82,7 +82,7 @@ class LogInViewController: UIViewController {
        
         let button = NBButton()
         button.setTitleColor(.systemBlue, for: .normal)
-        button.setTitle("FORGOT_PASSWORD_BUTTON".localize(file: "LogIn"), for: .normal)
+        button.setTitle(NSLocalizedString("FORGOT_PASSWORD_BUTTON", comment: ""), for: .normal)
         
         return button
     }()

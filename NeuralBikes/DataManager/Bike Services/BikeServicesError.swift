@@ -16,7 +16,7 @@ extension BikeServicesError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .bikeNotFound:
-            return "BIKE_NOT_FOUND".localize(file: "DataManager")
+            return NSLocalizedString("BIKE_NOT_FOUND", comment: "")
         }
     }
 }

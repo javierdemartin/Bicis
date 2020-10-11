@@ -12,7 +12,6 @@ import CoreLocation
 import Combine
 
 protocol LocationServiceable: class {
-//    var signalForDidUpdateLocations: Signal<CLLocation, Never> { get }
     var locationPublisher: PassthroughSubject<CLLocation, Never> { get set }
     var currentLocation: CLLocation? { get set }
     var locationAuthorizationStatus: PassthroughSubject<PermissionStatus, Never> { get set }

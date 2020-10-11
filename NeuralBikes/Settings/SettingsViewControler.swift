@@ -123,7 +123,7 @@ class SettingsViewController: UIViewController {
         let textView = NBTextView(frame: .zero, textContainer: nil)
         textView.applyProtocolUIAppearance()
         textView.accessibilityLabel = NSLocalizedString("HOW_TO_USE_ACCESIBILITY_LABEL", comment: "")
-        textView.text = "HOW_TO_USE".localize(file: "Settings")
+        textView.text = NSLocalizedString("HOW_TO_USE", comment: "")
 
         return textView
     }()
@@ -157,7 +157,7 @@ class SettingsViewController: UIViewController {
         let button = NBButton()
         button.applyProtocolUIAppearance()
         button.accessibilityLabel = NSLocalizedString("REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL", comment: "")
-        button.setTitle("FEEDBACK_BUTTON".localize(file: "Settings"), for: .normal)
+        button.setTitle(NSLocalizedString("FEEDBACK_BUTTON", comment: ""), for: .normal)
         button.sizeToFit()
         return button
     }()
@@ -177,7 +177,7 @@ class SettingsViewController: UIViewController {
         let button = NBButton()
         button.applyProtocolUIAppearance()
         button.accessibilityLabel = NSLocalizedString("LOG_OUT_BUTTON_ACCESIBILITY_LABEL", comment: "")
-        button.setTitle("LOG_OUT_BUTTON".localize(file: "Settings"), for: .normal)
+        button.setTitle(NSLocalizedString("LOG_OUT_BUTTON", comment: ""), for: .normal)
         button.accessibilityLabel = NSLocalizedString("LOG_OUT_ACCESIBILITY_LABEL", comment: "")
         button.sizeToFit()
         button.isHidden = true
@@ -188,7 +188,7 @@ class SettingsViewController: UIViewController {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
-        button.setTitle("RESTORE_PURCHASES_BUTTON".localize(file: "Settings"), for: .normal)
+        button.setTitle(NSLocalizedString("RESTORE_PURCHASES_BUTTON", comment: ""), for: .normal)
         button.accessibilityLabel = NSLocalizedString("RESTORE_PURCHASES_ACCESIBILITY_LABEL", comment: "")
 
         return button
@@ -297,7 +297,7 @@ class SettingsViewController: UIViewController {
 
     override var keyCommands: [UIKeyCommand]? {
         return [
-            UIKeyCommand(title: "CLOSE_SETTINGS_KEYBOARD".localize(file: "Settings"), action: #selector(dismiss(animated:completion:)), input: UIKeyCommand.inputDownArrow, modifierFlags: .command, alternates: [], discoverabilityTitle: "CLOSE_SETTINGS_KEYBOARD".localize(file: "Settings"), attributes: .destructive, state: .on)
+            UIKeyCommand(title: NSLocalizedString("CLOSE_SETTINGS_KEYBOARD", comment: ""), action: #selector(dismiss(animated:completion:)), input: UIKeyCommand.inputDownArrow, modifierFlags: .command, alternates: [], discoverabilityTitle: NSLocalizedString("CLOSE_SETTINGS_KEYBOARD", comment: ""), attributes: .destructive, state: .on)
         ]
     }
 

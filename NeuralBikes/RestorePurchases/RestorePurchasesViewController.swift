@@ -33,7 +33,7 @@ extension RestorePurchasesViewController: RestorePurchasesViewModelDelegate {
         unlockFeaturesLabel.tintColor = .systemGray
 
         DispatchQueue.main.async {
-            self.purchaseStatusLabel.text = "HAS_PURCHASED".localize(file: "RestorePurchases")
+            self.purchaseStatusLabel.text = NSLocalizedString("HAS_PURCHASED", comment: "")
         }
 
         FeedbackGenerator.sharedInstance.generator.impactOccurred()
@@ -46,7 +46,7 @@ extension RestorePurchasesViewController: RestorePurchasesViewModelDelegate {
 
     func updatePriceForIap(price: NSDecimalNumber) {
         DispatchQueue.main.async {
-            self.unlockFeaturesLabel.titleLabel?.text = "UNLOCK_FEATURE_POST_LOAD".localize(file: "RestorePurchases").replacingOccurrences(of: "%price", with: "\(price)")
+            self.unlockFeaturesLabel.titleLabel?.text = NSLocalizedString("UNLOCK_FEATURE_POST_LOAD", comment: "").replacingOccurrences(of: "%price", with: "\(price)")
             self.unlockFeaturesLabel.sizeToFit()
         }
     }
@@ -73,7 +73,7 @@ class RestorePurchasesViewController: UIViewController {
 
         let textView = NBTextView(frame: .zero, textContainer: nil)
         textView.applyProtocolUIAppearance()
-        textView.text = "GIVE_ME_YOUR_MONEY".localize(file: "RestorePurchases")
+        textView.text = NSLocalizedString("GIVE_ME_YOUR_MONEY", comment: "")
 
         return textView
     }()
@@ -109,7 +109,7 @@ class RestorePurchasesViewController: UIViewController {
 
         let label = NBLabel()
         label.applyProtocolUIAppearance()
-        label.text = "RESTORE_PURCHASES_TITLE".localize(file: "RestorePurchases")
+        label.text = NSLocalizedString("RESTORE_PURCHASES_TITLE", comment: "")
         label.textAlignment = .left
         label.font = UIFont.preferredFont(for: .title1, weight: .heavy)
 
@@ -120,7 +120,7 @@ class RestorePurchasesViewController: UIViewController {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
-        button.setTitle("UNLOCK_FEATURE_PRE_LOAD".localize(file: "RestorePurchases"), for: .normal)
+        button.setTitle(NSLocalizedString("UNLOCK_FEATURE_PRE_LOAD", comment: ""), for: .normal)
         return button
     }()
 
@@ -128,7 +128,7 @@ class RestorePurchasesViewController: UIViewController {
 
         let button = NBButton()
         button.applyProtocolUIAppearance()
-        button.setTitle("RESTORE_PURCHASES".localize(file: "RestorePurchases"), for: .normal)
+        button.setTitle(NSLocalizedString("RESTORE_PURCHASES", comment: ""), for: .normal)
         return button
     }()
 
@@ -137,7 +137,7 @@ class RestorePurchasesViewController: UIViewController {
         let label = NBLabel()
         label.applyProtocolUIAppearance()
         label.font = UIFont.preferredFont(for: .body, weight: .bold)
-        label.text = "HAS_NOT_PURCHASED".localize(file: "RestorePurchases")
+        label.text = NSLocalizedString("HAS_NOT_PURCHASED", comment: "")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
 

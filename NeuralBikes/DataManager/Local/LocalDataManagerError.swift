@@ -17,22 +17,22 @@ enum LocalDataManagerError: Error {
     case errorSavingToDefaults
     case hasntPaid
 }
-
-extension LocalDataManagerError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .noLogInSaved:
-            return "NO_LOGIN_SAVED".localize(file: "DataManager")
-        case .noCitySaved:
-            return "NO_LOGIN_SAVED".localize(file: "DataManager")
-        case .errorDecodingDefaults:
-            return "ERROR_DECODING_DEFAULTS".localize(file: "DataManager")
-        case .errorReadingFromDefaults:
-            return "ERROR_READING_DEFAULTS".localize(file: "DataManager")
-        case .errorSavingToDefaults:
-            return "ERROR_SAVING_TO_DEFAULTS".localize(file: "DataManager")
-        case .hasntPaid:
-            return "HASNT_PAID".localize(file: "DataManager")
-        }
-    }
-}
+//
+//extension LocalDataManagerError: LocalizedError {
+//    public var errorDescription: String? {
+//        switch self {
+//        case .noLogInSaved:
+//            return "NO_LOGIN_SAVED".localize(file: "DataManager")
+//        case .noCitySaved:
+//            return "NO_LOGIN_SAVED".localize(file: "DataManager")
+//        case .errorDecodingDefaults:
+//            return "ERROR_DECODING_DEFAULTS".localize(file: "DataManager")
+//        case .errorReadingFromDefaults:
+//            return "ERROR_READING_DEFAULTS".localize(file: "DataManager")
+//        case .errorSavingToDefaults:
+//            return "ERROR_SAVING_TO_DEFAULTS".localize(file: "DataManager")
+//        case .hasntPaid:
+//            return "HASNT_PAID".localize(file: "DataManager")
+//        }
+//    }
+//}
