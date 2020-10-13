@@ -106,6 +106,11 @@ class SettingsViewModel: ObservableObject {
 
         coordinatorDelegate?.changedCitySelectionInPickerView(city: selectedCity)
     }
+    
+    func changedCityTo(citio: City) {
+        coordinatorDelegate?.changedCitySelectionInPickerView(city: citio)
+    }
+    
 
     func setUpBindings() {
 

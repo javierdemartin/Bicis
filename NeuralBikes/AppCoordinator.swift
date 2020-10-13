@@ -88,17 +88,21 @@ class AppCoordinator: Coordinator {
         window.makeKeyAndVisible()
     }
 
-    var settingsViewController: SettingsViewController?
+    var settingsViewController: UIHostingController<SettingsViewControllerSwiftUI>? // SettingsViewController?
     var logInViewController: LogInViewController?
 
     fileprivate func presentModallySettingsViewController() {
 
         let settingsViewModel = SettingsViewModel(currentCity: currentCity ?? nil, locationService: locationService, dataManager: dataManager)
 
-        settingsViewController = SettingsViewController(viewModel: settingsViewModel)
+        
 
         settingsViewModel.coordinatorDelegate = self
-        settingsViewModel.delegate = settingsViewController
+//        settingsViewModel.delegate = settingsViewController
+        
+        
+        settingsViewController = UIHostingController(rootView: SettingsViewControllerSwiftUI(viewModel: settingsViewModel)) //<SettingsViewControllerSwiftUI>() //SettingsViewController(viewModel: settingsViewModel)
+        
         settingsViewController?.modalPresentationStyle = .formSheet
 
         self.window.rootViewController?.present(settingsViewController!, animated: true, completion: nil)
@@ -242,7 +246,7 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
     func presenTutorialViewController() {
         
         
-        let tutorialViewModel = TutorialViewModel(dataManager: dataManager)
+        let tutorialViewModel = TutorialViewModel()
         tutorialViewModel.coordinatorDelegate = self
         
         let swiftUIView = TutorialViewController(viewModel: tutorialViewModel)

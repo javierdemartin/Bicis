@@ -85,6 +85,8 @@ class DefaultLocalDataManager: LocalDataManager {
     /// Reads the UserDefault bool value
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
 
+        completion(.success(true))
+        
         // Automatically unlock the purchases if doing UI Tests, mainly to
         // facilitate fastlane's snapshot
         if UITestingHelper.sharedInstance.isUITesting() {

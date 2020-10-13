@@ -290,6 +290,8 @@ class HomeViewController: UIViewController {
         
         graphView.clipsToBounds = true
         graphView.layer.cornerRadius = Constants.cornerRadius
+        
+        viewModel.setUpLocation()
 
         self.hideStackView()
 //        viewModel.getCurrentCity(completion: { [weak self] cityResult in

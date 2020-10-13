@@ -22,6 +22,12 @@ struct NBActions {
         
         phr_open(url: url)
     }
+    
+    static func sendToPrivacyPolicy() {
+        guard let url = URL(string: "https://neuralbike.app/privacy") else { return }
+        
+        phr_open(url: url)
+    }
 }
 
 

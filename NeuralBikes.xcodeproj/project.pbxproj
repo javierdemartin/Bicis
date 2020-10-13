@@ -51,6 +51,7 @@
 		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
 		8055B898246FF65100BCC141 /* RecoverPinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8055B897246FF65100BCC141 /* RecoverPinResponse.swift */; };
 		805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B5A2223EE050C000F3CC5 /* Bundle.swift */; };
+		805BC8E42533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805BC8E32533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift */; };
 		80628461236E34C500717472 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628460236E34C500717472 /* Coordinator.swift */; };
 		80628463236ED79300717472 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628462236ED79300717472 /* Result.swift */; };
 		80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628464236ED87900717472 /* DefaultRemoteDataManager.swift */; };
@@ -86,8 +87,6 @@
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
 		80AB8B7024B23A2F004F3905 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */; };
 		80AB8B7224B23A36004F3905 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */; };
-		80AB8B7624B24627004F3905 /* Tutorial.json in Resources */ = {isa = PBXBuildFile; fileRef = 80AB8B7524B24627004F3905 /* Tutorial.json */; };
-		80AB8B7824B24669004F3905 /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B7724B24669004F3905 /* Tutorial.swift */; };
 		80ABE1F0243E148E004920D8 /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ABE1EF243E148E004920D8 /* UIAlertController.swift */; };
 		80B1D016241A95F20072D1D9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D015241A95F20072D1D9 /* UIView.swift */; };
 		80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */; };
@@ -98,10 +97,7 @@
 		80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FE1246E899B00AA7008 /* NBTextView.swift */; };
 		80B8727724BA2C0900098D6B /* BlurAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8727624BA2C0800098D6B /* BlurAlertView.swift */; };
 		80B8727A24BA55F700098D6B /* SantanderBikesLondon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */; };
-		80BB4A3F252D0DC900FF93E8 /* Settings.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80BB4A39252D0DC900FF93E8 /* Settings.strings */; };
-		80BB4A40252D0DC900FF93E8 /* SettingsErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A3C252D0DC900FF93E8 /* SettingsErrors.swift */; };
 		80BB4A41252D0DC900FF93E8 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A3D252D0DC900FF93E8 /* SettingsViewModel.swift */; };
-		80BB4A42252D0DC900FF93E8 /* SettingsViewControler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A3E252D0DC900FF93E8 /* SettingsViewControler.swift */; };
 		80BB4A4A252D0FCF00FF93E8 /* NBActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A49252D0FCF00FF93E8 /* NBActions.swift */; };
 		80CC83E024AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CC83DF24AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift */; };
 		80CC83E224AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CC83E124AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift */; };
@@ -177,6 +173,7 @@
 		803FD8A023C71FAF008DDE91 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		8055B897246FF65100BCC141 /* RecoverPinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPinResponse.swift; sourceTree = "<group>"; };
 		805B5A2223EE050C000F3CC5 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		805BC8E32533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerSwiftUI.swift; sourceTree = "<group>"; };
 		80628460236E34C500717472 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		80628462236ED79300717472 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		80628464236ED87900717472 /* DefaultRemoteDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRemoteDataManager.swift; sourceTree = "<group>"; };
@@ -216,8 +213,6 @@
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
 		80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
-		80AB8B7524B24627004F3905 /* Tutorial.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Tutorial.json; sourceTree = "<group>"; };
-		80AB8B7724B24669004F3905 /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
 		80ABE1EF243E148E004920D8 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		80B1D015241A95F20072D1D9 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerError.swift; sourceTree = "<group>"; };
@@ -227,11 +222,7 @@
 		80B55FE1246E899B00AA7008 /* NBTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBTextView.swift; sourceTree = "<group>"; };
 		80B8727624BA2C0800098D6B /* BlurAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurAlertView.swift; sourceTree = "<group>"; };
 		80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SantanderBikesLondon.swift; sourceTree = "<group>"; };
-		80BB4A3A252D0DC900FF93E8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
-		80BB4A3B252D0DC900FF93E8 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Settings.strings; sourceTree = "<group>"; };
-		80BB4A3C252D0DC900FF93E8 /* SettingsErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsErrors.swift; sourceTree = "<group>"; };
 		80BB4A3D252D0DC900FF93E8 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		80BB4A3E252D0DC900FF93E8 /* SettingsViewControler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewControler.swift; sourceTree = "<group>"; };
 		80BB4A49252D0FCF00FF93E8 /* NBActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBActions.swift; sourceTree = "<group>"; };
 		80CC83DF24AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+MKMapViewDelegate.swift"; sourceTree = "<group>"; };
 		80CC83E124AF4E7F0001E407 /* HomeViewController+HomeViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+HomeViewModelDelegate.swift"; sourceTree = "<group>"; };
@@ -564,8 +555,6 @@
 			children = (
 				80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */,
 				80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */,
-				80AB8B7524B24627004F3905 /* Tutorial.json */,
-				80AB8B7724B24669004F3905 /* Tutorial.swift */,
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
@@ -598,10 +587,8 @@
 		80BB4A38252D0DC900FF93E8 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				80BB4A39252D0DC900FF93E8 /* Settings.strings */,
-				80BB4A3C252D0DC900FF93E8 /* SettingsErrors.swift */,
 				80BB4A3D252D0DC900FF93E8 /* SettingsViewModel.swift */,
-				80BB4A3E252D0DC900FF93E8 /* SettingsViewControler.swift */,
+				805BC8E32533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -748,10 +735,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8085CC69236E2CB800B45A7C /* LaunchScreen.storyboard in Resources */,
-				80AB8B7624B24627004F3905 /* Tutorial.json in Resources */,
 				8085CC66236E2CB800B45A7C /* Assets.xcassets in Resources */,
 				808CEAC62477A28F006B17F2 /* Localizable.strings in Resources */,
-				80BB4A3F252D0DC900FF93E8 /* Settings.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -826,13 +811,13 @@
 				80AB8B7024B23A2F004F3905 /* TutorialViewController.swift in Sources */,
 				8074D35124573CFA006B3062 /* NBTextField.swift in Sources */,
 				80CC83E024AF4CFC0001E407 /* HomeViewController+MKMapViewDelegate.swift in Sources */,
-				80AB8B7824B24669004F3905 /* Tutorial.swift in Sources */,
 				80FFDE362468614000436BA6 /* UIApplication.swift in Sources */,
 				801ECE46236F3C10003CFAF7 /* String.swift in Sources */,
 				80109135236E2DEC00D3C45E /* LocalDataManager.swift in Sources */,
 				807C88B323EB17EC003BA644 /* NextBike.swift in Sources */,
 				80299FDB243B80BC0094EDB2 /* IAPHelper.swift in Sources */,
 				8074D35624573F8D006B3062 /* NextBikeBikeServicesDataManager.swift in Sources */,
+				805BC8E42533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift in Sources */,
 				80B55FDC246D998F00AA7008 /* ScannerViewController.swift in Sources */,
 				807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */,
 				80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */,
@@ -847,7 +832,6 @@
 				80B55FE0246DB76D00AA7008 /* BikeServicesError.swift in Sources */,
 				80BB4A4A252D0FCF00FF93E8 /* NBActions.swift in Sources */,
 				800CE94423955A7F00674D1C /* LocalDataManagerError.swift in Sources */,
-				80BB4A42252D0DC900FF93E8 /* SettingsViewControler.swift in Sources */,
 				80ABE1F0243E148E004920D8 /* UIAlertController.swift in Sources */,
 				80109139236E2F9700D3C45E /* RemoteDataManager.swift in Sources */,
 				80B1D016241A95F20072D1D9 /* UIView.swift in Sources */,
@@ -864,7 +848,6 @@
 				80109141236E316E00D3C45E /* HomeViewController.swift in Sources */,
 				80299FE1243B94C40094EDB2 /* ConfettiKit.swift in Sources */,
 				80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */,
-				80BB4A40252D0DC900FF93E8 /* SettingsErrors.swift in Sources */,
 				803B6B02246AF3E60022A586 /* LogInViewController.swift in Sources */,
 				8074D333245736C4006B3062 /* Key.swift in Sources */,
 				800DDD4C23ED510700FCE4E5 /* BiciMad.swift in Sources */,
@@ -934,15 +917,6 @@
 				808CEAC92477A290006B17F2 /* es */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		80BB4A39252D0DC900FF93E8 /* Settings.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				80BB4A3A252D0DC900FF93E8 /* en */,
-				80BB4A3B252D0DC900FF93E8 /* es */,
-			);
-			name = Settings.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1161,7 +1135,7 @@
 				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikes/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1184,7 +1158,7 @@
 				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikes/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

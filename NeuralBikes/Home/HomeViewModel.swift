@@ -76,8 +76,6 @@ class HomeViewModel: ObservableObject {
         
         self.locationService = locationService
         
-        setUpLocation()
-        
         setUpBindings()
 
         if let currentCity = self.currentCity {
@@ -223,6 +221,11 @@ class HomeViewModel: ObservableObject {
         case .granted:
             locationService.startMonitoring()
         case .denied:
+            // If the user denies it
+            if currentCity == nil {
+                coordinatorDelegate?.showSettingsViewController()
+            }
+            
             break
         case .notDetermined:
             locationService.requestPermissions()

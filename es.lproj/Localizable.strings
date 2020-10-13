@@ -6,6 +6,16 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
+// MARK: - Tutorial
+
+"ML_PREDICTIONS_TITLE" = "Predicciones de disponibilidad con ML";
+"ML_PREDICTIONS_BODY" = "Comprueba en el gráfico la demanda actual. Compárala frente a la predicción para conocer más detalles";
+"INFORMATION_TITLE" = "Información actualizada";
+"INFORMATION_BODY" = "Nunca llegues a una estación vacía. Obtén información actualizada en directo";
+"PRIVACY_TITLE" = "Solo tu";
+"PRIVACY_BODY" = "Tu información nunca abandona el dispositivo, no hay terceros que reciban tus datos";
+"FINISH_ONBOARDING" = "¡Al lío!";
+"PRIVACY_POLICY" = "Política de Privacidad";
 
 // MARK: Accesibility
 
@@ -18,15 +28,20 @@
 
 // MARK: - Settings
 
-"DATA_INSIGHTS_ACCESIBILITY_LABEL" = "Más datos para esta estación";
-"REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL" = "Enviar comentarios";
-"VERSION_ACCESIBILITY_LABEL" = "Versión %number";
-"HOW_TO_USE_ACCESIBILITY_LABEL" = "Descripción de la aplicación";
-"RESTORE_PURCHASES_ACCESIBILITY_LABEL" = "Restaurar compras";
-"LOG_OUT_ACCESIBILITY_LABEL" = "Cerrar sesión";
-"GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Permisos de ubicación concedidos";
-"NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Permisos de ubicación no concedidos";
-"REPLAY_TUTORIAL_BUTTON" = "Repetir tutorial";
+"FEEDBACK_BUTTON" = "Enviar comentarios";
+"HOW_TO_USE" = "Receive detailed availability predictions for each city and compare them against the real availability.";
+"RESTORE_PURCHASES_BUTTON" = "Restore Purchases";
+"LOG_OUT_BUTTON" = "Log Out";
+"DATA_INSIGHTS_ACCESIBILITY_LABEL" = "Get more data for this station";
+"REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL" = "Send feedback";
+"LOG_OUT_BUTTON_ACCESIBILITY_LABEL" = "Log out";
+"VERSION_ACCESIBILITY_LABEL" = "Version %number";
+"HOW_TO_USE_ACCESIBILITY_LABEL" = "App description";
+"RESTORE_PURCHASES_ACCESIBILITY_LABEL" = "Restore purchases";
+"LOG_OUT_ACCESIBILITY_LABEL" = "Log out";
+"GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Granted location services";
+"NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Not granted location services";
+"REPLAY_TUTORIAL_BUTTON" = "Replay tutorial";
 
 // MARK: - Insights
 
@@ -42,19 +57,6 @@
 "REFILL" = "Recarga";
 "NOT_FOUND" = "Nada";
 "OPERATIONS_DESCRIPTION" = "Predicción de posibles operaciones de recarga y descarga hechas por los operarios.";
-
-// MARK: - Tutorial
-
-"ML_PREDICTIONS_TITLE" = "Predicciones de disponibilidad con ML";
-"ML_PREDICTIONS_BODY" = "Comprueba en el gráfico la demanda actual. Compárala frente a la predicción para conocer más detalles";
-
-"INFORMATION_TITLE" = "Información actualizada";
-"INFORMATION_BODY" = "Nunca llegues a una estación vacía. Obtén información actualizada en directo";
-
-"PRIVACY_TITLE" = "Sin trackers";
-"PRIVACY_BODY" = "Tu información nunca abandona el dispositivo, no hay terceros que reciban tus datos";
-
-"FINISH_ONBOARDING" = "Llévame a la app";
 
 // MARK: - Blur Alert View
 

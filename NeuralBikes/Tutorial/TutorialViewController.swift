@@ -18,105 +18,97 @@ struct TutorialViewController: View {
         self.viewModel = viewModel
     }
     
-    let mlTitle: LocalizedStringKey = "ML_PREDICTIONS_TITLE"
-    let mlBody: LocalizedStringKey = "ML_PREDICTIONS_BODY"
-    
-    let informationTitle: LocalizedStringKey = "INFORMATION_TITLE"
-    let informationBody: LocalizedStringKey = "INFORMATION_BODY"
-    
-    let privacyTitle: LocalizedStringKey = "PRIVACY_TITLE"
-    let privacyBody: LocalizedStringKey = "PRIVACY_BODY"
-    
-    let finishOnboardButton: LocalizedStringKey = "FINISH_ONBOARDING"
-
-
-    
     @ViewBuilder
     var body: some View {
         
-            VStack(alignment: .center) {
+        VStack(alignment: .center) {
+            
+            Spacer(minLength: 50)
+            
+            Text("Neural Bikes")
+                .font(.system(.largeTitle, design: .default))
+                .fontWeight(.heavy)
+            
+            VStack(alignment: .leading) {
                 
-                Spacer(minLength: 50)
+                HStack {
+                    Image(systemName: "0.circle.fill")
+                        .foregroundColor(.orange)
+                        .font(.system(size: 30, weight: .regular))
+                        .padding()
+                    VStack(alignment: .leading) {
+                        Text("ML_PREDICTIONS_TITLE")
+                            .font(.system(.body, design: .rounded))
+                            .bold()
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text("ML_PREDICTIONS_BODY")
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .padding()
                 
-                    Text("Neural Bikes")
-                        .font(.system(.largeTitle, design: .default))
-                        .fontWeight(.heavy)
+                HStack {
+                    Image(systemName: "location.fill")
+                        .foregroundColor(.blue)
+                        .font(.system(size: 30, weight: .regular))
+                        .padding()
                     
                     VStack(alignment: .leading) {
-                        
-                        HStack {
-                            Image(systemName: "0.circle.fill")
-                                .foregroundColor(.orange)
-                                .font(.system(size: 30, weight: .regular))
-                                .padding()
-                            VStack(alignment: .leading) {
-                                Text(mlTitle)
-                                    .font(.system(.body, design: .rounded))
-                                    .bold()
-                                    .fixedSize(horizontal: false, vertical: true)
-                                Text(mlBody)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
-                        }
-                        .padding()
-                        
-                        HStack {
-                            Image(systemName: "location.fill")
-                                .foregroundColor(.blue)
-                                .font(.system(size: 30, weight: .regular))
-                                .padding()
-                            
-                            VStack(alignment: .leading) {
-                                Text(informationTitle)
-                                    .font(.system(.body, design: .rounded))
-                                    .bold()
-                                    .fixedSize(horizontal: false, vertical: true)
-                                Text(informationBody)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
-                            
-                        }
-                        .padding()
-                        
-                        HStack {
-                            Image(systemName: "person.2.fill")
-                                .foregroundColor(.red)
-                                .font(.system(size: 30, weight: .regular))
-                                .padding()
-                            
-                            VStack(alignment: .leading) {
-                                Text(privacyTitle)
-                                    .font(.system(.body, design: .rounded))
-                                    .bold()
-                                    .fixedSize(horizontal: false, vertical: true)
-                                Text(privacyBody)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
-                        }
-                        .padding()
-                        
+                        Text("INFORMATION_TITLE")
+                            .font(.system(.body, design: .rounded))
+                            .bold()
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text("INFORMATION_BODY")
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     
-                    Spacer()
-                    
-                    Button(action: {
-                        viewModel.didTapFinishTutorial()
-                    }) {
-                        Text(finishOnboardButton)
-                            .fontWeight(.heavy)
-                            .padding()
-                    }.buttonStyle(DefaultButtonStyle())
+                }
+                .padding()
                 
+                HStack {
+                    Image(systemName: "person.2.fill")
+                        .foregroundColor(.red)
+                        .font(.system(size: 30, weight: .regular))
+                        .padding()
+                    
+                    VStack(alignment: .leading) {
+                        Text("PRIVACY_TITLE")
+                            .font(.system(.body, design: .rounded))
+                            .bold()
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text("PRIVACY_BODY")
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .padding()
                 
             }
-//            .edgesIgnoringSafeArea(.all)
-            .frame(minWidth: 0, maxWidth: 500, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
-
+            
+            
+            Spacer()
+            
+            
+            
+            Button(action: {
+                viewModel.didTapFinishTutorial()
+            }) {
+                Text("FINISH_ONBOARDING")
+                    .fontWeight(.heavy)
+                    .padding()
+            }
+            .foregroundColor(.white)
+            .background(Color.accentColor)
+            .cornerRadius(8)
+            
+            Button(action: {
+                NBActions.sendToPrivacyPolicy()
+            }) {
+                Text("PRIVACY_POLICY")
+                    .fontWeight(.heavy)
+                    .padding()
+            }
+        }
+        .frame(minWidth: 0, maxWidth: 500, alignment: .topLeading)
+        
     }
 }
-
-//struct TutorialViewController_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TutorialViewController()
-//    }
-//}

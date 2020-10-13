@@ -6,6 +6,16 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
+// MARK: - Tutorial
+
+"ML_PREDICTIONS_TITLE" = "Machine Learning predictions";
+"ML_PREDICTIONS_BODY" = "Check on a graph current bike demand. Compare it against the prediction on the graph.";
+"INFORMATION_TITLE" = "Local Information";
+"INFORMATION_BODY" = "Never arrive to an empty station again. Get information on how the system is gonna behave.";
+"PRIVACY_TITLE" = "Only you";
+"PRIVACY_BODY" = "Your information stays on device, no third parties involved.";
+"FINISH_ONBOARDING" = "Let's go!";
+"PRIVACY_POLICY" = "Privacy Policy";
 
 // MARK: Bike services
 
@@ -135,21 +145,6 @@
 
 "INSIGHTS_LABEL" = "Insights";
 
-
-
-
-// MARK: - Tutorial
-
-"ML_PREDICTIONS_TITLE" = "ML Bike sharing predictions";
-"ML_PREDICTIONS_BODY" = "Check on a graph current bike demand. Compare it against the prediction on the graph.";
-
-"INFORMATION_TITLE" = "Local Information";
-"INFORMATION_BODY" = "Never arrive to an empty station again. Get information on how the system is gonna behave.";
-
-"PRIVACY_TITLE" = "No trackers";
-"PRIVACY_BODY" = "Your information stays on device, no third parties involved.";
-
-"FINISH_ONBOARDING" = "Take me to the app";
 
 // MARK: - Blur Alert View
 
