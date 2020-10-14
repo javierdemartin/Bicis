@@ -653,44 +653,34 @@ extension HomeViewController: MKMapViewDelegate {
             case .freeBikes:
                 markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeBikes)"
                 
-                self.viewModel.hasUnlockedFeatures(completion: { hasPaid in
-
-                    if hasPaid {
-                        // Stablish the color coding of the availability
-                        // TODO: NoSpotIndex
-                        switch stationsDictFromViewModel.freeBikes {
-                        case 10...:
-                            markerAnnotationView.markerTintColor = UIColor.systemGreen
-                        case 5...10:
-                            markerAnnotationView.markerTintColor = UIColor.systemOrange
-                        case ..<5:
-                            markerAnnotationView.markerTintColor = UIColor.systemRed
-                        default:
-                            break
-                        }
-                    }
-                })
+                // Stablish the color coding of the availability
+                // TODO: NoSpotIndex
+                switch stationsDictFromViewModel.freeBikes {
+                case 10...:
+                    markerAnnotationView.markerTintColor = UIColor.systemGreen
+                case 5...10:
+                    markerAnnotationView.markerTintColor = UIColor.systemOrange
+                case ..<5:
+                    markerAnnotationView.markerTintColor = UIColor.systemRed
+                default:
+                    break
+                }
                 
             case .freeDocks:
                 markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeRacks)"
                 
-                self.viewModel.hasUnlockedFeatures(completion: { hasPaid in
-
-                    if hasPaid {
-                        // Stablish the color coding of the availability
-                        // TODO: NoSpotIndex
-                        switch stationsDictFromViewModel.freeRacks {
-                        case 10...:
-                            markerAnnotationView.markerTintColor = UIColor.systemRed
-                        case 5...10:
-                            markerAnnotationView.markerTintColor = UIColor.systemOrange
-                        case ..<5:
-                            markerAnnotationView.markerTintColor = UIColor.systemGreen
-                        default:
-                            break
-                        }
-                    }
-                })
+                // Stablish the color coding of the availability
+                // TODO: NoSpotIndex
+                switch stationsDictFromViewModel.freeRacks {
+                case 10...:
+                    markerAnnotationView.markerTintColor = UIColor.systemRed
+                case 5...10:
+                    markerAnnotationView.markerTintColor = UIColor.systemOrange
+                case ..<5:
+                    markerAnnotationView.markerTintColor = UIColor.systemGreen
+                default:
+                    break
+                }
             }
 
             return markerAnnotationView

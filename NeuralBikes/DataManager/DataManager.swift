@@ -152,16 +152,7 @@ extension DataManager: HomeViewModelDataManager {
     func addStationStatistics(for id: String, city: String) {
         localDataManager.addStationStatistics(for: id, city: city)
     }
-
-    func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
-        
-        completion(.success(true))
-        
-        localDataManager.hasUnlockedFeatures(completion: { hasUnlockedResult in
-            completion(hasUnlockedResult)
-        })
-    }
-
+    
     func getCurrentCity(completion: @escaping (Result<City>) -> Void) {
         localDataManager.getCurrentCity(completion: { getCurrentCityResult in
             switch getCurrentCityResult {

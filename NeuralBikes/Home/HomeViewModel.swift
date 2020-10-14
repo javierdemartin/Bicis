@@ -14,7 +14,6 @@ import Combine
 protocol HomeViewModelCoordinatorDelegate: class {
     func showSettingsViewController()
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation])
-    func presentRestorePurchasesViewControllerFromCoordinatorDelegate()
     func presentLogInViewController()
     func presentScannerViewController()
 }
@@ -23,7 +22,6 @@ protocol HomeViewModelDataManager {
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
     func checkUserCredentials(completion: @escaping (Result<UserCredentials>) -> Void)
     func getStations(city: String, completion: @escaping (Result<[BikeStation]>) -> Void)
-    func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void)
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping (Result<MyAPIResponse>) -> Void)
     func addStationStatistics(for id: String, city: String)
@@ -124,48 +122,11 @@ class HomeViewModel: ObservableObject {
         })
     }
 
-    func hasUnlockedFeatures(completion: @escaping(Bool) -> Void) {
-        
-        completion(true)
-        
-        if UITestingHelper.sharedInstance.isUITesting() {
-            completion(true)
-        }
-
-        dataManager.hasUnlockedFeatures(completion: { result in
-
-            switch result {
-
-            case .success(let hasUnlocked):
-                completion(hasUnlocked)
-            case .error:
-                completion(false)
-            }
-
-        })
-    }
-
     func selectedRoute(station: BikeStation) {
 
-        dataManager.hasUnlockedFeatures(completion: { [weak self] hasUnlockedResult in
+        let closestAnnotations = Array(self.sortStationsNearTo(self.stations, location: station.location).dropFirst().prefix(3))
 
-            guard let self = self else { fatalError() }
-
-            switch hasUnlockedResult {
-
-            case .success(let hasUnlocked):
-                if hasUnlocked {
-
-                    let closestAnnotations = Array(self.sortStationsNearTo(self.stations, location: station.location).dropFirst().prefix(3))
-
-                    self.coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station, closestAnnotations: closestAnnotations)
-                } else if !hasUnlocked {
-                    self.coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
-                }
-            case .error:
-                self.coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
-            }
-        })
+        self.coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station, closestAnnotations: closestAnnotations)
     }
 
     func getCurrentCity(completion: @escaping(Result<City>) -> Void) {
@@ -242,69 +203,54 @@ class HomeViewModel: ObservableObject {
 
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<[String: [Int]]>) -> Void) {
         
-        dataManager.hasUnlockedFeatures(completion: { hasPaid in
-          
-            switch hasPaid {
-            case .success(_):
-                self.dataManager.getAllDataFromApi(city: city, station: station, completion: { result in
+        self.dataManager.getAllDataFromApi(city: city, station: station, completion: { result in
 
-                    switch result {
+            switch result {
 
-                    case .success(let datos):
+            case .success(let datos):
 
-                        let sortedNowKeysAndValues = Array(datos.values.today).sorted(by: { $0.0 < $1.0 })
-                        let sortedPredictionKeysAndValues = Array(datos.values.prediction).sorted(by: { $0.0 < $1.0 })
+                let sortedNowKeysAndValues = Array(datos.values.today).sorted(by: { $0.0 < $1.0 })
+                let sortedPredictionKeysAndValues = Array(datos.values.prediction).sorted(by: { $0.0 < $1.0 })
 
-                        var sortedNow: [Int] = []
-                        var sortedPrediction: [Int] = []
+                var sortedNow: [Int] = []
+                var sortedPrediction: [Int] = []
 
-                        sortedNowKeysAndValues.forEach({ sortedNow.append($0.value )})
-                        sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})
+                sortedNowKeysAndValues.forEach({ sortedNow.append($0.value )})
+                sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})
 
-                        // Get the remainder values for the prediction
+                // Get the remainder values for the prediction
 
-                        let payload = ["prediction": sortedPrediction, "today": sortedNow]
-                        
-                        self.latestSelectedBikeStation?.availabilityArray = sortedNow
-                        self.latestSelectedBikeStation?.predictionArray = sortedPrediction
+                let payload = ["prediction": sortedPrediction, "today": sortedNow]
+                
+                self.latestSelectedBikeStation?.availabilityArray = sortedNow
+                self.latestSelectedBikeStation?.predictionArray = sortedPrediction
 
-                        self.delegate?.drawPrediction(data: sortedPrediction, prediction: true)
-                        self.delegate?.drawPrediction(data: sortedNow, prediction: false)
+                self.delegate?.drawPrediction(data: sortedPrediction, prediction: true)
+                self.delegate?.drawPrediction(data: sortedNow, prediction: false)
 
-                        completion(.success(payload))
+                completion(.success(payload))
 
-                    case .error:
-                        break
-                    }
-                })
             case .error:
                 break
             }
-            
         })
     }
     
     // MARK: RENT PROCESS
     func startRentProcess() {
         
-        hasUnlockedFeatures(completion: { hasPaid in
-            
-            if hasPaid {
-                self.dataManager.isUserLoggedIn(completion: { result in
-                            switch result {
-                            case .success(let logInResponse):
-                                print(logInResponse)
-                                DispatchQueue.main.async {
-                                    self.coordinatorDelegate?.presentScannerViewController()
-                                }
-                            case .error:
-                                self.coordinatorDelegate?.presentLogInViewController()
-                            }
-                        })
-            } else {
-                self.coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
+        self.dataManager.isUserLoggedIn(completion: { result in
+            switch result {
+            case .success(let logInResponse):
+                print(logInResponse)
+                DispatchQueue.main.async {
+                    self.coordinatorDelegate?.presentScannerViewController()
+                }
+            case .error:
+                self.coordinatorDelegate?.presentLogInViewController()
             }
         })
+            
     }
     
     func finishRentProcess(bike number: Int?) {

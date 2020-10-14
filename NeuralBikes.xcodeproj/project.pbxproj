@@ -41,8 +41,6 @@
 		8029AEA324780F240072117B /* InsightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029AEA224780F240072117B /* InsightsViewController.swift */; };
 		803395F1249D5D78003E3ADC /* GBFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803395F0249D5D78003E3ADC /* GBFS.swift */; };
 		8036399D24829FA900FA096F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036399C24829FA900FA096F /* UIFont.swift */; };
-		80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */; };
-		80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */; };
 		803B6AF72469C3180022A586 /* LogInFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6AF62469C3180022A586 /* LogInFormData.swift */; };
 		803B6B00246AF3DD0022A586 /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6AFF246AF3DD0022A586 /* LogInViewModel.swift */; };
 		803B6B02246AF3E60022A586 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6B01246AF3E60022A586 /* LogInViewController.swift */; };
@@ -158,8 +156,6 @@
 		8029AEA224780F240072117B /* InsightsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewController.swift; sourceTree = "<group>"; };
 		803395F0249D5D78003E3ADC /* GBFS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFS.swift; sourceTree = "<group>"; };
 		8036399C24829FA900FA096F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
-		80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewController.swift; sourceTree = "<group>"; };
-		80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesViewModel.swift; sourceTree = "<group>"; };
 		803B6AF62469C3180022A586 /* LogInFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInFormData.swift; sourceTree = "<group>"; };
 		803B6AFF246AF3DD0022A586 /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
 		803B6B01246AF3E60022A586 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -221,6 +217,8 @@
 		80D288C0241D5200004EE583 /* UITestingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingHelper.swift; sourceTree = "<group>"; };
 		80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerStationModel.swift; sourceTree = "<group>"; };
 		80E7D8A82456033E00D49894 /* NBButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBButton.swift; sourceTree = "<group>"; };
+		80ECBDD025375E1700C1B420 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		80ECBDD125375E1700C1B420 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		80F882022490E2D800AB322A /* LocationServiceable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceable.swift; sourceTree = "<group>"; };
 		80F882042490E30C00AB322A /* PermissionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatus.swift; sourceTree = "<group>"; };
 		80F882062490E3B100AB322A /* LocationServicesCoreLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServicesCoreLocation.swift; sourceTree = "<group>"; };
@@ -495,7 +493,6 @@
 				803B6AFE246AF3CD0022A586 /* LogIn */,
 				80E7D8A7245602EB00D49894 /* Protocols */,
 				80299FDF243B94B20094EDB2 /* Confetti */,
-				80D288C7241E4952004EE583 /* RestorePurchases */,
 				809953F32416C50100B44DC9 /* Insights */,
 				800CE94523955BD400674D1C /* NeuralBikes.entitlements */,
 				801ECE40236F3BC3003CFAF7 /* Extensions */,
@@ -576,15 +573,6 @@
 				805BC8E32533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift */,
 			);
 			path = Settings;
-			sourceTree = "<group>";
-		};
-		80D288C7241E4952004EE583 /* RestorePurchases */ = {
-			isa = PBXGroup;
-			children = (
-				80395204241E85A400E15B87 /* RestorePurchasesViewController.swift */,
-				80395206241E85B600E15B87 /* RestorePurchasesViewModel.swift */,
-			);
-			path = RestorePurchases;
 			sourceTree = "<group>";
 		};
 		80E7D8A7245602EB00D49894 /* Protocols */ = {
@@ -687,6 +675,7 @@
 				en,
 				Base,
 				es,
+				fr,
 			);
 			mainGroup = 8085CC50236E2CB500B45A7C;
 			productRefGroup = 8085CC5A236E2CB500B45A7C /* Products */;
@@ -802,7 +791,6 @@
 				805BC8E42533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift in Sources */,
 				80B55FDC246D998F00AA7008 /* ScannerViewController.swift in Sources */,
 				807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */,
-				80395205241E85A400E15B87 /* RestorePurchasesViewController.swift in Sources */,
 				8074D349245737F7006B3062 /* RentalCollection.swift in Sources */,
 				8074D3452457377B006B3062 /* BikeList.swift in Sources */,
 				8074D33B24573720006B3062 /* LogInResponseError.swift in Sources */,
@@ -858,7 +846,6 @@
 				8036399D24829FA900FA096F /* UIFont.swift in Sources */,
 				803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */,
 				8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */,
-				80395207241E85B600E15B87 /* RestorePurchasesViewModel.swift in Sources */,
 				80628463236ED79300717472 /* Result.swift in Sources */,
 				8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */,
 				800CE942239559F700674D1C /* Constants.swift in Sources */,
@@ -886,6 +873,7 @@
 			children = (
 				8085CC68236E2CB800B45A7C /* Base */,
 				807C88A223EAD62B003BA644 /* es */,
+				80ECBDD025375E1700C1B420 /* fr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -895,6 +883,7 @@
 			children = (
 				808CEAC72477A28F006B17F2 /* en */,
 				808CEAC92477A290006B17F2 /* es */,
+				80ECBDD125375E1700C1B420 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

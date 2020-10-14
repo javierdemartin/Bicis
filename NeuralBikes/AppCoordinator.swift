@@ -129,22 +129,6 @@ extension AppCoordinator: ScannerViewModelCoordinatorDelegate {
     }
 }
 
-extension AppCoordinator: RestorePurchasesViewModelCoordinatorDelegate {
-    func reParseMainFeedShowingNewColors() {
-
-        localDataManager.getCurrentCity(completion: { cityResult in
-
-            switch cityResult {
-
-            case .success(let city):
-                self.homeViewModel?.getMapPinsFrom(city: city)
-            case .error:
-                break
-            }
-        })
-    }
-}
-
 extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
     
     func dismissSettingsViewController() {
@@ -153,19 +137,6 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
         }
     }
     
-    func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
-
-        self.settingsViewController?.dismiss(animated: true, completion: nil)
-
-        let restorePurchasesViewModel = RestorePurchasesViewModel()
-        restorePurchasesViewModel.coordinatorDelegate = self
-        let restorePurchasesViewController = RestorePurchasesViewController(viewModel: restorePurchasesViewModel)
-
-        restorePurchasesViewController.modalPresentationStyle = .formSheet
-
-        self.window.rootViewController?.present(restorePurchasesViewController, animated: true, completion: nil)
-    }
-
     // Re-centers the map when the UIPickerView changes value
     func changedCitySelectionInPickerView(city: City) {
 

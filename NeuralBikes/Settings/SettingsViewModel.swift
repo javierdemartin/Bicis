@@ -29,7 +29,6 @@ protocol SettingsViewModelDelegate: class {
 protocol SettingsViewModelCoordinatorDelegate: class {
     func presenTutorialViewController()
     func changedCitySelectionInPickerView(city: City)
-    func presentRestorePurchasesViewControllerFromCoordinatorDelegate()
     func dismissSettingsViewController()
 }
 
@@ -78,11 +77,6 @@ class SettingsViewModel {
 
     func sendFeedBackEmail() {
         NBActions.sendToMail()
-    }
-
-    /// Presents RestorePurchasesViewController and dismisses SettingsViewController that is currently presented as a modal
-    func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
-        coordinatorDelegate?.presentRestorePurchasesViewControllerFromCoordinatorDelegate()
     }
     
     func presentTutorialViewControllerFromCoordinatorDelegate() {

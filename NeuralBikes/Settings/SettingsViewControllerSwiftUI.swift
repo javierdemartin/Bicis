@@ -13,8 +13,6 @@ import Combine
 
 struct SettingsViewControllerSwiftUI: View {
     
-    var colors = ["Red", "Green", "Blue", "Tartan"]
-    
     let defaults = UserDefaults(suiteName: Constants.appGroupsBundleID)!
     
     weak var coordinatorDelegate: SettingsViewModelCoordinatorDelegate?
@@ -26,9 +24,7 @@ struct SettingsViewControllerSwiftUI: View {
     @State var productos: [MyPurchase] = []
     
     @ObservedObject var otherViewModel = OtherSettingsViewModel()
-    
-    //    @Published var otherViewModel = SettingsViewModel(
-    
+        
     init(viewModel: SettingsViewModel) {
         
         self.viewModel = viewModel
@@ -40,13 +36,15 @@ struct SettingsViewControllerSwiftUI: View {
     var body: some View {
         
         ScrollView {
-            VStack {
+            VStack(alignment: .leading) {
                 
-                VStack {
+                VStack(alignment: .center) {
                     Image(uiImage: UIImage(named: "AppIcon60x60")!)
                         .frame(width: 60, height: 60, alignment: .center)
-                        .padding()
-                        .cornerRadius(9.0)
+                        .cornerRadius(10)
+                                .overlay(RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.blue, lineWidth: 4))
+                                .shadow(radius: 2)
                     
                     Text(NBDefaults.longAppVersion!)
                         .bold()
@@ -62,24 +60,33 @@ struct SettingsViewControllerSwiftUI: View {
                         .font(.system(.body, design: .rounded))
                 })
                 .padding()
-                
-                ForEach(self.otherViewModel.products) { a in
+                                
+                if self.otherViewModel.products.count > 0 {
+                    
+                    ForEach(self.otherViewModel.products) { a in
+                        
+                        Button(action: {
+                            StoreKitProducts.store.buyProduct(a.skProd)
+                        }, label: {
+                            Text("\(a.localizedTitle) \(a.skProd.localizedPrice)")
+                                .bold()
+                                .font(.system(.body, design: .rounded))
+                                .padding()
+                        })
+                        .foregroundColor(.white)
+                        .background(Color.accentColor)
+                        .cornerRadius(8)
+                    }
                     
                     Button(action: {
-                        StoreKitProducts.store.buyProduct(a.skProd)
+                        NBActions.sendToMail()
                     }, label: {
-                        Text("\(a.localizedTitle) \(a.skProd.localizedPrice)")
+                        Text("RESTORE_PURCHASES_BUTTON")
                             .bold()
                             .font(.system(.body, design: .rounded))
                             .padding()
                     })
-                    .foregroundColor(.white)
-                    .background(Color.accentColor)
-                    .cornerRadius(8)
-                }
-                
-                
-                if self.otherViewModel.products.count > 0 {
+                    
                     Text("DONATIONS_EXPLANATION")
                         .font(.caption)
                 }
@@ -121,26 +128,12 @@ struct SettingsViewControllerSwiftUI: View {
                 Button(action: {
                     NBActions.sendToMail()
                 }, label: {
-                    Text("RESTORE_PURCHASES_BUTTON")
-                        .bold()
-                        .font(.system(.body, design: .rounded))
-                        .padding()
-                })
-                .foregroundColor(.white)
-                .background(Color.accentColor)
-                .cornerRadius(8)
-                
-                Button(action: {
-                    NBActions.sendToMail()
-                }, label: {
                     Text("REPLAY_TUTORIAL_BUTTON")
                         .bold()
                         .font(.system(.body, design: .rounded))
                 }).padding()
             }
-        }.onAppear(perform: {
-            
-        })
+        }.padding()
     }
 }
 

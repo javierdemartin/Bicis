@@ -14,12 +14,12 @@
 "INFORMATION_BODY" = "Never arrive to an empty station again. Get information on how the system is gonna behave.";
 "PRIVACY_TITLE" = "Only you";
 "PRIVACY_BODY" = "Your information stays on device, no third parties involved.";
-"FINISH_ONBOARDING" = "Let's go!";
+"FINISH_ONBOARDING" = "Allez!";
 "PRIVACY_POLICY" = "Privacy Policy";
 
 // MARK: Bike services
 
-"BIKE_NOT_FOUND" = "Bike number %bike% couldn't be found.";
+"BIKE_NOT_FOUND" = "Bike number %bike couldn't be found.";
 
 // MARK: Purchases
 
@@ -42,18 +42,16 @@
 "ALERT_HEADER" = "Alert";
 "CONFIRM_ALERT" = "Okay";
 
+// MARK:
+
 // MARK: Accesibility
 
 // MARK: - Home
 "START_ROUTE" = "Start commute";
-
-"OPEN_SETTINGS_KEYBOARD" = "Open Settings";
-
-"OPEN_INSIGHTS_KEYBOARD" = "Open Insights";
-
-"NEXT_STATION_KEYBOARD" = "Select Next Station";
-
-"PREVIOUS_STATION_KEYBOARD" = "Select Next Station";
+"OPEN_SETTINGS_KEYBOARD" = "Open settings";
+"OPEN_INSIGHTS_KEYBOARD" = "Open insights";
+"NEXT_STATION_KEYBOARD" = "Select next station";
+"PREVIOUS_STATION_KEYBOARD" = "Select next station";
 
 // MARK: Rent process
 
