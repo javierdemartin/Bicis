@@ -34,21 +34,45 @@ protocol SettingsViewModelCoordinatorDelegate: class {
 }
 
 enum DonationDescriptions: String {
-
-    case firstTier = "com.javierdemartin.bici.level_one_donation"
+    case firstTier = "com.javierdemartin.bici.donation_level_1"
     case secondTier = "com.javierdemartin.bici.level_two_donation"
 }
 
-class SettingsViewModel: ObservableObject {
+struct MyPurchase: Identifiable {
+    var id = UUID()
+    var localizedTitle: String
+    var identifier: String
+    var skProd: SKProduct
+}
+
+class OtherSettingsViewModel: ObservableObject {
+    
+    @Published var products: [MyPurchase] = []
+    
+    init() {
+        StoreKitProducts.store.requestProducts({ success, products in
+
+            if success {
+
+                guard let productos = products else { return }
+
+                DispatchQueue.main.async {
+                    productos.forEach({ prod in  self.products.append(MyPurchase(localizedTitle: prod.localizedTitle, identifier: prod.productIdentifier, skProd: prod))
+                    })
+                }
+
+            }
+        })
+    }
+}
+
+class SettingsViewModel {
 
     var availableCitiesModel = Binding<[String]>(value: Array(availableCities.keys))
-
+    
     weak var delegate: SettingsViewModelDelegate?
     weak var coordinatorDelegate: SettingsViewModelCoordinatorDelegate?
     var city: City?
-//    let usernameTextfieldContinuousTextValues = MutableProperty<String?>(nil)
-//    let passwordTextfieldContinuousTextValues = MutableProperty<String?>(nil)
-//    let logInButtonIsEnabled = MutableProperty(false)
     
     let dataManager: SettingsViewModelDataManager
 
@@ -114,9 +138,6 @@ class SettingsViewModel: ObservableObject {
 
     func setUpBindings() {
 
-//        let usernameIsNotEmpty = usernameTextfieldContinuousTextValues.producer.map({ $0?.isEmpty ?? true }).negate()
-//        let passwordIsNotEmpty = usernameTextfieldContinuousTextValues.producer.map({ $0?.isEmpty ?? true }).negate()
-//        compositeDisposable += logInButtonIsEnabled <~ usernameIsNotEmpty.and(passwordIsNotEmpty)
     }
     
     let locationService: LocationServiceable
@@ -129,15 +150,18 @@ class SettingsViewModel: ObservableObject {
         setUpBindings()
 
         self.city = currentCity
+        
+//        StoreKitProducts.store.requestProducts({ success, products in
+//
+//            if success {
+//
+//                guard let productos = products else { return }
+//
+//                DispatchQueue.main.async {
+//                    self.products = productos
+//                }
+//
+//            }
+//        })
     }
 }
-
-//extension SettingsViewModel: LocationServicesDelegate {
-//    func tracingLocation(_ currentLocation: CLLocation) {
-//        print(currentLocation)
-//    }
-//
-//    func tracingLocationDidFailWithError(_ error: NSError) {
-//        fatalError()
-//    }
-//}

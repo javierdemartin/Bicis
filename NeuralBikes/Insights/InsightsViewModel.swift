@@ -98,7 +98,6 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
                     switch result {
                         
                     case .success(let arrivalTime):
-                        dump(arrivalTime)
                         self.expectedArrivalTime = arrivalTime
                         
                         guard let expectedDocks = self.getPredictedDocksForArrivalTime(time: arrivalTime) else { return }

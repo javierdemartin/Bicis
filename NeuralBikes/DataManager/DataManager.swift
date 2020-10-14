@@ -154,6 +154,9 @@ extension DataManager: HomeViewModelDataManager {
     }
 
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
+        
+        completion(.success(true))
+        
         localDataManager.hasUnlockedFeatures(completion: { hasUnlockedResult in
             completion(hasUnlockedResult)
         })

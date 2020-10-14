@@ -287,8 +287,6 @@ extension NextBikeBikeServicesDataManager {
                                     
                                     let decoded = try JSONDecoder().decode(RentResponse.self, from: data)
                                     
-                                    dump(decoded)
-                                    
                                     if decoded.error != nil {
                                         completion(.error(BikeServicesError.bikeNotFound))
                                     } else {

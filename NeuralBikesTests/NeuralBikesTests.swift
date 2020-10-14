@@ -96,8 +96,6 @@ class BicisTests: XCTestCase {
                         case .success(let allData):
                             XCTAssertTrue(allData.values.today.count >= 0)
 
-                            dump(allData.values.prediction)
-
                             expectation.fulfill()
 
                         case .error(let error):

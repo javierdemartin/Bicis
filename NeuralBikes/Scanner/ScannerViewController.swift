@@ -114,7 +114,6 @@ class ScannerViewController: UIViewController, AVCaptureMetadataOutputObjectsDel
     }
 
     func found(code: String) {
-        print(code)
         
         let scannedBikeNumber = Int(code) ?? nil
         

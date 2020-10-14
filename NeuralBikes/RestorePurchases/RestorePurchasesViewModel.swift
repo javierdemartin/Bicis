@@ -31,7 +31,6 @@ class RestorePurchasesViewModel: NSObject {
             guard let self = self else { return }
 
             if success {
-                dump(products)
 
                 guard let products = products else { return }
 

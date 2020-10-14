@@ -113,7 +113,6 @@ class HomeViewModel: ObservableObject {
             switch rentalsResult {
                 
             case .success(let activeRentals):
-                print(activeRentals)
                 
                 if activeRentals.rentalCollection.count > 0 {
                     self.delegate?.showActiveRentedBike(number: activeRentals.rentalCollection[0].bike)
@@ -126,6 +125,8 @@ class HomeViewModel: ObservableObject {
     }
 
     func hasUnlockedFeatures(completion: @escaping(Bool) -> Void) {
+        
+        completion(true)
         
         if UITestingHelper.sharedInstance.isUITesting() {
             completion(true)
@@ -244,65 +245,38 @@ class HomeViewModel: ObservableObject {
         dataManager.hasUnlockedFeatures(completion: { hasPaid in
           
             switch hasPaid {
-            case .success(let paid):
-                if paid {
-                    
-                    self.dataManager.getAllDataFromApi(city: city, station: station, completion: { result in
+            case .success(_):
+                self.dataManager.getAllDataFromApi(city: city, station: station, completion: { result in
 
-                        switch result {
+                    switch result {
 
-                        case .success(let datos):
+                    case .success(let datos):
 
-                            let sortedNowKeysAndValues = Array(datos.values.today).sorted(by: { $0.0 < $1.0 })
-                            let sortedPredictionKeysAndValues = Array(datos.values.prediction).sorted(by: { $0.0 < $1.0 })
+                        let sortedNowKeysAndValues = Array(datos.values.today).sorted(by: { $0.0 < $1.0 })
+                        let sortedPredictionKeysAndValues = Array(datos.values.prediction).sorted(by: { $0.0 < $1.0 })
 
-                            var sortedNow: [Int] = []
-                            var sortedPrediction: [Int] = []
+                        var sortedNow: [Int] = []
+                        var sortedPrediction: [Int] = []
 
-                            sortedNowKeysAndValues.forEach({ sortedNow.append($0.value )})
-                            sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})
+                        sortedNowKeysAndValues.forEach({ sortedNow.append($0.value )})
+                        sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})
 
-                            // Get the remainder values for the prediction
+                        // Get the remainder values for the prediction
 
-                            let payload = ["prediction": sortedPrediction, "today": sortedNow]
-                            
-                            self.latestSelectedBikeStation?.availabilityArray = sortedNow
-                            self.latestSelectedBikeStation?.predictionArray = sortedPrediction
+                        let payload = ["prediction": sortedPrediction, "today": sortedNow]
+                        
+                        self.latestSelectedBikeStation?.availabilityArray = sortedNow
+                        self.latestSelectedBikeStation?.predictionArray = sortedPrediction
 
-                            self.delegate?.drawPrediction(data: sortedPrediction, prediction: true)
-                            self.delegate?.drawPrediction(data: sortedNow, prediction: false)
+                        self.delegate?.drawPrediction(data: sortedPrediction, prediction: true)
+                        self.delegate?.drawPrediction(data: sortedNow, prediction: false)
 
-                            completion(.success(payload))
+                        completion(.success(payload))
 
-                        case .error:
-                            break
-                        }
-                    })
-                } else {
-                    self.dataManager.getPredictionForStation(city: city, type: "prediction", name: station, completion: { result in
-                        switch result {
-                            
-                        case .success(let datos):
-                            
-                            let sortedPredictionKeysAndValues = Array(datos.values).sorted(by: { $0.0 < $1.0 })
-
-                            var sortedPrediction: [Int] = []
-
-                            sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})
-
-                            // Get the remainder values for the prediction
-
-                            let payload = ["prediction": sortedPrediction]
-
-                            self.delegate?.drawPrediction(data: sortedPrediction, prediction: true)
-
-                            completion(.success(payload))
-
-                        case .error:
-                            break
-                        }
-                    })
-                }
+                    case .error:
+                        break
+                    }
+                })
             case .error:
                 break
             }

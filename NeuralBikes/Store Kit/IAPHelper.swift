@@ -8,6 +8,7 @@
 
 import Foundation
 import StoreKit
+import Combine
 
 struct ReceiptData: Codable {
     let receipt: String

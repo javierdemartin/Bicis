@@ -236,7 +236,7 @@ class RestorePurchasesViewController: UIViewController {
             self.viewModel.unlockDataInsights()
         }.store(in: &cancellableBag)
         
-        restorePurchasesButton.publisher(for: .touchUpInside).sink { _ in
+        restorePurchasesButton.publisher(for: .touchUpInside).sink { _ in
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
             self.viewModel.restorePurchases()
         }.store(in: &cancellableBag)

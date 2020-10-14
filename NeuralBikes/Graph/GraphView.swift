@@ -260,9 +260,6 @@ class PredictionGraphView: UIView {
         }
 
         if isPrediction {
-
-            dump(values)
-            dump(arrayOfPoints)
             
             if shouldShowBorder {
                 drawingLayer.strokeColor = UIColor.white.cgColor

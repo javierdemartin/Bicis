@@ -81,13 +81,9 @@ struct TutorialViewController: View {
                     }
                 }
                 .padding()
-                
             }
             
-            
             Spacer()
-            
-            
             
             Button(action: {
                 viewModel.didTapFinishTutorial()

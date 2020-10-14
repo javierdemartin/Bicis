@@ -42,6 +42,7 @@
 "GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Granted location services";
 "NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Not granted location services";
 "REPLAY_TUTORIAL_BUTTON" = "Replay tutorial";
+"DONATIONS_EXPLANATION" = "Donations help this project stay alive. You can buy as many as you want.";
 
 // MARK: - Insights
 

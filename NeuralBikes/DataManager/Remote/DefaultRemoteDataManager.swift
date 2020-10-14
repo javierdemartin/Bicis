@@ -38,6 +38,8 @@ class DefaultRemoteDataManager: RemoteDataManager {
                     do {
 
                         let decoder = JSONDecoder()
+                        
+                        print(url)
 
                         let decoded = try decoder.decode(MyAllAPIResponse.self, from: data)
 

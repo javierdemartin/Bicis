@@ -273,15 +273,10 @@ class HomeViewController: UIViewController {
             blurAlertView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             blurAlertView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
-        
-//        blurAlertView.didMove(toParent: self)
-
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        viewModel.viewWillAppear()
         viewModel.viewWillAppear()
     }
 
@@ -294,7 +289,6 @@ class HomeViewController: UIViewController {
         viewModel.setUpLocation()
 
         self.hideStackView()
-//        viewModel.getCurrentCity(completion: { [weak self] cityResult in
         viewModel.getCurrentCity(completion: { [weak self] cityResult in
 
             guard let self = self else { fatalError() }
@@ -307,7 +301,7 @@ class HomeViewController: UIViewController {
                     self.shouldShowRentBikeButton()
                 }
 
-//                self.centerMap(on: cityCoordinates, coordinateSpan: Constants.narrowCoordinateSpan)
+                self.centerMap(on: CLLocationCoordinate2D(latitude: CLLocationDegrees(city.latitude), longitude: CLLocationDegrees(city.longitude)), coordinateSpan: Constants.narrowCoordinateSpan)
 
             case .error:
                 break
@@ -317,19 +311,15 @@ class HomeViewController: UIViewController {
 
     @objc func appMovedToForeground() {
     
-//        viewModel.getCurrentCity(completion: { currentCityResult in
         viewModel.getCurrentCity(completion: { currentCityResult in
             switch currentCityResult {
 
             case .success(let currentCity):
-//                self.viewModel.currentCity = currentCity
                 self.viewModel.currentCity = currentCity
 
-//                guard let unwrappedCity = self.viewModel.currentCity else { return }
                 guard let unwrappedCity = self.viewModel.currentCity else { return }
 
                 self.viewModel.getMapPinsFrom(city: unwrappedCity)
-//                self.viewModel.getMapPinsFrom(city: unwrappedCity)
 
             case .error(let err):
                 self.presentAlertViewWithError(title: "Error", body: err.localizedDescription)
@@ -341,7 +331,6 @@ class HomeViewController: UIViewController {
     @objc func appMovedToBackground() {
         print("App moved to Background!")
 
-//        guard let didSelectAnnotation = viewModel.latestSelectedAnnotation else { return }
         guard let didSelectAnnotation = viewModel.latestSelectedAnnotation else { return }
 
         mapView.deselectAnnotation(didSelectAnnotation, animated: false)
@@ -416,15 +405,14 @@ class HomeViewController: UIViewController {
     }
 
     @objc func showSettingsViewController() {
-//        viewModel.coordinatorDelegate?.showSettingsViewController()
+
         viewModel.coordinatorDelegate?.showSettingsViewController()
     }
 
     @objc func showInsightsViewController() {
-//        guard let latestSelectedStation = self.viewModel.latestSelectedBikeStation else { return }
+
         guard let latestSelectedStation = self.viewModel.latestSelectedBikeStation else { return }
         
-//        self.viewModel.selectedRoute(station: latestSelectedStation)
         self.viewModel.selectedRoute(station: latestSelectedStation)
     }
 
@@ -451,7 +439,6 @@ class HomeViewController: UIViewController {
         }.store(in: &cancellableBag)
         
         rentButton.publisher(for: .touchUpInside).sink { _ in
-//            self.viewModel.startRentProcess()
             self.viewModel.startRentProcess()
         }.store(in: &cancellableBag)
         
@@ -498,8 +485,6 @@ class HomeViewController: UIViewController {
 
             switch UITestingHelper.sharedInstance.isUITesting() {
             case true:
-
-//                guard let unwrappedCity = self.viewModel.currentCity else { return }
                 guard let unwrappedCity = self.viewModel.currentCity else { return }
 
                 currentLocationFromDevice = CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude), longitude: CLLocationDegrees(unwrappedCity.longitude))
@@ -597,5 +582,260 @@ extension UIControl: CombineCompatible { }
 extension CombineCompatible where Self: UIControl {
     func publisher(for events: UIControl.Event) -> UIControlPublisher<UIControl> {
         return UIControlPublisher(control: self, events: events)
+    }
+}
+
+// MARK: MKMapViewDelegate
+extension HomeViewController: MKMapViewDelegate {
+
+    // MARK: - MKMapViewDelegate
+    private func customAnnotationView(in mapView: MKMapView, for annotation: MKAnnotation) -> CustomAnnotationView {
+
+        let identifier = "CustomAnnotationViewID"
+
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomAnnotationView {
+            annotationView.annotation = annotation
+            return annotationView
+
+        } else {
+            let customAnnotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            customAnnotationView.canShowCallout = true
+            return customAnnotationView
+        }
+    }
+
+    /// Handle the user location, disabling the callout when it's tapped
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        let userLocationView = mapView.view(for: userLocation)
+        userLocationView?.canShowCallout = false
+    }
+
+    /// Prepare the `AnnotationView` & set up the clustering for the stations
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+
+        // Don't show a custom image if the annotation is the user's location.
+        guard !(annotation is MKUserLocation) else { return nil }
+
+        if let cluster = annotation as? MKClusterAnnotation {
+
+            let markerAnnotationView = MKMarkerAnnotationView()
+            markerAnnotationView.glyphText = String(cluster.memberAnnotations.count)
+            markerAnnotationView.canShowCallout = false
+
+            return markerAnnotationView
+        }
+
+        var annotationView: MKAnnotationView?
+
+        if let dequeuedAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier) as? CustomAnnotationView {
+            annotationView = dequeuedAnnotationView
+            annotationView?.annotation = annotation
+        } else {
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+            annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        }
+
+        if let annotationView = annotationView {
+
+            // Disable the callout showing the title, the title will be shown in the GraphView
+            annotationView.canShowCallout = false
+
+            guard let annotationTitle = annotation.title! else { return nil }
+            guard let stationsDictFromViewModel = self.viewModel.stationsDict.value[annotationTitle] else { return nil }
+            
+            let markerAnnotationView: MKMarkerAnnotationView = {
+                let marker = MKMarkerAnnotationView()
+                marker.glyphText = "\(stationsDictFromViewModel.freeBikes)"
+                return marker
+            }()
+            
+            switch whatsShown {
+            case .freeBikes:
+                markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeBikes)"
+                
+                self.viewModel.hasUnlockedFeatures(completion: { hasPaid in
+
+                    if hasPaid {
+                        // Stablish the color coding of the availability
+                        // TODO: NoSpotIndex
+                        switch stationsDictFromViewModel.freeBikes {
+                        case 10...:
+                            markerAnnotationView.markerTintColor = UIColor.systemGreen
+                        case 5...10:
+                            markerAnnotationView.markerTintColor = UIColor.systemOrange
+                        case ..<5:
+                            markerAnnotationView.markerTintColor = UIColor.systemRed
+                        default:
+                            break
+                        }
+                    }
+                })
+                
+            case .freeDocks:
+                markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeRacks)"
+                
+                self.viewModel.hasUnlockedFeatures(completion: { hasPaid in
+
+                    if hasPaid {
+                        // Stablish the color coding of the availability
+                        // TODO: NoSpotIndex
+                        switch stationsDictFromViewModel.freeRacks {
+                        case 10...:
+                            markerAnnotationView.markerTintColor = UIColor.systemRed
+                        case 5...10:
+                            markerAnnotationView.markerTintColor = UIColor.systemOrange
+                        case ..<5:
+                            markerAnnotationView.markerTintColor = UIColor.systemGreen
+                        default:
+                            break
+                        }
+                    }
+                })
+            }
+
+            return markerAnnotationView
+        }
+
+        return annotationView
+    }
+
+    func mapView(_ mapView: MKMapView, clusterAnnotationForMemberAnnotations memberAnnotations: [MKAnnotation]) -> MKClusterAnnotation {
+        return MKClusterAnnotation(memberAnnotations: memberAnnotations)
+    }
+
+    /// As the annotation is deselected hde the `GraphView` and disable the route planner button
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        hideStackView()
+        insightsButton.isEnabled = false
+    }
+
+    /// Annotation was selected
+    /// 1. Query the API for the prediction and availability data
+    /// 2. Center the MapView
+    /// 3. Set the `GraphView`'s title using the selected station name
+    /// 4. Show the route planner view controller
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+
+        // If for any reason the current city is not saved cancel the operation
+        guard viewModel.currentCity != nil else { return }
+
+        guard let annotationFromPin = view.annotation as? MapPin else { return }
+
+        centerMap(on: annotationFromPin.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
+
+        viewModel.latestSelectedAnnotation = annotationFromPin
+        viewModel.latestSelectedBikeStation = annotationFromPin.stationInformation
+
+        var apiQueryStationValue: String?
+
+        apiQueryStationValue = annotationFromPin.stationInformation.id
+        
+        graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationInformation.stationName)
+
+        guard apiQueryStationValue != nil else { return }
+
+        viewModel.getAllDataFromApi(city: viewModel.currentCity!.apiName, station: apiQueryStationValue!, completion: { res in
+
+            // As soon as new data is retrieved from the API show the graph
+            self.showStackView()
+
+            switch res {
+
+            case .success(let payload):
+
+                self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.availabilityArray = payload["today"]
+                self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.predictionArray = payload["prediction"]
+
+                self.insightsButton.isEnabled = true
+                self.showRoutePlannerButton()
+                self.graphView.accessibilityLabel = NSLocalizedString("SELECTED_STATION_GRAPH_ACCESIBILITY_LABEL", comment: "").replacingOccurrences(of: "%name", with: annotationFromPin.stationInformation.stationName)
+
+            case .error:
+                break
+            }
+        })
+    }
+}
+
+// MARK: HomeViewModelDelegate
+extension HomeViewController: HomeViewModelDelegate {
+    
+    func selectClosestAnnotationGraph(stations: [BikeStation], currentLocation: CLLocation) {
+
+        let nearestPin: BikeStation? = stations.reduce((CLLocationDistanceMax, nil)) { (nearest, pin) in
+            let coord = CLLocationCoordinate2D(latitude: CLLocationDegrees(pin.latitude), longitude: CLLocationDegrees(pin.longitude))
+            let loc = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+            let distance = currentLocation.distance(from: loc)
+            return distance < nearest.0 ? (distance, pin) : nearest
+        }.1
+
+        guard let nearest = nearestPin else { return }
+
+        guard let nearestStation = self.viewModel.stationsDict.value[nearest.stationName] else { return }
+
+        // Find the index of the current station
+        if let index = viewModel.stations.firstIndex(where: { $0.stationName == nearestStation.stationName }) {
+            self.viewModel.currentSelectedStationIndex = index
+        }
+
+        self.centerMap(on: CLLocationCoordinate2D(latitude: CLLocationDegrees(nearestStation.latitude),
+                                                  longitude: CLLocationDegrees(nearestStation.longitude)), coordinateSpan: Constants.narrowCoordinateSpan)
+
+        if self.mapView.annotations.contains(where: {$0.title == nearestStation.stationName}) {
+
+            if let foo = self.mapView.annotations.first(where: {$0.title == nearestStation.stationName}) {
+                self.mapView.selectAnnotation(foo, animated: true)
+            }
+        }
+    }
+    
+    func showActiveRentedBike(number: String) {
+        activeRentalBike.setTitle(number, for: .normal)
+        activeRentalBike.accessibilityIdentifier = number
+        activeRentalBike.isHidden = false
+        activeRentalScrollView.isHidden = false
+    }
+    
+    func centerMap(on point: CLLocationCoordinate2D, coordinateSpan: MKCoordinateSpan) {
+
+        let region = MKCoordinateRegion(center: point, span: coordinateSpan)
+
+        self.mapView.setRegion(region, animated: false)
+    }
+    
+    func shouldShowRentBikeButton() {
+        rentButton.isHidden = false
+    }
+    
+    func shouldHideRentBikeButton() {
+        rentButton.isHidden = true
+    }
+
+    func presentAlertViewWithError(title: String, body: String) {
+
+        let alertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alertController.addAction(okAction)
+
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    /// Called when a new city is selected, removing the pins from the previous city
+    func removePinsFromMap() {
+        mapView.removeAnnotations(mapView.annotations)
+    }
+
+    func dismissGraphView() {
+        self.hideStackView()
+    }
+
+    func drawPrediction(data: [Int], prediction: Bool) {
+        graphView.drawLine(values: data, isPrediction: prediction)
+    }
+
+    func receivedError(with errorString: String) {
+        let alert = UIAlertController(title: NSLocalizedString("ALERT_HEADER", comment: ""), message: errorString, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("CONFIRM_ALERT", comment: ""), style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
