@@ -23,13 +23,4 @@ struct LogHelper {
 
         UserDefaults.standard.set(numberOfTimesTappedDataInsightsButton, forKey: LogHelper.numberOfTimesTappedDataInsightsButtonKey)
     }
-
-    static func logTAppedSettingsButton() {
-
-        let numberOfTimesTappedSettingsButton: Int = defaults.integer(forKey: LogHelper.numberOfTimesTappedSettingsButtonKey) + 1
-
-        print("> Settings button has been tapped \(numberOfTimesTappedSettingsButtonKey) times")
-
-        UserDefaults.standard.set(numberOfTimesTappedSettingsButton, forKey: LogHelper.numberOfTimesTappedSettingsButtonKey)
-    }
 }

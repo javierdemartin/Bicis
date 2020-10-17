@@ -27,14 +27,13 @@ class BicisUITests: XCTestCase {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launchArguments.append("is_ui_testing")
+        /// Mocking the city that's being shown depending on the user's locale
         app.launchArguments.append("ui_testing_manual_city")
         
-
         setupSnapshot(app)
         app.launch()
-        
 
-        sleep(10) // Wait for the map to load
+        sleep(20) /// Wait for the map to load
 
         snapshot("00-Home")
 
@@ -52,24 +51,5 @@ class BicisUITests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
 
         snapshot("01-RoutePlanner")
-
-//        let pullDownTab = app.otherElements["PULL_DOWN_TAB"]
-//
-//        let start = pullDownTab.coordinate(withNormalizedOffset: CGVector(dx: 10, dy: 20))
-//        let finish = pullDownTab.coordinate(withNormalizedOffset: CGVector(dx: 10, dy: 200))
-//        start.press(forDuration: 0.01, thenDragTo: finish)
-
-//        pullDownTab.swipeDown()
-
-        // MARK: RoutePlanner
     }
-
-//    func testLaunchPerformance() {
-//        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-//            // This measures how long it takes to launch your application.
-//            measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
-//                XCUIApplication().launch()
-//            }
-//        }
-//    }
 }

@@ -32,7 +32,6 @@ class NBButton: UIButton, NBButtonable {
         setTitleShadowColor(.darkGray, for: .highlighted)
         setTitleColor(.white, for: .normal)
         translatesAutoresizingMaskIntoConstraints = false
-//        titleLabel?.numberOfLines = 0
         imageView?.tintColor = .white
         titleLabel?.textAlignment = .center
         sizeToFit()

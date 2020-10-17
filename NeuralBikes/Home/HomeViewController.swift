@@ -307,7 +307,6 @@ class HomeViewController: UIViewController {
         settingsButton.publisher(for: .touchUpInside).sink { button in
             
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
-            LogHelper.logTAppedSettingsButton()
             self.showSettingsViewController()
         }.store(in: &cancellableBag)
         
