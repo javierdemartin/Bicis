@@ -13,13 +13,6 @@ struct InsightsViewController: View {
     @ObservedObject var viewModel: InsightsViewModel
     
     @State var destinationStationName: String = "DESTINATION_STATION"
-    @State var accuracyString: LocalizedStringKey = "CALCULATING_PRECISSION"
-    @State var freeDocksAtDestination: LocalizedStringKey = "FREE_DOCKS_DESTINATION_PLACEHOLDER"
-    @State var explanationStringKey: LocalizedStringKey = "EXPLANATION_INSIGHTS"
-    @State var dischargeStringKey: LocalizedStringKey = "DISCHARGE"
-    @State var refillStringKey: LocalizedStringKey = "REFILL"
-    @State var operationNotFoundKey: LocalizedStringKey = "NOT_FOUND"
-    @State var operationsDescriptionKey: LocalizedStringKey = "OPERATIONS_DESCRIPTION"   
     @State var nextRefillTime: String?
     @State var nextDischargeTime: String?
     
@@ -65,11 +58,17 @@ struct InsightsViewController: View {
                             
                             PredictionGraphViewRepresentable(prediction: viewModel.predictionArray, availability: viewModel.availabilityArray)
                                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100, maxHeight: 100)
-                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0))
+                                .padding(EdgeInsets(top: 0, leading: 0, bottom: 17, trailing: 0))
                             
-                            Divider()
-                            Text(viewModel.predictionPrecission)
-                                .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+                            if viewModel.predictionPrecission != nil {
+                                
+                                Divider()
+                                
+                                Text(viewModel.predictionPrecission!)
+                                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+                            } else {
+                                
+                            }
                             
                         }
                         .overlay(
@@ -91,9 +90,9 @@ struct InsightsViewController: View {
                             bottom: 0,
                             trailing: 3 * Constants.cornerRadius))
                     
-                    VStack {
+                    VStack(alignment: .leading) {
                         
-                        Text(operationsDescriptionKey)
+                        Text("OPERATIONS_DESCRIPTION")
                         
                         HStack {
                             
@@ -104,7 +103,7 @@ struct InsightsViewController: View {
                                 HStack {
                                     Image(systemName: "chevron.up")
                                         .padding(EdgeInsets(top: Constants.cornerRadius, leading: 10, bottom: 0, trailing: 0))
-                                    Text(refillStringKey)
+                                    Text("REFILL")
                                         .padding(EdgeInsets(top: Constants.cornerRadius, leading: 0, bottom: 0, trailing: 10))
                                 }
                                 
@@ -131,7 +130,7 @@ struct InsightsViewController: View {
                                 HStack {
                                     Image(systemName: "chevron.down")
                                         .padding(EdgeInsets(top: Constants.cornerRadius, leading: 10, bottom: 0, trailing: 0))
-                                    Text(dischargeStringKey)
+                                    Text("DISCHARGE")
                                         .padding(EdgeInsets(top: Constants.cornerRadius, leading: 0, bottom: 0, trailing: 10))
                                 }
                                 
@@ -162,13 +161,13 @@ struct InsightsViewController: View {
                         trailing: 3 * Constants.cornerRadius))
                     
                     VStack(alignment: .leading) {
-                        Text(freeDocksAtDestination)
+                        Text("FREE_DOCKS_DESTINATION_PLACEHOLDER")
                         
                         HStack {
                             Spacer()
                             // - Now
                             VStack(alignment: .center) {
-                                Text("Now")
+                                Text("NOW")
                                     .font(.system(.body, design: .rounded))
                                 Divider()
                                 Text(viewModel.actualDocksAtDestination)

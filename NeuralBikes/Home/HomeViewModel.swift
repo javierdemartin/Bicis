@@ -14,20 +14,15 @@ import Combine
 protocol HomeViewModelCoordinatorDelegate: class {
     func showSettingsViewController()
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation])
-    func presentLogInViewController()
-    func presentScannerViewController()
 }
 
 protocol HomeViewModelDataManager {
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
-    func checkUserCredentials(completion: @escaping (Result<UserCredentials>) -> Void)
+    
     func getStations(city: String, completion: @escaping (Result<[BikeStation]>) -> Void)
     func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping (Result<MyAPIResponse>) -> Void)
     func addStationStatistics(for id: String, city: String)
-    func isUserLoggedIn(completion: @escaping (Result<LogInResponse>) -> Void)
-    func rent(bike number: Int, completion: @escaping(Result<Void>) -> Void)
-    func getActiveRentals(completion: @escaping(Result<GetActiveRentalsResponse>) -> Void)
 }
 
 protocol HomeViewModelDelegate: class {
@@ -38,9 +33,7 @@ protocol HomeViewModelDelegate: class {
     func dismissGraphView()
     func removePinsFromMap()
     func presentAlertViewWithError(title: String, body: String)
-    func shouldShowRentBikeButton()
-    func shouldHideRentBikeButton()
-    func showActiveRentedBike(number: String)
+    
 }
 
 class HomeViewModel: ObservableObject {
@@ -61,7 +54,6 @@ class HomeViewModel: ObservableObject {
 
     let dataManager: HomeViewModelDataManager
 
-//    let stations = Binding<[BikeStation]>(value: [])
     @Published var stations: [BikeStation] = []
     @Published var stationsDictCombine: [String: BikeStation] = [:]
 
@@ -78,10 +70,6 @@ class HomeViewModel: ObservableObject {
 
         if let currentCity = self.currentCity {
             getMapPinsFrom(city: currentCity)
-            
-            if currentCity.allowsLogIn {
-                self.delegate?.shouldShowRentBikeButton()
-            }
         }
     }
     
@@ -90,38 +78,10 @@ class HomeViewModel: ObservableObject {
     func setUpBindings() {
         
         locationService.locationPublisher.sink(receiveValue: { location in
-            
             self.delegate?.centerMap(on: location.coordinate, coordinateSpan: Constants.narrowCoordinateSpan)
         }).store(in: &cancellableBag)
     }
     
-    func viewWillAppear() {
-        
-        if let currentCity = self.currentCity {
-            if currentCity.allowsLogIn {
-                delegate?.shouldShowRentBikeButton()
-                getActiveRentals()
-            }
-        }
-    }
-    
-    func getActiveRentals() {
-        
-        dataManager.getActiveRentals(completion: { rentalsResult in
-            switch rentalsResult {
-                
-            case .success(let activeRentals):
-                
-                if activeRentals.rentalCollection.count > 0 {
-                    self.delegate?.showActiveRentedBike(number: activeRentals.rentalCollection[0].bike)
-                }
-                
-            case .error(let error):
-                self.delegate?.receivedError(with: error.localizedDescription)
-            }
-        })
-    }
-
     func selectedRoute(station: BikeStation) {
 
         let closestAnnotations = Array(self.sortStationsNearTo(self.stations, location: station.location).dropFirst().prefix(3))
@@ -232,49 +192,6 @@ class HomeViewModel: ObservableObject {
 
             case .error:
                 break
-            }
-        })
-    }
-    
-    // MARK: RENT PROCESS
-    func startRentProcess() {
-        
-        self.dataManager.isUserLoggedIn(completion: { result in
-            switch result {
-            case .success(let logInResponse):
-                print(logInResponse)
-                DispatchQueue.main.async {
-                    self.coordinatorDelegate?.presentScannerViewController()
-                }
-            case .error:
-                self.coordinatorDelegate?.presentLogInViewController()
-            }
-        })
-            
-    }
-    
-    func finishRentProcess(bike number: Int?) {
-        
-        guard let number = number else {
-            self.delegate?.receivedError(with: "NO BIKE")
-            return
-        }
-        
-        dataManager.isUserLoggedIn(completion: { result in
-            switch result {
-            case .success(let logInResponse):
-                print(logInResponse)
-                self.dataManager.rent(bike: number, completion: { rentResult in
-                    switch rentResult {
-                        
-                    case .success:
-                        self.getActiveRentals()
-                    case .error(let error):
-                        self.delegate?.receivedError(with: error.localizedDescription.replacingOccurrences(of: "%bike", with: "\(number)"))
-                    }
-                })
-            case .error(let error):
-                self.delegate?.receivedError(with: error.localizedDescription)
             }
         })
     }

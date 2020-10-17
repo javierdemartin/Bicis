@@ -25,12 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         appCoordinator.start()
 
-        NSSetUncaughtExceptionHandler { exception in
-            print("-------------------")
-           print(exception)
-           print(exception.callStackSymbols)
-        }
-
         return true
     }
 

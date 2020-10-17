@@ -13,9 +13,7 @@ protocol TutorialViewModelCoordinatorDelegate: class {
     func didTapFinishTutorial()
 }
 
-protocol TutorialViewModelDataManager {
-    func didReadTutorial()
-}
+
 
 class TutorialViewModel: ObservableObject {
     

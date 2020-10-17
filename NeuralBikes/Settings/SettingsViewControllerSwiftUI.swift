@@ -107,7 +107,9 @@ struct SettingsViewControllerSwiftUI: View {
                         }
                         
                         Button(action: {
-                            StoreKitProducts.store.restorePurchases()
+                            DispatchQueue.main.async {
+                                StoreKitProducts.store.restorePurchases()
+                            }
                         }, label: {
                             Text("RESTORE_PURCHASES_BUTTON")
                                 .bold()
@@ -136,23 +138,23 @@ struct SettingsViewControllerSwiftUI: View {
                             .font(.system(.body, design: .rounded))
                     }
                 }
-                .onChange(of: selectedColor, perform: { change in
-                    print("\(change) - \(Array(availableCities.keys)[change])")
-                    
-                    let apiCityName = availableCities[Array(availableCities.keys)[change]]
-                    
-                    do {
-                        let encodedData = try PropertyListEncoder().encode(apiCityName)
-                        defaults.set(encodedData, forKey: "city")
-                    } catch {
-                        fatalError("\(#function)")
-                    }
-                    
-                    if let citio = apiCityName {
-                        viewModel.changedCityTo(citio: citio)
-                    }
-                    
-                })
+//                .onChange(of: selectedColor, perform: { change in
+//                    print("\(change) - \(Array(availableCities.keys)[change])")
+//                    
+//                    let apiCityName = availableCities[Array(availableCities.keys)[change]]
+//                    
+//                    do {
+//                        let encodedData = try PropertyListEncoder().encode(apiCityName)
+//                        defaults.set(encodedData, forKey: "city")
+//                    } catch {
+//                        fatalError("\(#function)")
+//                    }
+//                    
+//                    if let citio = apiCityName {
+//                        viewModel.changedCityTo(citio: citio)
+//                    }
+//                    
+//                })
                 
                 Divider()
                     

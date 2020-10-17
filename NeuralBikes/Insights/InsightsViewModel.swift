@@ -31,7 +31,7 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
     @Published var destinationStationString: String = ""
     @Published var nextRefillTime: String?
     @Published var nextDischargeTime: String?
-    @Published var predictionPrecission: String = NSLocalizedString("CALCULATING_PRECISSION", comment: "")
+    @Published var predictionPrecission: String?
     @Published var expectedArrivalTime: String = "-:--"
     @Published var expectedDocksAtArrivalTime: String = "-"
     @Published var actualDocksAtDestination: String = "-"
@@ -63,8 +63,6 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
         
         if let precission = destinationStation.rmse {
             predictionPrecission = NSLocalizedString("ACCURACY_OF_MODEL", comment: "").replacingOccurrences(of: "%percentage%", with: "\(Int(precission))%")
-        } else {
-            predictionPrecission = NSLocalizedString("ERROR_CALCULATING_PRECISSION", comment: "")
         }
         
         super.init()

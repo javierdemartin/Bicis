@@ -16,19 +16,11 @@ protocol HomeViewControllerGraphViewDelegate: class {
     func setStationTitleFor(name: String)
 }
 
-enum ShowsNumberInAnnotation {
-    
-    case freeBikes
-    case freeDocks
-}
-
 class HomeViewController: UIViewController {
 
     weak var graphViewDelegate: HomeViewControllerGraphViewDelegate?
     
     @ObservedObject var viewModel: HomeViewModel
-
-    var whatsShown: ShowsNumberInAnnotation = .freeBikes
     
     lazy var mapView: MKMapView = {
 
@@ -55,70 +47,6 @@ class HomeViewController: UIViewController {
 
     }()
     
-    lazy var activeRentalScrollView: UIScrollView = {
-        let scrollView = UIScrollView(frame: .zero)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.backgroundColor = .clear
-        scrollView.scrollsToTop = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.alwaysBounceVertical = true
-        scrollView.isDirectionalLockEnabled = true
-        scrollView.isHidden = true
-
-        return scrollView
-    }()
-    
-    private lazy var activeRentalStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [activeRentalBike])
-        stackView.alignment = UIStackView.Alignment.center
-        stackView.backgroundColor = .white
-        stackView.addBackground(color: .red)
-        stackView.axis = NSLayoutConstraint.Axis.horizontal
-        stackView.distribution  = UIStackView.Distribution.equalSpacing
-        stackView.spacing = Constants.spacing
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stackView
-    }()
-    
-    lazy var blurAlertView: UIView = {
-        let blur = UIBlurEffect(style: .regular)
-        let blurView = UIVisualEffectView(effect: blur)
-        let vibrancy = UIVibrancyEffect(blurEffect: blur)
-        let vibrantView = UIVisualEffectView(effect: blurView.effect)
-        vibrantView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurView.contentView.addSubview(vibrantView)
-        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurView.layer.cornerRadius = 20
-        blurView.layer.masksToBounds = true
-        let blendView = UIView()
-        blendView.backgroundColor = .white
-        blendView.alpha = 0.4
-        blendView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        blurView.contentView.addSubview(blendView)
-//        return blurView
-        
-        let childView = UIHostingController(rootView: BlurAlertView())
-        childView.view.translatesAutoresizingMaskIntoConstraints = false
-        childView.view.addSubview(blendView)
-        childView.view.layer.masksToBounds = true
-        childView.view.layer.cornerRadius = 20
-        
-        childView.view.isHidden = true
-                
-        return childView.view
-        
-    }()
-    
-    var activeRentalBike: UIButton = {
-
-        let button = NBButton()
-        button.applyProtocolUIAppearance()
-        button.setTitle("", for: .normal)
-
-        return button
-    }()
-
     var graphView: PredictionGraphView = {
         let view = PredictionGraphView(frame: .zero, true)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -138,7 +66,7 @@ class HomeViewController: UIViewController {
     // MARK: Renting
     
     private lazy var bottomButtonsStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [rentButton, insightsButton, alternateDocksBikesButton, settingsButton])
+        let stackView = UIStackView(arrangedSubviews: [insightsButton, settingsButton])
         stackView.alignment = UIStackView.Alignment.center
         stackView.axis = NSLayoutConstraint.Axis.vertical
         stackView.distribution  = UIStackView.Distribution.equalSpacing
@@ -161,17 +89,6 @@ class HomeViewController: UIViewController {
         return button
     }()
     
-    var rentButton: UIButton = {
-
-        let button = NBButton()
-        button.applyProtocolUIAppearance()
-        button.accessibilityIdentifier = "RENT_BIKE"
-        button.accessibilityLabel = NSLocalizedString("RENT_BIKE_ACCESIBILITY_LABEL", comment: "")
-        button.isHidden = true
-        button.setImage(UIImage(systemName: "lock.fill"), for: .normal)
-        return button
-    }()
-
     private var settingsButton: UIButton = {
 
         let button = NBButton()
@@ -184,18 +101,6 @@ class HomeViewController: UIViewController {
         return button
     }()
     
-    private var alternateDocksBikesButton: UIButton = {
-
-        let button = NBButton()
-        button.applyProtocolUIAppearance()
-        button.accessibilityIdentifier = "SETTINGS"
-        button.accessibilityLabel = NSLocalizedString("SETTINGS_ACCESIBILITY_BUTTON", comment: "")
-        button.setImage(UIImage(systemName: "circle"), for: .normal)
-        button.imageView?.tintColor = .white
-        
-        return button
-    }()
-
     init(viewModel: HomeViewModel) {
 
         self.viewModel = viewModel
@@ -218,41 +123,16 @@ class HomeViewController: UIViewController {
 
         view.addSubview(mapView)
         
-        activeRentalScrollView.addSubview(activeRentalStackView)
-        mapView.addSubview(activeRentalScrollView)
-
         view.addSubview(statisticsAndGraphViewStackView)
         view.bringSubviewToFront(statisticsAndGraphViewStackView)
         view.addSubview(bottomButtonsStackView)
         
-        view.addSubview(blurAlertView)
-        view.bringSubviewToFront(blurAlertView)
-
         // MARK: Settings Button constraints
 
         // Align to the bottom right
         NSLayoutConstraint.activate([
             bottomButtonsStackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -2 * Constants.spacing),
             bottomButtonsStackView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -2 * Constants.spacing)
-        ])
-        
-        // MARK: Active Rentals
-        NSLayoutConstraint.activate([
-            activeRentalScrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 16.0),
-            activeRentalScrollView.trailingAnchor.constraint(equalTo: bottomButtonsStackView.leadingAnchor, constant: -16.0),
-            activeRentalScrollView.heightAnchor.constraint(equalToConstant: 100.0),
-            activeRentalScrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 16.0)
-        ])
-        
-        NSLayoutConstraint.activate([
-//            activeRentalScrollView.heightAnchor.constraint(equalTo: self.view.heightAnchor, constant: self.activeRentalScrollView.frame.height - 16.0)
-        ])
-        
-        NSLayoutConstraint.activate([
-            activeRentalStackView.topAnchor.constraint(equalTo: activeRentalScrollView.topAnchor, constant: 0.0),
-            activeRentalStackView.trailingAnchor.constraint(equalTo: activeRentalScrollView.trailingAnchor, constant: 0),
-            activeRentalStackView.leadingAnchor.constraint(equalTo: activeRentalScrollView.leadingAnchor, constant: 0),
-            activeRentalStackView.bottomAnchor.constraint(equalTo: activeRentalScrollView.bottomAnchor, constant: 0)
         ])
         
         // Pin the borders of the graph to the container UIStackView
@@ -268,16 +148,10 @@ class HomeViewController: UIViewController {
             mapView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
             mapView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor)
         ])
-        
-        NSLayoutConstraint.activate([
-            blurAlertView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            blurAlertView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
-        ])
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.viewWillAppear()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -297,10 +171,6 @@ class HomeViewController: UIViewController {
 
             case .success(let city):
                 
-                if city.allowsLogIn {
-                    self.shouldShowRentBikeButton()
-                }
-
                 self.centerMap(on: CLLocationCoordinate2D(latitude: CLLocationDegrees(city.latitude), longitude: CLLocationDegrees(city.longitude)), coordinateSpan: Constants.narrowCoordinateSpan)
 
             case .error:
@@ -437,35 +307,6 @@ class HomeViewController: UIViewController {
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
             self.showInsightsViewController()
         }.store(in: &cancellableBag)
-        
-        rentButton.publisher(for: .touchUpInside).sink { _ in
-            self.viewModel.startRentProcess()
-        }.store(in: &cancellableBag)
-        
-        alternateDocksBikesButton.publisher(for: .touchUpInside).sink { _ in
-            self.blurAlertView.fadeIn(0.2, onCompletion: {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                    self.blurAlertView.fadeOut(0.2)
-                })
-            })
-            
-            FeedbackGenerator.sharedInstance.generator.impactOccurred()
-                        
-            if self.whatsShown == .freeBikes {
-                self.whatsShown = .freeDocks
-                self.alternateDocksBikesButton.setImage(UIImage(systemName: "circle.fill"), for: .normal)
-            } else {
-                self.whatsShown = .freeBikes
-                self.alternateDocksBikesButton.setImage(UIImage(systemName: "circle"), for: .normal)
-            }
-            
-            let stations = self.mapView.annotations
-            
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            
-            self.mapView.addAnnotations(stations)
-        }.store(in: &cancellableBag)
-        
         
         otherCancellable = viewModel.$stations.sink(receiveValue: { stations in
             stations.forEach({ pin in
@@ -649,38 +490,19 @@ extension HomeViewController: MKMapViewDelegate {
                 return marker
             }()
             
-            switch whatsShown {
-            case .freeBikes:
-                markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeBikes)"
-                
-                // Stablish the color coding of the availability
-                // TODO: NoSpotIndex
-                switch stationsDictFromViewModel.freeBikes {
-                case 10...:
-                    markerAnnotationView.markerTintColor = UIColor.systemGreen
-                case 5...10:
-                    markerAnnotationView.markerTintColor = UIColor.systemOrange
-                case ..<5:
-                    markerAnnotationView.markerTintColor = UIColor.systemRed
-                default:
-                    break
-                }
-                
-            case .freeDocks:
-                markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeRacks)"
-                
-                // Stablish the color coding of the availability
-                // TODO: NoSpotIndex
-                switch stationsDictFromViewModel.freeRacks {
-                case 10...:
-                    markerAnnotationView.markerTintColor = UIColor.systemRed
-                case 5...10:
-                    markerAnnotationView.markerTintColor = UIColor.systemOrange
-                case ..<5:
-                    markerAnnotationView.markerTintColor = UIColor.systemGreen
-                default:
-                    break
-                }
+            markerAnnotationView.glyphText = "\(stationsDictFromViewModel.freeBikes)"
+            
+            // Stablish the color coding of the availability
+            // TODO: NoSpotIndex
+            switch stationsDictFromViewModel.freeBikes {
+            case 10...:
+                markerAnnotationView.markerTintColor = UIColor.systemGreen
+            case 5...10:
+                markerAnnotationView.markerTintColor = UIColor.systemOrange
+            case ..<5:
+                markerAnnotationView.markerTintColor = UIColor.systemRed
+            default:
+                break
             }
 
             return markerAnnotationView
@@ -779,13 +601,6 @@ extension HomeViewController: HomeViewModelDelegate {
         }
     }
     
-    func showActiveRentedBike(number: String) {
-        activeRentalBike.setTitle(number, for: .normal)
-        activeRentalBike.accessibilityIdentifier = number
-        activeRentalBike.isHidden = false
-        activeRentalScrollView.isHidden = false
-    }
-    
     func centerMap(on point: CLLocationCoordinate2D, coordinateSpan: MKCoordinateSpan) {
 
         let region = MKCoordinateRegion(center: point, span: coordinateSpan)
@@ -793,14 +608,6 @@ extension HomeViewController: HomeViewModelDelegate {
         self.mapView.setRegion(region, animated: false)
     }
     
-    func shouldShowRentBikeButton() {
-        rentButton.isHidden = false
-    }
-    
-    func shouldHideRentBikeButton() {
-        rentButton.isHidden = true
-    }
-
     func presentAlertViewWithError(title: String, body: String) {
 
         let alertController = UIAlertController(title: title, message: body, preferredStyle: .alert)

@@ -14,8 +14,6 @@ import Combine
 protocol SettingsViewModelDataManager {
     func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void)
     func getCurrentCityFromDefaults(completion: @escaping (Result<City>) -> Void)
-    func logOut()
-
 }
 
 protocol SettingsViewModelDelegate: class {
@@ -81,11 +79,6 @@ class SettingsViewModel {
     
     func presentTutorialViewControllerFromCoordinatorDelegate() {
         coordinatorDelegate?.presenTutorialViewController()
-    }
-    
-    func logOut() {
-        dataManager.logOut()
-        coordinatorDelegate?.dismissSettingsViewController()
     }
 
     func prepareViewForAppearance() {

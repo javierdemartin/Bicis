@@ -36,17 +36,12 @@
 		8028059F2442319C008138BA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800CE941239559F700674D1C /* Constants.swift */; };
 		80299FDB243B80BC0094EDB2 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FDA243B80BC0094EDB2 /* IAPHelper.swift */; };
 		80299FDE243B860F0094EDB2 /* StoreKitProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */; };
-		80299FE1243B94C40094EDB2 /* ConfettiKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE0243B94C40094EDB2 /* ConfettiKit.swift */; };
 		80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */; };
 		8029AEA324780F240072117B /* InsightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029AEA224780F240072117B /* InsightsViewController.swift */; };
 		803395F1249D5D78003E3ADC /* GBFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803395F0249D5D78003E3ADC /* GBFS.swift */; };
 		8036399D24829FA900FA096F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036399C24829FA900FA096F /* UIFont.swift */; };
-		803B6AF72469C3180022A586 /* LogInFormData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6AF62469C3180022A586 /* LogInFormData.swift */; };
-		803B6B00246AF3DD0022A586 /* LogInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6AFF246AF3DD0022A586 /* LogInViewModel.swift */; };
-		803B6B02246AF3E60022A586 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6B01246AF3E60022A586 /* LogInViewController.swift */; };
 		803B6D0A243A88010080E115 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6D09243A88010080E115 /* Double.swift */; };
 		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
-		8055B898246FF65100BCC141 /* RecoverPinResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8055B897246FF65100BCC141 /* RecoverPinResponse.swift */; };
 		805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B5A2223EE050C000F3CC5 /* Bundle.swift */; };
 		805BC8E42533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805BC8E32533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift */; };
 		80628461236E34C500717472 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628460236E34C500717472 /* Coordinator.swift */; };
@@ -56,19 +51,12 @@
 		8074D333245736C4006B3062 /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D332245736C4006B3062 /* Key.swift */; };
 		8074D335245736E6006B3062 /* UserCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D334245736E6006B3062 /* UserCredentials.swift */; };
 		8074D33724573704006B3062 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D33624573704006B3062 /* User.swift */; };
-		8074D33924573712006B3062 /* LogInResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D33824573712006B3062 /* LogInResponse.swift */; };
-		8074D33B24573720006B3062 /* LogInResponseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D33A24573720006B3062 /* LogInResponseError.swift */; };
 		8074D33D2457372B006B3062 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D33C2457372B006B3062 /* BaseResponse.swift */; };
 		8074D33F24573748006B3062 /* Rent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D33E24573748006B3062 /* Rent.swift */; };
-		8074D3412457375E006B3062 /* RentResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D3402457375E006B3062 /* RentResponse.swift */; };
 		8074D3432457376D006B3062 /* UserR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D3422457376D006B3062 /* UserR.swift */; };
 		8074D3452457377B006B3062 /* BikeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D3442457377B006B3062 /* BikeList.swift */; };
-		8074D347245737BE006B3062 /* GetActiveRentalsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D346245737BE006B3062 /* GetActiveRentalsResponse.swift */; };
-		8074D349245737F7006B3062 /* RentalCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D348245737F7006B3062 /* RentalCollection.swift */; };
 		8074D34B24573806006B3062 /* MyAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D34A24573806006B3062 /* MyAPIResponse.swift */; };
 		8074D35124573CFA006B3062 /* NBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D35024573CFA006B3062 /* NBTextField.swift */; };
-		8074D35324573E98006B3062 /* BikeServicesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D35224573E98006B3062 /* BikeServicesDataManager.swift */; };
-		8074D35624573F8D006B3062 /* NextBikeBikeServicesDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D35524573F8D006B3062 /* NextBikeBikeServicesDataManager.swift */; };
 		807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C88AF23EB17CA003BA644 /* CityBikes.swift */; };
 		807C88B323EB17EC003BA644 /* NextBike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807C88B223EB17EC003BA644 /* NextBike.swift */; };
 		8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8085CC5C236E2CB500B45A7C /* AppDelegate.swift */; };
@@ -79,7 +67,6 @@
 		8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099540924181C5B00B44DC9 /* TimeInterval.swift */; };
 		809FCFB625333924005E82EA /* NBDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809FCFB525333924005E82EA /* NBDefaults.swift */; };
 		80A4CEBF253B2B4800435D54 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
-		80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */; };
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
 		80AB8B7024B23A2F004F3905 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */; };
 		80AB8B7224B23A36004F3905 /* TutorialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */; };
@@ -87,9 +74,6 @@
 		80B1D016241A95F20072D1D9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D015241A95F20072D1D9 /* UIView.swift */; };
 		80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */; };
 		80B1D019241ABCCC0072D1D9 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE45236F3C10003CFAF7 /* String.swift */; };
-		80B55FDC246D998F00AA7008 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDB246D998F00AA7008 /* ScannerViewController.swift */; };
-		80B55FDE246D999500AA7008 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDD246D999500AA7008 /* ScannerViewModel.swift */; };
-		80B55FE0246DB76D00AA7008 /* BikeServicesError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */; };
 		80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FE1246E899B00AA7008 /* NBTextView.swift */; };
 		80B8727724BA2C0900098D6B /* BlurAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8727624BA2C0800098D6B /* BlurAlertView.swift */; };
 		80B8727A24BA55F700098D6B /* SantanderBikesLondon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */; };
@@ -97,8 +81,9 @@
 		80BB4A4A252D0FCF00FF93E8 /* NBActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A49252D0FCF00FF93E8 /* NBActions.swift */; };
 		80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BC241BC52E004EE583 /* UIStackView.swift */; };
 		80D288BF241D5150004EE583 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BE241D5150004EE583 /* Binding.swift */; };
-		80D288C1241D5200004EE583 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
 		80D288C3241E3063004EE583 /* RoutePlannerStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */; };
+		80D30458253B5C460016F358 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
+		80D3045F253B5C4E0016F358 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
 		80E7D8A92456033E00D49894 /* NBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E7D8A82456033E00D49894 /* NBButton.swift */; };
 		80F882032490E2D800AB322A /* LocationServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F882022490E2D800AB322A /* LocationServiceable.swift */; };
 		80F882052490E30C00AB322A /* PermissionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F882042490E30C00AB322A /* PermissionStatus.swift */; };
@@ -152,17 +137,12 @@
 		801ECE45236F3C10003CFAF7 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		80299FDA243B80BC0094EDB2 /* IAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitProducts.swift; sourceTree = "<group>"; };
-		80299FE0243B94C40094EDB2 /* ConfettiKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiKit.swift; sourceTree = "<group>"; };
 		80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackGenerator.swift; sourceTree = "<group>"; };
 		8029AEA224780F240072117B /* InsightsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewController.swift; sourceTree = "<group>"; };
 		803395F0249D5D78003E3ADC /* GBFS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFS.swift; sourceTree = "<group>"; };
 		8036399C24829FA900FA096F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
-		803B6AF62469C3180022A586 /* LogInFormData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInFormData.swift; sourceTree = "<group>"; };
-		803B6AFF246AF3DD0022A586 /* LogInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewModel.swift; sourceTree = "<group>"; };
-		803B6B01246AF3E60022A586 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		803B6D09243A88010080E115 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		803FD8A023C71FAF008DDE91 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
-		8055B897246FF65100BCC141 /* RecoverPinResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverPinResponse.swift; sourceTree = "<group>"; };
 		805B5A2223EE050C000F3CC5 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		805BC8E32533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerSwiftUI.swift; sourceTree = "<group>"; };
 		80628460236E34C500717472 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -172,19 +152,12 @@
 		8074D332245736C4006B3062 /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
 		8074D334245736E6006B3062 /* UserCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCredentials.swift; sourceTree = "<group>"; };
 		8074D33624573704006B3062 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		8074D33824573712006B3062 /* LogInResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInResponse.swift; sourceTree = "<group>"; };
-		8074D33A24573720006B3062 /* LogInResponseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInResponseError.swift; sourceTree = "<group>"; };
 		8074D33C2457372B006B3062 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		8074D33E24573748006B3062 /* Rent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rent.swift; sourceTree = "<group>"; };
-		8074D3402457375E006B3062 /* RentResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentResponse.swift; sourceTree = "<group>"; };
 		8074D3422457376D006B3062 /* UserR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserR.swift; sourceTree = "<group>"; };
 		8074D3442457377B006B3062 /* BikeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeList.swift; sourceTree = "<group>"; };
-		8074D346245737BE006B3062 /* GetActiveRentalsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetActiveRentalsResponse.swift; sourceTree = "<group>"; };
-		8074D348245737F7006B3062 /* RentalCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalCollection.swift; sourceTree = "<group>"; };
 		8074D34A24573806006B3062 /* MyAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAPIResponse.swift; sourceTree = "<group>"; };
 		8074D35024573CFA006B3062 /* NBTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBTextField.swift; sourceTree = "<group>"; };
-		8074D35224573E98006B3062 /* BikeServicesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeServicesDataManager.swift; sourceTree = "<group>"; };
-		8074D35524573F8D006B3062 /* NextBikeBikeServicesDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBikeBikeServicesDataManager.swift; sourceTree = "<group>"; };
 		807C88A223EAD62B003BA644 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		807C88AF23EB17CA003BA644 /* CityBikes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityBikes.swift; sourceTree = "<group>"; };
 		807C88B223EB17EC003BA644 /* NextBike.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextBike.swift; sourceTree = "<group>"; };
@@ -198,16 +171,12 @@
 		809953F62416C77700B44DC9 /* InsightsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewModel.swift; sourceTree = "<group>"; };
 		8099540924181C5B00B44DC9 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		809FCFB525333924005E82EA /* NBDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBDefaults.swift; sourceTree = "<group>"; };
-		80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUserInterfaceIdiom.swift; sourceTree = "<group>"; };
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
 		80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		80ABE1EF243E148E004920D8 /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 		80B1D015241A95F20072D1D9 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerError.swift; sourceTree = "<group>"; };
-		80B55FDB246D998F00AA7008 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
-		80B55FDD246D999500AA7008 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
-		80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BikeServicesError.swift; sourceTree = "<group>"; };
 		80B55FE1246E899B00AA7008 /* NBTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBTextView.swift; sourceTree = "<group>"; };
 		80B8727624BA2C0800098D6B /* BlurAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurAlertView.swift; sourceTree = "<group>"; };
 		80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SantanderBikesLondon.swift; sourceTree = "<group>"; };
@@ -274,6 +243,7 @@
 		8000476D23EF425300492DFB /* NeuralBikesUITests */ = {
 			isa = PBXGroup;
 			children = (
+				80D288C0241D5200004EE583 /* UITestingHelper.swift */,
 				8000477623EF426000492DFB /* SnapshotHelper.swift */,
 				8000476E23EF425300492DFB /* NeuralBikesUITests.swift */,
 				8000477023EF425300492DFB /* Info.plist */,
@@ -317,7 +287,6 @@
 				80109136236E2DFA00D3C45E /* DataManager.swift */,
 				807C88AE23EB1711003BA644 /* Remote */,
 				80628462236ED79300717472 /* Result.swift */,
-				8074D35424573F32006B3062 /* Bike Services */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -325,6 +294,7 @@
 		8010913F236E316000D3C45E /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				80B8727524BA2BF700098D6B /* Blur Alert */,
 				80109140236E316E00D3C45E /* HomeViewController.swift */,
 				80109142236E317700D3C45E /* HomeViewModel.swift */,
 				801ECE3A236F3B7D003CFAF7 /* MapPin.swift */,
@@ -360,23 +330,6 @@
 			path = "Store Kit";
 			sourceTree = "<group>";
 		};
-		80299FDF243B94B20094EDB2 /* Confetti */ = {
-			isa = PBXGroup;
-			children = (
-				80299FE0243B94C40094EDB2 /* ConfettiKit.swift */,
-			);
-			path = Confetti;
-			sourceTree = "<group>";
-		};
-		803B6AFE246AF3CD0022A586 /* LogIn */ = {
-			isa = PBXGroup;
-			children = (
-				803B6AFF246AF3DD0022A586 /* LogInViewModel.swift */,
-				803B6B01246AF3E60022A586 /* LogInViewController.swift */,
-			);
-			path = LogIn;
-			sourceTree = "<group>";
-		};
 		805101B0249BA4C9008FBD21 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,31 +360,14 @@
 				8074D332245736C4006B3062 /* Key.swift */,
 				8074D334245736E6006B3062 /* UserCredentials.swift */,
 				8074D33624573704006B3062 /* User.swift */,
-				8074D33824573712006B3062 /* LogInResponse.swift */,
-				8074D33A24573720006B3062 /* LogInResponseError.swift */,
 				8074D33C2457372B006B3062 /* BaseResponse.swift */,
 				8074D33E24573748006B3062 /* Rent.swift */,
-				8074D3402457375E006B3062 /* RentResponse.swift */,
 				8074D3422457376D006B3062 /* UserR.swift */,
 				8074D3442457377B006B3062 /* BikeList.swift */,
-				8074D346245737BE006B3062 /* GetActiveRentalsResponse.swift */,
-				8074D348245737F7006B3062 /* RentalCollection.swift */,
 				8074D34A24573806006B3062 /* MyAPIResponse.swift */,
-				8055B897246FF65100BCC141 /* RecoverPinResponse.swift */,
 				803395F0249D5D78003E3ADC /* GBFS.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		8074D35424573F32006B3062 /* Bike Services */ = {
-			isa = PBXGroup;
-			children = (
-				8074D35224573E98006B3062 /* BikeServicesDataManager.swift */,
-				8074D35524573F8D006B3062 /* NextBikeBikeServicesDataManager.swift */,
-				803B6AF62469C3180022A586 /* LogInFormData.swift */,
-				80B55FDF246DB76D00AA7008 /* BikeServicesError.swift */,
-			);
-			path = "Bike Services";
 			sourceTree = "<group>";
 		};
 		807C88AE23EB1711003BA644 /* Remote */ = {
@@ -488,12 +424,8 @@
 		8085CC5B236E2CB500B45A7C /* NeuralBikes */ = {
 			isa = PBXGroup;
 			children = (
-				80B8727524BA2BF700098D6B /* Blur Alert */,
 				80AB8B6E24B23A10004F3905 /* Tutorial */,
-				80B55FDA246D997D00AA7008 /* Scanner */,
-				803B6AFE246AF3CD0022A586 /* LogIn */,
 				80E7D8A7245602EB00D49894 /* Protocols */,
-				80299FDF243B94B20094EDB2 /* Confetti */,
 				809953F32416C50100B44DC9 /* Insights */,
 				800CE94523955BD400674D1C /* NeuralBikes.entitlements */,
 				801ECE40236F3BC3003CFAF7 /* Extensions */,
@@ -510,12 +442,10 @@
 				800CE941239559F700674D1C /* Constants.swift */,
 				80BB4A38252D0DC900FF93E8 /* Settings */,
 				8002ED7D2397FCAB008ABB6B /* LocationServices */,
-				80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */,
 				80A8216923D9B7E4003DD67D /* Cities.swift */,
 				80299FDC243B86040094EDB2 /* Store Kit */,
 				80D288BE241D5150004EE583 /* Binding.swift */,
 				80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */,
-				80D288C0241D5200004EE583 /* UITestingHelper.swift */,
 				8018E1562451889400CE7796 /* LogHelper.swift */,
 				80BB4A49252D0FCF00FF93E8 /* NBActions.swift */,
 				809FCFB525333924005E82EA /* NBDefaults.swift */,
@@ -540,15 +470,6 @@
 				80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */,
 			);
 			path = Tutorial;
-			sourceTree = "<group>";
-		};
-		80B55FDA246D997D00AA7008 /* Scanner */ = {
-			isa = PBXGroup;
-			children = (
-				80B55FDB246D998F00AA7008 /* ScannerViewController.swift */,
-				80B55FDD246D999500AA7008 /* ScannerViewModel.swift */,
-			);
-			path = Scanner;
 			sourceTree = "<group>";
 		};
 		80B8727524BA2BF700098D6B /* Blur Alert */ = {
@@ -761,6 +682,7 @@
 				80A4CEBF253B2B4800435D54 /* Cities.swift in Sources */,
 				80B1D019241ABCCC0072D1D9 /* String.swift in Sources */,
 				8000476F23EF425300492DFB /* NeuralBikesUITests.swift in Sources */,
+				80D30458253B5C460016F358 /* UITestingHelper.swift in Sources */,
 				8000477723EF426000492DFB /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -770,18 +692,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8029AEA324780F240072117B /* InsightsViewController.swift in Sources */,
-				8074D33924573712006B3062 /* LogInResponse.swift in Sources */,
 				80109145236E320300D3C45E /* AppCoordinator.swift in Sources */,
 				8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */,
-				80D288C1241D5200004EE583 /* UITestingHelper.swift in Sources */,
-				803B6B00246AF3DD0022A586 /* LogInViewModel.swift in Sources */,
 				80109137236E2DFA00D3C45E /* DataManager.swift in Sources */,
-				8074D347245737BE006B3062 /* GetActiveRentalsResponse.swift in Sources */,
 				80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */,
 				809FCFB625333924005E82EA /* NBDefaults.swift in Sources */,
 				8018E1572451889400CE7796 /* LogHelper.swift in Sources */,
 				80F882072490E3B100AB322A /* LocationServicesCoreLocation.swift in Sources */,
-				803B6AF72469C3180022A586 /* LogInFormData.swift in Sources */,
 				80AB8B7024B23A2F004F3905 /* TutorialViewController.swift in Sources */,
 				8074D35124573CFA006B3062 /* NBTextField.swift in Sources */,
 				80FFDE362468614000436BA6 /* UIApplication.swift in Sources */,
@@ -789,18 +706,13 @@
 				80109135236E2DEC00D3C45E /* LocalDataManager.swift in Sources */,
 				807C88B323EB17EC003BA644 /* NextBike.swift in Sources */,
 				80299FDB243B80BC0094EDB2 /* IAPHelper.swift in Sources */,
-				8074D35624573F8D006B3062 /* NextBikeBikeServicesDataManager.swift in Sources */,
 				805BC8E42533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift in Sources */,
-				80B55FDC246D998F00AA7008 /* ScannerViewController.swift in Sources */,
 				807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */,
-				8074D349245737F7006B3062 /* RentalCollection.swift in Sources */,
 				8074D3452457377B006B3062 /* BikeList.swift in Sources */,
-				8074D33B24573720006B3062 /* LogInResponseError.swift in Sources */,
+				80D3045F253B5C4E0016F358 /* UITestingHelper.swift in Sources */,
 				80109143236E317700D3C45E /* HomeViewModel.swift in Sources */,
 				80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */,
 				80F882032490E2D800AB322A /* LocationServiceable.swift in Sources */,
-				8074D35324573E98006B3062 /* BikeServicesDataManager.swift in Sources */,
-				80B55FE0246DB76D00AA7008 /* BikeServicesError.swift in Sources */,
 				80BB4A4A252D0FCF00FF93E8 /* NBActions.swift in Sources */,
 				800CE94423955A7F00674D1C /* LocalDataManagerError.swift in Sources */,
 				80ABE1F0243E148E004920D8 /* UIAlertController.swift in Sources */,
@@ -817,9 +729,7 @@
 				80D288C3241E3063004EE583 /* RoutePlannerStationModel.swift in Sources */,
 				809953F72416C77700B44DC9 /* InsightsViewModel.swift in Sources */,
 				80109141236E316E00D3C45E /* HomeViewController.swift in Sources */,
-				80299FE1243B94C40094EDB2 /* ConfettiKit.swift in Sources */,
 				80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */,
-				803B6B02246AF3E60022A586 /* LogInViewController.swift in Sources */,
 				8074D333245736C4006B3062 /* Key.swift in Sources */,
 				800DDD4C23ED510700FCE4E5 /* BiciMad.swift in Sources */,
 				80FFDE3224683D4A00436BA6 /* NBStackView.swift in Sources */,
@@ -828,22 +738,18 @@
 				8074D33724573704006B3062 /* User.swift in Sources */,
 				805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */,
 				80FFDE342468407500436BA6 /* NBLabel.swift in Sources */,
-				8074D3412457375E006B3062 /* RentResponse.swift in Sources */,
 				8062846A236EE22F00717472 /* DefaultLocalDataManager.swift in Sources */,
 				80B8727A24BA55F700098D6B /* SantanderBikesLondon.swift in Sources */,
 				80AB8B7224B23A36004F3905 /* TutorialViewModel.swift in Sources */,
 				80B8727724BA2C0900098D6B /* BlurAlertView.swift in Sources */,
-				80B55FDE246D999500AA7008 /* ScannerViewModel.swift in Sources */,
 				801ECE42236F3BD1003CFAF7 /* UIColor.swift in Sources */,
 				80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */,
 				8074D335245736E6006B3062 /* UserCredentials.swift in Sources */,
 				80628461236E34C500717472 /* Coordinator.swift in Sources */,
-				80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */,
 				80F882052490E30C00AB322A /* PermissionStatus.swift in Sources */,
 				8074D33F24573748006B3062 /* Rent.swift in Sources */,
 				80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */,
 				80D288BF241D5150004EE583 /* Binding.swift in Sources */,
-				8055B898246FF65100BCC141 /* RecoverPinResponse.swift in Sources */,
 				803B6D0A243A88010080E115 /* Double.swift in Sources */,
 				8036399D24829FA900FA096F /* UIFont.swift in Sources */,
 				803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */,
@@ -1103,7 +1009,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NeuralBikes/NeuralBikes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 54;
+				CURRENT_PROJECT_VERSION = 55;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1111,12 +1017,17 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.10.1;
+				MARKETING_VERSION = 2020.10.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "Neural Bikes";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				WARNING_CFLAGS = (
+					"-Wunused-label",
+					"-Wunused-variable",
+					"-Wall",
+				);
 			};
 			name = Debug;
 		};
@@ -1126,7 +1037,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NeuralBikes/NeuralBikes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 54;
+				CURRENT_PROJECT_VERSION = 55;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1134,12 +1045,17 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.10.1;
+				MARKETING_VERSION = 2020.10.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "Neural Bikes";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				WARNING_CFLAGS = (
+					"-Wunused-label",
+					"-Wunused-variable",
+					"-Wall",
+				);
 			};
 			name = Release;
 		};

@@ -15,7 +15,7 @@ class AppCoordinator: Coordinator {
 
     let window: UIWindow
 
-    var dismissingSettingsViewController = false
+    var currentCity: City?
 
     lazy var localDataManager: LocalDataManager = {
         return DefaultLocalDataManager()
@@ -25,19 +25,15 @@ class AppCoordinator: Coordinator {
         return DefaultRemoteDataManager()
     }()
     
-    lazy var bikeServicesDataManager: BikeServicesDataManager = {
-       return NextBikeBikeServicesDataManager()
-    }()
+    
 
     lazy var dataManager: DataManager = {
-        return DataManager(localDataManager: self.localDataManager, remoteDataManager: self.remoteDataManager, bikeServicesDataManager: bikeServicesDataManager)
+        return DataManager(localDataManager: self.localDataManager, remoteDataManager: self.remoteDataManager)
     }()
     
     lazy var locationService: LocationServiceable = {
        return LocationServiceCoreLocation()
     }()
-    
-    var scannerViewModel: ScannerViewModel?
 
     init(window: UIWindow) {
         self.window = window
@@ -46,8 +42,12 @@ class AppCoordinator: Coordinator {
     override func start() {
 
         if UITestingHelper.sharedInstance.isUITesting() {
-            currentCity = availableCities["Madrid"]
-            localDataManager.saveCurrentCity(apiCityName: availableCities["Madrid"]!, completion: { _ in })
+            
+            if let uiTestingCity = UITestingHelper.sharedInstance.isForceFeedingCity() {
+                currentCity = uiTestingCity
+                localDataManager.saveCurrentCity(apiCityName: uiTestingCity, completion: { _ in })
+            }
+            
             showHomeViewController()
 
         } else {
@@ -68,22 +68,12 @@ class AppCoordinator: Coordinator {
         }
     }
 
-    override func finish() {
-
-    }
-
     var homeViewModel: HomeViewModel?
-    var homeViewController: HomeViewController?
-    var currentCity: City?
-    
+        
     fileprivate func showHomeViewController() {
         
-        if let uiTestingCity = UITestingHelper.sharedInstance.isForceFeedingCity() {
-            currentCity = uiTestingCity
-        }
-
         homeViewModel = HomeViewModel(city: currentCity ?? nil, dataManager: dataManager, locationService: locationService)
-        homeViewController = HomeViewController(viewModel: homeViewModel!)
+        let homeViewController = HomeViewController(viewModel: homeViewModel!)
         self.window.rootViewController = homeViewController
 
         homeViewModel!.coordinatorDelegate = self
@@ -92,44 +82,19 @@ class AppCoordinator: Coordinator {
         window.makeKeyAndVisible()
     }
 
-    var settingsViewController: UIHostingController<SettingsViewControllerSwiftUI>? // SettingsViewController?
-    var logInViewController: LogInViewController?
+    var settingsViewController: UIHostingController<SettingsViewControllerSwiftUI>?
 
     fileprivate func presentModallySettingsViewController() {
 
         let settingsViewModel = SettingsViewModel(currentCity: currentCity ?? nil, locationService: locationService, dataManager: dataManager)
 
-        
-
         settingsViewModel.coordinatorDelegate = self
-//        settingsViewModel.delegate = settingsViewController
         
-        
-        settingsViewController = UIHostingController(rootView: SettingsViewControllerSwiftUI(viewModel: settingsViewModel)) //<SettingsViewControllerSwiftUI>() //SettingsViewController(viewModel: settingsViewModel)
+        settingsViewController = UIHostingController(rootView: SettingsViewControllerSwiftUI(viewModel: settingsViewModel))
         
         settingsViewController?.modalPresentationStyle = .formSheet
 
         self.window.rootViewController?.present(settingsViewController!, animated: true, completion: nil)
-    }
-
-    fileprivate func handleModalDismissed() {
-
-        localDataManager.getCurrentCity(completion: { getCurrentCityResult in
-            switch getCurrentCityResult {
-
-            case .success(let suc):
-                self.homeViewModel?.currentCity = suc
-
-            case .error:
-                break
-            }
-        })
-    }
-}
-
-extension AppCoordinator: ScannerViewModelCoordinatorDelegate {
-    func scannedCodeWith(number: Int?) {
-        homeViewModel?.finishRentProcess(bike: number)
     }
 }
 
@@ -146,12 +111,6 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
 
         homeViewModel?.removeAnnotationsFromMap()
         
-        if city.allowsLogIn {
-            homeViewModel?.delegate?.shouldShowRentBikeButton()
-        } else {
-            homeViewModel?.delegate?.shouldHideRentBikeButton()
-        }
-
         print("Selected from coordinator \(city.formalName)")
 
         guard let homeViewModel = homeViewModel else { return }
@@ -160,10 +119,8 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
 
         homeViewModel.delegate?.centerMap(on: centerCoordinates, coordinateSpan: Constants.wideCoordinateSpan)
 
-//        homeViewModel.stations.value = []
         homeViewModel.stations = []
         homeViewModel.stationsDictCombine = [:]
-//        homeViewModel.stationsDict.value = [:]
 
         homeViewModel.dataManager.getStations(city: city.formalName, completion: { resultStations in
 
@@ -176,19 +133,10 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
                 })
 
                 self.homeViewModel?.stations = res
-//                self.homeViewModel?.stations.value = res
             case .error:
                 break
             }
         })
-    }
-}
-
-extension AppCoordinator: LogInVieWModelCoordinatorDelegate {
-    func dismissViewController() {
-        DispatchQueue.main.async {
-            self.logInViewController?.dismiss(animated: true, completion: nil)
-        }
     }
 }
 
@@ -199,27 +147,8 @@ extension AppCoordinator: TutorialViewModelCoordinatorDelegate {
 }
 
 extension AppCoordinator: HomeViewModelCoordinatorDelegate {
-    func presentScannerViewController() {
-        scannerViewModel = ScannerViewModel()
-        let scannerViewController = ScannerViewController(viewModel: scannerViewModel!)
-        
-        scannerViewModel?.delegate = scannerViewController
-        scannerViewModel?.coordinatorDelegate = self
-        scannerViewController.modalPresentationStyle = .formSheet
-        self.window.rootViewController?.present(scannerViewController, animated: true, completion: nil)
-    }
-    
-    func presentLogInViewController() {
-        let logInViewModel = LogInViewModel(dataManager: dataManager)
-        logInViewController = LogInViewController(viewModel: logInViewModel)
-        logInViewModel.delegate = logInViewController
-        logInViewModel.coordinatorDelegate = self
-        logInViewController!.modalPresentationStyle = .formSheet
-        self.window.rootViewController?.present(logInViewController!, animated: true, completion: nil)
-    }
     
     func presenTutorialViewController() {
-        
         
         let tutorialViewModel = TutorialViewModel()
         tutorialViewModel.coordinatorDelegate = self
@@ -239,11 +168,11 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
         let routePlannerViewModel = InsightsViewModel(locationService: locationService, dataManager: dataManager, destinationStation: stationsDict)
    
         let swiftUIView = InsightsViewController(viewModel: routePlannerViewModel)
-        let viewCtrl = UIHostingController(rootView: swiftUIView)
+        let viewController = UIHostingController(rootView: swiftUIView)
         
-        viewCtrl.modalPresentationStyle = .formSheet
+        viewController.modalPresentationStyle = .formSheet
 
-        self.window.rootViewController?.present(viewCtrl, animated: true, completion: nil)
+        self.window.rootViewController?.present(viewController, animated: true, completion: nil)
     }
 
     func showSettingsViewController() {
