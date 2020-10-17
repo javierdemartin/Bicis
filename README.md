@@ -1,6 +1,6 @@
 # Bicis
 
-![Donate & support the project](http://paypal.me/javierdemartin)
+![Donate & support the project](https://ko-fi.com/javierdemartin)
 
 ![Neural Bikes in action](resources/promo.png)
 
@@ -12,4 +12,4 @@ Compares the daily historic availability against the predictions made by [Neural
 
 ## Acknowledgements
 
-This app is completely free. I even removed Google Ads because I didn't feel comfortable using them. I'm planning on adding donation buttons to the app to help me maintain the development of this project. Meanwhile you can contribute and donate via Ko-Fi using the button above.
+This app is completelly free and Open-Source if it's helped you can donate using [Ko-Fi](https://ko-fi.com/javierdemartin) or using the In-App Purchases of the iOS app. There's no third party libraries involved or data shared with anyone.
