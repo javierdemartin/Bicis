@@ -105,31 +105,3 @@ extension DataManager: InsightsViewModelDataManager {
         })
     }
 }
-
-// MARK: SettingsViewModelDataManager
-extension DataManager: SettingsViewModelDataManager {
-
-    func getCurrentCityFromDefaults(completion: @escaping (Result<City>) -> Void) {
-        localDataManager.getCurrentCity(completion: { cityResult in
-
-            switch cityResult {
-
-            case .success(let city):
-                completion(.success(city))
-            case .error(let err):
-                completion(.error(err))
-            }
-        })
-    }
-
-    func saveCurrentCity(apiCityName: City, completion: @escaping (Result<Void>) -> Void) {
-        localDataManager.saveCurrentCity(apiCityName: apiCityName, completion: { saveCurrentCityResult in
-            switch saveCurrentCityResult {
-            case .success:
-                completion(.success(()))
-            case .error(let err):
-                completion(.error(err))
-            }
-        })
-    }
-}

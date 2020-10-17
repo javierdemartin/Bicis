@@ -15,8 +15,13 @@ class AppCoordinator: Coordinator {
 
     let window: UIWindow
 
+    /// Current selected city
     var currentCity: City?
+    
+    var homeViewModel: HomeViewModel?
 
+    var settingsViewController: UIHostingController<SettingsViewController>?
+    
     lazy var localDataManager: LocalDataManager = {
         return DefaultLocalDataManager()
     }()
@@ -24,8 +29,6 @@ class AppCoordinator: Coordinator {
     lazy var remoteDataManager: RemoteDataManager = {
         return DefaultRemoteDataManager()
     }()
-    
-    
 
     lazy var dataManager: DataManager = {
         return DataManager(localDataManager: self.localDataManager, remoteDataManager: self.remoteDataManager)
@@ -41,6 +44,7 @@ class AppCoordinator: Coordinator {
 
     override func start() {
 
+        /// Mock the city that's shown if running UI Tests depending on the device's locale
         if UITestingHelper.sharedInstance.isUITesting() {
             
             if let uiTestingCity = UITestingHelper.sharedInstance.isForceFeedingCity() {
@@ -67,8 +71,6 @@ class AppCoordinator: Coordinator {
             }
         }
     }
-
-    var homeViewModel: HomeViewModel?
         
     fileprivate func showHomeViewController() {
         
@@ -82,15 +84,13 @@ class AppCoordinator: Coordinator {
         window.makeKeyAndVisible()
     }
 
-    var settingsViewController: UIHostingController<SettingsViewControllerSwiftUI>?
-
     fileprivate func presentModallySettingsViewController() {
 
-        let settingsViewModel = SettingsViewModel(currentCity: currentCity ?? nil, locationService: locationService, dataManager: dataManager)
+        let settingsViewModel = SettingsViewModel(currentCity: currentCity ?? nil)
 
         settingsViewModel.coordinatorDelegate = self
         
-        settingsViewController = UIHostingController(rootView: SettingsViewControllerSwiftUI(viewModel: settingsViewModel))
+        settingsViewController = UIHostingController(rootView: SettingsViewController(viewModel: settingsViewModel))
         
         settingsViewController?.modalPresentationStyle = .formSheet
 
@@ -99,12 +99,6 @@ class AppCoordinator: Coordinator {
 }
 
 extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
-    
-    func dismissSettingsViewController() {
-        DispatchQueue.main.async {
-            self.settingsViewController?.dismiss(animated: true, completion: nil)
-        }
-    }
     
     // Re-centers the map when the UIPickerView changes value
     func changedCitySelectionInPickerView(city: City) {

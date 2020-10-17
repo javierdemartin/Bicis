@@ -11,7 +11,7 @@ import UIKit
 import StoreKit
 import Combine
 
-struct SettingsViewControllerSwiftUI: View {
+struct SettingsViewController: View {
     
     let defaults = UserDefaults(suiteName: Constants.appGroupsBundleID)!
     
@@ -24,12 +24,11 @@ struct SettingsViewControllerSwiftUI: View {
     @State var productos: [MyPurchase] = []
     
     @ObservedObject var otherViewModel = OtherSettingsViewModel()
-        
+    
     init(viewModel: SettingsViewModel) {
         
         self.viewModel = viewModel
     }
-    
     
     @State private var selectedCity = 0
     
@@ -45,8 +44,9 @@ struct SettingsViewControllerSwiftUI: View {
                     Image(uiImage: UIImage(named: "AppIcon60x60")!)
                         .frame(width: 60, height: 60, alignment: .center)
                         .cornerRadius(10)
-                                .overlay(RoundedRectangle(cornerRadius: 10)
+                        .overlay(RoundedRectangle(cornerRadius: 10)
                                     .stroke(Color.blue, lineWidth: 4))
+                        .padding()
                     
                     Text(NBDefaults.longAppVersion!)
                         .bold()
@@ -58,19 +58,21 @@ struct SettingsViewControllerSwiftUI: View {
                     Button(action: {
                         NBActions.sendToTwitter(profile: "javierdemartin")
                     }, label: {
-                            Text("@javierdemartin")
+                        Text("@javierdemartin")
                             .bold()
                             .font(.system(.body, design: .rounded))
-                                .padding()
+                            .padding()
                     })
+                    
+                    Divider()
                     
                     Button(action: {
                         NBActions.sendToTwitter(profile: "neuralbikes")
                     }, label: {
-                            Text("@neuralbikes")
+                        Text("@neuralbikes")
                             .bold()
                             .font(.system(.body, design: .rounded))
-                                .padding()
+                            .padding()
                     })
                 }
                 
@@ -93,6 +95,19 @@ struct SettingsViewControllerSwiftUI: View {
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                 
+                
+//                #if targetEnvironment(macCatalyst)
+//                Picker(selection: $selectedCity, label: Text("Change cities")) {
+//                    ForEach(0 ..< availableCities.count) {
+//                        Text(Array(availableCities.keys)[$0])
+//                            .bold()
+//                            .font(.system(.body, design: .rounded))
+//                    }
+//                }
+//                .onPreferenceChange(perform: { change in
+//                    changeCity(change: change)
+//                })
+//                #else
                 Picker(selection: $selectedCity, label: Text("Change cities")) {
                     ForEach(0 ..< availableCities.count) {
                         Text(Array(availableCities.keys)[$0])
@@ -100,23 +115,11 @@ struct SettingsViewControllerSwiftUI: View {
                             .font(.system(.body, design: .rounded))
                     }
                 }
-                .onChange(of: selectedCity, perform: { change in
-                    print("\(change) - \(Array(availableCities.keys)[change])")
-
-                    let apiCityName = availableCities[Array(availableCities.keys)[change]]
-
-                    do {
-                        let encodedData = try PropertyListEncoder().encode(apiCityName)
-                        defaults.set(encodedData, forKey: "city")
-                    } catch {
-                        fatalError("\(#function)")
-                    }
-
-                    if let citio = apiCityName {
-                        viewModel.changedCityTo(citio: citio)
-                    }
-                })
-                                
+//                .onChange(of: selectedCity, perform: { change in
+//                    changeCity(change: change)
+//                })
+//                #endif
+                
                 if self.otherViewModel.products.count > 0 {
                     
                     Divider()
@@ -169,41 +172,66 @@ struct SettingsViewControllerSwiftUI: View {
                 
                 Divider()
                 
-                Button(action: {
-                    NBActions.sendToWeb()
-                }, label: {
-                    Text("SEND_TO_WEBSITE")
-                        .bold()
-                        .font(.system(.body, design: .rounded))
-                })
+                VStack {
+                    Button(action: {
+                        NBActions.sendToWeb()
+                    }, label: {
+                        Text("SEND_TO_WEBSITE")
+                            .bold()
+                            .font(.system(.body, design: .rounded))
+                    }).padding()
+                    
+                    Button(action: {
+                        NBActions.sendToPrivacyPolicy()
+                    }, label: {
+                        Text("PRIVACY_POLICY")
+                            .bold()
+                            .font(.system(.body, design: .rounded))
+                    }).padding()
+                }
                 
             }
         }.padding()
         .onAppear(perform: {
             
             guard let data = defaults.value(forKey: "city") as? Data else {
-               return
+                return
             }
-
+            
             guard let decoded = try? PropertyListDecoder().decode(City.self, from: data) else {
-               return
+                return
             }
             
-            let selected = Array(availableCities.keys).index(of: decoded.formalName)
-            
-            print(selected)
-            
-            selectedCity = selected!
+            if let currentCityIndex = Array(availableCities.keys).index(of: decoded.formalName) {
+                selectedCity = currentCityIndex
+            }
         })
+    }
+    
+    func changeCity(change: Int) {
+        print("\(change) - \(Array(availableCities.keys)[change])")
+        
+        let apiCityName = availableCities[Array(availableCities.keys)[change]]
+        
+        do {
+            let encodedData = try PropertyListEncoder().encode(apiCityName)
+            defaults.set(encodedData, forKey: "city")
+        } catch {
+            fatalError("\(#function)")
+        }
+        
+        if let citio = apiCityName {
+            viewModel.changedCityTo(citio: citio)
+        }
     }
 }
 
-class SettingsHostingController: UIHostingController<SettingsViewControllerSwiftUI> {
+class SettingsHostingController: UIHostingController<SettingsViewController> {
     
     var coordinatorDelegate: SettingsViewModelCoordinatorDelegate?
     
     init(viewModel: SettingsViewModel) {
-        super.init(rootView: SettingsViewControllerSwiftUI(viewModel: viewModel))
+        super.init(rootView: SettingsViewController(viewModel: viewModel))
     }
     
     required init?(coder: NSCoder) {

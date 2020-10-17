@@ -75,15 +75,28 @@ class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, Location
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        guard let latestLocation = locations.last else {
-            return
+        if let uiTestCity = UITestingHelper.sharedInstance.isForceFeedingCity() {
+            
+            let uiTestLocation = CLLocation(latitude: CLLocationDegrees(uiTestCity.latitude), longitude: CLLocationDegrees(uiTestCity.longitude))
+            
+            currentLocation = uiTestLocation
+            
+            locationPublisher.send(self.currentLocation!)
+            
+            didUpdateLocationsHandler?(self.currentLocation!)
+            
+        } else {
+
+            guard let latestLocation = locations.last else {
+                return
+            }
+            
+            currentLocation = latestLocation
+            
+            locationPublisher.send(self.currentLocation!)
+            
+            didUpdateLocationsHandler?(self.currentLocation!)
         }
-        
-        currentLocation = latestLocation
-        
-        locationPublisher.send(latestLocation)
-        
-        didUpdateLocationsHandler?(latestLocation)
     }
     
     func startMonitoring() {

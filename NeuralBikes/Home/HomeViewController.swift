@@ -83,7 +83,11 @@ class HomeViewController: UIViewController {
         button.accessibilityLabel = NSLocalizedString("DATA_INSIGHTS_ACCESIBILITY_LABEL", comment: "")
         button.accessibilityIdentifier = "START_ROUTE"
         button.accessibilityLabel = NSLocalizedString("DATA_INSIGHTS_ACCESIBILITY_BUTTON", comment: "")
-        button.setImage(UIImage(systemName: "info.circle.fill"), for: .normal)
+        button.setImage(UIImage(systemName: "lightbulb"), for: .normal)
+        button.setImage(UIImage(systemName: "lightbulb.fill"), for: .selected)
+        button.layer.borderWidth = 2.0
+        button.layer.borderColor = UIColor(white: 0.25, alpha: 0.4).cgColor
+        button.layer.masksToBounds = true
         button.isHidden = true
 
         return button
@@ -95,7 +99,11 @@ class HomeViewController: UIViewController {
         button.applyProtocolUIAppearance()
         button.accessibilityIdentifier = "SETTINGS"
         button.accessibilityLabel = NSLocalizedString("SETTINGS_ACCESIBILITY_BUTTON", comment: "")
-        button.setImage(UIImage(systemName: "gear"), for: .normal)
+        button.setImage(UIImage(systemName: "gearshape"), for: .normal)
+        button.setImage(UIImage(systemName: "gearshape.fill"), for: .selected)
+        button.layer.borderWidth = 2.0
+        button.layer.borderColor = UIColor(white: 0.25, alpha: 0.4).cgColor
+        button.layer.masksToBounds = true
         button.imageView?.tintColor = .white
         
         return button

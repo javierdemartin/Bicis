@@ -66,10 +66,7 @@ struct InsightsViewController: View {
                                 
                                 Text(viewModel.predictionPrecission!)
                                     .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-                            } else {
-                                
                             }
-                            
                         }
                         .overlay(
                             RoundedRectangle(cornerRadius: Constants.cornerRadius)
@@ -92,7 +89,7 @@ struct InsightsViewController: View {
                     
                     VStack(alignment: .leading) {
                         
-                        Text("OPERATIONS_DESCRIPTION")
+//                        Text("OPERATIONS_DESCRIPTION")
                         
                         HStack {
                             

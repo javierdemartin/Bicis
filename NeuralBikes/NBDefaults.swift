@@ -15,7 +15,7 @@ struct NBDefaults {
 
             guard let bundleString = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else { return nil }
             
-            return versionString + "(\(bundleString))"
+            return versionString + " (\(bundleString))"
         }
     }
 }

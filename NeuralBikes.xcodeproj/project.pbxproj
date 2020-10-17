@@ -43,7 +43,7 @@
 		803B6D0A243A88010080E115 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803B6D09243A88010080E115 /* Double.swift */; };
 		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
 		805B5A2323EE050C000F3CC5 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B5A2223EE050C000F3CC5 /* Bundle.swift */; };
-		805BC8E42533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805BC8E32533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift */; };
+		805BC8E42533B17A00C4AF7F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805BC8E32533B17A00C4AF7F /* SettingsViewController.swift */; };
 		80628461236E34C500717472 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628460236E34C500717472 /* Coordinator.swift */; };
 		80628463236ED79300717472 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628462236ED79300717472 /* Result.swift */; };
 		80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80628464236ED87900717472 /* DefaultRemoteDataManager.swift */; };
@@ -138,7 +138,7 @@
 		803B6D09243A88010080E115 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		803FD8A023C71FAF008DDE91 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 		805B5A2223EE050C000F3CC5 /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
-		805BC8E32533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewControllerSwiftUI.swift; sourceTree = "<group>"; };
+		805BC8E32533B17A00C4AF7F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		80628460236E34C500717472 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		80628462236ED79300717472 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		80628464236ED87900717472 /* DefaultRemoteDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultRemoteDataManager.swift; sourceTree = "<group>"; };
@@ -474,7 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				80BB4A3D252D0DC900FF93E8 /* SettingsViewModel.swift */,
-				805BC8E32533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift */,
+				805BC8E32533B17A00C4AF7F /* SettingsViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -688,7 +688,7 @@
 				80109135236E2DEC00D3C45E /* LocalDataManager.swift in Sources */,
 				807C88B323EB17EC003BA644 /* NextBike.swift in Sources */,
 				80299FDB243B80BC0094EDB2 /* IAPHelper.swift in Sources */,
-				805BC8E42533B17A00C4AF7F /* SettingsViewControllerSwiftUI.swift in Sources */,
+				805BC8E42533B17A00C4AF7F /* SettingsViewController.swift in Sources */,
 				807C88B023EB17CA003BA644 /* CityBikes.swift in Sources */,
 				80D3045F253B5C4E0016F358 /* UITestingHelper.swift in Sources */,
 				80109143236E317700D3C45E /* HomeViewModel.swift in Sources */,
