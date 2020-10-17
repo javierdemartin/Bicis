@@ -78,7 +78,6 @@ class DefaultLocalDataManager: LocalDataManager {
     }
     
     func set<T>(value: T, for key: String) {
-     
         defaults.setValue(value, forKey: key)
     }
 
@@ -123,60 +122,5 @@ class DefaultLocalDataManager: LocalDataManager {
         }
 
         completion(.success(decoded))
-    }
-
-    func saveUserData(validateInstallationResponse: UserCredentials, completion: @escaping (Result<Void>) -> Void) {
-        do {
-            let encodedData = try PropertyListEncoder().encode(validateInstallationResponse)
-            defaults.set(encodedData, forKey: "UserCredentials")
-
-            completion(.success(()))
-
-        } catch {
-            completion(.error(LocalDataManagerError.errorSavingToDefaults))
-        }
-    }
-
-    func getUserData(completion: @escaping (Result<UserCredentials>) -> Void) {
-
-        guard let data = defaults.value(forKey: "UserCredentials") as? Data else {
-            completion(.error(LocalDataManagerError.noLogInSaved))
-           return
-        }
-
-        guard let decoded = try? PropertyListDecoder().decode(UserCredentials.self, from: data) else {
-            completion(.error(LocalDataManagerError.errorDecodingDefaults))
-           return
-        }
-
-        completion(.success(decoded))
-    }
-    
-    func logOut() {
-        defaults.set(nil, forKey: "UserCredentials")
-    }
-    
-    func saveLogIn(response: UserR) {
-        
-        do {
-            let encodedData = try PropertyListEncoder().encode(response)
-            defaults.set(encodedData, forKey: "\(type(of: response).self)")
-
-        } catch {
-            print("Error \(error.localizedDescription)")
-        }
-            
-    }
-    
-    func getLogIn() -> UserR? {
-        guard let data = defaults.value(forKey: "\(UserR.self)") as? Data else {
-           return nil
-        }
-
-        guard let decoded = try? PropertyListDecoder().decode(UserR.self, from: data) else {
-           return nil
-        }
-        
-        return decoded
     }
 }

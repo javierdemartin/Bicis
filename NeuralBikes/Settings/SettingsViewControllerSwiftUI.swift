@@ -31,7 +31,7 @@ struct SettingsViewControllerSwiftUI: View {
     }
     
     
-    @State private var selectedColor = 0
+    @State private var selectedCity = 0
     
     var body: some View {
         
@@ -84,22 +84,68 @@ struct SettingsViewControllerSwiftUI: View {
                         .font(.system(.body, design: .rounded))
                         .padding()
                 })
+                
+                Divider()
+                
+                Text("HOW_TO_USE")
+                    .bold()
+                    .font(.system(.body, design: .rounded))
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Picker(selection: $selectedCity, label: Text("Change cities")) {
+                    ForEach(0 ..< availableCities.count) {
+                        Text(Array(availableCities.keys)[$0])
+                            .bold()
+                            .font(.system(.body, design: .rounded))
+                    }
+                }
+                .onChange(of: selectedCity, perform: { change in
+                    print("\(change) - \(Array(availableCities.keys)[change])")
+
+                    let apiCityName = availableCities[Array(availableCities.keys)[change]]
+
+                    do {
+                        let encodedData = try PropertyListEncoder().encode(apiCityName)
+                        defaults.set(encodedData, forKey: "city")
+                    } catch {
+                        fatalError("\(#function)")
+                    }
+
+                    if let citio = apiCityName {
+                        viewModel.changedCityTo(citio: citio)
+                    }
+                })
                                 
                 if self.otherViewModel.products.count > 0 {
                     
                     Divider()
                     
-                    VStack {
+                    VStack(alignment: .center) {
+                        
+                        HStack {
+                            Text("DONATIONS_EXPLANATION")
+                                .bold()
+                                .font(.system(.body, design: .rounded))
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: false, vertical: true)
+                            Spacer()
+                        }
                         
                         ForEach(self.otherViewModel.products) { a in
                             
                             Button(action: {
                                 StoreKitProducts.store.buyProduct(a.skProd)
                             }, label: {
-                                Text("\(a.localizedTitle) \(a.skProd.localizedPrice)")
-                                    .bold()
-                                    .font(.system(.body, design: .rounded))
-                                    .padding()
+                                HStack {
+                                    Spacer()
+                                    Text("\(a.localizedTitle) \(a.skProd.localizedPrice)")
+                                        .bold()
+                                        .font(.system(.body, design: .rounded))
+                                        .padding()
+                                    Spacer()
+                                    
+                                }
                             })
                             .foregroundColor(.white)
                             .background(Color.accentColor)
@@ -117,71 +163,38 @@ struct SettingsViewControllerSwiftUI: View {
                                 .padding()
                         })
                         
-                        Text("DONATIONS_EXPLANATION")
-                            .font(.caption)
                     }.padding()
                 }
                 
                 
                 Divider()
                 
-                Text("HOW_TO_USE")
-                    .bold()
-                    .font(.system(.body, design: .rounded))
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
-                
-                Picker(selection: $selectedColor, label: Text("Please choose a color")) {
-                    ForEach(0 ..< availableCities.count) {
-                        Text(Array(availableCities.keys)[$0])
-                            .bold()
-                            .font(.system(.body, design: .rounded))
-                    }
-                }
-//                .onChange(of: selectedColor, perform: { change in
-//                    print("\(change) - \(Array(availableCities.keys)[change])")
-//                    
-//                    let apiCityName = availableCities[Array(availableCities.keys)[change]]
-//                    
-//                    do {
-//                        let encodedData = try PropertyListEncoder().encode(apiCityName)
-//                        defaults.set(encodedData, forKey: "city")
-//                    } catch {
-//                        fatalError("\(#function)")
-//                    }
-//                    
-//                    if let citio = apiCityName {
-//                        viewModel.changedCityTo(citio: citio)
-//                    }
-//                    
-//                })
-                
-                Divider()
-                    
-                    
-                
-        
-                
-//                Button(action: {
-//                    NBActions.sendToMail()
-//                }, label: {
-//                    Text("REPLAY_TUTORIAL_BUTTON")
-//                        .bold()
-//                        .font(.system(.body, design: .rounded))
-//                })
-                
-                
-                
-//                Button(action: {
-//                    NBActions.sendToWeb()
-//                }, label: {
-//                    Text("SEND_TO_WEBSITE")
-//                        .bold()
-//                        .font(.system(.body, design: .rounded))
-//                })
+                Button(action: {
+                    NBActions.sendToWeb()
+                }, label: {
+                    Text("SEND_TO_WEBSITE")
+                        .bold()
+                        .font(.system(.body, design: .rounded))
+                })
                 
             }
         }.padding()
+        .onAppear(perform: {
+            
+            guard let data = defaults.value(forKey: "city") as? Data else {
+               return
+            }
+
+            guard let decoded = try? PropertyListDecoder().decode(City.self, from: data) else {
+               return
+            }
+            
+            let selected = Array(availableCities.keys).index(of: decoded.formalName)
+            
+            print(selected)
+            
+            selectedCity = selected!
+        })
     }
 }
 

@@ -13,8 +13,6 @@ protocol TutorialViewModelCoordinatorDelegate: class {
     func didTapFinishTutorial()
 }
 
-
-
 class TutorialViewModel: ObservableObject {
     
     weak var coordinatorDelegate: TutorialViewModelCoordinatorDelegate?

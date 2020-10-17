@@ -21,7 +21,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
         myComponents.host = "neuralbike.app"
     }
 
-    func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void) {
+    func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<NeuralBikeAllAPIResponse>) -> Void) {
 
         myComponents.path = "/api/v1/all/\(city)/\(station)"
 
@@ -41,7 +41,7 @@ class DefaultRemoteDataManager: RemoteDataManager {
                         
                         print(url)
 
-                        let decoded = try decoder.decode(MyAllAPIResponse.self, from: data)
+                        let decoded = try decoder.decode(NeuralBikeAllAPIResponse.self, from: data)
 
                         completion(.success(decoded))
 

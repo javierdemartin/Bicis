@@ -7,7 +7,7 @@
 //
 
 /// Endpoint: https:://javierdemart.in/api/v1/all/STATION_ID
-struct MyAllAPIResponse: Codable {
+struct NeuralBikeAllAPIResponse: Codable {
     let values: MyAllAPIResponseItem
     let discharges: [String]
     let refill: [String]

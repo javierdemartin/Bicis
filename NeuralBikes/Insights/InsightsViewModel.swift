@@ -22,7 +22,7 @@ protocol InsightsViewModelDataManager: class {
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void)
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
     func getStationStatistics(for city: String) -> [String: Int]
-    func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<MyAllAPIResponse>) -> Void)
+    func getAllDataFromApi(city: String, station: String, completion: @escaping(Result<NeuralBikeAllAPIResponse>) -> Void)
     func getPredictedNumberOfDocksAt(time: String, for station: BikeStation, completion: @escaping(Result<Int>) -> Void)
 }
 

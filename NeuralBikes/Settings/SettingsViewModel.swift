@@ -21,7 +21,6 @@ protocol SettingsViewModelDelegate: class {
     func errorSubmittingCode(with errorString: String)
     func updateCitiesPicker(sortedCities: [String])
     func presentAlertViewWithError(title: String, body: String)
-    func shouldShowLogOutButton()
 }
 
 protocol SettingsViewModelCoordinatorDelegate: class {
@@ -32,7 +31,8 @@ protocol SettingsViewModelCoordinatorDelegate: class {
 
 enum DonationDescriptions: String {
     case firstTier = "com.javierdemartin.bici.donation_level_1"
-    case secondTier = "com.javierdemartin.bici.level_two_donation"
+    case secondTier = "com.javierdemartin.bici.donation_level_2"
+    case thirdTier = "com.javierdemartin.bici.donation_level_3"
 }
 
 struct MyPurchase: Identifiable {
@@ -83,12 +83,6 @@ class SettingsViewModel {
 
     func prepareViewForAppearance() {
         
-        if let currentCity = self.city {
-            if currentCity.allowsLogIn {
-                delegate?.shouldShowLogOutButton()
-            }
-        }
-
         dataManager.getCurrentCityFromDefaults(completion: { cityResult in
             switch cityResult {
 

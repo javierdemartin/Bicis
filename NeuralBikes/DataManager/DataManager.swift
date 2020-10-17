@@ -44,7 +44,7 @@ extension DataManager: HomeViewModelDataManager {
         })
     }
 
-    func getAllDataFromApi(city: String, station: String, completion: @escaping (Result<MyAllAPIResponse>) -> Void) {
+    func getAllDataFromApi(city: String, station: String, completion: @escaping (Result<NeuralBikeAllAPIResponse>) -> Void) {
 
         localDataManager.addStationStatistics(for: station, city: city)
 
