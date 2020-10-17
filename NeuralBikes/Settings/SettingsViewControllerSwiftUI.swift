@@ -35,22 +35,46 @@ struct SettingsViewControllerSwiftUI: View {
     
     var body: some View {
         
-        ScrollView {
-            VStack(alignment: .leading) {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .center) {
                 
                 VStack(alignment: .center) {
+                    VStack {
+                        
+                    }
                     Image(uiImage: UIImage(named: "AppIcon60x60")!)
                         .frame(width: 60, height: 60, alignment: .center)
                         .cornerRadius(10)
                                 .overlay(RoundedRectangle(cornerRadius: 10)
                                     .stroke(Color.blue, lineWidth: 4))
-                                .shadow(radius: 2)
                     
                     Text(NBDefaults.longAppVersion!)
                         .bold()
                         .font(.system(.body, design: .rounded))
-                        .padding()
-                }.padding()
+                }
+                .padding()
+                
+                HStack {
+                    Button(action: {
+                        NBActions.sendToTwitter(profile: "javierdemartin")
+                    }, label: {
+                            Text("@javierdemartin")
+                            .bold()
+                            .font(.system(.body, design: .rounded))
+                                .padding()
+                    })
+                    
+                    Button(action: {
+                        NBActions.sendToTwitter(profile: "neuralbikes")
+                    }, label: {
+                            Text("@neuralbikes")
+                            .bold()
+                            .font(.system(.body, design: .rounded))
+                                .padding()
+                    })
+                }
+                
+                Divider()
                 
                 Button(action: {
                     NBActions.sendToMail()
@@ -58,44 +82,50 @@ struct SettingsViewControllerSwiftUI: View {
                     Text("FEEDBACK_BUTTON")
                         .bold()
                         .font(.system(.body, design: .rounded))
+                        .padding()
                 })
-                .padding()
                                 
                 if self.otherViewModel.products.count > 0 {
                     
-                    ForEach(self.otherViewModel.products) { a in
+                    Divider()
+                    
+                    VStack {
+                        
+                        ForEach(self.otherViewModel.products) { a in
+                            
+                            Button(action: {
+                                StoreKitProducts.store.buyProduct(a.skProd)
+                            }, label: {
+                                Text("\(a.localizedTitle) \(a.skProd.localizedPrice)")
+                                    .bold()
+                                    .font(.system(.body, design: .rounded))
+                                    .padding()
+                            })
+                            .foregroundColor(.white)
+                            .background(Color.accentColor)
+                            .cornerRadius(8)
+                        }
                         
                         Button(action: {
-                            StoreKitProducts.store.buyProduct(a.skProd)
+                            StoreKitProducts.store.restorePurchases()
                         }, label: {
-                            Text("\(a.localizedTitle) \(a.skProd.localizedPrice)")
+                            Text("RESTORE_PURCHASES_BUTTON")
                                 .bold()
                                 .font(.system(.body, design: .rounded))
                                 .padding()
                         })
-                        .foregroundColor(.white)
-                        .background(Color.accentColor)
-                        .cornerRadius(8)
-                    }
-                    
-                    Button(action: {
-                        NBActions.sendToMail()
-                    }, label: {
-                        Text("RESTORE_PURCHASES_BUTTON")
-                            .bold()
-                            .font(.system(.body, design: .rounded))
-                            .padding()
-                    })
-                    
-                    Text("DONATIONS_EXPLANATION")
-                        .font(.caption)
+                        
+                        Text("DONATIONS_EXPLANATION")
+                            .font(.caption)
+                    }.padding()
                 }
                 
+                
+                Divider()
                 
                 Text("HOW_TO_USE")
                     .bold()
                     .font(.system(.body, design: .rounded))
-                    .padding()
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
                 
@@ -123,15 +153,31 @@ struct SettingsViewControllerSwiftUI: View {
                     }
                     
                 })
-                .padding()
                 
-                Button(action: {
-                    NBActions.sendToMail()
-                }, label: {
-                    Text("REPLAY_TUTORIAL_BUTTON")
-                        .bold()
-                        .font(.system(.body, design: .rounded))
-                }).padding()
+                Divider()
+                    
+                    
+                
+        
+                
+//                Button(action: {
+//                    NBActions.sendToMail()
+//                }, label: {
+//                    Text("REPLAY_TUTORIAL_BUTTON")
+//                        .bold()
+//                        .font(.system(.body, design: .rounded))
+//                })
+                
+                
+                
+//                Button(action: {
+//                    NBActions.sendToWeb()
+//                }, label: {
+//                    Text("SEND_TO_WEBSITE")
+//                        .bold()
+//                        .font(.system(.body, design: .rounded))
+//                })
+                
             }
         }.padding()
     }

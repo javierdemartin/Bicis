@@ -19,4 +19,28 @@ class UITestingHelper: NSObject {
     func isUITesting() -> Bool {
         return ProcessInfo.processInfo.arguments.contains("is_ui_testing")
     }
+    
+    func isForceFeedingCity() -> City? {
+        if ProcessInfo.processInfo.arguments.contains("ui_testing_manual_city") {
+            
+            var selectedCity: City?
+            
+            switch Locale.current.identifier {
+            case "en-US":
+                selectedCity = availableCities["New York"]
+            case "en-GB":
+                selectedCity = availableCities["London"]
+            case "es-ES":
+                selectedCity = availableCities["Bilbao"]
+            case "fr-FR":
+                selectedCity = availableCities["Paris"]
+            default:
+                selectedCity = availableCities["Paris"]
+            }
+            
+            return selectedCity
+        }
+        
+        return nil
+    }
 }

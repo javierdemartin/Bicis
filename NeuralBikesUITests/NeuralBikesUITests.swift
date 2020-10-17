@@ -27,11 +27,14 @@ class BicisUITests: XCTestCase {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launchArguments.append("is_ui_testing")
+        app.launchArguments.append("ui_testing_manual_city")
+        
 
         setupSnapshot(app)
         app.launch()
+        
 
-        sleep(14) // Wait for the map to load
+        sleep(10) // Wait for the map to load
 
         snapshot("00-Home")
 

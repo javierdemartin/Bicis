@@ -14,24 +14,32 @@ struct NBActions {
         
         guard let url = URL(string: "mailto:javierdemartin@me.com") else { return }
         
-        phr_open(url: url)
+        neuralbikes_open(url: url)
     }
     
-    static func sendToTwitter() {
-        guard let url = URL(string: "https://twitter.com/javierdemartin") else { return }
+    static func sendToTwitter(profile: String) {
+        guard let url = URL(string: "https://twitter.com/\(profile)") else { return }
         
-        phr_open(url: url)
+        neuralbikes_open(url: url)
     }
     
     static func sendToPrivacyPolicy() {
         guard let url = URL(string: "https://neuralbike.app/privacy") else { return }
         
-        phr_open(url: url)
+        neuralbikes_open(url: url)
     }
+    
+    static func sendToWeb() {
+        guard let url = URL(string: "https://neuralbike.app") else { return }
+        
+        neuralbikes_open(url: url)
+    }
+    
+    
 }
 
 
-func phr_open(url: URL) {
+func neuralbikes_open(url: URL) {
     DispatchQueue.main.async {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }

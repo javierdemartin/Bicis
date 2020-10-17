@@ -12,7 +12,9 @@ devices([
 # A list of supported languages
 languages([
   'es-ES',
-  'en-US'
+  'en-US',
+  'en-GB',
+  'fr-FR'
 ])
  
 # Where should the resulting screenshots be stored?

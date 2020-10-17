@@ -77,6 +77,10 @@ class AppCoordinator: Coordinator {
     var currentCity: City?
     
     fileprivate func showHomeViewController() {
+        
+        if let uiTestingCity = UITestingHelper.sharedInstance.isForceFeedingCity() {
+            currentCity = uiTestingCity
+        }
 
         homeViewModel = HomeViewModel(city: currentCity ?? nil, dataManager: dataManager, locationService: locationService)
         homeViewController = HomeViewController(viewModel: homeViewModel!)

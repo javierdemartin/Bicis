@@ -78,6 +78,7 @@
 		809953F72416C77700B44DC9 /* InsightsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809953F62416C77700B44DC9 /* InsightsViewModel.swift */; };
 		8099540A24181C5B00B44DC9 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8099540924181C5B00B44DC9 /* TimeInterval.swift */; };
 		809FCFB625333924005E82EA /* NBDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809FCFB525333924005E82EA /* NBDefaults.swift */; };
+		80A4CEBF253B2B4800435D54 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
 		80A8216823D9AD74003DD67D /* UIUserInterfaceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216723D9AD74003DD67D /* UIUserInterfaceIdiom.swift */; };
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
 		80AB8B7024B23A2F004F3905 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */; };
@@ -757,6 +758,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80A4CEBF253B2B4800435D54 /* Cities.swift in Sources */,
 				80B1D019241ABCCC0072D1D9 /* String.swift in Sources */,
 				8000476F23EF425300492DFB /* NeuralBikesUITests.swift in Sources */,
 				8000477723EF426000492DFB /* SnapshotHelper.swift in Sources */,
