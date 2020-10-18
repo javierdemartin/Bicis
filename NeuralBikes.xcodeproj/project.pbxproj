@@ -62,7 +62,6 @@
 		80B1D016241A95F20072D1D9 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D015241A95F20072D1D9 /* UIView.swift */; };
 		80B1D018241AB3140072D1D9 /* RoutePlannerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */; };
 		80B1D019241ABCCC0072D1D9 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 801ECE45236F3C10003CFAF7 /* String.swift */; };
-		80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B55FE1246E899B00AA7008 /* NBTextView.swift */; };
 		80B8727A24BA55F700098D6B /* SantanderBikesLondon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */; };
 		80BB4A41252D0DC900FF93E8 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A3D252D0DC900FF93E8 /* SettingsViewModel.swift */; };
 		80BB4A4A252D0FCF00FF93E8 /* NBActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A49252D0FCF00FF93E8 /* NBActions.swift */; };
@@ -152,7 +151,6 @@
 		80AB8B7124B23A36004F3905 /* TutorialViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewModel.swift; sourceTree = "<group>"; };
 		80B1D015241A95F20072D1D9 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerError.swift; sourceTree = "<group>"; };
-		80B55FE1246E899B00AA7008 /* NBTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBTextView.swift; sourceTree = "<group>"; };
 		80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SantanderBikesLondon.swift; sourceTree = "<group>"; };
 		80BB4A3D252D0DC900FF93E8 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		80BB4A49252D0FCF00FF93E8 /* NBActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBActions.swift; sourceTree = "<group>"; };
@@ -457,7 +455,6 @@
 				80E7D8A82456033E00D49894 /* NBButton.swift */,
 				80FFDE3124683D4A00436BA6 /* NBStackView.swift */,
 				80D304BC253B9B7A0016F358 /* NBLabel.swift */,
-				80B55FE1246E899B00AA7008 /* NBTextView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -647,7 +644,6 @@
 				8029AEA324780F240072117B /* InsightsViewController.swift in Sources */,
 				80109145236E320300D3C45E /* AppCoordinator.swift in Sources */,
 				80109137236E2DFA00D3C45E /* DataManager.swift in Sources */,
-				80B55FE2246E899B00AA7008 /* NBTextView.swift in Sources */,
 				809FCFB625333924005E82EA /* NBDefaults.swift in Sources */,
 				8018E1572451889400CE7796 /* LogHelper.swift in Sources */,
 				80F882072490E3B100AB322A /* LocationServicesCoreLocation.swift in Sources */,

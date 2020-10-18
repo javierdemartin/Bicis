@@ -22,6 +22,9 @@ class HomeViewController: UIViewController {
     
     @ObservedObject var viewModel: HomeViewModel
     
+    var otherCancellable: AnyCancellable?
+    var cancellableBag = Set<AnyCancellable>()
+    
     lazy var mapView: MKMapView = {
 
         let map = MKMapView()
@@ -62,8 +65,6 @@ class HomeViewController: UIViewController {
         label.text = ""
         return label
     }()
-
-    // MARK: Renting
     
     private lazy var bottomButtonsStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [insightsButton, settingsButton])
@@ -135,8 +136,6 @@ class HomeViewController: UIViewController {
         view.bringSubviewToFront(statisticsAndGraphViewStackView)
         view.addSubview(bottomButtonsStackView)
         
-        // MARK: Settings Button constraints
-
         // Align to the bottom right
         NSLayoutConstraint.activate([
             bottomButtonsStackView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -2 * Constants.spacing),
@@ -207,8 +206,6 @@ class HomeViewController: UIViewController {
     }
 
     @objc func appMovedToBackground() {
-        print("App moved to Background!")
-
         guard let didSelectAnnotation = viewModel.latestSelectedAnnotation else { return }
 
         mapView.deselectAnnotation(didSelectAnnotation, animated: false)
@@ -298,14 +295,9 @@ class HomeViewController: UIViewController {
         return true
     }
     
-    var cancellable: AnyCancellable?
-    var otherCancellable: AnyCancellable?
-    var cancellableBag = Set<AnyCancellable>()
-
     fileprivate func setupBindings() {
         
         settingsButton.publisher(for: .touchUpInside).sink { button in
-            
             FeedbackGenerator.sharedInstance.generator.impactOccurred()
             self.showSettingsViewController()
         }.store(in: &cancellableBag)
@@ -329,13 +321,11 @@ class HomeViewController: UIViewController {
                                                   stationInformation: pin))
             })
 
-            var currentLocationFromDevice = CLLocation()
-
             switch UITestingHelper.sharedInstance.isUITesting() {
             case true:
                 guard let unwrappedCity = self.viewModel.currentCity else { return }
 
-                currentLocationFromDevice = CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude), longitude: CLLocationDegrees(unwrappedCity.longitude))
+                let currentLocationFromDevice = CLLocation(latitude: CLLocationDegrees(unwrappedCity.latitude), longitude: CLLocationDegrees(unwrappedCity.longitude))
                 
                 self.selectClosestAnnotationGraph(stations: stations, currentLocation: currentLocationFromDevice)
             case false:
@@ -368,7 +358,7 @@ class HomeViewController: UIViewController {
         graphView.fadeIn(0.2)
     }
 
-    func showRoutePlannerButton() {
+    func showInsightsButton() {
         insightsButton.fadeIn(0.2)
     }
 
@@ -545,15 +535,13 @@ extension HomeViewController: MKMapViewDelegate {
         viewModel.latestSelectedAnnotation = annotationFromPin
         viewModel.latestSelectedBikeStation = annotationFromPin.stationInformation
 
-        var apiQueryStationValue: String?
+//        var apiQueryStationValue: String?
 
-        apiQueryStationValue = annotationFromPin.stationInformation.id
+        let apiQueryStationValue = annotationFromPin.stationInformation.id
         
         graphViewDelegate?.setStationTitleFor(name: annotationFromPin.stationInformation.stationName)
 
-        guard apiQueryStationValue != nil else { return }
-
-        viewModel.getAllDataFromApi(city: viewModel.currentCity!.apiName, station: apiQueryStationValue!, completion: { res in
+        viewModel.getAllDataFromApi(city: viewModel.currentCity!.apiName, station: apiQueryStationValue, completion: { res in
 
             // As soon as new data is retrieved from the API show the graph
             self.showStackView()
@@ -566,7 +554,7 @@ extension HomeViewController: MKMapViewDelegate {
                 self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.predictionArray = payload["prediction"]
 
                 self.insightsButton.isEnabled = true
-                self.showRoutePlannerButton()
+                self.showInsightsButton()
                 self.graphView.accessibilityLabel = NSLocalizedString("SELECTED_STATION_GRAPH_ACCESIBILITY_LABEL", comment: "").replacingOccurrences(of: "%name", with: annotationFromPin.stationInformation.stationName)
 
             case .error:
@@ -611,7 +599,6 @@ extension HomeViewController: HomeViewModelDelegate {
     func centerMap(on point: CLLocationCoordinate2D, coordinateSpan: MKCoordinateSpan) {
 
         let region = MKCoordinateRegion(center: point, span: coordinateSpan)
-
         self.mapView.setRegion(region, animated: false)
     }
     

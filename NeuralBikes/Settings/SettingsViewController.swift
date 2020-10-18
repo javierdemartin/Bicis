@@ -96,18 +96,15 @@ struct SettingsViewController: View {
                     .fixedSize(horizontal: false, vertical: true)
                 
                 
-//                #if targetEnvironment(macCatalyst)
-//                Picker(selection: $selectedCity, label: Text("Change cities")) {
-//                    ForEach(0 ..< availableCities.count) {
-//                        Text(Array(availableCities.keys)[$0])
-//                            .bold()
-//                            .font(.system(.body, design: .rounded))
-//                    }
-//                }
-//                .onPreferenceChange(perform: { change in
-//                    changeCity(change: change)
-//                })
-//                #else
+                #if targetEnvironment(macCatalyst)
+                Picker("CHANGE_CITIES", selection: $selectedCity, content: {
+                    ForEach(0 ..< availableCities.count) {
+                        Text(Array(availableCities.keys)[$0])
+                            .bold()
+                            .font(.system(.body, design: .rounded))
+                    }
+                })
+                #else
                 Picker(selection: $selectedCity, label: Text("Change cities")) {
                     ForEach(0 ..< availableCities.count) {
                         Text(Array(availableCities.keys)[$0])
@@ -115,10 +112,10 @@ struct SettingsViewController: View {
                             .font(.system(.body, design: .rounded))
                     }
                 }
-//                .onChange(of: selectedCity, perform: { change in
-//                    changeCity(change: change)
-//                })
-//                #endif
+                .onChange(of: selectedCity, perform: { change in
+                    changeCity(change: change)
+                })
+                #endif
                 
                 if self.otherViewModel.products.count > 0 {
                     
