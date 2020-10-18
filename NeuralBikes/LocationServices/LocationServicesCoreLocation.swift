@@ -54,6 +54,9 @@ class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, Location
         }
     }
     
+    /**
+     Request CoreLocation permissions. If doing UI Tests don't even request permissions.
+     */
     func requestPermissions() {
     
         if UITestingHelper().isUITesting() { return }

@@ -1,4 +1,4 @@
-# Bicis
+# Neural Bikes
 
 ![Donate & support the project](https://ko-fi.com/javierdemartin)
 
@@ -6,9 +6,17 @@
 
 [Download link to the AppStore](https://neuralbike.app)
 
-iOS app to check on the status of bike sharing services. Currently available for Bilbao, Madrid, New York, London & Paris. 
+Bike sharing services have an imbalance problem that's shared around the world. A simple search leads up to [different studies](https://duckduckgo.com/?q=balancing+bike+sharing+systems) that try to solve this problem in the best way that minimizes costs for the service manager and so the user's don't ever arrive to a full or empty station that can't be used.
 
-Compares the daily historic availability against the predictions made by [Neural Bikes](https://neuralbike.app). The predictions are handled and created by the Machine Learning backend, [Neural Bikes](https://github.com/javierdemartin/neural-bikes).
+This repository contains the code of the App Store app available for multiple cities around the world. All the data being used comes from the main repo linked below and shows users daily bike sharing demand predictions based on recent usage using custom neural networks trained specifically for each city.
+
+## Related repositories
+
+* [neural-bikes-cronjobs](https://github.com/javierdemartin/neural-bikes-cronjobs): Automated data upload & prediction generations
+* [neural-bikes](https://github.com/javierdemartin/neural-bikes): Python & Machine Learning process to generate neural network predictive models
+* [neural-bikes-ios-app](https://github.com/javierdemartin/neural-bikes-ios-app)
+* [neural-bikes-backend](https://github.com/javierdemartin/neural-bikes-backend): Gathers data from InfluxDB database and uploads it to CloudKit
+* [neural-bikes-web](https://github.com/javierdemartin/neural-bikes-web): API & [website](https://neuralbike.app)
 
 ## Acknowledgements
 

@@ -21,5 +21,19 @@ struct MyAllAPIResponseItem: Codable {
     let today: [String: Int]
     let prediction: [String: Int]
     
-    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        do {
+            today = try container.decode([String:Int].self, forKey: .today)
+        } catch DecodingError.valueNotFound {
+            today = [:]
+        }
+        
+        do {
+            prediction = try container.decode([String:Int].self, forKey: .prediction)
+        } catch DecodingError.valueNotFound {
+            prediction = [:]
+        }
+    }
 }

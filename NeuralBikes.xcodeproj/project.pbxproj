@@ -38,6 +38,9 @@
 		80299FDE243B860F0094EDB2 /* StoreKitProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */; };
 		80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */; };
 		8029AEA324780F240072117B /* InsightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029AEA224780F240072117B /* InsightsViewController.swift */; };
+		8029C25C253C4B24009DB3BD /* NeuralBikeAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D34A24573806006B3062 /* NeuralBikeAPIResponse.swift */; };
+		8029C260253C4B3C009DB3BD /* GBFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803395F0249D5D78003E3ADC /* GBFS.swift */; };
+		8029C264253C4B49009DB3BD /* SantanderBikesLondon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */; };
 		803395F1249D5D78003E3ADC /* GBFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803395F0249D5D78003E3ADC /* GBFS.swift */; };
 		8036399D24829FA900FA096F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036399C24829FA900FA096F /* UIFont.swift */; };
 		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
@@ -66,13 +69,11 @@
 		80BB4A41252D0DC900FF93E8 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A3D252D0DC900FF93E8 /* SettingsViewModel.swift */; };
 		80BB4A4A252D0FCF00FF93E8 /* NBActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A49252D0FCF00FF93E8 /* NBActions.swift */; };
 		80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BC241BC52E004EE583 /* UIStackView.swift */; };
-		80D288C3241E3063004EE583 /* RoutePlannerStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */; };
 		80D30458253B5C460016F358 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
 		80D3045F253B5C4E0016F358 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
 		80D304BD253B9B7A0016F358 /* NBLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D304BC253B9B7A0016F358 /* NBLabel.swift */; };
 		80E7D8A92456033E00D49894 /* NBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E7D8A82456033E00D49894 /* NBButton.swift */; };
 		80F882032490E2D800AB322A /* LocationServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F882022490E2D800AB322A /* LocationServiceable.swift */; };
-		80F882052490E30C00AB322A /* PermissionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F882042490E30C00AB322A /* PermissionStatus.swift */; };
 		80F882072490E3B100AB322A /* LocationServicesCoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F882062490E3B100AB322A /* LocationServicesCoreLocation.swift */; };
 		80FFDE3224683D4A00436BA6 /* NBStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FFDE3124683D4A00436BA6 /* NBStackView.swift */; };
 		80FFDE362468614000436BA6 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FFDE352468614000436BA6 /* UIApplication.swift */; };
@@ -155,13 +156,11 @@
 		80BB4A49252D0FCF00FF93E8 /* NBActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBActions.swift; sourceTree = "<group>"; };
 		80D288BC241BC52E004EE583 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		80D288C0241D5200004EE583 /* UITestingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingHelper.swift; sourceTree = "<group>"; };
-		80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerStationModel.swift; sourceTree = "<group>"; };
 		80D304BC253B9B7A0016F358 /* NBLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBLabel.swift; sourceTree = "<group>"; };
 		80E7D8A82456033E00D49894 /* NBButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBButton.swift; sourceTree = "<group>"; };
 		80ECBDD025375E1700C1B420 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		80ECBDD125375E1700C1B420 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		80F882022490E2D800AB322A /* LocationServiceable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServiceable.swift; sourceTree = "<group>"; };
-		80F882042490E30C00AB322A /* PermissionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatus.swift; sourceTree = "<group>"; };
 		80F882062490E3B100AB322A /* LocationServicesCoreLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationServicesCoreLocation.swift; sourceTree = "<group>"; };
 		80FFDE3124683D4A00436BA6 /* NBStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBStackView.swift; sourceTree = "<group>"; };
 		80FFDE352468614000436BA6 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
@@ -225,7 +224,6 @@
 			isa = PBXGroup;
 			children = (
 				80F882022490E2D800AB322A /* LocationServiceable.swift */,
-				80F882042490E30C00AB322A /* PermissionStatus.swift */,
 				80F882062490E3B100AB322A /* LocationServicesCoreLocation.swift */,
 			);
 			path = LocationServices;
@@ -237,7 +235,6 @@
 				80109134236E2DEC00D3C45E /* LocalDataManager.swift */,
 				800CE94323955A7F00674D1C /* LocalDataManagerError.swift */,
 				80628469236EE22F00717472 /* DefaultLocalDataManager.swift */,
-				80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */,
 			);
 			path = Local;
 			sourceTree = "<group>";
@@ -611,14 +608,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8028059E2442256E008138BA /* NextBike.swift in Sources */,
+				8029C264253C4B49009DB3BD /* SantanderBikesLondon.swift in Sources */,
 				8000292A243FBBB200862C75 /* Cities.swift in Sources */,
 				8028059D24422550008138BA /* BiciMad.swift in Sources */,
 				80280598244220AC008138BA /* DefaultRemoteDataManager.swift in Sources */,
 				80280599244222E7008138BA /* Result.swift in Sources */,
+				8029C260253C4B3C009DB3BD /* GBFS.swift in Sources */,
 				8028059F2442319C008138BA /* Constants.swift in Sources */,
 				8028059B2442252F008138BA /* RemoteDataManager.swift in Sources */,
 				8028059A244222ED008138BA /* CityBikes.swift in Sources */,
 				80002921243FB92F00862C75 /* NeuralBikesTests.swift in Sources */,
+				8029C25C253C4B24009DB3BD /* NeuralBikeAPIResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,7 +668,6 @@
 				8074D34B24573806006B3062 /* NeuralBikeAPIResponse.swift in Sources */,
 				80BB4A41252D0DC900FF93E8 /* SettingsViewModel.swift in Sources */,
 				80E7D8A92456033E00D49894 /* NBButton.swift in Sources */,
-				80D288C3241E3063004EE583 /* RoutePlannerStationModel.swift in Sources */,
 				809953F72416C77700B44DC9 /* InsightsViewModel.swift in Sources */,
 				80109141236E316E00D3C45E /* HomeViewController.swift in Sources */,
 				80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */,
@@ -681,7 +680,6 @@
 				801ECE42236F3BD1003CFAF7 /* UIColor.swift in Sources */,
 				80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */,
 				80628461236E34C500717472 /* Coordinator.swift in Sources */,
-				80F882052490E30C00AB322A /* PermissionStatus.swift in Sources */,
 				80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */,
 				8036399D24829FA900FA096F /* UIFont.swift in Sources */,
 				803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */,
@@ -737,14 +735,14 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
-				INFOPLIST_FILE = BicisTests/Info.plist;
+				INFOPLIST_FILE = NeuralBikes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.BicisTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.NeuralBikesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -758,14 +756,14 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
-				INFOPLIST_FILE = BicisTests/Info.plist;
+				INFOPLIST_FILE = NeuralBikes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.BicisTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.NeuralBikesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

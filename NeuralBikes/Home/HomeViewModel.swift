@@ -177,7 +177,6 @@ class HomeViewModel: ObservableObject {
                 sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})
 
                 // Get the remainder values for the prediction
-
                 let payload = ["prediction": sortedPrediction, "today": sortedNow]
                 
                 self.latestSelectedBikeStation?.availabilityArray = sortedNow

@@ -8,8 +8,14 @@
 
 import Foundation
 import CoreLocation
-
 import Combine
+
+enum PermissionStatus {
+    case notDetermined
+    case granted
+    case denied
+}
+
 
 protocol LocationServiceable: class {
     var locationPublisher: PassthroughSubject<CLLocation, Never> { get set }

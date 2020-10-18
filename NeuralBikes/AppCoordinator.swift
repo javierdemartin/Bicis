@@ -86,7 +86,7 @@ class AppCoordinator: Coordinator {
 
     fileprivate func presentModallySettingsViewController() {
 
-        let settingsViewModel = SettingsViewModel(currentCity: currentCity ?? nil)
+        let settingsViewModel = SettingsViewModel()
 
         settingsViewModel.coordinatorDelegate = self
         

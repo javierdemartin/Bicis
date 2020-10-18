@@ -51,13 +51,11 @@ class OtherSettingsViewModel: ObservableObject {
 class SettingsViewModel {
 
     weak var coordinatorDelegate: SettingsViewModelCoordinatorDelegate?
-    var city: City?
     
     func changedCityTo(citio: City) {
         coordinatorDelegate?.changedCitySelectionInPickerView(city: citio)
     }
 
-    init(currentCity: City?) {
-        self.city = currentCity
+    init() {
     }
 }

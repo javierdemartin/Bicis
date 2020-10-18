@@ -13,14 +13,6 @@ struct SantanderBikesRoot: Decodable {
     let countries: [SantanderBikesStation]
 }
 
-//struct NextBikeCities: Decodable {
-//    let cities: [NextBikePlaces]
-//}
-//
-//struct NextBikePlaces: Decodable {
-//    let places: [NextBikeStation]
-//}
-
 struct SantanderBikeSAdditionalProperties: Decodable {
     
     var key: String

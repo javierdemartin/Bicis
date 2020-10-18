@@ -34,8 +34,6 @@ struct NBActions {
         
         neuralbikes_open(url: url)
     }
-    
-    
 }
 
 

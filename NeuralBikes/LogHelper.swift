@@ -13,7 +13,6 @@ struct LogHelper {
     static let defaults = UserDefaults(suiteName: Constants.appGroupsBundleID)!
 
     static let numberOfTimesTappedDataInsightsButtonKey = "numberOfTimesTappedDataInsightsButton"
-    static let numberOfTimesTappedSettingsButtonKey = "numberOfTimesTappedSettingsButton"
 
     static func logTAppedDataInsightsButton() {
 
