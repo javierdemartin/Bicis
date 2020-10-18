@@ -47,8 +47,8 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
     let locationService: LocationServiceable
     var predictionJson: [String: Int] = [:]
 
-    var destinationStation = Binding<BikeStation?>(value: nil)
-
+    @Published var destinationStation: BikeStation? = nil
+    
     let dataManager: InsightsViewModelDataManager
 
     init(locationService: LocationServiceable, dataManager: InsightsViewModelDataManager, destinationStation: BikeStation) {
@@ -57,7 +57,9 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
         
         self.locationService = locationService
         
-        self.destinationStation.value = destinationStation
+        self.destinationStation = destinationStation
+        
+//        self.destinationStation.value = destinationStation
         
         destinationStationString = destinationStation.stationName
         
@@ -89,7 +91,7 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
                 
                 guard let latestLocation = locationService.currentLocation else { return }
                 
-                guard let destinationStation = destinationStation.value else { return }
+                guard let destinationStation = destinationStation else { return }
                 
                 self.calculateRouteToDestination(pickupCoordinate: latestLocation.coordinate, destinationCoordinate: destinationStation.location.coordinate, completion: { result in
                     
@@ -116,11 +118,11 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
     
     func getPredictedDocksForArrivalTime(time: String) -> Int? {
         
-        if let actualDocks = self.destinationStation.value?.freeRacks {
+        if let actualDocks = self.destinationStation?.freeRacks {
             self.actualDocksAtDestination = "\(actualDocks)"
         }
         
-        guard self.destinationStation.value != nil else { return nil }
+        guard self.destinationStation != nil else { return nil }
         
         var time = time
         time.removeLast()
@@ -128,7 +130,7 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
         
         var numberOfDocksAtTime: Int?
         
-        dataManager.getPredictedNumberOfDocksAt(time: time, for: destinationStation.value!, completion: { result in
+        dataManager.getPredictedNumberOfDocksAt(time: time, for: destinationStation!, completion: { result in
             
             switch result {
             case .success(let numberOfDocks):
@@ -162,7 +164,7 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
 
                 var stationName = ""
 
-                stationName = self.destinationStation.value!.id
+                stationName = self.destinationStation!.id
 
                 self.dataManager.getAllDataFromApi(city: city.apiName, station: stationName, completion: { result in
 
@@ -181,8 +183,8 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
                         sortedNowKeysAndValues.forEach({ sortedNow.append($0.value )})
                         sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})
 
-                        self.destinationStation.value!.availabilityArray = sortedNow
-                        self.destinationStation.value!.predictionArray = sortedPrediction
+                        self.destinationStation!.availabilityArray = sortedNow
+                        self.destinationStation!.predictionArray = sortedPrediction
                         
                         self.predictionArray = sortedPrediction
                         self.availabilityArray = sortedNow
@@ -216,7 +218,7 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
         // Date retrieved from the API uses 24 hour formand intependently of the user's locale
         dateFormatter.dateFormat = "HH:mm"
 
-        guard self.destinationStation.value != nil else { return }
+        guard self.destinationStation != nil else { return }
 
         let date = Date()
         let calendar = Calendar.current
@@ -229,7 +231,7 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
 
                 var stationName = ""
 
-                stationName = self.destinationStation.value!.id
+                stationName = self.destinationStation!.id
 
                 self.dataManager.getAllDataFromApi(city: city.apiName, station: stationName, completion: { result in
 
@@ -248,8 +250,8 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
                         sortedNowKeysAndValues.forEach({ sortedNow.append($0.value )})
                         sortedPredictionKeysAndValues.forEach({ sortedPrediction.append($0.value )})
 
-                        self.destinationStation.value!.availabilityArray = sortedNow
-                        self.destinationStation.value!.predictionArray = sortedPrediction
+                        self.destinationStation!.availabilityArray = sortedNow
+                        self.destinationStation!.predictionArray = sortedPrediction
                         
                         self.predictionArray = sortedPrediction
                         self.availabilityArray = sortedNow

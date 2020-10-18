@@ -47,8 +47,6 @@ class HomeViewModel: ObservableObject {
     var latestSelectedAnnotation: MKAnnotation?
     var latestSelectedBikeStation: BikeStation?
 
-    var destinationStation = Binding<BikeStation?>(value: nil)
-
     weak var delegate: HomeViewModelDelegate?
     weak var coordinatorDelegate: HomeViewModelCoordinatorDelegate?
 
@@ -57,7 +55,7 @@ class HomeViewModel: ObservableObject {
     @Published var stations: [BikeStation] = []
     @Published var stationsDictCombine: [String: BikeStation] = [:]
 
-    let stationsDict = Binding<[String: BikeStation]>(value: [:])
+    @Published var stationsDict: [String: BikeStation] = [:]
 
     init(city: City?, dataManager: HomeViewModelDataManager, locationService: LocationServiceable) {
 
@@ -119,7 +117,7 @@ class HomeViewModel: ObservableObject {
                 // Sort by closeness
 
                 res.forEach({ individualStation in
-                    self.stationsDict.value[individualStation.stationName] = individualStation
+                    self.stationsDict[individualStation.stationName] = individualStation
                 })
 
                 self.stations = res

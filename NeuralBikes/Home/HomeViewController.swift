@@ -479,7 +479,7 @@ extension HomeViewController: MKMapViewDelegate {
             annotationView.canShowCallout = false
 
             guard let annotationTitle = annotation.title! else { return nil }
-            guard let stationsDictFromViewModel = self.viewModel.stationsDict.value[annotationTitle] else { return nil }
+            guard let stationsDictFromViewModel = self.viewModel.stationsDict[annotationTitle] else { return nil }
             
             let markerAnnotationView: MKMarkerAnnotationView = {
                 let marker = MKMarkerAnnotationView()
@@ -550,8 +550,8 @@ extension HomeViewController: MKMapViewDelegate {
 
             case .success(let payload):
 
-                self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.availabilityArray = payload["today"]
-                self.viewModel.stationsDict.value[annotationFromPin.stationInformation.stationName]!.predictionArray = payload["prediction"]
+                self.viewModel.stationsDict[annotationFromPin.stationInformation.stationName]!.availabilityArray = payload["today"]
+                self.viewModel.stationsDict[annotationFromPin.stationInformation.stationName]!.predictionArray = payload["prediction"]
 
                 self.insightsButton.isEnabled = true
                 self.showInsightsButton()
@@ -578,7 +578,7 @@ extension HomeViewController: HomeViewModelDelegate {
 
         guard let nearest = nearestPin else { return }
 
-        guard let nearestStation = self.viewModel.stationsDict.value[nearest.stationName] else { return }
+        guard let nearestStation = self.viewModel.stationsDict[nearest.stationName] else { return }
 
         // Find the index of the current station
         if let index = viewModel.stations.firstIndex(where: { $0.stationName == nearestStation.stationName }) {

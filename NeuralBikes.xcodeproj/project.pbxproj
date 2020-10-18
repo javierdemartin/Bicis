@@ -66,7 +66,6 @@
 		80BB4A41252D0DC900FF93E8 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A3D252D0DC900FF93E8 /* SettingsViewModel.swift */; };
 		80BB4A4A252D0FCF00FF93E8 /* NBActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80BB4A49252D0FCF00FF93E8 /* NBActions.swift */; };
 		80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BC241BC52E004EE583 /* UIStackView.swift */; };
-		80D288BF241D5150004EE583 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288BE241D5150004EE583 /* Binding.swift */; };
 		80D288C3241E3063004EE583 /* RoutePlannerStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */; };
 		80D30458253B5C460016F358 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
 		80D3045F253B5C4E0016F358 /* UITestingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D288C0241D5200004EE583 /* UITestingHelper.swift */; };
@@ -155,7 +154,6 @@
 		80BB4A3D252D0DC900FF93E8 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		80BB4A49252D0FCF00FF93E8 /* NBActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBActions.swift; sourceTree = "<group>"; };
 		80D288BC241BC52E004EE583 /* UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
-		80D288BE241D5150004EE583 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
 		80D288C0241D5200004EE583 /* UITestingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestingHelper.swift; sourceTree = "<group>"; };
 		80D288C2241E3063004EE583 /* RoutePlannerStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerStationModel.swift; sourceTree = "<group>"; };
 		80D304BC253B9B7A0016F358 /* NBLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NBLabel.swift; sourceTree = "<group>"; };
@@ -404,7 +402,6 @@
 				8002ED7D2397FCAB008ABB6B /* LocationServices */,
 				80A8216923D9B7E4003DD67D /* Cities.swift */,
 				80299FDC243B86040094EDB2 /* Store Kit */,
-				80D288BE241D5150004EE583 /* Binding.swift */,
 				80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */,
 				8018E1562451889400CE7796 /* LogHelper.swift */,
 				80BB4A49252D0FCF00FF93E8 /* NBActions.swift */,
@@ -686,7 +683,6 @@
 				80628461236E34C500717472 /* Coordinator.swift in Sources */,
 				80F882052490E30C00AB322A /* PermissionStatus.swift in Sources */,
 				80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */,
-				80D288BF241D5150004EE583 /* Binding.swift in Sources */,
 				8036399D24829FA900FA096F /* UIFont.swift in Sources */,
 				803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */,
 				8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */,

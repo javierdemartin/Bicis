@@ -123,7 +123,7 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
             case .success(let res):
 
                 res.forEach({ individualStation in
-                    self.homeViewModel?.stationsDict.value[individualStation.stationName] = individualStation
+                    self.homeViewModel?.stationsDict[individualStation.stationName] = individualStation
                 })
 
                 self.homeViewModel?.stations = res
