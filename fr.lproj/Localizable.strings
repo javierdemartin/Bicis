@@ -8,14 +8,14 @@
 
 // MARK: - Tutorial
 
-"ML_PREDICTIONS_TITLE" = "Machine Learning predictions";
+"ML_PREDICTIONS_TITLE" = "Prédictions avec Machine Learning";
 "ML_PREDICTIONS_BODY" = "Check on a graph current bike demand. Compare it against the prediction on the graph.";
 "INFORMATION_TITLE" = "Local Information";
 "INFORMATION_BODY" = "Never arrive to an empty station again. Get information on how the system is gonna behave.";
-"PRIVACY_TITLE" = "Only you";
+"PRIVACY_TITLE" = "Seulement toi";
 "PRIVACY_BODY" = "Your information stays on device, no third parties involved.";
 "FINISH_ONBOARDING" = "Allez!";
-"PRIVACY_POLICY" = "Privacy Policy";
+"PRIVACY_POLICY" = "Politique de Confidentialité";
 
 // MARK: General
 
@@ -23,43 +23,32 @@
 "CONFIRM_ALERT" = "Okay";
 
 // MARK: - Home
-"START_ROUTE" = "Open insights";
-"OPEN_SETTINGS_KEYBOARD" = "Open settings";
-"OPEN_INSIGHTS_KEYBOARD" = "Open insights";
-"NEXT_STATION_KEYBOARD" = "Next station";
-"PREVIOUS_STATION_KEYBOARD" = "Previous station";
+"START_ROUTE" = "Ouvrir Analytiques";
+"OPEN_SETTINGS_KEYBOARD" = "Ouvrir Régrages";
+"OPEN_INSIGHTS_KEYBOARD" = "Ouvrir Analytiques";
+"NEXT_STATION_KEYBOARD" = "Prochaine station";
+"PREVIOUS_STATION_KEYBOARD" = "Station précédente";
 
 // MARK: - Settings
 
-"FEEDBACK_BUTTON" = "Send Feedback";
+"FEEDBACK_BUTTON" = "Envoyer des commentaires";
 "HOW_TO_USE" = "Receive detailed availability predictions for each city and compare them against the real availability.";
-"RESTORE_PURCHASES_BUTTON" = "Restore Purchases";
-"LOG_OUT_BUTTON" = "Log Out";
+"RESTORE_PURCHASES_BUTTON" = "Restaurer les achats";
 "DATA_INSIGHTS_ACCESIBILITY_LABEL" = "Get more data for this station";
 "REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL" = "Send feedback";
-"LOG_OUT_BUTTON_ACCESIBILITY_LABEL" = "Log out";
-"VERSION_ACCESIBILITY_LABEL" = "Version %number";
 "RESTORE_PURCHASES_ACCESIBILITY_LABEL" = "Restore purchases";
-"LOG_OUT_ACCESIBILITY_LABEL" = "Log out";
-"GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Granted location services";
-"NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Not granted location services";
 "REPLAY_TUTORIAL_BUTTON" = "Replay tutorial";
 "DONATIONS_EXPLANATION" = "Donations help this project stay alive. You can buy as many as you want.";
 
 // MARK: - Insights
-
-
-"NEXT_REFILL_ACCESIBILITY_LABEL" = "Next refill will be at %time";
-
-"DESTINATION_STATION" = "Destination station";
+"DESTINATION_STATION" = "Gare de destination";
 "CALCULATING_PRECISSION" = "Calculating accuracy...";
 "FREE_DOCKS_DESTINATION_PLACEHOLDER" = "Free racks at destination";
-"EXPLANATION_INSIGHTS" = "Destination station statistics";
 "ERROR_CALCULATING_PRECISSION" = "Prediction accuracy couldn't be calculated";
-"ACCURACY_OF_MODEL" = "%percentage% error rate";
+"ACCURACY_OF_MODEL" = "%percentage% taux d'erreur";
 "NUMBER_TIMES_LAUNCHED" = "You have opened this version of %app_name% %times% times";
-"DISCHARGE" = "Discharge";
-"REFILL" = "Refill";
+"DISCHARGE" = "Décharge";
+"REFILL" = "Recharge";
 "NOT_FOUND" = "None";
 "OPERATIONS_DESCRIPTION" = "Possible prediction of manual charge and discharge operations at the station done by service workers.";
 "ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitor the available number of docks of the destination station at your expected arrival time";
@@ -68,21 +57,11 @@
 "FREE_DOCKS_AT_DESTINATION_LABEL" = "%number free docks";
 "ERROR_LOADING_FREE_DOCKS_AT_DESTINATION" = "Unable to retrieve details";
 
-"START_TRIP" = " Start commute ";
-
-"NOW" = "Now";
-
-"ESTIMATED_TIME_OF_ARRIVAL" = "Arriving at %time, riding %distanceUnits";
+"NOW" = "Maintentant";
 
 "LOADING_ROUTE" = "Calculating time to destination...";
 
-"LOADING_PREDICTIONS" = "Loading predictions...";
-
 "ACCURACY_OF_MODEL" = "%percentage% prediction accuracy";
-
-"ACCURACY_OF_MODEL_ERROR" = "Error calculating the precission of the predictions";
-
-"DESTINATION_DOCKS_LABEL" = "Free docks";
 
 "RECHARGE" = "Next recharge";
 
@@ -92,33 +71,10 @@
 
 "TOO_FAR_AWAY_WARNING" = "You are too far away!";
 
-"START_TIME_COMMUTE" = "Start time";
-
-"END_TIME_COMMUTE" = "End time";
-
-"CLOSEST_ANNOTATION_DESCRIPTION" = "%number free docks at %distance kms.";
-
-"CLOSEST_ANNOTATION_DESCRIPTION_WO_LOCATION" = "%number free docks";
-
 "CLOSEST_ANNOTATION_HEADER" = "Closest alternative station";
 
-"FREE_DOCKS_AT_DESTINATION_LABEL" = "Free docks at destination";
+"FREE_DOCKS_AT_DESTINATION_LABEL" = "Places gratuites à destination";
 
-"CLOSE_INSIGHTS_KEYBOARD" = "Close window";
+"CLOSE_INSIGHTS_KEYBOARD" = "Fermer";
 
 "INSIGHTS_LABEL" = "Insights";
-
-
-// MARK: - Blur Alert View
-
-"BLUR_ALERT_TITLE" = "Docks/Bikes";
-"BLUR_ALERT_SUBTITLE" = "Alternating between showing docks or bikes in the pins";
-
-// MARK: Log In
-"LOG_IN_EXPLANATION" = "This app does not share any data with third parties and it is not affiliated with any. Irresponsible use of the service is solely responsability of the user. Logging in allows the user to rent bikes. Credentials are stored on device and are not shared.";
-"SUBMIT_CREDENTIALS_BUTTON" = "Log In";
-"LOG_IN_TITLE_LABEL" = "Log In";
-"USERNAME_PLACEHOLDER" = "Username";
-"PASSWORD_PLACEHOLDER" = "Password";
-"FORGOT_PASSWORD_BUTTON" = "Reset password";
-"FINISH_FORGOT_PASSWORD" = "A SMS has been sent with the new password";

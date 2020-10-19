@@ -26,10 +26,30 @@ class NeuralBikesTests: XCTestCase {
         XCTAssertTrue(true)
     }
 
-    func testPerformanceExample() throws {
+    func testPerformanceBilbao() throws {
         // This is an example of a performance test case.
         measure {
             // Put the code you want to measure the time of here.
+            let exp = XCTestExpectation(description: "Paris")
+            
+            remoteDataManager.getStations(city: "New York", completion: { parseResult in
+                // Got data from the api
+                switch parseResult {
+
+                case .success(_):
+                    
+//                    self.stopMeasuring()
+
+                    print(">>> DONE")
+                    exp.fulfill()
+
+                case .error(let error):
+                    XCTFail(error.localizedDescription)
+                }
+
+            })
+            
+            self.wait(for: [exp], timeout: 20)
         }
     }
 
