@@ -1,0 +1,5 @@
+Ever arrived to an empty bike sharing station? Open Bicis and glance detailed bike sharing availability predictions next to the daily history. 
+
+New predictions are created daily at midnight. Custom tailored predictions by a neural network using previous data. Compare the actual behavior of a station with the predicted availability.
+
+Available for Madrid, Bilbao, New York and more to come!

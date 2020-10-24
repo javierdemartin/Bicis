@@ -63,9 +63,9 @@
 
 "ACCURACY_OF_MODEL" = "%percentage% prediction accuracy";
 
-"RECHARGE" = "Next recharge";
+"RECHARGE" = "Recharge";
 
-"DISCHARGE" = "Next discharge";
+"DISCHARGE" = "Discharge";
 
 "LOW_DOCK_AVAILABILITY_WARNING" = "Low dock availability";
 
