@@ -34,6 +34,7 @@
 "DATA_INSIGHTS_ACCESIBILITY_LABEL" = "Get more data for this station";
 "REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL" = "Send feedback";
 "LOG_OUT_BUTTON_ACCESIBILITY_LABEL" = "Log out";
+"SEND_TO_WEBSITE" = "Visit web";
 
 "RESTORE_PURCHASES_ACCESIBILITY_LABEL" = "Restore purchases";
 "LOG_OUT_ACCESIBILITY_LABEL" = "Log out";
@@ -66,9 +67,9 @@
 
 "ACCURACY_OF_MODEL" = "%percentage% prediction accuracy";
 
-"RECHARGE" = "Next recharge";
+"RECHARGE" = "Recharge";
 
-"DISCHARGE" = "Next discharge";
+"DISCHARGE" = "Discharge";
 
 "LOW_DOCK_AVAILABILITY_WARNING" = "Low dock availability";
 

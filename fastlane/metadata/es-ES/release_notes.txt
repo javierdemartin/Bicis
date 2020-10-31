@@ -1,1 +1,9 @@
-¡Hola! He vuelto. El trabajo ha ocupado más tiempo del que esperaba y necesitaba descansar. He vuelto con las actualizaciones y arreglado unos pequeños fallos que he descubierto y tengo planes para lanzar nuevas ciudades y características en los próximos meses. 
+¡Hola!
+
+• He hecho bastante trabajo interno eliminando unas cuantas líneas de código que ya no son necesarias y me hacen la vida un poquito más fácil. Este punto solo me importa a mi pero bueno, no creo que ningún usuario esté interesado en el código.
+• Añadido soporte para Londres y París. ¿Sabías que el servicio de bicicletas de París es de los más grandes del mundo? A mis bases de datos y servidor no les hace mucha gracia eso.
+• Ahora puedes donar cuantas veces quieras a través de compras dentro de la app. Esta vía es mi principal forma de recuperar el trabajo invertido.
+• Rediseñada la pantalla de Ajustes.
+• Los análisis de datos de cada estación están ahora disponibles para todo el mundo, esto espero que ayude a más usuarios.
+
+¡Nos vemos en la siguiente actualización!

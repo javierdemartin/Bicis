@@ -1,5 +1,7 @@
-Ever arrived to an empty bike sharing station? Open Bicis and glance detailed bike sharing availability predictions next to the daily history. 
+Bike sharing shouldn't be as complex as it is. Get custom tailored demand predictions for each station based on recent usage. A complex backend that does data analysis creates new predictions on a daily basis so Neural Bikes is always up to date with the most recent data.
 
-New predictions are created daily at midnight. Custom tailored predictions by a neural network using previous data. Compare the actual behavior of a station with the predicted availability.
+Not only prediction graphs are useful but also live demand history. Glance at the station's graph and compare the actual demand against the predicted values.
 
-Available for Madrid, Bilbao, New York and more to come!
+Take a glance at the insights view and get estimate values on future charges and discharges operations done by the service's operators.
+
+Available for bike services around the globe: Bilbao, Madrid, New York, London & Paris.

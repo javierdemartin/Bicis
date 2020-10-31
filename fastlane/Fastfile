@@ -18,16 +18,16 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
-    build_app(workspace: "NeuralBikes.xcworkspace", scheme: "NeuralBikes")
+    build_app(project: "NeuralBikes.xcodeproj", scheme: "NeuralBikes")
     upload_to_testflight
   end
 
   lane :shipit do
-	get_certificates           # invokes cert
-	get_provisioning_profile   # invokes sigh
-build_app(workspace: "NeuralBikes.xcworkspace", scheme: "NeuralBikes")
-	#snapshot
-	#frameit
+	  get_certificates           # invokes cert
+	  get_provisioning_profile   # invokes sigh
+    build_app(project: "NeuralBikes.xcodeproj", scheme: "NeuralBikes")
+	  snapshot
+	  frameit
   	#precheck
     deliver(
       force: true,
