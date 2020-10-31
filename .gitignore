@@ -3,6 +3,7 @@ Podfile.lock
 fastlane/SnapshotHelper.swift
 fastlane/report.xml
 fastlane/screenshots/
+NeuralBikes.xcodeproj/project.xcworkspace/xcuserdata/*
 NeuralBikes.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad/
 NeuralBikes.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad/UserInterfaceState.xcuserstate
 NeuralBikes.xcworkspace/xcuserdata/javierdemartin.xcuserdatad/*

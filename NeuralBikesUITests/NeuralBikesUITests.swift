@@ -47,6 +47,7 @@ class NeuralBikesUITests: XCTestCase {
             print("loaded pins")
         })
         
+        sleep(2)
         
         snapshot("00-Home")
 

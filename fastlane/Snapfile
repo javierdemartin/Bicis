@@ -1,14 +1,12 @@
 # A list of devices you want to take the screenshots from
 devices([
-  "iPhone 12 Pro Max",
+  "iPhone 8",
   "iPhone 8 Plus",
+  "iPad Pro (11-inch) (2nd generation)",
    "iPad Pro (12.9-inch) (2nd generation)",
-   "iPad Pro (12.9-inch) (4th generation)",
-   "iPhone 12 mini",
-   "iPhone 12 Pro",
-   "iPad Air (4th generation)",
-   "iPhone 8",
-   "iPad Pro (11-inch) (2nd generation)"
+   "iPad Pro (12.9-inch) (3rd generation)",
+   "iPhone 11 Pro",
+   "iPhone 11 Pro Max"
 ])
  
 # A list of supported languages
@@ -26,4 +24,4 @@ output_directory "./fastlane/screenshots"
 clear_previous_screenshots true
  
 # Latest version of iOS
-ios_version '14.0'
+ios_version '14.1'

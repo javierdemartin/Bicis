@@ -1,1 +1,1 @@
-Neural Bikes - Bike Sharing Predictions
+Neural Bikes - Bike Sharing
