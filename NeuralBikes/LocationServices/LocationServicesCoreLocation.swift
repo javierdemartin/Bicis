@@ -37,8 +37,8 @@ class LocationServiceCoreLocation: NSObject, CLLocationManagerDelegate, Location
         self.locationManager?.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager?.distanceFilter = kCLLocationAccuracyHundredMeters
         
-        if UITestingHelper().isUITesting() {
-            currentLocation = CLLocation(latitude: availableCities["Madrid"]!.latitude, longitude: availableCities["Madrid"]!.longitude)
+        if let simulatedLocation = UITestingHelper.sharedInstance.getSimulatedLocationForTestingCity() {
+            currentLocation = simulatedLocation
         }
     }
         

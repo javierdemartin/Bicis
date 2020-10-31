@@ -52,8 +52,12 @@ struct SantanderBikesStation: BikeStation {
 
         guard let availability = availabilityArray else { return nil }
         guard let prediction = predictionArray else { return nil }
+        
+        guard let maxAv = availability.max(), let maxPred = prediction.max() else {
+            return nil
+        }
 
-        let range = Double(max(availability.max()!, prediction.max()!))
+        let range = Double(max(maxAv, maxPred))
 
         if range == 0 {
             return nil

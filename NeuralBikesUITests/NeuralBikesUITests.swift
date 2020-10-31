@@ -9,7 +9,7 @@
 import XCTest
 import Foundation
 
-class BicisUITests: XCTestCase {
+class NeuralBikesUITests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -32,24 +32,32 @@ class BicisUITests: XCTestCase {
         
         setupSnapshot(app)
         app.launch()
-
-        sleep(20) /// Wait for the map to load
-
-        snapshot("00-Home")
-
-        // Wait for the API information to be delivered
-        let label = app.buttons["START_ROUTE"]
+        
         let exists = NSPredicate(format: "exists == 1")
-
-        expectation(for: exists, evaluatedWith: label, handler: nil)
-        waitForExpectations(timeout: 10, handler: nil)
+        let label = app.buttons["START_ROUTE"]
+        
+        expectation(for: exists, evaluatedWith: label, handler: {
+            
+            print("FINISHED")
+            return true
+        })
+        
+        waitForExpectations(timeout: 30, handler: { comp in
+            
+            print("loaded pins")
+        })
+        
+        
+        snapshot("00-Home")
 
         label.tap()
 
-        let textPredicate = NSPredicate(format: "label != %@", "...")
-        expectation(for: textPredicate, evaluatedWith: app.staticTexts["DESTINATION_BIKES"], handler: nil)
-        waitForExpectations(timeout: 10, handler: nil)
+//        let textPredicate = NSPredicate(format: "label != %@", "...")
+//        expectation(for: textPredicate, evaluatedWith: app.staticTexts["DESTINATION_BIKES"], handler: nil)
+//        waitForExpectations(timeout: 2, handler: nil)
 
         snapshot("01-RoutePlanner")
+        
+        app.terminate()
     }
 }

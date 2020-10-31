@@ -30,18 +30,7 @@ struct InsightsViewController: View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
                 
-                HStack(spacing: Constants.cornerRadius) {
-                    Spacer()
-                    RoundedRectangle(cornerRadius: Constants.cornerRadius)
-                        .fill(Color(.systemFill))
-                        .frame(
-                            width: 60,
-                            height: 6
-                    )
-                    
-                    Spacer()
-                }
-                .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))
+                Spacer().frame(height: 20)
                 
                 VStack(alignment: .leading) {
                     // MARK: Destination Station
@@ -227,6 +216,8 @@ struct InsightsViewController: View {
                         leading: 3 * Constants.cornerRadius,
                         bottom: 0,
                         trailing: 3 * Constants.cornerRadius))
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
                 
                 Spacer()
             }

@@ -71,6 +71,12 @@ class AppCoordinator: Coordinator {
             }
         }
     }
+    
+    override func finish() {
+        super.finish()
+        
+        
+    }
         
     fileprivate func showHomeViewController() {
         

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class UITestingHelper: NSObject {
 
@@ -39,6 +40,14 @@ class UITestingHelper: NSObject {
             }
             
             return selectedCity
+        }
+        
+        return nil
+    }
+    
+    func getSimulatedLocationForTestingCity() -> CLLocation?  {
+        if let forcedCity = isForceFeedingCity() {
+            return CLLocation(latitude: forcedCity.latitude, longitude: forcedCity.longitude)
         }
         
         return nil
