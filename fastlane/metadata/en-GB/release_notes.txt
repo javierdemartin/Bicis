@@ -1,0 +1,9 @@
+Heyo! 
+
+• I did some internal work that I will hope will make it easier for me to ship things & deleted a whole bunch of code
+• Added support for London & Paris (did you know Paris is one of the largest bike sharing systems in the world? My databases don't like that
+• You can now donate through In App Purchases, this is the main income of the app and I am grateful whenever any of you make a donation
+• Rebuilt the Settings page
+• Data insights is now available for everybody this is a decision I hope help more users
+
+'til the next update!

@@ -6,27 +6,51 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
+// MARK: - Tutorial
 
-// MARK: Accesibility
+"ML_PREDICTIONS_TITLE" = "Predicciones de disponibilidad con Machine Learning";
+"ML_PREDICTIONS_BODY" = "Comprueba en el gráfico la demanda actual. Compárala frente a la predicción para conocer más detalles";
+"INFORMATION_TITLE" = "Información actualizada";
+"INFORMATION_BODY" = "Nunca llegues a una estación vacía. Obtén información actualizada en directo";
+"PRIVACY_TITLE" = "Solo tu";
+"PRIVACY_BODY" = "Tu información nunca abandona el dispositivo, no hay terceros que reciban tus datos";
+"FINISH_ONBOARDING" = "¡Al lío!";
+"PRIVACY_POLICY" = "Política de Privacidad";
 
 // MARK: - Home
-
-"DATA_INSIGHTS_ACCESIBILITY_BUTTON" = "Más datos";
-"SETTINGS_ACCESIBILITY_BUTTON" = "Ajustes";
-"RENT_BIKE_ACCESIBILITY_LABEL" = "Alquilar bicicleta";
-"SELECTED_STATION_GRAPH_ACCESIBILITY_LABEL" = "Seleccionada la estación %name";
+"START_ROUTE" = "Abrir estadísticas";
+"OPEN_SETTINGS_KEYBOARD" = "Abrir ajustes";
+"OPEN_INSIGHTS_KEYBOARD" = "Abrir estadísticas";
 
 // MARK: - Settings
 
-"DATA_INSIGHTS_ACCESIBILITY_LABEL" = "Más datos para esta estación";
-"REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL" = "Enviar comentarios";
-"VERSION_ACCESIBILITY_LABEL" = "Versión %number";
-"HOW_TO_USE_ACCESIBILITY_LABEL" = "Descripción de la aplicación";
+"FEEDBACK_BUTTON" = "Enviar comentarios";
+"HOW_TO_USE" = "Predicciones de disponibilidad actualizadas a diario. Compara estadísticas junto al comportamiento en directo.";
+"RESTORE_PURCHASES_BUTTON" = "Restaurar compras";
+
+"DATA_INSIGHTS_ACCESIBILITY_LABEL" = "Más datos sobre esta estación";
+
 "RESTORE_PURCHASES_ACCESIBILITY_LABEL" = "Restaurar compras";
-"LOG_OUT_ACCESIBILITY_LABEL" = "Cerrar sesión";
-"GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Permisos de ubicación concedidos";
-"NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Permisos de ubicación no concedidos";
+
+"REPLAY_TUTORIAL_BUTTON" = "Repetir introducción";
+"DONATIONS_EXPLANATION" = "Este proyecto se mantiene a flote gracias a las donaciones. Puedes comprar tantas como quieras.";
+"SEND_TO_WEBSITE" = "Sitio web";
+"DONATIONS_TITLE" = "Propinas";
+"PRIVACY_POLICY" = "Política de Privacidad";
 
 // MARK: - Insights
+"DESTINATION_STATION" = "Estación de destino";
+"CALCULATING_PRECISSION" = "Calculando precisión...";
+"FREE_DOCKS_DESTINATION_PLACEHOLDER" = "Estaciones libres en destino";
+"ERROR_CALCULATING_PRECISSION" = "No se ha podido calcular la precisión de las predicciones";
+"ACCURACY_OF_MODEL" = "%percentage% tasa de error";
+"NUMBER_TIMES_LAUNCHED" = "Has abierto esta versión de %app_name% %times% veces";
+"DISCHARGE" = "Descarga";
+"REFILL" = "Recarga";
+"NOT_FOUND" = "Nada";
+"OPERATIONS_DESCRIPTION" = "Predicción de posibles cargas y descargas de la estación.";
+"NOW" = "Ahora";
 
-"NEXT_REFILL_ACCESIBILITY_LABEL" = "Siguiente recarga a las %time";
+// MARK: - Blur Alert View
+
+"BLUR_ALERT_TITLE" = "Anclajes/Bicicletas";

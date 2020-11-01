@@ -9,7 +9,7 @@
 import XCTest
 import Foundation
 
-class BicisUITests: XCTestCase {
+class NeuralBikesUITests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -27,46 +27,37 @@ class BicisUITests: XCTestCase {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launchArguments.append("is_ui_testing")
-
+        /// Mocking the city that's being shown depending on the user's locale
+        app.launchArguments.append("ui_testing_manual_city")
+        
         setupSnapshot(app)
         app.launch()
-
-        sleep(14) // Wait for the map to load
-
-        snapshot("00-Home")
-
-        // Wait for the API information to be delivered
-        let label = app.buttons["START_ROUTE"]
+        
         let exists = NSPredicate(format: "exists == 1")
-
-        expectation(for: exists, evaluatedWith: label, handler: nil)
-        waitForExpectations(timeout: 10, handler: nil)
+        let label = app.buttons["START_ROUTE"]
+        
+        expectation(for: exists, evaluatedWith: label, handler: {
+            
+            print("FINISHED")
+            return true
+        })
+        
+        waitForExpectations(timeout: 30, handler: { comp in
+            
+            print("loaded pins")
+        })
+        
+        
+        snapshot("00-Home")
 
         label.tap()
 
-        let textPredicate = NSPredicate(format: "label != %@", "...")
-        expectation(for: textPredicate, evaluatedWith: app.staticTexts["DESTINATION_BIKES"], handler: nil)
-        waitForExpectations(timeout: 10, handler: nil)
+//        let textPredicate = NSPredicate(format: "label != %@", "...")
+//        expectation(for: textPredicate, evaluatedWith: app.staticTexts["DESTINATION_BIKES"], handler: nil)
+//        waitForExpectations(timeout: 2, handler: nil)
 
         snapshot("01-RoutePlanner")
-
-//        let pullDownTab = app.otherElements["PULL_DOWN_TAB"]
-//
-//        let start = pullDownTab.coordinate(withNormalizedOffset: CGVector(dx: 10, dy: 20))
-//        let finish = pullDownTab.coordinate(withNormalizedOffset: CGVector(dx: 10, dy: 200))
-//        start.press(forDuration: 0.01, thenDragTo: finish)
-
-//        pullDownTab.swipeDown()
-
-        // MARK: RoutePlanner
+        
+        app.terminate()
     }
-
-//    func testLaunchPerformance() {
-//        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-//            // This measures how long it takes to launch your application.
-//            measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
-//                XCUIApplication().launch()
-//            }
-//        }
-//    }
 }

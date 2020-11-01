@@ -51,6 +51,16 @@ struct CitiBikesStation: BikeStation {
     var id: String
     var freeBikes: Int
     var freeRacks: Int
+    
+    init(latitude: Double, longitude: Double, stationName: String, id: String, freeBikes: Int, freeRacks: Int) {
+        
+        self.latitude = latitude
+        self.longitude = longitude
+        self.stationName = stationName
+        self.id = id
+        self.freeBikes = freeBikes
+        self.freeRacks = freeRacks
+    }
 
     var availabilityArray: [Int]?
     var predictionArray: [Int]?
@@ -103,7 +113,7 @@ struct CitiBikesStation: BikeStation {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
-        id = (try "\(values.decode(Int.self, forKey: .id))")
+        id = (try "\(values.decode(String.self, forKey: .id))")
 
         freeBikes = try values.decode(Int.self, forKey: .freeBikes)
         freeRacks = try values.decode(Int.self, forKey: .freeRacks)
@@ -113,15 +123,19 @@ struct CitiBikesStation: BikeStation {
     }
 
     enum CodingKeys: String, CodingKey {
-        case latitude
-        case longitude
-        case stationName = "stationName"
-        case id
-        case freeBikes = "availableBikes"
-        case freeRacks = "availableDocks"
+        case latitude = "lat"
+        case longitude = "lon"
+        case stationName = "name"
+        case id = "station_id"
+        case freeBikes = "num_bikes_available"
+        case freeRacks = "num_docks_available"
     }
 }
 
 struct CitiBikesRoot: Decodable {
-    let stationBeanList: [CitiBikesStation]
+    let data: CitiBikeStations
+}
+
+struct CitiBikeStations: Decodable {
+    let stations: [CitiBikesStation]
 }

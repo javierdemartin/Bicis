@@ -53,7 +53,6 @@ class DefaultLocalDataManager: LocalDataManager {
 
                     unwrapped!.statistics[cityIndex].stations[stationIndex].count += 1
                     unwrapped!.statistics[cityIndex].stations[stationIndex].timeOfDay.append(hour)
-
                 }
 
                 // This station has not been previously registered
@@ -69,27 +68,29 @@ class DefaultLocalDataManager: LocalDataManager {
 
             // Save the updated data into defaults
             defaults.set(try? PropertyListEncoder().encode(unwrapped!), forKey: Constants.selectedStationsStatistics)
-//            print("he")
 
         } else {
-            print("No data")
             let stationStatistics = StationStatistics(statistics: [StationStatisticsItem(city: city, stations: [StationStatisticsStation(stationId: id, count: 1, timeOfDay: [hour])])])
             dump(stationStatistics)
 
             defaults.set(try? PropertyListEncoder().encode(stationStatistics), forKey: Constants.selectedStationsStatistics)
         }
     }
+    
+    func set<T>(value: T, for key: String) {
+        defaults.setValue(value, forKey: key)
+    }
 
     /// Reads the UserDefault bool value
     func hasUnlockedFeatures(completion: @escaping (Result<Bool>) -> Void) {
 
+        completion(.success(true))
+        
         // Automatically unlock the purchases if doing UI Tests, mainly to
         // facilitate fastlane's snapshot
         if UITestingHelper.sharedInstance.isUITesting() {
             completion(.success(true))
         }
-        
-//        completion(.success(true))
 
         let hasPaidBefore = defaults.bool(forKey: StoreKitProducts.DataInsights)
 
@@ -121,63 +122,5 @@ class DefaultLocalDataManager: LocalDataManager {
         }
 
         completion(.success(decoded))
-    }
-
-    func saveUserData(validateInstallationResponse: UserCredentials, completion: @escaping (Result<Void>) -> Void) {
-        do {
-            let encodedData = try PropertyListEncoder().encode(validateInstallationResponse)
-            defaults.set(encodedData, forKey: "UserCredentials")
-
-            completion(.success(()))
-
-        } catch {
-            completion(.error(LocalDataManagerError.errorSavingToDefaults))
-        }
-    }
-
-    func getUserData(completion: @escaping (Result<UserCredentials>) -> Void) {
-
-        guard let data = defaults.value(forKey: "UserCredentials") as? Data else {
-            completion(.error(LocalDataManagerError.noLogInSaved))
-           return
-        }
-
-        guard let decoded = try? PropertyListDecoder().decode(UserCredentials.self, from: data) else {
-            completion(.error(LocalDataManagerError.errorDecodingDefaults))
-           return
-        }
-
-        completion(.success(decoded))
-    }
-    
-    func logOut() {
-        defaults.set(nil, forKey: "UserCredentials")
-    }
-    
-    func saveLogIn(response: UserR) {
-        
-        do {
-            let encodedData = try PropertyListEncoder().encode(response)
-            defaults.set(encodedData, forKey: "\(type(of: response).self)")
-
-            
-
-        } catch {
-            print("Error \(error.localizedDescription)")
-        }
-        
-        
-    }
-    
-    func getLogIn() -> UserR? {
-        guard let data = defaults.value(forKey: "\(UserR.self)") as? Data else {
-           return nil
-        }
-
-        guard let decoded = try? PropertyListDecoder().decode(UserR.self, from: data) else {
-           return nil
-        }
-        
-        return decoded
     }
 }

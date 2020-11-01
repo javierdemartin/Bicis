@@ -8,15 +8,20 @@
 
 import Foundation
 import UIKit
-import ReactiveSwift
+import SwiftUI
 import CoreLocation
 
 class AppCoordinator: Coordinator {
 
     let window: UIWindow
 
-    var dismissingSettingsViewController = false
+    /// Current selected city
+    var currentCity: City?
+    
+    var homeViewModel: HomeViewModel?
 
+    var settingsViewController: UIHostingController<SettingsViewController>?
+    
     lazy var localDataManager: LocalDataManager = {
         return DefaultLocalDataManager()
     }()
@@ -24,16 +29,14 @@ class AppCoordinator: Coordinator {
     lazy var remoteDataManager: RemoteDataManager = {
         return DefaultRemoteDataManager()
     }()
-    
-    lazy var bikeServicesDataManager: BikeServicesDataManager = {
-       return NextBikeBikeServicesDataManager()
-    }()
 
     lazy var dataManager: DataManager = {
-        return DataManager(localDataManager: self.localDataManager, remoteDataManager: self.remoteDataManager, bikeServicesDataManager: bikeServicesDataManager)
+        return DataManager(localDataManager: self.localDataManager, remoteDataManager: self.remoteDataManager)
     }()
     
-    var scannerViewModel: ScannerViewModel?
+    lazy var locationService: LocationServiceable = {
+       return LocationServiceCoreLocation()
+    }()
 
     init(window: UIWindow) {
         self.window = window
@@ -41,9 +44,14 @@ class AppCoordinator: Coordinator {
 
     override func start() {
 
+        /// Mock the city that's shown if running UI Tests depending on the device's locale
         if UITestingHelper.sharedInstance.isUITesting() {
-            currentCity = availableCities["Bilbao"]
-            localDataManager.saveCurrentCity(apiCityName: availableCities["Bilbao"]!, completion: { _ in })
+            
+            if let uiTestingCity = UITestingHelper.sharedInstance.isForceFeedingCity() {
+                currentCity = uiTestingCity
+                localDataManager.saveCurrentCity(apiCityName: uiTestingCity, completion: { _ in })
+            }
+            
             showHomeViewController()
 
         } else {
@@ -57,29 +65,23 @@ class AppCoordinator: Coordinator {
                     self.showHomeViewController()
                 case .error(let err):
                     print(err.localizedDescription)
-
-                    self.showHomeViewController()
-                    self.presentModallySettingsViewController()
+                    
+                    self.presenTutorialViewController()
                 }
             }
         }
     }
-
-    override func finish() {
-
-    }
-
-    var homeViewModel: HomeViewModel?
-    var homeViewController: HomeViewController?
-    var currentCity: City?
-
-    var routePlannerViewController: InsightsViewController?
     
+    override func finish() {
+        super.finish()
+        
+        
+    }
+        
     fileprivate func showHomeViewController() {
-
-        let compositeDisposable = CompositeDisposable()
-        homeViewModel = HomeViewModel(city: currentCity ?? nil, compositeDisposable: compositeDisposable, dataManager: dataManager)
-        homeViewController = HomeViewController(viewModel: homeViewModel!, compositeDisposable: compositeDisposable)
+        
+        homeViewModel = HomeViewModel(city: currentCity ?? nil, dataManager: dataManager, locationService: locationService)
+        let homeViewController = HomeViewController(viewModel: homeViewModel!)
         self.window.rootViewController = homeViewController
 
         homeViewModel!.coordinatorDelegate = self
@@ -88,95 +90,27 @@ class AppCoordinator: Coordinator {
         window.makeKeyAndVisible()
     }
 
-    var settingsViewController: SettingsViewController?
-    var logInViewController: LogInViewController?
-
     fileprivate func presentModallySettingsViewController() {
 
-        let compositeDisposable = CompositeDisposable()
-        let settingsViewModel = SettingsViewModel(currentCity: currentCity ?? nil, compositeDisposable: compositeDisposable, dataManager: dataManager)
-
-        settingsViewController = SettingsViewController(viewModel: settingsViewModel, compositeDisposable: compositeDisposable)
-
-        settingsViewController?.reactive.trigger(for: #selector(settingsViewController?.viewDidDisappear(_:))).observe { _ in self.handleModalDismissed() }
+        let settingsViewModel = SettingsViewModel()
 
         settingsViewModel.coordinatorDelegate = self
-        settingsViewModel.delegate = settingsViewController
+        
+        settingsViewController = UIHostingController(rootView: SettingsViewController(viewModel: settingsViewModel))
+        
         settingsViewController?.modalPresentationStyle = .formSheet
 
         self.window.rootViewController?.present(settingsViewController!, animated: true, completion: nil)
-    }
-
-    fileprivate func handleModalDismissed() {
-
-        localDataManager.getCurrentCity(completion: { getCurrentCityResult in
-            switch getCurrentCityResult {
-
-            case .success(let suc):
-                self.homeViewModel?.currentCity = suc
-
-            case .error:
-                break
-            }
-        })
-    }
-}
-
-extension AppCoordinator: ScannerViewModelCoordinatorDelegate {
-    func scannedCodeWith(number: Int?) {
-        homeViewModel?.finishRentProcess(bike: number)
-    }
-}
-
-extension AppCoordinator: RestorePurchasesViewModelCoordinatorDelegate {
-    func reParseMainFeedShowingNewColors() {
-
-        localDataManager.getCurrentCity(completion: { cityResult in
-
-            switch cityResult {
-
-            case .success(let city):
-                self.homeViewModel?.getMapPinsFrom(city: city)
-            case .error:
-                break
-            }
-        })
     }
 }
 
 extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
     
-    func dismissSettingsViewController() {
-        DispatchQueue.main.async {
-            self.settingsViewController?.dismiss(animated: true, completion: nil)
-        }
-    }
-    
-    func presentRestorePurchasesViewControllerFromCoordinatorDelegate() {
-
-        self.settingsViewController?.dismiss(animated: true, completion: nil)
-
-        let compositeDisposable = CompositeDisposable()
-        let restorePurchasesViewModel = RestorePurchasesViewModel(compositeDisposable: compositeDisposable)
-        restorePurchasesViewModel.coordinatorDelegate = self
-        let restorePurchasesViewController = RestorePurchasesViewController(compositeDisposable: compositeDisposable, viewModel: restorePurchasesViewModel)
-
-        restorePurchasesViewController.modalPresentationStyle = .formSheet
-
-        self.window.rootViewController?.present(restorePurchasesViewController, animated: true, completion: nil)
-    }
-
     // Re-centers the map when the UIPickerView changes value
     func changedCitySelectionInPickerView(city: City) {
 
         homeViewModel?.removeAnnotationsFromMap()
         
-        if city.allowsLogIn {
-            homeViewModel?.delegate?.shouldShowRentBikeButton()
-        } else {
-            homeViewModel?.delegate?.shouldHideRentBikeButton()
-        }
-
         print("Selected from coordinator \(city.formalName)")
 
         guard let homeViewModel = homeViewModel else { return }
@@ -185,11 +119,8 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
 
         homeViewModel.delegate?.centerMap(on: centerCoordinates, coordinateSpan: Constants.wideCoordinateSpan)
 
-        homeViewModel.stations.value = []
-        homeViewModel.stationsDict.value = [:]
-
-        // Dismiss the graphview
-        homeViewModel.delegate?.dismissGraphView()
+        homeViewModel.stations = []
+        homeViewModel.stationsDictCombine = [:]
 
         homeViewModel.dataManager.getStations(city: city.formalName, completion: { resultStations in
 
@@ -198,10 +129,10 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
             case .success(let res):
 
                 res.forEach({ individualStation in
-                    self.homeViewModel?.stationsDict.value[individualStation.stationName] = individualStation
+                    self.homeViewModel?.stationsDict[individualStation.stationName] = individualStation
                 })
 
-                self.homeViewModel?.stations.value = res
+                self.homeViewModel?.stations = res
             case .error:
                 break
             }
@@ -209,64 +140,39 @@ extension AppCoordinator: SettingsViewModelCoordinatorDelegate {
     }
 }
 
-extension AppCoordinator: InsightsViewModelCoordinatorDelegate {
-
-    /// Dismisses the UIViewController presented after starting the commute
-    func dismissModalRoutePlannerViewController() {
-
-        DispatchQueue.main.async {
-            self.routePlannerViewController?.dismiss(animated: true, completion: nil)
-        }
-    }
-
-    /// Send the route between the user's current location to the destination station to be drawn on the map
-    func sendSelectedDestinationToHomeViewController(station: BikeStation) {
-        homeViewModel?.destinationStation.value = station
-    }
-}
-
-extension AppCoordinator: LogInVieWModelCoordinatorDelegate {
-    func dismissViewController() {
-        DispatchQueue.main.async {
-            self.logInViewController?.dismiss(animated: true, completion: nil)
-        }
+extension AppCoordinator: TutorialViewModelCoordinatorDelegate {
+    func didTapFinishTutorial() {
+        showHomeViewController()
     }
 }
 
 extension AppCoordinator: HomeViewModelCoordinatorDelegate {
-    func presentScannerViewController() {
-        let compositeDisposable = CompositeDisposable()
-        scannerViewModel = ScannerViewModel(compositeDisposable: compositeDisposable)
-        let scannerViewController = ScannerViewController(compositeDisposable: compositeDisposable, viewModel: scannerViewModel!)
-        
-        scannerViewModel?.delegate = scannerViewController
-        scannerViewModel?.coordinatorDelegate = self
-        scannerViewController.modalPresentationStyle = .formSheet
-        self.window.rootViewController?.present(scannerViewController, animated: true, completion: nil)
-    }
     
-    func presentLogInViewController() {
-        let compositeDisposable = CompositeDisposable()
-        let logInViewModel = LogInViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager)
-        logInViewController = LogInViewController(compositeDisposable: compositeDisposable, viewModel: logInViewModel)
-        logInViewModel.delegate = logInViewController
-        logInViewModel.coordinatorDelegate = self
-        logInViewController!.modalPresentationStyle = .formSheet
-        self.window.rootViewController?.present(logInViewController!, animated: true, completion: nil)
+    func presenTutorialViewController() {
+        
+        let tutorialViewModel = TutorialViewModel()
+        tutorialViewModel.coordinatorDelegate = self
+        
+        let swiftUIView = TutorialViewController(viewModel: tutorialViewModel)
+        let viewCtrl = UIHostingController(rootView: swiftUIView)
+        
+        self.window.rootViewController = viewCtrl
+
+        UIView.transition(with: window, duration: 0.3, options: [UIView.AnimationOptions.transitionCrossDissolve], animations: {}, completion: nil)
+        window.makeKeyAndVisible()
     }
     
     /// Presents the UIViewController in charge of planning the route to the destination station
     func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation]) {
+        
+        let routePlannerViewModel = InsightsViewModel(locationService: locationService, dataManager: dataManager, destinationStation: stationsDict)
+   
+        let swiftUIView = InsightsViewController(viewModel: routePlannerViewModel)
+        let viewController = UIHostingController(rootView: swiftUIView)
+        
+        viewController.modalPresentationStyle = .formSheet
 
-        let compositeDisposable = CompositeDisposable()
-        let routePlannerViewModel = InsightsViewModel(compositeDisposable: compositeDisposable, dataManager: dataManager, stationsDict: nil, closestAnnotations: closestAnnotations, destinationStation: stationsDict)
-        routePlannerViewModel.coordinatorDelegate = self
-        routePlannerViewController = InsightsViewController(viewModel: routePlannerViewModel, compositeDisposable: compositeDisposable)
-        routePlannerViewModel.delegate = routePlannerViewController!
-
-        routePlannerViewController!.modalPresentationStyle = .formSheet
-
-        self.window.rootViewController?.present(routePlannerViewController!, animated: true, completion: nil)
+        self.window.rootViewController?.present(viewController, animated: true, completion: nil)
     }
 
     func showSettingsViewController() {

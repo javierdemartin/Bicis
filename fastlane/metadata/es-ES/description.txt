@@ -1,6 +1,7 @@
-¿Has llegado alguna vez a una estación de bicicletas y estaba vacía? Abre Bicis y obtén información detallada sobre la predicción de disponibilidad durante el día junto con el historial. Compara ambas para ver el comportamiento y decide tu medio de transporte.
+Los servicios de préstamo de bicicletas no deberían ser tan complicados. Consulta predicciones detalladas de la demanda estimada basada en el uso reciente. Un sistema de predicciones realiza análisis diarios para que recibas a diario nuevas predicciones, así Neural Bikes está actualizado siempre con los datos más recientes.
 
-Cada día se crean nuevas predicciones. Cada una es personalizada para cada estación por una red neuronal utilizando datos de días anteriores.
+No sólo los gráficos de predicción son útiles sino que también lo es el histórico de uso diario. Echa un ojo al gráfico de predicción de cada estació y compara la demanda actual frente a las predicciones.
 
-Disponible para Madrid, Bilbao, Nueva York y más por llegar.
+Abre la pestaña de análisis de datos para ver una estimación de operaciones de carga y descarga realizados por los operarios del servicio.
 
+Disponible para servicios de préstamo de bicicletas de alrededor del mundo: Bilbao, Madrid, Neuva York, Londres y París.

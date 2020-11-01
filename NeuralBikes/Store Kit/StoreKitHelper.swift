@@ -15,6 +15,7 @@ struct StoreKitHelper {
 
     static func displayStoreKit() {
 
+        /// Don't prompt StoreKit review if doing UITests
         if ProcessInfo.processInfo.arguments.contains("is_ui_testing") { return }
 
         guard let currentVersion = Bundle.main.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String else {
@@ -25,10 +26,17 @@ struct StoreKitHelper {
 
         let numberOfTimesLaunched: Int = UserDefaults.standard.integer(forKey: StoreKitHelper.numberOfTimesLaunchedKey)
 
-        if numberOfTimesLaunched > 8 && currentVersion != lastVersionPromptedForReview {
+        if numberOfTimesLaunched > 15 && currentVersion != lastVersionPromptedForReview {
             SKStoreReviewController.requestReview()
             UserDefaults.standard.set(currentVersion, forKey: "lastVersion")
         }
+    }
+    
+    static func getNumberOfTimesLaunched() -> Int? {
+        
+        let timesLaunched = UserDefaults.standard.integer(forKey: StoreKitHelper.numberOfTimesLaunchedKey)
+        
+        return timesLaunched
     }
 
     static func incrementNumberOfTimesLaunched() {

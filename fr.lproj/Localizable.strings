@@ -1,0 +1,80 @@
+/*
+  Localizable.strings
+  NeuralBikes
+
+  Created by Javier de Martín Gil on 22/05/2020.
+  Copyright © 2020 Javier de Martín Gil. All rights reserved.
+*/
+
+// MARK: - Tutorial
+
+"ML_PREDICTIONS_TITLE" = "Prédictions avec Machine Learning";
+"ML_PREDICTIONS_BODY" = "Check on a graph current bike demand. Compare it against the prediction on the graph.";
+"INFORMATION_TITLE" = "Local Information";
+"INFORMATION_BODY" = "Never arrive to an empty station again. Get information on how the system is gonna behave.";
+"PRIVACY_TITLE" = "Seulement toi";
+"PRIVACY_BODY" = "Your information stays on device, no third parties involved.";
+"FINISH_ONBOARDING" = "Allez!";
+"PRIVACY_POLICY" = "Politique de Confidentialité";
+
+// MARK: General
+
+"ALERT_HEADER" = "Alert";
+"CONFIRM_ALERT" = "Okay";
+
+// MARK: - Home
+"START_ROUTE" = "Ouvrir Analytiques";
+"OPEN_SETTINGS_KEYBOARD" = "Ouvrir Régrages";
+"OPEN_INSIGHTS_KEYBOARD" = "Ouvrir Analytiques";
+"NEXT_STATION_KEYBOARD" = "Prochaine station";
+"PREVIOUS_STATION_KEYBOARD" = "Station précédente";
+
+// MARK: - Settings
+
+"FEEDBACK_BUTTON" = "Envoyer des commentaires";
+"HOW_TO_USE" = "Receive detailed availability predictions for each city and compare them against the real availability.";
+"RESTORE_PURCHASES_BUTTON" = "Restaurer les achats";
+"DATA_INSIGHTS_ACCESIBILITY_LABEL" = "Get more data for this station";
+"REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL" = "Send feedback";
+"RESTORE_PURCHASES_ACCESIBILITY_LABEL" = "Restore purchases";
+"REPLAY_TUTORIAL_BUTTON" = "Replay tutorial";
+"DONATIONS_EXPLANATION" = "Donations help this project stay alive. You can buy as many as you want.";
+
+// MARK: - Insights
+"DESTINATION_STATION" = "Gare de destination";
+"CALCULATING_PRECISSION" = "Calculating accuracy...";
+"FREE_DOCKS_DESTINATION_PLACEHOLDER" = "Free racks at destination";
+"ERROR_CALCULATING_PRECISSION" = "Prediction accuracy couldn't be calculated";
+"ACCURACY_OF_MODEL" = "%percentage% taux d'erreur";
+"NUMBER_TIMES_LAUNCHED" = "You have opened this version of %app_name% %times% times";
+"DISCHARGE" = "Décharge";
+"REFILL" = "Recharge";
+"NOT_FOUND" = "None";
+"OPERATIONS_DESCRIPTION" = "Possible prediction of manual charge and discharge operations at the station done by service workers.";
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitor the available number of docks of the destination station at your expected arrival time";
+"STATION_SEARCH_PLACEHOLDER" = "Destination station";
+
+"FREE_DOCKS_AT_DESTINATION_LABEL" = "%number free docks";
+"ERROR_LOADING_FREE_DOCKS_AT_DESTINATION" = "Unable to retrieve details";
+
+"NOW" = "Maintentant";
+
+"LOADING_ROUTE" = "Calculating time to destination...";
+
+"ACCURACY_OF_MODEL" = "%percentage% prediction accuracy";
+
+"RECHARGE" = "Recharge";
+
+"DISCHARGE" = "Discharge";
+
+"LOW_DOCK_AVAILABILITY_WARNING" = "Low dock availability";
+
+"TOO_FAR_AWAY_WARNING" = "You are too far away!";
+
+"CLOSEST_ANNOTATION_HEADER" = "Closest alternative station";
+
+"FREE_DOCKS_AT_DESTINATION_LABEL" = "Places gratuites à destination";
+
+"CLOSE_INSIGHTS_KEYBOARD" = "Fermer";
+
+"INSIGHTS_LABEL" = "Insights";

@@ -6,28 +6,79 @@
   Copyright © 2020 Javier de Martín Gil. All rights reserved.
 */
 
+// MARK: - Tutorial
 
-// MARK: Accesibility
+"ML_PREDICTIONS_TITLE" = "Machine Learning predictions";
+"ML_PREDICTIONS_BODY" = "Check on a graph current bike demand. Compare it against the prediction on the graph.";
+"INFORMATION_TITLE" = "Local Information";
+"INFORMATION_BODY" = "Never arrive to an empty station again. Get information on how the system is gonna behave.";
+"PRIVACY_TITLE" = "Only you";
+"PRIVACY_BODY" = "Your information stays on device, no third parties involved.";
+"FINISH_ONBOARDING" = "Let's go!";
+"PRIVACY_POLICY" = "Privacy Policy";
+
+// MARK: General
+
+"ALERT_HEADER" = "Alert";
+"CONFIRM_ALERT" = "Okay";
 
 // MARK: - Home
-
-"DATA_INSIGHTS_ACCESIBILITY_BUTTON" = "Data insights";
-"SETTINGS_ACCESIBILITY_BUTTON" = "Settings";
-"RENT_BIKE_ACCESIBILITY_LABEL" = "Rent bike";
-"SELECTED_STATION_GRAPH_ACCESIBILITY_LABEL" = "Selected station %name";
+"START_ROUTE" = "Open insights";
 
 // MARK: - Settings
 
+"FEEDBACK_BUTTON" = "Send Feedback";
+"HOW_TO_USE" = "Receive detailed availability predictions for each city and compare them against the real availability.";
+"RESTORE_PURCHASES_BUTTON" = "Restore Purchases";
+"LOG_OUT_BUTTON" = "Log Out";
 "DATA_INSIGHTS_ACCESIBILITY_LABEL" = "Get more data for this station";
 "REQUEST_FEEDBACK_BUTTON_ACCESIBILITY_LABEL" = "Send feedback";
 "LOG_OUT_BUTTON_ACCESIBILITY_LABEL" = "Log out";
-"VERSION_ACCESIBILITY_LABEL" = "Version %number";
-"HOW_TO_USE_ACCESIBILITY_LABEL" = "App description";
+"SEND_TO_WEBSITE" = "Visit web";
+
 "RESTORE_PURCHASES_ACCESIBILITY_LABEL" = "Restore purchases";
 "LOG_OUT_ACCESIBILITY_LABEL" = "Log out";
-"GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Granted location services";
-"NOT_GRANDED_LOCATION_PERMISSION_ACCESIBILITY_LABEL" = "Not granted location services";
+
+"REPLAY_TUTORIAL_BUTTON" = "Replay tutorial";
+"DONATIONS_EXPLANATION" = "Donations help this project stay alive. You can buy as many as you want.";
 
 // MARK: - Insights
 
-"NEXT_REFILL_ACCESIBILITY_LABEL" = "Next bike refill at %time";
+"DESTINATION_STATION" = "Destination station";
+"CALCULATING_PRECISSION" = "Calculating accuracy...";
+"FREE_DOCKS_DESTINATION_PLACEHOLDER" = "Free racks at destination";
+
+"ERROR_CALCULATING_PRECISSION" = "Prediction accuracy couldn't be calculated";
+"ACCURACY_OF_MODEL" = "%percentage% error rate";
+"NUMBER_TIMES_LAUNCHED" = "You have opened this version of %app_name% %times% times";
+"DISCHARGE" = "Discharge";
+"REFILL" = "Refill";
+"NOT_FOUND" = "None";
+"OPERATIONS_DESCRIPTION" = "Possible prediction of manual charge and discharge operations at the station done by service workers.";
+"ROUTE_PLANNER_INSTRUCTIONS_TEXT_FIELD" = "Monitor the available number of docks of the destination station at your expected arrival time";
+"STATION_SEARCH_PLACEHOLDER" = "Destination station";
+
+"FREE_DOCKS_AT_DESTINATION_LABEL" = "%number free docks";
+"ERROR_LOADING_FREE_DOCKS_AT_DESTINATION" = "Unable to retrieve details";
+
+"NOW" = "Now";
+
+"LOADING_ROUTE" = "Calculating time to destination...";
+
+"ACCURACY_OF_MODEL" = "%percentage% prediction accuracy";
+
+"RECHARGE" = "Recharge";
+
+"DISCHARGE" = "Discharge";
+
+"LOW_DOCK_AVAILABILITY_WARNING" = "Low dock availability";
+
+"TOO_FAR_AWAY_WARNING" = "You are too far away!";
+
+"CLOSEST_ANNOTATION_HEADER" = "Closest alternative station";
+
+"FREE_DOCKS_AT_DESTINATION_LABEL" = "Free docks at destination";
+
+"CLOSE_INSIGHTS_KEYBOARD" = "Close window";
+
+"INSIGHTS_LABEL" = "Insights";
