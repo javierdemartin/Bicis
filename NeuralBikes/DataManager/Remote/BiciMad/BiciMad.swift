@@ -54,23 +54,28 @@ struct BiciMadStation: BikeStation {
     var totalAvailableDocks: Int {
         return freeRacks + freeBikes
     }
+    
+    
+    
 
     var rmse: Double? {
-
-            guard let availability = availabilityArray else { return nil }
-            guard let prediction = predictionArray else { return nil }
-
-        let range = Double(max(availability.max()!, prediction.max()!))
-
-            var rmseResult = 0.0
-
-            for element in 0..<availability.count {
-                rmseResult += pow(Double(prediction[element] - availability[element]), 2.0)
-            }
-
-            rmseResult = sqrt(1/Double(availability.count) * rmseResult)
-
-            return (rmseResult/range * 100)
+        
+        guard let availability = availabilityArray else { return nil }
+        guard let prediction = predictionArray else { return nil }
+        
+        guard let availabilityMax = availability.max(), let predictionMax = prediction.max() else { return nil }
+        
+        let range = Double(max(availabilityMax, predictionMax))
+        
+        var rmseResult = 0.0
+        
+        for element in 0..<availability.count {
+            rmseResult += pow(Double(prediction[element] - availability[element]), 2.0)
+        }
+        
+        rmseResult = sqrt(1/Double(availability.count) * rmseResult)
+        
+        return (rmseResult/range * 100)
     }
 
     var inverseAccuracyRmse: Double? {

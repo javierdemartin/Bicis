@@ -55,7 +55,7 @@ extension DataManager: HomeViewModelDataManager {
 }
 
 // MARK: RoutePlannerViewModelDataManager
-extension DataManager: InsightsViewModelDataManager {
+extension DataManager: DashboardViewModelDataManager {
     
     func getPredictedNumberOfDocksAt(time: String, for station: BikeStation, completion: @escaping(Result<Int>) -> Void) {
         

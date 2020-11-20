@@ -163,14 +163,14 @@ extension AppCoordinator: HomeViewModelCoordinatorDelegate {
     }
     
     /// Presents the UIViewController in charge of planning the route to the destination station
-    func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation]) {
+    func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation], stations: [BikeStation]) {
         
-        let routePlannerViewModel = InsightsViewModel(locationService: locationService, dataManager: dataManager, destinationStation: stationsDict)
+        let routePlannerViewModel = DashboardViewModel(locationService: locationService, dataManager: dataManager, destinationStation: stationsDict, stations: stations)
    
-        let swiftUIView = InsightsViewController(viewModel: routePlannerViewModel)
+        let swiftUIView = DashboardViewController(viewModel: routePlannerViewModel)
         let viewController = UIHostingController(rootView: swiftUIView)
         
-        viewController.modalPresentationStyle = .formSheet
+//        viewController.modalPresentationStyle = .automatic
 
         self.window.rootViewController?.present(viewController, animated: true, completion: nil)
     }

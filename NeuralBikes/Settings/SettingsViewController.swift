@@ -23,133 +23,53 @@ struct SettingsViewController: View {
     
     @State var productos: [MyPurchase] = []
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @ObservedObject var otherViewModel = OtherSettingsViewModel()
     
     init(viewModel: SettingsViewModel) {
-        
         self.viewModel = viewModel
     }
     
-    @State private var selectedCity = 0
+    @State var selectedCity = 0
     
     var body: some View {
         
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .center) {
-                
-                VStack(alignment: .center) {
-                    VStack {
-                        
-                    }
-                    Image(uiImage: UIImage(named: "AppIcon60x60")!)
-                        .frame(width: 60, height: 60, alignment: .center)
-                        .cornerRadius(10)
-                        .overlay(RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.blue, lineWidth: 4))
-                        .padding()
-                    
-                    Text(NBDefaults.longAppVersion!)
-                        .bold()
-                        .font(.system(.body, design: .rounded))
-                }
-                .padding()
-                
-                HStack {
-                    Button(action: {
-                        NBActions.sendToTwitter(profile: "javierdemartin")
-                    }, label: {
-                        Text("@javierdemartin")
-                            .bold()
-                            .font(.system(.body, design: .rounded))
-                            .padding()
-                    })
-                    
-                    Divider()
-                    
-                    Button(action: {
-                        NBActions.sendToTwitter(profile: "neuralbikes")
-                    }, label: {
-                        Text("@neuralbikes")
-                            .bold()
-                            .font(.system(.body, design: .rounded))
-                            .padding()
-                    })
-                }
-                
-                Divider()
-                
-                Button(action: {
-                    NBActions.sendToMail()
-                }, label: {
-                    Text("FEEDBACK_BUTTON")
-                        .bold()
-                        .font(.system(.body, design: .rounded))
-                        .padding()
-                })
-                
-                Divider()
-                
-                Text("HOW_TO_USE")
-                    .bold()
-                    .font(.system(.body, design: .rounded))
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
-                
-                
-                #if targetEnvironment(macCatalyst)
-                Picker("CHANGE_CITIES", selection: $selectedCity, content: {
-                    ForEach(0 ..< availableCities.count) {
-                        Text(Array(availableCities.keys)[$0])
-                            .bold()
-                            .font(.system(.body, design: .rounded))
-                    }
-                })
-                #else
-                Picker(selection: $selectedCity, label: Text("Change cities")) {
-                    ForEach(0 ..< availableCities.count) {
-                        Text(Array(availableCities.keys)[$0])
-                            .bold()
-                            .font(.system(.body, design: .rounded))
-                    }
-                }
-                .onChange(of: selectedCity, perform: { change in
-                    changeCity(change: change)
-                })
-                #endif
-                
-                if self.otherViewModel.products.count > 0 {
-                    
-                    Divider()
-                    
-                    VStack(alignment: .center) {
+            NavigationView {
+                 
+                List {
+
+                    NavigationLink(destination: SettingsSelectCityView(selectedCity: $selectedCity)) {
                         
                         HStack {
-                            Text("DONATIONS_EXPLANATION")
-                                .bold()
-                                .font(.system(.body, design: .rounded))
-                                .lineLimit(nil)
-                                .fixedSize(horizontal: false, vertical: true)
+                            Text("Select City")
                             Spacer()
+                            Text(Array(availableCities.keys)[selectedCity])
                         }
+                    }
+                    
+                    Section(header: Text("SOCIAL"), content: {
+                        Button(action: {
+                            NBActions.sendToTwitter(profile: "javierdemartin")
+                        }, label: {
+                            Text("@javierdemartin")
+                        })
                         
+                        Button(action: {
+                            NBActions.sendToTwitter(profile: "neuralbikes")
+                        }, label: {
+                            Text("@neuralbikes")
+                        })
+                    })
+                    
+                    Section(header: Text("DONATIONS_SUPPORT"), footer: Text("DONATIONS_EXPLANATION"), content: {
                         ForEach(self.otherViewModel.products) { a in
-                            
+
                             Button(action: {
                                 StoreKitProducts.store.buyProduct(a.skProd)
                             }, label: {
-                                HStack {
-                                    Spacer()
-                                    Text("\(a.localizedTitle) \(a.skProd.localizedPrice)")
-                                        .bold()
-                                        .font(.system(.body, design: .rounded))
-                                        .padding()
-                                    Spacer()
-                                    
-                                }
+                                Text("\(a.localizedTitle) \(a.skProd.localizedPrice)")
                             })
-                            .foregroundColor(.white)
-                            .background(Color.accentColor)
-                            .cornerRadius(8)
                         }
                         
                         Button(action: {
@@ -158,51 +78,59 @@ struct SettingsViewController: View {
                             }
                         }, label: {
                             Text("RESTORE_PURCHASES_BUTTON")
-                                .bold()
-                                .font(.system(.body, design: .rounded))
-                                .padding()
+                        })
+                    })
+                    
+                    Section {
+                        
+                        Button(action: {
+                            NBActions.sendToWeb()
+                        }, label: {
+                            Text("SEND_TO_WEBSITE")
                         })
                         
-                    }.padding()
-                }
-                
-                
-                Divider()
-                
-                VStack {
-                    Button(action: {
-                        NBActions.sendToWeb()
-                    }, label: {
-                        Text("SEND_TO_WEBSITE")
-                            .bold()
-                            .font(.system(.body, design: .rounded))
-                    }).padding()
+                        Button(action: {
+                            NBActions.sendToPrivacyPolicy()
+                        }, label: {
+                            Text("PRIVACY_POLICY")
+                        })
+                        
+                        Button(action: {
+                            NBActions.sendToMail()
+                        }, label: {
+                            Text("FEEDBACK_BUTTON")
+                        })
+                    }
                     
-                    Button(action: {
-                        NBActions.sendToPrivacyPolicy()
-                    }, label: {
-                        Text("PRIVACY_POLICY")
-                            .bold()
-                            .font(.system(.body, design: .rounded))
-                    }).padding()
-                }
+                    Section {
+                        Text(NBDefaults.longAppVersion!)
+                        
+                        Button(action: {
+                            SKStoreReviewController.requestReview()
+                        }) {
+                         Text("Review")
+                        }
+                    }
+                    
+                }.listStyle(InsetGroupedListStyle())
+                .navigationTitle(Text("SETTINGS"))
+            }
+            .onChange(of: selectedCity, perform: { value in
+                changeCity(change: value)
+            }).onAppear(perform: {
                 
-            }
-        }.padding()
-        .onAppear(perform: {
-            
-            guard let data = defaults.value(forKey: "city") as? Data else {
-                return
-            }
-            
-            guard let decoded = try? PropertyListDecoder().decode(City.self, from: data) else {
-                return
-            }
-            
-            if let currentCityIndex = Array(availableCities.keys).index(of: decoded.formalName) {
-                selectedCity = currentCityIndex
-            }
-        })
+                guard let data = defaults.value(forKey: "city") as? Data else {
+                    return
+                }
+    
+                guard let decoded = try? PropertyListDecoder().decode(City.self, from: data) else {
+                    return
+                }
+    
+                if let currentCityIndex = Array(availableCities.keys).index(of: decoded.formalName) {
+                    selectedCity = currentCityIndex
+                }
+            })
     }
     
     func changeCity(change: Int) {

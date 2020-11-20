@@ -31,6 +31,7 @@
 
 // MARK: - Settings
 
+"DONATIONS_SUPPORT" = "Support this app!";
 "FEEDBACK_BUTTON" = "Envoyer des commentaires";
 "HOW_TO_USE" = "Receive detailed availability predictions for each city and compare them against the real availability.";
 "RESTORE_PURCHASES_BUTTON" = "Restaurer les achats";
@@ -39,6 +40,10 @@
 "RESTORE_PURCHASES_ACCESIBILITY_LABEL" = "Restore purchases";
 "REPLAY_TUTORIAL_BUTTON" = "Replay tutorial";
 "DONATIONS_EXPLANATION" = "Donations help this project stay alive. You can buy as many as you want.";
+"SELECT_CITY_EXPLANATION" = "Select the city you would like to explore.";
+"SELECT_CITY" = "Select city";
+"REVIEW" = "Rate Neural Bikes";
+"SETTINGS" = "Settings";
 
 // MARK: - Insights
 "DESTINATION_STATION" = "Gare de destination";
@@ -77,4 +82,11 @@
 
 "CLOSE_INSIGHTS_KEYBOARD" = "Fermer";
 
-"INSIGHTS_LABEL" = "Insights";
+"INSIGHTS_LABEL" = "Dashboard";
+"FREE_BIKES" = "Vélos disponibles";
+"FREE_RACKS" = "Free racks";
+"AVAILABLE_RACKS" = "Vide ancres";
+"LOAD_FACTOR" = "Facteur de charge";
+"LOAD_FACTOR_EXPLANATION" = "Nombre total de vélos divisé par le nombre total d'ancres.";
+"FULL_STATIONS" = "Stations complètes";
+"EMPTY_STATIONS" = "Stations vides";

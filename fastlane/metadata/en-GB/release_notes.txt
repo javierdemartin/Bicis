@@ -1,9 +1,7 @@
-Heyo! 
+Hello again!
 
-• I did some internal work that I will hope will make it easier for me to ship things & deleted a whole bunch of code
-• Added support for London & Paris (did you know Paris is one of the largest bike sharing systems in the world? My databases don't like that
-• You can now donate through In App Purchases, this is the main income of the app and I am grateful whenever any of you make a donation
-• Rebuilt the Settings page
-• Data insights is now available for everybody this is a decision I hope help more users
+I discovered a little bug that would crash the app whenever you opened the station dashboard for a station that wouldn't have available predictions. It's been solved now.
 
-'til the next update!
+I have also added new interesting statistics to the dashboard that you might find interesting and give an overall view of the system.
+
+See you, next week?

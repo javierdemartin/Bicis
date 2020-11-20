@@ -13,7 +13,7 @@ import Combine
 
 protocol HomeViewModelCoordinatorDelegate: class {
     func showSettingsViewController()
-    func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation])
+    func modallyPresentRoutePlannerWithRouteSelected(stationsDict: BikeStation, closestAnnotations: [BikeStation], stations:  [BikeStation])
 }
 
 protocol HomeViewModelDataManager {
@@ -68,6 +68,8 @@ class HomeViewModel: ObservableObject {
 
         if let currentCity = self.currentCity {
             getMapPinsFrom(city: currentCity)
+            
+            
         }
     }
     
@@ -84,7 +86,7 @@ class HomeViewModel: ObservableObject {
 
         let closestAnnotations = Array(self.sortStationsNearTo(self.stations, location: station.location).dropFirst().prefix(3))
 
-        self.coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station, closestAnnotations: closestAnnotations)
+        self.coordinatorDelegate?.modallyPresentRoutePlannerWithRouteSelected(stationsDict: station, closestAnnotations: closestAnnotations, stations: self.stations)
     }
 
     func getCurrentCity(completion: @escaping(Result<City>) -> Void) {

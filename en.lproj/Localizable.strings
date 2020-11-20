@@ -26,7 +26,7 @@
 "START_ROUTE" = "Open insights";
 
 // MARK: - Settings
-
+"SOCIAL" = "Social";
 "FEEDBACK_BUTTON" = "Send Feedback";
 "HOW_TO_USE" = "Receive detailed availability predictions for each city and compare them against the real availability.";
 "RESTORE_PURCHASES_BUTTON" = "Restore Purchases";
@@ -40,7 +40,14 @@
 "LOG_OUT_ACCESIBILITY_LABEL" = "Log out";
 
 "REPLAY_TUTORIAL_BUTTON" = "Replay tutorial";
+"DONATIONS_SUPPORT" = "Support this app!";
 "DONATIONS_EXPLANATION" = "Donations help this project stay alive. You can buy as many as you want.";
+
+"SETTINGS" = "Settings";
+"SELECT_CITY" = "Select city";
+"SELECT_CITY_EXPLANATION" = "Select the city you would like to explore.";
+"SELECT_CITY" = "Select city";
+"REVIEW" = "Rate Neural Bikes";
 
 // MARK: - Insights
 
@@ -82,3 +89,12 @@
 "CLOSE_INSIGHTS_KEYBOARD" = "Close window";
 
 "INSIGHTS_LABEL" = "Insights";
+
+"FREE_BIKES" = "Free bikes";
+"FREE_RACKS" = "Free racks";
+"AVAILABLE_RACKS" = "Available racks";
+"LOAD_FACTOR" = "Load factor";
+"LOAD_FACTOR_EXPLANATION" = "Total number of free bikes dividded by total number of docking stations.";
+"FULL_STATIONS" = "Full stations";
+"EMPTY_STATIONS" = "Empty stations";
+"CLOSE" = "Close";

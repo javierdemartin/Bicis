@@ -26,17 +26,22 @@
 
 "FEEDBACK_BUTTON" = "Enviar comentarios";
 "HOW_TO_USE" = "Predicciones de disponibilidad actualizadas a diario. Compara estadísticas junto al comportamiento en directo.";
+"DONATIONS_SUPPORT" = "Apoya el desarrollo";
 "RESTORE_PURCHASES_BUTTON" = "Restaurar compras";
 
 "DATA_INSIGHTS_ACCESIBILITY_LABEL" = "Más datos sobre esta estación";
 
 "RESTORE_PURCHASES_ACCESIBILITY_LABEL" = "Restaurar compras";
+"SETTINGS" = "Ajustes";
 
 "REPLAY_TUTORIAL_BUTTON" = "Repetir introducción";
 "DONATIONS_EXPLANATION" = "Este proyecto se mantiene a flote gracias a las donaciones. Puedes comprar tantas como quieras.";
 "SEND_TO_WEBSITE" = "Sitio web";
 "DONATIONS_TITLE" = "Propinas";
 "PRIVACY_POLICY" = "Política de Privacidad";
+"SELECT_CITY_EXPLANATION" = "Selecciona la ciudad que deseas explorar.";
+"SELECT_CITY" = "Select city";
+"REVIEW" = "Puntúa Neural Bikes";
 
 // MARK: - Insights
 "DESTINATION_STATION" = "Estación de destino";
@@ -50,6 +55,13 @@
 "NOT_FOUND" = "Nada";
 "OPERATIONS_DESCRIPTION" = "Predicción de posibles cargas y descargas de la estación.";
 "NOW" = "Ahora";
+"FREE_BIKES" = "Bicis libres";
+"FREE_RACKS" = "Anclajes libres";
+"AVAILABLE_RACKS" = "Anclajes disponibles";
+"LOAD_FACTOR" = "Factor de carga";
+"LOAD_FACTOR_EXPLANATION" = "Número total de bicicletas dividido por el número número total de anclajes.";
+"FULL_STATIONS" = "Estaciones llenas";
+"EMPTY_STATIONS" = "Estaciones vacías";
 
 // MARK: - Blur Alert View
 

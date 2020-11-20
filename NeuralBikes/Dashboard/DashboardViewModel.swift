@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 import Combine
 
-protocol InsightsViewModelDelegate: class {
+protocol DashboardViewModelDelegate: class {
     func presentAlertViewWithError(title: String, body: String)
     func errorTooFarAway()
     func updateBikeStationOperations(nextRefill: String?, nextDischarge: String?)
@@ -18,7 +18,7 @@ protocol InsightsViewModelDelegate: class {
     func showMostUsedStations(stations: [String: Int])
 }
 
-protocol InsightsViewModelDataManager: class {
+protocol DashboardViewModelDataManager: class {
     func getPredictionForStation(city: String, type: String, name: String, completion: @escaping(Result<MyAPIResponse>) -> Void)
     func getCurrentCity(completion: @escaping (Result<City>) -> Void)
     func getStationStatistics(for city: String) -> [String: Int]
@@ -26,7 +26,7 @@ protocol InsightsViewModelDataManager: class {
     func getPredictedNumberOfDocksAt(time: String, for station: BikeStation, completion: @escaping(Result<Int>) -> Void)
 }
 
-class InsightsViewModel: NSObject, ObservableObject, Identifiable {
+class DashboardViewModel: NSObject, ObservableObject, Identifiable {
     
     @Published var destinationStationString: String = ""
     @Published var nextRefillTime: String?
@@ -42,24 +42,59 @@ class InsightsViewModel: NSObject, ObservableObject, Identifiable {
     @Published var numberOfTimesLaunched: String = ""
 
     let stationsDict: [String: BikeStation]? = [:]
-    weak var delegate: InsightsViewModelDelegate?
+    weak var delegate: DashboardViewModelDelegate?
     let dateFormatter = DateFormatter()
     let locationService: LocationServiceable
     var predictionJson: [String: Int] = [:]
+    
+    @Published var stations : [BikeStation]
 
     @Published var destinationStation: BikeStation? = nil
     
-    let dataManager: InsightsViewModelDataManager
+    var freeStations: [String] {
+        get {
+            return self.stations.filter({ $0.freeBikes == 0}).map({ $0.stationName })
+        }
+    }
+    
+    var fullStations: [String] {
+        get {
+            return self.stations.filter({ $0.freeRacks == 0}).map({ $0.stationName })
+        }
+    }
+    
+    var totalFreeBikes: Int {
+        get {
+            return self.stations.map({ $0.freeBikes }).reduce(0, +)
+        }
+    }
+    
+    var totalFreeRacks: Int {
+        get {
+            return self.stations.map({ $0.freeRacks + $0.freeBikes }).reduce(0, +)
+        }
+    }
+    
+    // Load factor = bikes available / # docks
+    var loadFactor: Int {
+        get {
+            return Int(Double(totalFreeBikes) / Double(totalFreeRacks) * 100)
+        }
+    }
+    
+    let dataManager: DashboardViewModelDataManager
 
-    init(locationService: LocationServiceable, dataManager: InsightsViewModelDataManager, destinationStation: BikeStation) {
+    init(locationService: LocationServiceable, dataManager: DashboardViewModelDataManager, destinationStation: BikeStation, stations: [BikeStation]) {
 
         self.dataManager = dataManager
         
         self.locationService = locationService
         
         self.destinationStation = destinationStation
+        self.stations = stations
         
-//        self.destinationStation.value = destinationStation
+        print("Total free bikes \(stations.map({ $0.freeBikes }).reduce(0, +))")
+        print("Total free racks \(stations.map({ $0.freeRacks }).reduce(0, +))")
         
         destinationStationString = destinationStation.stationName
         

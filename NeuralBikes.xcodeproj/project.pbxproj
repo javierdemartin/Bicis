@@ -11,7 +11,7 @@
 		8000292A243FBBB200862C75 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
 		8000476F23EF425300492DFB /* NeuralBikesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000476E23EF425300492DFB /* NeuralBikesUITests.swift */; };
 		8000477723EF426000492DFB /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000477623EF426000492DFB /* SnapshotHelper.swift */; };
-		8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8000477A23F06C1100492DFB /* StoreKitHelper.swift */; };
+		8002E33C25606C4F008D5662 /* SettingsSelectCityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8002E33B25606C4F008D5662 /* SettingsSelectCityView.swift */; };
 		800CE942239559F700674D1C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800CE941239559F700674D1C /* Constants.swift */; };
 		800CE94423955A7F00674D1C /* LocalDataManagerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800CE94323955A7F00674D1C /* LocalDataManagerError.swift */; };
 		800DDD4C23ED510700FCE4E5 /* BiciMad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800DDD4B23ED510700FCE4E5 /* BiciMad.swift */; };
@@ -37,10 +37,11 @@
 		80299FDB243B80BC0094EDB2 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FDA243B80BC0094EDB2 /* IAPHelper.swift */; };
 		80299FDE243B860F0094EDB2 /* StoreKitProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */; };
 		80299FE9243C6E220094EDB2 /* FeedBackGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */; };
-		8029AEA324780F240072117B /* InsightsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029AEA224780F240072117B /* InsightsViewController.swift */; };
+		8029AEA324780F240072117B /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029AEA224780F240072117B /* DashboardViewController.swift */; };
 		8029C25C253C4B24009DB3BD /* NeuralBikeAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8074D34A24573806006B3062 /* NeuralBikeAPIResponse.swift */; };
 		8029C260253C4B3C009DB3BD /* GBFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803395F0249D5D78003E3ADC /* GBFS.swift */; };
 		8029C264253C4B49009DB3BD /* SantanderBikesLondon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B8727924BA55F700098D6B /* SantanderBikesLondon.swift */; };
+		803008112568711E005BC44D /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803008102568711E005BC44D /* StoreKitHelper.swift */; };
 		803395F1249D5D78003E3ADC /* GBFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803395F0249D5D78003E3ADC /* GBFS.swift */; };
 		8036399D24829FA900FA096F /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8036399C24829FA900FA096F /* UIFont.swift */; };
 		803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 803FD8A023C71FAF008DDE91 /* GraphView.swift */; };
@@ -57,7 +58,7 @@
 		8085CC66236E2CB800B45A7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8085CC65236E2CB800B45A7C /* Assets.xcassets */; };
 		8085CC69236E2CB800B45A7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8085CC67236E2CB800B45A7C /* LaunchScreen.storyboard */; };
 		808CEAC62477A28F006B17F2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 808CEAC82477A28F006B17F2 /* Localizable.strings */; };
-		809953F72416C77700B44DC9 /* InsightsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809953F62416C77700B44DC9 /* InsightsViewModel.swift */; };
+		809953F72416C77700B44DC9 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809953F62416C77700B44DC9 /* DashboardViewModel.swift */; };
 		809FCFB625333924005E82EA /* NBDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809FCFB525333924005E82EA /* NBDefaults.swift */; };
 		80A4CEBF253B2B4800435D54 /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
 		80A8216A23D9B7E4003DD67D /* Cities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A8216923D9B7E4003DD67D /* Cities.swift */; };
@@ -105,7 +106,7 @@
 		8000476E23EF425300492DFB /* NeuralBikesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuralBikesUITests.swift; sourceTree = "<group>"; };
 		8000477023EF425300492DFB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8000477623EF426000492DFB /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
-		8000477A23F06C1100492DFB /* StoreKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
+		8002E33B25606C4F008D5662 /* SettingsSelectCityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSelectCityView.swift; sourceTree = "<group>"; };
 		800CE941239559F700674D1C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		800CE94323955A7F00674D1C /* LocalDataManagerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDataManagerError.swift; sourceTree = "<group>"; };
 		800CE94523955BD400674D1C /* NeuralBikes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NeuralBikes.entitlements; sourceTree = "<group>"; };
@@ -125,7 +126,8 @@
 		80299FDA243B80BC0094EDB2 /* IAPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitProducts.swift; sourceTree = "<group>"; };
 		80299FE8243C6E220094EDB2 /* FeedBackGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedBackGenerator.swift; sourceTree = "<group>"; };
-		8029AEA224780F240072117B /* InsightsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewController.swift; sourceTree = "<group>"; };
+		8029AEA224780F240072117B /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
+		803008102568711E005BC44D /* StoreKitHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
 		803395F0249D5D78003E3ADC /* GBFS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBFS.swift; sourceTree = "<group>"; };
 		8036399C24829FA900FA096F /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		803FD8A023C71FAF008DDE91 /* GraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
@@ -146,7 +148,7 @@
 		8085CC6A236E2CB800B45A7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		808CEAC72477A28F006B17F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		808CEAC92477A290006B17F2 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
-		809953F62416C77700B44DC9 /* InsightsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViewModel.swift; sourceTree = "<group>"; };
+		809953F62416C77700B44DC9 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
 		809FCFB525333924005E82EA /* NBDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NBDefaults.swift; sourceTree = "<group>"; };
 		80A8216923D9B7E4003DD67D /* Cities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cities.swift; sourceTree = "<group>"; };
 		80AB8B6F24B23A2F004F3905 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
@@ -287,7 +289,7 @@
 		80299FDC243B86040094EDB2 /* Store Kit */ = {
 			isa = PBXGroup;
 			children = (
-				8000477A23F06C1100492DFB /* StoreKitHelper.swift */,
+				803008102568711E005BC44D /* StoreKitHelper.swift */,
 				80299FDA243B80BC0094EDB2 /* IAPHelper.swift */,
 				80299FDD243B860F0094EDB2 /* StoreKitProducts.swift */,
 			);
@@ -383,7 +385,7 @@
 			children = (
 				80AB8B6E24B23A10004F3905 /* Tutorial */,
 				80E7D8A7245602EB00D49894 /* Protocols */,
-				809953F32416C50100B44DC9 /* Insights */,
+				809953F32416C50100B44DC9 /* Dashboard */,
 				800CE94523955BD400674D1C /* NeuralBikes.entitlements */,
 				801ECE40236F3BC3003CFAF7 /* Extensions */,
 				80628466236EDA3600717472 /* Model */,
@@ -410,14 +412,14 @@
 			path = NeuralBikes;
 			sourceTree = "<group>";
 		};
-		809953F32416C50100B44DC9 /* Insights */ = {
+		809953F32416C50100B44DC9 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
-				8029AEA224780F240072117B /* InsightsViewController.swift */,
-				809953F62416C77700B44DC9 /* InsightsViewModel.swift */,
+				8029AEA224780F240072117B /* DashboardViewController.swift */,
+				809953F62416C77700B44DC9 /* DashboardViewModel.swift */,
 				80B1D017241AB3140072D1D9 /* RoutePlannerError.swift */,
 			);
-			path = Insights;
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		80AB8B6E24B23A10004F3905 /* Tutorial */ = {
@@ -442,6 +444,7 @@
 			children = (
 				80BB4A3D252D0DC900FF93E8 /* SettingsViewModel.swift */,
 				805BC8E32533B17A00C4AF7F /* SettingsViewController.swift */,
+				8002E33B25606C4F008D5662 /* SettingsSelectCityView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -641,7 +644,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8029AEA324780F240072117B /* InsightsViewController.swift in Sources */,
+				8029AEA324780F240072117B /* DashboardViewController.swift in Sources */,
 				80109145236E320300D3C45E /* AppCoordinator.swift in Sources */,
 				80109137236E2DFA00D3C45E /* DataManager.swift in Sources */,
 				809FCFB625333924005E82EA /* NBDefaults.swift in Sources */,
@@ -667,11 +670,13 @@
 				801ECE3D236F3B90003CFAF7 /* CustomAnnotationView.swift in Sources */,
 				80D288BD241BC52E004EE583 /* UIStackView.swift in Sources */,
 				803395F1249D5D78003E3ADC /* GBFS.swift in Sources */,
+				8002E33C25606C4F008D5662 /* SettingsSelectCityView.swift in Sources */,
+				803008112568711E005BC44D /* StoreKitHelper.swift in Sources */,
 				801ECE3B236F3B7D003CFAF7 /* MapPin.swift in Sources */,
 				8074D34B24573806006B3062 /* NeuralBikeAPIResponse.swift in Sources */,
 				80BB4A41252D0DC900FF93E8 /* SettingsViewModel.swift in Sources */,
 				80E7D8A92456033E00D49894 /* NBButton.swift in Sources */,
-				809953F72416C77700B44DC9 /* InsightsViewModel.swift in Sources */,
+				809953F72416C77700B44DC9 /* DashboardViewModel.swift in Sources */,
 				80109141236E316E00D3C45E /* HomeViewController.swift in Sources */,
 				80628465236ED87900717472 /* DefaultRemoteDataManager.swift in Sources */,
 				800DDD4C23ED510700FCE4E5 /* BiciMad.swift in Sources */,
@@ -689,7 +694,6 @@
 				803FD8A123C71FAF008DDE91 /* GraphView.swift in Sources */,
 				8085CC5D236E2CB500B45A7C /* AppDelegate.swift in Sources */,
 				80628463236ED79300717472 /* Result.swift in Sources */,
-				8000477B23F06C1100492DFB /* StoreKitHelper.swift in Sources */,
 				800CE942239559F700674D1C /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -943,7 +947,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NeuralBikes/NeuralBikes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 60;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -951,7 +955,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.10.2;
+				MARKETING_VERSION = 2020.11.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "Neural Bikes";
 				SUPPORTS_MACCATALYST = NO;
@@ -971,7 +975,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = NeuralBikes/NeuralBikes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 58;
+				CURRENT_PROJECT_VERSION = 60;
 				DEVELOPMENT_TEAM = Z3PCB8TM76;
 				INFOPLIST_FILE = NeuralBikes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -979,7 +983,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2020.10.2;
+				MARKETING_VERSION = 2020.11.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.javierdemartin.bici;
 				PRODUCT_NAME = "Neural Bikes";
 				SUPPORTS_MACCATALYST = NO;
